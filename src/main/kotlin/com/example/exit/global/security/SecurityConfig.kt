@@ -11,7 +11,6 @@ import org.springframework.security.web.SecurityFilterChain
 internal class SecurityConfig(
     private val jwtTokenParser: JwtTokenParser
 ){
-    @Throws(Exception::class)
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
