@@ -9,6 +9,7 @@ import java.util.Date
 import java.util.UUID
 
 import com.example.exit.domain.auth.dto.response.TokenResponse
+import java.time.LocalDateTime
 
 
 @Component
@@ -25,7 +26,9 @@ class JwtTokenProvider(
     fun generateBothToken(userId: UUID): TokenResponse {
         return TokenResponse(
             accessToken = this.generateAccessToken(userId),
-            refreshToken = this.generateRefreshToken(userId)
+            accessExpiredAt = LocalDateTime.now().withNano(0).plusSeconds(jwtProperties.accessExp.toLong()),
+            refreshToken = this.generateRefreshToken(userId),
+            refreshExpiredAt =  LocalDateTime.now().withNano(0).plusSeconds(jwtProperties.refreshExp.toLong())
         )
     }
 
