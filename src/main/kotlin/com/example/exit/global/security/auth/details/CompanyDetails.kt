@@ -2,9 +2,10 @@ package com.example.exit.global.security.auth.details
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.UUID
 
 class CompanyDetails(
-
+    private val companyId: UUID
 ): UserDetails{
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -14,7 +15,7 @@ class CompanyDetails(
     override fun getPassword(): String? =  null;
 
     override fun getUsername(): String {
-        TODO("Company Entity 만들기")
+        return companyId.toString()
     }
 
     override fun isAccountNonExpired(): Boolean = true;
