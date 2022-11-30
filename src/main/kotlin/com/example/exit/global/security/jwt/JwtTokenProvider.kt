@@ -8,7 +8,7 @@ import com.example.exit.global.security.jwt.properties.JwtProperties
 import java.util.Date
 import java.util.UUID
 
-import com.example.exit.domain.auth.dto.request.TokenResponse
+import com.example.exit.domain.auth.dto.response.TokenResponse
 
 
 @Component
