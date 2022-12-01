@@ -1,3 +1,28 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "60s"
+
+  datasource:
+    username: ${DB_USERNAME:cos}
+    password: ${DB_PASSWORD:cos1234}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_URL:localhost}:3306/${DB_NAME:test}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL:update}
+    properties:
+      hibernate:
+        format_sql: ${FORMAT_SQL:true}
+        show_sql: ${SHOW_SQL:true}
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-exp: ${JWT_ACCESS_EXP}
