@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component
 @Component
 class TeacherDetailService (
     // private val teacherRepository: TeacherRepository
-
 ): UserDetailsService {
+
     override fun loadUserByUsername(username: String?): UserDetails {
         TODO("Teacher Entity 만들고 진행")
     }
