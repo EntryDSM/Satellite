@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 class StudentDetailService (
     // private val studentRepository StudentRepository
 ): UserDetailsService{
+
     override fun loadUserByUsername(username: String?): UserDetails {
         TODO("Student Entity 만들고 진행")
     }
