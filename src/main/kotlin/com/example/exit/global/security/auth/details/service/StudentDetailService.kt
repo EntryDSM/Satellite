@@ -1,15 +1,21 @@
 package com.example.exit.global.security.auth.details.service
 
+import com.example.exit.domain.student.persistence.repository.StudentRepository
+import com.example.exit.global.security.auth.details.StudentDetails
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class StudentDetailService (
-    // private val studentRepository StudentRepository
+     private val studentRepository: StudentRepository
 ): UserDetailsService{
 
     override fun loadUserByUsername(username: String?): UserDetails {
-        TODO("Student Entity 만들고 진행")
+        val student = studentRepository.findByIdOrNull(UUID.fromString(username)) ?: throw Exception() //TODO
+
+        return StudentDetails(student.id);
     }
 }
