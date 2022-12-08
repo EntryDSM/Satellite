@@ -21,6 +21,13 @@ dependencies {
     // jwt token
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
+    // time base uuid
+    implementation("com.fasterxml.uuid:java-uuid-generator:3.1.4")
+
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-security")
