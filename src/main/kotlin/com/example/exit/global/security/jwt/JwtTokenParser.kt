@@ -6,13 +6,13 @@ import com.example.exit.global.exception.jwt.ExpiredTokenException
 import com.example.exit.global.security.auth.details.service.CompanyDetailService
 import com.example.exit.global.security.auth.details.service.StudentDetailService
 import com.example.exit.global.security.auth.details.service.TeacherDetailService
-import com.example.exit.global.security.jwt.properties.JwtProperties.ACCESS
+import com.example.exit.global.security.jwt.properties.JwtConstants.ACCESS
 import com.example.exit.global.security.jwt.properties.SecurityProperties
 import com.example.exit.global.exception.jwt.InvalidClaimException
 import com.example.exit.global.exception.jwt.InvalidTokenException
 import com.example.exit.global.exception.jwt.UnexpectedTokenException
-import com.example.exit.global.security.jwt.properties.JwtProperties.ROLE_CLAIM
-import com.example.exit.global.security.jwt.properties.JwtProperties.TYPE_CLAIM
+import com.example.exit.global.security.jwt.properties.JwtConstants.ROLE_CLAIM
+import com.example.exit.global.security.jwt.properties.JwtConstants.TYPE_CLAIM
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts

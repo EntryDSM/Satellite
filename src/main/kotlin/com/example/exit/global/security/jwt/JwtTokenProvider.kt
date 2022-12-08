@@ -10,10 +10,10 @@ import java.util.Date
 import java.util.UUID
 
 import com.example.exit.domain.auth.dto.response.TokenResponse
-import com.example.exit.global.security.jwt.properties.JwtProperties.ACCESS
-import com.example.exit.global.security.jwt.properties.JwtProperties.REFRESH
-import com.example.exit.global.security.jwt.properties.JwtProperties.ROLE_CLAIM
-import com.example.exit.global.security.jwt.properties.JwtProperties.TYPE_CLAIM
+import com.example.exit.global.security.jwt.properties.JwtConstants.ACCESS
+import com.example.exit.global.security.jwt.properties.JwtConstants.REFRESH
+import com.example.exit.global.security.jwt.properties.JwtConstants.ROLE_CLAIM
+import com.example.exit.global.security.jwt.properties.JwtConstants.TYPE_CLAIM
 import java.time.LocalDateTime
 
 

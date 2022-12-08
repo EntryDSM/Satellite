@@ -1,8 +1,7 @@
 package com.example.exit.global.security.jwt
 
 
-import com.example.exit.global.security.jwt.properties.JwtProperties
-import com.example.exit.global.security.jwt.properties.SecurityProperties
+import com.example.exit.global.security.jwt.properties.JwtConstants
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
@@ -30,9 +29,9 @@ class JwtTokenFilter(
     }
 
     private fun resolvedToken(request: HttpServletRequest): String? =
-        request.getHeader(JwtProperties.HEADER)?.also {
-            if (it.startsWith(JwtProperties.PREFIX)) {
-                return it.substring(JwtProperties.PREFIX.length)
+        request.getHeader(JwtConstants.HEADER)?.also {
+            if (it.startsWith(JwtConstants.PREFIX)) {
+                return it.substring(JwtConstants.PREFIX.length)
             }
         }
 }
