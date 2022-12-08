@@ -15,7 +15,7 @@ class Teacher(
     val accountId: String,
 
     @field: NotNull
-    @Length(max = 60)
+    @Length(min = 8, max = 60)
     val password: String
 
 ): BaseUUIDEntity()
