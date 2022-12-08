@@ -1,54 +1,55 @@
 package com.example.exit.global.security.jwt
 
+import com.example.exit.domain.auth.Authority
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Component
 
-import com.example.exit.global.security.jwt.properties.JwtProperties
+import com.example.exit.global.security.jwt.properties.SecurityProperties
 import java.util.Date
 import java.util.UUID
 
 import com.example.exit.domain.auth.dto.response.TokenResponse
+import com.example.exit.global.security.jwt.properties.JwtConstants.ACCESS
+import com.example.exit.global.security.jwt.properties.JwtConstants.REFRESH
+import com.example.exit.global.security.jwt.properties.JwtConstants.ROLE_CLAIM
+import com.example.exit.global.security.jwt.properties.JwtConstants.TYPE_CLAIM
 import java.time.LocalDateTime
 
 
 @Component
 class JwtTokenProvider(
-    private val jwtProperties: JwtProperties
+    private val securityProperties: SecurityProperties
    // RefreshTokenRepository TODO
 ) {
-    companion object {
-        private const val ACCESS_KEY = "access"
-        private const val REFRESH_KEY = "refresh"
-        private const val TYPE_CLAIM = "typ"
-    }
 
-    fun generateBothToken(userId: UUID): TokenResponse {
+    fun generateBothToken(userId: UUID, auth: Authority): TokenResponse {
         return TokenResponse(
-            accessToken = this.generateAccessToken(userId),
-            accessExpiredAt = LocalDateTime.now().withNano(0).plusSeconds(jwtProperties.accessExp.toLong()),
+            accessToken = this.generateAccessToken(userId, auth),
+            accessExpiredAt = LocalDateTime.now().withNano(0).plusSeconds(securityProperties.accessExp.toLong()),
             refreshToken = this.generateRefreshToken(userId),
-            refreshExpiredAt =  LocalDateTime.now().withNano(0).plusSeconds(jwtProperties.refreshExp.toLong())
+            refreshExpiredAt =  LocalDateTime.now().withNano(0).plusSeconds(securityProperties.refreshExp.toLong())
         )
     }
 
     private fun generateRefreshToken(userId: UUID): String {
         return Jwts.builder()
-            .signWith(SignatureAlgorithm.HS512, jwtProperties.secretKey)
+            .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
             .setSubject(userId.toString())
-            .claim(TYPE_CLAIM, REFRESH_KEY)
+            .setHeaderParam(TYPE_CLAIM, REFRESH)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + jwtProperties.accessExp))
+            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp))
             .compact()
     }
 
-    private fun generateAccessToken(userId: UUID): String {
+    private fun generateAccessToken(userId: UUID, auth: Authority): String {
         return Jwts.builder()
-            .signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
+            .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
             .setSubject(userId.toString())
-            .claim(TYPE_CLAIM, ACCESS_KEY)
+            .setHeaderParam(TYPE_CLAIM, ACCESS)
+            .claim(ROLE_CLAIM, auth.name)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + jwtProperties.accessExp))
+            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp))
             .compact()
     }
 }

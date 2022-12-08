@@ -1,6 +1,8 @@
 package com.example.exit.global.security.auth.details
 
+import com.example.exit.domain.auth.Authority
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.UUID
 
@@ -9,7 +11,7 @@ class TeacherDetails(
 ): UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Teacher Entity 만들고 하기")
+        return mutableListOf(SimpleGrantedAuthority(Authority.TEACHER.name))
     }
 
     override fun getPassword(): String? =  null;
