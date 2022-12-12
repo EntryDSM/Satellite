@@ -8,6 +8,8 @@ enum class GlobalErrorCode(
     private val code: String
 ) : CustomErrorProperty {
 
+    PASSWORD_MISS_MATCHED(400, "COMMON-400-1","Password Mismatch"),
+
     EXPIRED_JWT(401, "COMMON-401-1", "Expired Jwt"),
     INVALID_JWT(401, "COMMON-401-2", "Invalid Jwt"),
     UNEXPECTED_JWT(401, "COMMON-401-3", "Unexpected Token"),
