@@ -8,6 +8,8 @@ enum class DomainErrorCode(
     private val code: String
 ) : CustomErrorProperty {
 
+    PASSWORD_MISS_MATCHED(400, "COMMON-400-1","Password Mismatch"),
+
     TEACHER_NOT_FOUND(404, "TEACHER NOT FOUND", "TEACHER-404-1")
     ;
 
