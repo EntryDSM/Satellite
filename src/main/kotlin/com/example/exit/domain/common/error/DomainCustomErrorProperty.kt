@@ -1,4 +1,4 @@
-package com.example.exit.domain.common.custom
+package com.example.exit.domain.common.error
 
 interface DomainCustomErrorProperty {
 

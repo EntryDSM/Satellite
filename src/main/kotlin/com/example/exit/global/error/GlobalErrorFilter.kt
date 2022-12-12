@@ -1,6 +1,6 @@
 package com.example.exit.global.error
 
-import com.example.exit.domain.common.custom.DomainCustomException
+import com.example.exit.domain.common.error.DomainCustomException
 import com.example.exit.global.error.custom.CustomErrorProperty
 import com.example.exit.global.error.custom.GlobalCustomException
 import com.example.exit.global.error.response.DefaultErrorResponse

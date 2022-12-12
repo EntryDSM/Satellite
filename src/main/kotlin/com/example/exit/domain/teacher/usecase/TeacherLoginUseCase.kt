@@ -7,7 +7,7 @@ import com.example.exit.domain.auth.persistence.repository.RefreshTokenRepositor
 import com.example.exit.domain.teacher.exception.TeacherNotFoundException
 import com.example.exit.domain.teacher.persistence.repository.TeacherRepository
 import com.example.exit.domain.teacher.presentation.dto.request.TeacherSignInRequest
-import com.example.exit.global.exception.jwt.GlobalPasswordMissMatchedException
+import com.example.exit.domain.common.exception.PasswordMissMatchedException
 import com.example.exit.global.security.jwt.JwtTokenProvider
 import com.example.exit.global.security.jwt.properties.SecurityProperties
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -28,7 +28,7 @@ class TeacherLoginUseCase(
             ?: throw TeacherNotFoundException
 
         if (!passwordEncoder.matches(request.password, teacher.password)) {
-            throw GlobalPasswordMissMatchedException
+            throw PasswordMissMatchedException
         }
 
         val tokenResponse = tokenProvider.generateBothToken(teacher.id, Authority.TEACHER)
