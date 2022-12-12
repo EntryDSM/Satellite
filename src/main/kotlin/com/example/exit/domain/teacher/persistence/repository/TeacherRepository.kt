@@ -7,4 +7,7 @@ import java.util.UUID
 
 @Repository
 interface TeacherRepository : CrudRepository<Teacher, UUID> {
+
+    fun findByAccountId(accountId: String): Teacher
+
 }
