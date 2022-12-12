@@ -1,5 +1,5 @@
 package com.example.exit.global.error.custom
 
-abstract class CustomException(
+abstract class GlobalCustomException(
     val errorProperty: CustomErrorProperty
 ) : RuntimeException()

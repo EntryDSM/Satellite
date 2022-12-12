@@ -1,16 +1,16 @@
 package com.example.exit.global.security.jwt
 
 import com.example.exit.domain.auth.Authority
-import com.example.exit.global.exception.InternalServerException
-import com.example.exit.global.exception.jwt.ExpiredTokenException
+import com.example.exit.global.exception.GlobalInternalServerException
+import com.example.exit.global.exception.jwt.GlobalExpiredTokenException
 import com.example.exit.global.security.auth.details.service.CompanyDetailService
 import com.example.exit.global.security.auth.details.service.StudentDetailService
 import com.example.exit.global.security.auth.details.service.TeacherDetailService
 import com.example.exit.global.security.jwt.properties.JwtConstants.ACCESS
 import com.example.exit.global.security.jwt.properties.SecurityProperties
-import com.example.exit.global.exception.jwt.InvalidClaimException
-import com.example.exit.global.exception.jwt.InvalidTokenException
-import com.example.exit.global.exception.jwt.UnexpectedTokenException
+import com.example.exit.global.exception.jwt.GlobalInvalidClaimException
+import com.example.exit.global.exception.jwt.GlobalInvalidTokenException
+import com.example.exit.global.exception.jwt.GlobalUnexpectedTokenException
 import com.example.exit.global.security.jwt.properties.JwtConstants.ROLE_CLAIM
 import com.example.exit.global.security.jwt.properties.JwtConstants.TYPE_CLAIM
 import io.jsonwebtoken.Jws
@@ -36,7 +36,7 @@ class JwtTokenParser(
         val claims = getClaims(token);
 
         if (claims.header[TYPE_CLAIM] != ACCESS) {
-            throw InvalidTokenException
+            throw GlobalInvalidTokenException
         }
 
         val userDetails = getDetails(claims.body)
@@ -51,10 +51,10 @@ class JwtTokenParser(
                 .parseClaimsJws(token)
         } catch (e: Exception) {
             when (e){
-                is InvalidClaimException -> throw InvalidClaimException
-                is ExpiredJwtException -> throw ExpiredTokenException
-                is JwtException -> throw UnexpectedTokenException
-                else -> throw InternalServerException
+                is GlobalInvalidClaimException -> throw GlobalInvalidClaimException
+                is ExpiredJwtException -> throw GlobalExpiredTokenException
+                is JwtException -> throw GlobalUnexpectedTokenException
+                else -> throw GlobalInternalServerException
             }
         }
     };
@@ -66,7 +66,7 @@ class JwtTokenParser(
             Authority.STUDENT.name -> studentDetailService.loadUserByUsername(body.id)
             Authority.COMPANY.name -> companyDetailService.loadUserByUsername(body.id)
             Authority.TEACHER.name -> teacherDetailService.loadUserByUsername(body.id)
-            else -> throw InternalServerException
+            else -> throw GlobalInternalServerException
         }
     }
 
