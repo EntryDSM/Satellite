@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank
 class RefreshToken(
 
     @Id
-    @Indexed
     val userId: UUID,
 
     @NotBlank
