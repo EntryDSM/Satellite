@@ -8,8 +8,8 @@ import java.util.Base64
 @ConfigurationProperties(prefix = "jwt")
 data class SecurityProperties(
     var secretKey: String,
-    val accessExp: Int,
-    val refreshExp: Int
+    val accessExp: Long,
+    val refreshExp: Long
 ) {
     init {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray())
