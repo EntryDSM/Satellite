@@ -10,6 +10,7 @@ import java.util.Date
 import java.util.UUID
 
 import com.example.exit.domain.auth.dto.response.TokenResponse
+import com.example.exit.domain.auth.persistence.repository.RefreshTokenRepository
 import com.example.exit.global.security.jwt.properties.JwtConstants.ACCESS
 import com.example.exit.global.security.jwt.properties.JwtConstants.REFRESH
 import com.example.exit.global.security.jwt.properties.JwtConstants.ROLE_CLAIM
@@ -20,7 +21,6 @@ import java.time.LocalDateTime
 @Component
 class JwtTokenProvider(
     private val securityProperties: SecurityProperties
-   // RefreshTokenRepository TODO
 ) {
 
     fun generateBothToken(userId: UUID, auth: Authority): TokenResponse {
