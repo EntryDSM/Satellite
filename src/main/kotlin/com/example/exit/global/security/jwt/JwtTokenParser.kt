@@ -63,9 +63,9 @@ class JwtTokenParser(
         val authority = body.get(ROLE_CLAIM, String::class.java)
 
         return when (authority) {
-            Authority.STUDENT.name -> studentDetailService.loadUserByUsername(body.id)
-            Authority.COMPANY.name -> companyDetailService.loadUserByUsername(body.id)
-            Authority.TEACHER.name -> teacherDetailService.loadUserByUsername(body.id)
+            Authority.STUDENT.name -> studentDetailService.loadUserByUsername(body.subject)
+            Authority.COMPANY.name -> companyDetailService.loadUserByUsername(body.subject)
+            Authority.TEACHER.name -> teacherDetailService.loadUserByUsername(body.subject)
             else -> throw GlobalInternalServerException
         }
     }
