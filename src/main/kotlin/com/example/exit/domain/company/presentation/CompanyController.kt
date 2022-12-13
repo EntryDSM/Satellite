@@ -30,13 +30,13 @@ class CompanyController(
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PostMapping("/stand-by/{standby-company-id}")
+    @PostMapping("/standby/{standby-company-id}")
     fun allowStandByCompany(@PathVariable("standby-company-id") standbyCompanyId: UUID) {
         allowStandByCompanyUseCase.execute(standbyCompanyId)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/stand-by/{standby-company-id}")
+    @DeleteMapping("/standby/{standby-company-id}")
     fun rejectStandByCompany(@PathVariable("standby-company-id") standbyCompanyId: UUID) {
         rejectStandByCompanyUseCase.execute(standbyCompanyId)
     }
