@@ -19,11 +19,17 @@ class Company(
     val email: String,
 
     @field: NotNull
-    @Length(max = 11)
-    val phoneNumber: String,
+    @Length(min = 8, max = 60)
+    val password: String,
 
     @field: NotNull
-    @Length(min = 8, max = 60)
-    val password: String
+    val managerName: String,
+
+    @field: NotNull
+    @Length(max = 11)
+    val managerNumber: String,
+
+    @field: NotNull
+    val location: String
 
 ) : BaseUUIDEntity()
