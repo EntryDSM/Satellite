@@ -1,6 +1,6 @@
 package com.example.exit.domain.company.presentation
 
-import com.example.exit.domain.company.presentation.dto.request.SignUpRequestDto
+import com.example.exit.domain.company.presentation.dto.request.SignUpRequest
 import com.example.exit.domain.company.usecase.AllowStandByCompanyUseCase
 import com.example.exit.domain.company.usecase.CompanySignUpUseCase
 import com.example.exit.domain.company.usecase.RejectStandByCompanyUseCase
@@ -25,7 +25,7 @@ class CompanyController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
-    fun singUp(@RequestBody @Valid request: SignUpRequestDto) {
+    fun singUp(@RequestBody @Valid request: SignUpRequest) {
         companySignUpUseCase.execute(request)
     }
 
