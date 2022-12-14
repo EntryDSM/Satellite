@@ -8,8 +8,8 @@ enum class DomainErrorCode(
     private val code: String
 ) : CustomErrorProperty {
 
-    PASSWORD_MISS_MATCHED(400, "COMMON-400-1","Password Mismatch"),
-    EMAIL_SUFFIX_NOT_VALID(400, "COMMON-400-2","Email not ends with @dsm.hs.kr"),
+    PASSWORD_MISS_MATCHED(400, "Password Mismatch", "COMMON-400-1"),
+    EMAIL_SUFFIX_NOT_VALID(400, "Email not ends with @dsm.hs.kr", "COMMON-400-2"),
 
     STUDENT_NOT_FOUND(404, "STUDENT NOT FOUND", "STUDENT-404-1"),
 
