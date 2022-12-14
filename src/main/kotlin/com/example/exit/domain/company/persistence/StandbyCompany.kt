@@ -1,15 +1,14 @@
 package com.example.exit.domain.company.persistence
 
-import org.hibernate.validator.constraints.Length
-
 import com.example.exit.global.entity.BaseUUIDEntity
+import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
 import javax.persistence.Entity
 import javax.persistence.Table
 
 @Entity
-@Table(name = "tbl_company")
-class Company(
+@Table(name = "tbl_standby_company")
+class StandbyCompany(
 
     @field: NotNull
     val name: String,

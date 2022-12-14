@@ -34,7 +34,18 @@ internal class SecurityConfig(
 
         http
             .authorizeRequests()
+
+            // AUTH
+            .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+
+            // STUDENT
             .antMatchers("/student/profile").hasAuthority(STUDENT)
+
+            // COMPANY
+            .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
+            .antMatchers(HttpMethod.POST, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
+
             .anyRequest().permitAll()
 
         http

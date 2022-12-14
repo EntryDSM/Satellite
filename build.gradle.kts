@@ -34,6 +34,8 @@ dependencies {
     implementation("io.github.openfeign:feign-httpclient:11.9.1")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
 
+    // cool sms
+    implementation ("net.nurigo:javaSDK:2.2")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
@@ -45,6 +47,7 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
 }
 
 tasks.withType<KotlinCompile> {
