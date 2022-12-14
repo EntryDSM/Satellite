@@ -1,10 +1,11 @@
 package com.example.exit.domain.student.persistence
 
 import com.example.exit.global.entity.BaseUUIDEntity
+import com.fasterxml.uuid.Generators
 import org.jetbrains.annotations.NotNull
-import javax.persistence.Column
+import org.jetbrains.annotations.Nullable
+import java.util.*
 import javax.persistence.Entity
-import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
@@ -12,9 +13,26 @@ import javax.persistence.Table
 class Student(
 
     @field: NotNull
-    val email: String,
+    override val id: UUID,
 
     @field: NotNull
-    val major: String
+    val email: String,
 
-): BaseUUIDEntity()
+    val name: String?,
+
+    val grade: String?,
+
+    val classNum: String?,
+
+    val number: String?,
+
+    val major: String?,
+
+    val profileImagePath: String?
+
+) : BaseUUIDEntity() {
+    constructor(email: String) : this(
+        Generators.timeBasedGenerator().generate(), email,
+        null, null, null, null, null, null
+    )
+}
