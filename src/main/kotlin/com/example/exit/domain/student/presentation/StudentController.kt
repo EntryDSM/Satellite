@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/student")
 @RestController
-
 class StudentController(
     private val updateProfileUseCase: StudentUpdateProfileUseCase
 ) {
