@@ -49,15 +49,19 @@ class SendPhoneNumberVerificationCodeUseCase(
         return SendPhoneNumberCodeResponse(code)
     }
 
+    companion object{
+        private const val TYPE = "SMS"
+        private const val APP_VERSION = "app 1.0"
+    }
     fun sendAuthCode(phoneNumber: String, authCode: String?) {
         val message = Message(properties.key, properties.secret)
 
         val params: HashMap<String, String> = HashMap()
         params["to"] = phoneNumber
         params["from"] = properties.phoneNumber
-        params["type"] = "SMS"
+        params["type"] = TYPE
         params["text"] = "인증번호 " + authCode + "를 입력하세요."
-        params["app_version"] = "app 1.0"
+        params["app_version"] = APP_VERSION
 
         try {
             message.send(params)

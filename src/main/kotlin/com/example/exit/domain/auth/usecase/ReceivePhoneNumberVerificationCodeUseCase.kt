@@ -12,6 +12,10 @@ class ReceivePhoneNumberVerificationCodeUseCase(
     private val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository,
 ) {
 
+    companion object{
+        private const val MAX_TIME_TO_LIVE = 999999L
+    }
+
     fun execute(phoneNumber: String, code: String) {
         val phoneNumberVerificationCode = phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber)
             ?: throw PhoneNumberVerificationCodeNotFoundException
@@ -26,7 +30,7 @@ class ReceivePhoneNumberVerificationCodeUseCase(
                 code = phoneNumberVerificationCode.code,
                 isVerified = true,
                 countOfSend = phoneNumberVerificationCode.countOfSend,
-                timeToLive = 9999999
+                timeToLive = MAX_TIME_TO_LIVE
             )
         )
     }
