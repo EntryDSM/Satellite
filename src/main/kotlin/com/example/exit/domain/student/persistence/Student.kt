@@ -12,7 +12,6 @@ import javax.persistence.Table
 @Table(name = "tbl_student")
 class Student(
 
-    @field: NotNull
     override val id: UUID,
 
     @field: NotNull
