@@ -38,3 +38,12 @@ auth:
   redirect-url: ${REDIRECT_URL}
   client-id: ${GOOGLE_CLIENT_ID}
   secret-key: ${GOOGLE_SECRET_KEY}
+
+verification:
+  phone:
+    limit-count-of-send: ${PHONE_LIMIT_COUNT}
+    base-time-to-live: ${PHONE_EXP}
+    code-length: ${PHONE_LENGTH}
+    key: ${SMS_KEY}
+    secret: ${SMS_SECRET}
+    phoneNumber: ${SMS_PHONE_NUMBER}
