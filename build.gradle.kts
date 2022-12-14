@@ -30,6 +30,10 @@ dependencies {
     // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
+    // Fegin Client
+    implementation("io.github.openfeign:feign-httpclient:11.9.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
+
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
