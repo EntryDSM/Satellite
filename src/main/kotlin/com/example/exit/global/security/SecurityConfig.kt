@@ -34,6 +34,7 @@ internal class SecurityConfig(
 
         http
             .authorizeRequests()
+            .antMatchers("/student/profile").hasAuthority(STUDENT)
             .anyRequest().permitAll()
 
         http
