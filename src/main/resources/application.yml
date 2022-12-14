@@ -22,7 +22,7 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
-    
+
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-exp: ${JWT_ACCESS_EXP}
@@ -32,3 +32,9 @@ redis:
   port: ${REDIS_PORT}
   host: ${REDIS_HOST}
   password: ${REDIS_PASS}
+
+auth:
+  base-url: ${GOOGLE_BASE_URL}
+  redirect-url: ${REDIRECT_URL}
+  client-id: ${GOOGLE_CLIENT_ID}
+  secret-key: ${GOOGLE_SECRET_KEY}
