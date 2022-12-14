@@ -1,6 +1,7 @@
 package com.example.exit.domain.student.usecase;
 
 import com.example.exit.domain.common.security.SecurityPort
+import com.example.exit.domain.common.security.SecurityUtil
 import com.example.exit.domain.student.exception.StudentNotFoundException
 import com.example.exit.domain.student.persistence.Student
 import com.example.exit.domain.student.persistence.repository.StudentRepository
@@ -10,13 +11,13 @@ import javax.transaction.Transactional
 
 @Service
 class StudentUpdateProfileUseCase(
-    private val securityPort: SecurityPort,
+    private val securityUtil: SecurityUtil,
     private val studentRepository: StudentRepository
 ) {
 
     @Transactional
     fun execute(request: StudentUpdateRequest) {
-        val studentId = securityPort.getCurrentUserId()
+        val studentId = securityUtil.getCurrentUserId()
 
         val student = studentRepository.findById(studentId)
             .orElseThrow { throw StudentNotFoundException }
