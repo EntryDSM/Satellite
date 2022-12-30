@@ -3,7 +3,10 @@ package kr.hs.entrydsm.exit.global.security.jwt
 import io.jsonwebtoken.*
 import kr.hs.entrydsm.exit.domain.auth.Authority
 import kr.hs.entrydsm.exit.global.exception.GlobalInternalServerException
+import kr.hs.entrydsm.exit.global.exception.jwt.GlobalExpiredTokenException
+import kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidClaimException
 import kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidTokenException
+import kr.hs.entrydsm.exit.global.exception.jwt.GlobalUnexpectedTokenException
 import kr.hs.entrydsm.exit.global.security.auth.details.service.CompanyDetailService
 import kr.hs.entrydsm.exit.global.security.auth.details.service.StudentDetailService
 import kr.hs.entrydsm.exit.global.security.auth.details.service.TeacherDetailService
@@ -25,7 +28,7 @@ class JwtTokenParser(
 ) {
 
     fun getAuthentication(token: String): Authentication? {
-        val claims = getClaims(token);
+        val claims = getClaims(token)
 
         if (claims.header[TYPE_CLAIM] != ACCESS) {
             throw GlobalInvalidTokenException
@@ -42,24 +45,23 @@ class JwtTokenParser(
                 .setSigningKey(securityProperties.secretKey)
                 .parseClaimsJws(token)
         } catch (e: Exception) {
-            when (e){
-                is kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidClaimException -> throw kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidClaimException
-                is ExpiredJwtException -> throw kr.hs.entrydsm.exit.global.exception.jwt.GlobalExpiredTokenException
-                is JwtException -> throw kr.hs.entrydsm.exit.global.exception.jwt.GlobalUnexpectedTokenException
+            when (e) {
+                is GlobalInvalidClaimException -> throw GlobalInvalidClaimException
+                is ExpiredJwtException -> throw GlobalExpiredTokenException
+                is JwtException -> throw GlobalUnexpectedTokenException
                 else -> throw GlobalInternalServerException
             }
         }
     };
 
     private fun getDetails(body: Claims): UserDetails {
-        val authority = body.get(ROLE_CLAIM, String::class.java)
+        val authority = body.get(ROLE_CLAIM, Authority::class.java)
 
         return when (authority) {
-            Authority.STUDENT.name -> studentDetailService.loadUserByUsername(body.subject)
-            Authority.COMPANY.name -> companyDetailService.loadUserByUsername(body.subject)
-            Authority.TEACHER.name -> teacherDetailService.loadUserByUsername(body.subject)
-            else -> throw GlobalInternalServerException
-        }
+            Authority.STUDENT -> studentDetailService
+            Authority.COMPANY -> companyDetailService
+            Authority.TEACHER -> teacherDetailService
+        }.loadUserByUsername(body.subject)
     }
 
 }
