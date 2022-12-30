@@ -10,13 +10,13 @@ import java.util.*
 @RestController
 @RequestMapping("/document")
 class DocumentController(
-    private val createDocumentService: CreateDocumentService
+    private val createDocumentUseCase: CreateDocumentUseCase
 ) {
  
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createDocument(@RequestBody request: CreateDocumentRequest): CreateDocumentResponse {
-        return createDocumentService.execute(request)
+        return createDocumentUseCase.execute(request)
     }
 
 }

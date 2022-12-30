@@ -20,7 +20,7 @@ import java.util.*
 import javax.transaction.Transactional
 
 @Service
-class CreateDocumentService(
+class CreateDocumentUseCase(
     val documentRepository: DocumentRepository,
     val studentRepository: StudentRepository,
     val majorRepository: MajorRepository
