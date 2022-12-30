@@ -1,15 +1,14 @@
 package kr.hs.entrydsm.exit.global.error
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.exit.domain.common.error.DomainCustomException
 import kr.hs.entrydsm.exit.global.error.custom.CustomErrorProperty
 import kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException
 import kr.hs.entrydsm.exit.global.error.response.DefaultErrorResponse
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.Exception
 
 class GlobalErrorFilter(
     private val objectMapper: ObjectMapper
@@ -25,7 +24,7 @@ class GlobalErrorFilter(
         } catch (e: Exception) {
             when (e.cause) {
                 is DomainCustomException -> sendErrorMessage(response, (e.cause as DomainCustomException).errorProperty)
-                is kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException -> sendErrorMessage(response, (e.cause as kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException).errorProperty)
+                is GlobalCustomException -> sendErrorMessage(response, (e.cause as GlobalCustomException).errorProperty)
                 else -> {
                     e.printStackTrace()
                 }
@@ -33,13 +32,13 @@ class GlobalErrorFilter(
         }
     }
 
-    private fun sendErrorMessage(response: HttpServletResponse, errorProperty: kr.hs.entrydsm.exit.global.error.custom.CustomErrorProperty) {
+    private fun sendErrorMessage(response: HttpServletResponse, errorProperty: CustomErrorProperty) {
         response.status = errorProperty.status()
         response.contentType = "application/json"
         response.characterEncoding = "UTF-8"
         response.writer.write(
             objectMapper.writeValueAsString(
-                kr.hs.entrydsm.exit.global.error.response.DefaultErrorResponse(
+                DefaultErrorResponse(
                     status = errorProperty.status(),
                     message = errorProperty.message(),
                     code = errorProperty.code()

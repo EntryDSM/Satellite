@@ -6,7 +6,7 @@ enum class DomainErrorCode(
     private val status: Int,
     private val code: String,
     private val message: String
-) : kr.hs.entrydsm.exit.global.error.custom.CustomErrorProperty {
+) : CustomErrorProperty {
 
     PASSWORD_MISS_MATCHED(400, "COMMON-400-1", "PASSWORD MISMATCH"),
     EMAIL_SUFFIX_NOT_VALID(400, "COMMON-400-2", "Email not ends with @dsm.hs.kr"),
@@ -24,7 +24,10 @@ enum class DomainErrorCode(
     ALREADY_VERIFIED_EXCEPTION(409, "AUTH-409-1", "IS ALREADY VERIFIED"),
     TOO_MANY_SEND_VERIFICATION_CODE(429, "AUTH-429-1", "TOO MANY SEND VERIFICATION CODE / PLEASE CONFIRM LATER"),
 
-    DOCUMENT_NOT_FOUND(404, "DOCUMENT-404-1", "Document Not Found")
+    DOCUMENT_NOT_FOUND(404, "DOCUMENT-404-1", "Document Not Found"),
+    DOCUMENT_ALREADY_EXIST(409, "DOCUMENT-409-1", "Document Already Exist"),
+
+    MAJOR_NOT_FOUND(404, "MAJOR-404-1", "Major Not Found")
     ;
 
     override fun status(): Int = status

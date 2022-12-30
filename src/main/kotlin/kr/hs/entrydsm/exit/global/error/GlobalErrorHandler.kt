@@ -13,7 +13,7 @@ class GlobalErrorHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException::class)
-    protected fun handleBindException(e: BindException): kr.hs.entrydsm.exit.global.error.response.BindErrorResponse? {
+    protected fun handleBindException(e: BindException): BindErrorResponse? {
 
         val errorMap = HashMap<String, String?>()
 
@@ -21,7 +21,7 @@ class GlobalErrorHandler {
             errorMap[error.field] = error.defaultMessage
         }
 
-        return kr.hs.entrydsm.exit.global.error.response.BindErrorResponse(
+        return BindErrorResponse(
             status = HttpStatus.BAD_REQUEST.value(),
             fieldError = listOf(errorMap)
         )

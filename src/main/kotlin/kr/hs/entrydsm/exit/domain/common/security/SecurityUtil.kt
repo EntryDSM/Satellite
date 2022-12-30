@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.exit.domain.common.security
 
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.stereotype.Component
 import java.util.UUID
 
 

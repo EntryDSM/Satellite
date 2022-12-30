@@ -1,5 +1,8 @@
 package kr.hs.entrydsm.exit.global.exception.jwt
 
-object GlobalExpiredTokenException: kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException(
-    kr.hs.entrydsm.exit.global.error.GlobalErrorCode.EXPIRED_JWT
+import kr.hs.entrydsm.exit.global.error.GlobalErrorCode
+import kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException
+
+object GlobalExpiredTokenException: GlobalCustomException(
+    GlobalErrorCode.EXPIRED_JWT
 )

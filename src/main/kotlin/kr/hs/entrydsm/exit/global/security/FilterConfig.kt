@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.exit.global.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.exit.global.error.GlobalErrorFilter
 import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenFilter
 import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenParser
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.DefaultSecurityFilterChain
@@ -21,7 +21,7 @@ class FilterConfig(
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .addFilterBefore(
-                kr.hs.entrydsm.exit.global.error.GlobalErrorFilter(objectMapper),
+                GlobalErrorFilter(objectMapper),
                 JwtTokenFilter::class.java
             )
     }
