@@ -19,9 +19,15 @@ spring:
       hibernate:
         format_sql: ${FORMAT_SQL:true}
         show_sql: ${SHOW_SQL:true}
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_DB_URL:localhost}:27017
+      database: ${MONGO_DB_NAME}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}

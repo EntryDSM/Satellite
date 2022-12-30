@@ -1,4 +1,4 @@
-package com.example.exit
+package kr.hs.entrydsm.exit
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
