@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/document")
 class DocumentController(
     private val createDocumentService: CreateDocumentService
 ) {
