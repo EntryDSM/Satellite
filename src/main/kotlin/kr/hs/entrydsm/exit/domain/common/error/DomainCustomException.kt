@@ -1,7 +1,8 @@
 package kr.hs.entrydsm.exit.domain.common.error
 
-import kr.hs.entrydsm.exit.domain.common.DomainErrorCode
+import kr.hs.entrydsm.exit.global.error.custom.CustomErrorProperty
+import kr.hs.entrydsm.exit.global.error.custom.CustomException
 
 abstract class DomainCustomException(
-    val errorProperty: DomainErrorCode
-) : RuntimeException()
+    override val errorProperty: CustomErrorProperty
+) : CustomException(errorProperty)
