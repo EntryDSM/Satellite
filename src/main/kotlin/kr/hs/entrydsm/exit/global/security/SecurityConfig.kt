@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.exit.global.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.exit.domain.auth.Authority
 import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenParser
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -46,10 +46,13 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
 
+            // DOCUMENT
+            .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
+
             .anyRequest().permitAll()
 
         http
-            .apply(kr.hs.entrydsm.exit.global.security.FilterConfig(jwtTokenParser, objectMapper))
+            .apply(FilterConfig(jwtTokenParser, objectMapper))
 
         return http.build()
     }

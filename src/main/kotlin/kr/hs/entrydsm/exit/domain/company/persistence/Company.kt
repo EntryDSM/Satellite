@@ -32,4 +32,4 @@ class Company(
     @field: NotNull
     val location: String
 
-) : kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity()
+) : BaseUUIDEntity()
