@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.exit.domain.auth.usecase
 
 import kr.hs.entrydsm.exit.domain.auth.exception.PhoneNumberVerificationCodeNotFoundException
-import kr.hs.entrydsm.exit.domain.auth.exception.VerificationCodeMisMatchedException
+import kr.hs.entrydsm.exit.domain.auth.exception.VerificationCodeMismatchedException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -21,7 +21,7 @@ class ReceivePhoneNumberVerificationCodeUseCase(
             ?: throw PhoneNumberVerificationCodeNotFoundException
 
         if (phoneNumberVerificationCode.code != code) {
-            throw VerificationCodeMisMatchedException
+            throw VerificationCodeMismatchedException
         }
 
         phoneNumberVerificationCodeRepository.save(
