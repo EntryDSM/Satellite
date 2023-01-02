@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@RestController
 @RequestMapping("/document")
+@RestController
 class DocumentController(
     private val createDocumentUseCase: CreateDocumentUseCase
 ) {
