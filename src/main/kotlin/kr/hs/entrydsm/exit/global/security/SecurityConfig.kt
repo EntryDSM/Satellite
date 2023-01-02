@@ -46,7 +46,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
 
-            // COMPANY
+            // DOCUMENT
             .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
 
             .anyRequest().permitAll()
