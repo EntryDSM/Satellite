@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.exit.domain.document.persistence.element
 
 import kr.hs.entrydsm.exit.domain.major.persistence.Major
+import kr.hs.entrydsm.exit.domain.major.presentation.dto.response.MajorElement
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import java.util.*
 
@@ -16,7 +17,7 @@ class WriterInfoElement (
     val number: String,
 
     val email: String,
-    val major: Major
+    val major: MajorElement
 
 ) {
     constructor(
@@ -33,7 +34,7 @@ class WriterInfoElement (
         number = student.number!!,
 
         email = student.email,
-        major = major
+        major = MajorElement(major)
     )
 
     fun updateVariableInfo(
@@ -41,13 +42,15 @@ class WriterInfoElement (
         grade: String,
         classNum: String,
         number: String,
-        major: Major
+        email: String,
+        major: MajorElement
     ): WriterInfoElement {
         return copy(
             profileImagePath = profileImagePath,
             grade = grade,
             classNum = classNum,
             number = number,
+            email = email,
             major = major
         )
     }
@@ -60,7 +63,7 @@ class WriterInfoElement (
         classNum: String = this.classNum,
         number: String  = this.number,
         email: String = this.email,
-        major: Major = this.major
+        major: MajorElement = this.major
     ): WriterInfoElement {
         return WriterInfoElement(
             studentId = studentId,
