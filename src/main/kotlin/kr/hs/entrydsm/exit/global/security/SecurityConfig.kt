@@ -49,6 +49,11 @@ internal class SecurityConfig(
             // DOCUMENT
             .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
 
+            // MAJOR
+            .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
+
             .anyRequest().permitAll()
 
         http
