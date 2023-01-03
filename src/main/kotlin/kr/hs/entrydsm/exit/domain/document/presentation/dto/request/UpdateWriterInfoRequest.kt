@@ -2,7 +2,6 @@ package kr.hs.entrydsm.exit.domain.document.presentation.dto.request
 
 import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.major.persistence.Major
-import kr.hs.entrydsm.exit.domain.major.presentation.dto.response.MajorElement
 import kr.hs.entrydsm.exit.global.util.RegexUtil
 import org.hibernate.validator.constraints.Length
 import org.intellij.lang.annotations.Pattern
@@ -50,7 +49,7 @@ data class UpdateWriterInfoRequest (
                 classNum = classNum,
                 number = number,
                 email = email,
-                major = MajorElement(major)
+                major = major
             )
         }
     }

@@ -41,6 +41,7 @@ class WriterInfoElement (
         grade: String,
         classNum: String,
         number: String,
+        email: String,
         major: Major
     ): WriterInfoElement {
         return copy(
@@ -48,6 +49,7 @@ class WriterInfoElement (
             grade = grade,
             classNum = classNum,
             number = number,
+            email = email,
             major = major
         )
     }
