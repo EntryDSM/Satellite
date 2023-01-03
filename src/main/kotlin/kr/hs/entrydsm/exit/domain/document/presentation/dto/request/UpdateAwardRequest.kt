@@ -38,7 +38,7 @@ data class UpdateAwardRequest(
             return this.run{ AwardElement(
                 name = name,
                 awardingInstitution = awardingInstitution,
-                awardDate = awardDate,
+                date = awardDate,
                 description = description,
                 url = url
             ) }

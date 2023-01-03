@@ -4,7 +4,7 @@ import DocumentNotFoundException
 import kr.hs.entrydsm.exit.domain.common.security.SecurityUtil
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.UpdateCertificateRequest
+import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.UpdateAwardRequest
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -13,7 +13,7 @@ class UpdateAwardUseCase (
     private val documentRepository: DocumentRepository
 ) {
     @Transactional
-    fun execute(request: UpdateCertificateRequest) {
+    fun execute(request: UpdateAwardRequest) {
 
         val student = SecurityUtil.getCurrentStudent()
 
@@ -27,11 +27,11 @@ class UpdateAwardUseCase (
 
     private fun documentWithUpdatedAward(
         document: Document,
-        request: UpdateCertificateRequest
+        request: UpdateAwardRequest
     ): Document {
-        return document.updateCertificateList(
-            request.certificateList.map {
-                it.toCertificateElement()
+        return document.updateAwardList(
+            request.awardList.map {
+                it.toAwardElement()
             }.toMutableList()
         )
     }
