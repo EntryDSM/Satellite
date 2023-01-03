@@ -48,6 +48,12 @@ internal class SecurityConfig(
 
             // DOCUMENT
             .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/writer-info").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/introduce").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/skill-set").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/project").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/award").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PUT, "/document/certificate").hasAuthority(STUDENT)
 
             .anyRequest().permitAll()
 
