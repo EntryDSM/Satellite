@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.domain.document.presentation.dto.request
 
-import AwardElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
 import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
 import java.util.*
