@@ -49,6 +49,8 @@ dependencies {
 
     // cool sms
     implementation ("net.nurigo:javaSDK:2.2")
+    //AWS
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 
     // DB
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
