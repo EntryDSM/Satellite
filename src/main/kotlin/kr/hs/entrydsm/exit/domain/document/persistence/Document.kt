@@ -1,16 +1,10 @@
 package kr.hs.entrydsm.exit.domain.document.persistence
 
-import com.fasterxml.uuid.Generators
-import kr.hs.entrydsm.exit.domain.document.persistence.element.CertificateElement
-import kr.hs.entrydsm.exit.domain.document.persistence.element.IntroduceElement
-import kr.hs.entrydsm.exit.domain.document.persistence.element.ProjectElement
-import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.*
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.global.entity.BaseMongoUUIDEntity
-import org.springframework.data.annotation.Id
-import java.util.*
-import javax.persistence.Column
 
 @org.springframework.data.mongodb.core.mapping.Document(collection="documents")
 class Document(
@@ -24,6 +18,8 @@ class Document(
     val skillSet: MutableList<String> = mutableListOf(),
 
     val projectList: MutableList<ProjectElement> = mutableListOf(),
+
+    val awardList: MutableList<AwardElement> = mutableListOf(),
 
     val certificateList: MutableList<CertificateElement> = mutableListOf()
 
@@ -42,13 +38,17 @@ class Document(
     fun updateIntroduce(introduce: IntroduceElement): Document =
         copy(introduce = introduce)
 
-    fun updateSkillSet(skillSet: MutableList<String>): Document  =
+    fun updateSkillSet(skillSet: MutableList<String>): Document =
         copy(skillSet = skillSet)
 
-    fun updateProject(projectList: MutableList<ProjectElement>): Document  =
+    fun updateProject(projectList: MutableList<ProjectElement>): Document =
         copy(projectList = projectList)
 
-    fun updateCertificateList(certificateList: MutableList<CertificateElement>): Document  =
+
+    fun updateAwardList(toMutableList: MutableList<AwardElement>): Document =
+        copy(awardList = awardList)
+
+    fun updateCertificateList(certificateList: MutableList<CertificateElement>): Document =
         copy(certificateList = certificateList)
 
     private fun copy(
@@ -57,6 +57,7 @@ class Document(
         introduce: IntroduceElement = this.introduce,
         skillSet: MutableList<String> = this.skillSet,
         projectList: MutableList<ProjectElement> = this.projectList,
+        awardList: MutableList<AwardElement> = this.awardList,
         certificateList: MutableList<CertificateElement> = this.certificateList
     ): Document {
         return Document(
@@ -65,8 +66,10 @@ class Document(
             introduce = introduce,
             skillSet = skillSet,
             projectList = projectList,
+            awardList = awardList,
             certificateList = certificateList
         )
     }
+
 
 }
