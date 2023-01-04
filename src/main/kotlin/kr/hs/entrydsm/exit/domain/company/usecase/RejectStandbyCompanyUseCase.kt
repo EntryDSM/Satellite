@@ -1,13 +1,13 @@
 package kr.hs.entrydsm.exit.domain.company.usecase
 
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.company.exception.StandbyCompanyNotFoundException
 import kr.hs.entrydsm.exit.domain.company.persistence.repository.StandbyCompanyRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
 
-@Service
-class RejectStandByCompanyUseCase(
+@UseCase
+class RejectStandbyCompanyUseCase(
     private val standbyCompanyRepository: StandbyCompanyRepository
 ) {
 
@@ -18,3 +18,5 @@ class RejectStandByCompanyUseCase(
         standbyCompanyRepository.delete(standByCompany)
     }
 }
+
+
