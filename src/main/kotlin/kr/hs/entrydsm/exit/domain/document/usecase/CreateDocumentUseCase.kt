@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.exit.domain.document.usecase
 
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.security.SecurityUtil
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAlreadyExistException
 import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
@@ -11,18 +12,14 @@ import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.CreateDocume
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.CreateDocumentResponse
 import kr.hs.entrydsm.exit.domain.major.persistence.repository.MajorRepository
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
-import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
-import javax.transaction.Transactional
 
-@Service
+@UseCase
 class CreateDocumentUseCase(
-    val documentRepository: DocumentRepository,
-    val studentRepository: StudentRepository,
-    val majorRepository: MajorRepository
+    private val documentRepository: DocumentRepository,
+    private val majorRepository: MajorRepository
 ) {
-    @Transactional
+
     fun execute(request: CreateDocumentRequest): CreateDocumentResponse {
 
         val student = SecurityUtil.getCurrentStudent()

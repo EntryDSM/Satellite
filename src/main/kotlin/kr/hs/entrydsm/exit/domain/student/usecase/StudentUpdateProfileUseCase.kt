@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.exit.domain.student.usecase;
 
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.security.SecurityUtil
 import kr.hs.entrydsm.exit.domain.student.exception.StudentNotFoundException
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
@@ -8,7 +9,7 @@ import kr.hs.entrydsm.exit.domain.student.presentation.dto.request.StudentUpdate
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional
 
-@Service
+@UseCase
 class StudentUpdateProfileUseCase(
     private val studentRepository: StudentRepository
 ) {

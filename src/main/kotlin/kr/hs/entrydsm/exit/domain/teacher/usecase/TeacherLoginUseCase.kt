@@ -4,6 +4,7 @@ import kr.hs.entrydsm.exit.domain.auth.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.auth.persistence.RefreshToken
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.RefreshTokenRepository
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.teacher.exception.TeacherNotFoundException
 import kr.hs.entrydsm.exit.domain.teacher.persistence.repository.TeacherRepository
 import kr.hs.entrydsm.exit.domain.teacher.presentation.dto.request.TeacherSignInRequest
@@ -14,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 
-@Service
+@UseCase
 class TeacherLoginUseCase(
     private val tokenProvider: JwtTokenProvider,
     private val passwordEncoder: PasswordEncoder,
@@ -22,6 +23,7 @@ class TeacherLoginUseCase(
     private val refreshTokenRepository: RefreshTokenRepository,
     private val securityProperties: SecurityProperties
 ) {
+
     fun execute(request: TeacherSignInRequest): TokenResponse? {
 
         val teacher = teacherRepository.findByAccountId(request.accountId)

@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.exit.domain.document.usecase
 
 import DocumentNotFoundException
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.security.SecurityUtil
 import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
@@ -8,17 +9,13 @@ import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentReposi
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.UpdateWriterInfoRequest
 import kr.hs.entrydsm.exit.domain.major.persistence.repository.MajorRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Isolation
-import org.springframework.transaction.annotation.Transactional
 
-@Transactional(isolation = Isolation.REPEATABLE_READ)
-@Service
+@UseCase
 class UpdateWriterInfoUseCase(
     private val documentRepository: DocumentRepository,
     private val majorRepository: MajorRepository
 ) {
-    @Transactional
+
     fun execute(request: UpdateWriterInfoRequest) {
 
         val student = SecurityUtil.getCurrentStudent()

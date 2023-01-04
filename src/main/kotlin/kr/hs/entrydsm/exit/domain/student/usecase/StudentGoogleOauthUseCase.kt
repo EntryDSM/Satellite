@@ -6,6 +6,7 @@ import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.auth.oauth.GoogleAuth
 import kr.hs.entrydsm.exit.domain.auth.oauth.GoogleEmail
 import kr.hs.entrydsm.exit.domain.auth.properties.GoogleOauthProperties
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
@@ -13,7 +14,7 @@ import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenProvider
 import org.springframework.stereotype.Service
 
 
-@Service
+@UseCase
 class StudentGoogleOauthUseCase(
     private val studentRepository: StudentRepository,
     private val googleProperties: GoogleOauthProperties,
