@@ -6,7 +6,7 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
-data class SignUpRequest(
+data class CompanySignUpRequest(
     @field:Length(min = 10, max = 11)
     @field:NotBlank
     val phoneNumber: String,

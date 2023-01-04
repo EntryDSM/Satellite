@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.exit.domain.company.presentation
 
-import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.SignUpRequest
-import kr.hs.entrydsm.exit.domain.company.usecase.AllowStandByCompanyUseCase
+import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.CompanySignUpRequest
+import kr.hs.entrydsm.exit.domain.company.usecase.AllowStandbyCompanyUseCase
 import kr.hs.entrydsm.exit.domain.company.usecase.CompanySignUpUseCase
-import kr.hs.entrydsm.exit.domain.company.usecase.RejectStandByCompanyUseCase
+import kr.hs.entrydsm.exit.domain.company.usecase.RejectStandbyCompanyUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,13 +19,13 @@ import javax.validation.Valid
 @RestController
 class CompanyController(
     private val companySignUpUseCase: CompanySignUpUseCase,
-    private val allowStandByCompanyUseCase: AllowStandByCompanyUseCase,
-    private val rejectStandByCompanyUseCase: RejectStandByCompanyUseCase
+    private val allowStandByCompanyUseCase: AllowStandbyCompanyUseCase,
+    private val rejectStandByCompanyUseCase: RejectStandbyCompanyUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
-    fun singUp(@RequestBody @Valid request: SignUpRequest) {
+    fun singUp(@RequestBody @Valid request: CompanySignUpRequest) {
         companySignUpUseCase.execute(request)
     }
 
