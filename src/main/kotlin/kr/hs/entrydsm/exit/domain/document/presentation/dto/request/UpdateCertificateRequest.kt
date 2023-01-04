@@ -28,11 +28,11 @@ data class UpdateCertificateRequest(
         val date: Date
     ) {
         fun toCertificateElement(): CertificateElement {
-            return this.run{ CertificateElement(
+            return CertificateElement(
                 name = name,
                 issuingInstitution = issuingInstitution,
                 date = date
-            ) }
+            )
         }
     }
 }

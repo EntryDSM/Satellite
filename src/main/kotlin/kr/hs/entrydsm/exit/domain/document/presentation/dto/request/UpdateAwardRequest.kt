@@ -35,13 +35,14 @@ data class UpdateAwardRequest(
 
     ) {
         fun toAwardElement(): AwardElement {
-            return this.run{ AwardElement(
+            return AwardElement(
                 name = name,
                 awardingInstitution = awardingInstitution,
                 date = awardDate,
                 description = description,
                 url = url
-            ) }
+            )
         }
     }
+
 }

@@ -40,8 +40,7 @@ data class UpdateWriterInfoRequest (
 
 ) {
     fun toElement(writer: WriterInfoElement, major: Major): WriterInfoElement {
-        return this.run {
-            WriterInfoElement(
+        return WriterInfoElement(
                 studentId = writer.studentId,
                 name = writer.name,
                 profileImagePath = profileImagePath,
@@ -50,7 +49,6 @@ data class UpdateWriterInfoRequest (
                 number = number,
                 email = email,
                 major = major
-            )
-        }
+        )
     }
 }
