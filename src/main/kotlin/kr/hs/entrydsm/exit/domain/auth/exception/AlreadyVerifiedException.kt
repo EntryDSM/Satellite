@@ -4,5 +4,5 @@ import kr.hs.entrydsm.exit.domain.common.DomainErrorCode
 import kr.hs.entrydsm.exit.domain.common.error.DomainCustomException
 
 object AlreadyVerifiedException : DomainCustomException(
-    DomainErrorCode.ALREADY_VERIFIED_EXCEPTION
+    DomainErrorCode.ALREADY_VERIFIED
 )
