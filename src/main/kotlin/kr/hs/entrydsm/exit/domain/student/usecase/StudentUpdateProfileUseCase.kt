@@ -5,16 +5,13 @@ import kr.hs.entrydsm.exit.domain.common.security.SecurityUtil
 import kr.hs.entrydsm.exit.domain.student.exception.StudentNotFoundException
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.exit.domain.student.presentation.dto.request.StudentUpdateRequest;
-import org.springframework.stereotype.Service;
-import javax.transaction.Transactional
+import kr.hs.entrydsm.exit.domain.student.presentation.dto.request.StudentUpdateRequest
 
 @UseCase
 class StudentUpdateProfileUseCase(
     private val studentRepository: StudentRepository
 ) {
 
-    @Transactional
     fun execute(request: StudentUpdateRequest) {
         val studentId = SecurityUtil.getCurrentUserId()
 
@@ -34,7 +31,6 @@ class StudentUpdateProfileUseCase(
             request.grade,
             request.classNum,
             request.number,
-            request.major,
             request.profileImagePath
         )
     }

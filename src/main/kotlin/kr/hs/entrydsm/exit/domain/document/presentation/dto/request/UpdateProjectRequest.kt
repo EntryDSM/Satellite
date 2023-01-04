@@ -39,17 +39,15 @@ data class UpdateProjectRequest(
         val url: String?
     ) {
         fun toProjectElement(): ProjectElement {
-            return this.run {
-                ProjectElement(
-                    name = name,
-                    representImagePath = representImagePath,
-                    startDate = startDate,
-                    endDate = endDate,
-                    skillSet = skillList,
-                    description = description,
-                    url = url
-                )
-            }
+            return ProjectElement(
+                name = name,
+                representImagePath = representImagePath,
+                startDate = startDate,
+                endDate = endDate,
+                skillSet = skillList,
+                description = description,
+                url = url
+            )
         }
     }
 }

@@ -41,14 +41,14 @@ data class UpdateWriterInfoRequest (
 ) {
     fun toElement(writer: WriterInfoElement, major: Major): WriterInfoElement {
         return WriterInfoElement(
-                studentId = writer.studentId,
-                name = writer.name,
-                profileImagePath = profileImagePath,
-                grade = grade,
-                classNum = classNum,
-                number = number,
-                email = email,
-                major = major
+            studentId = writer.studentId,
+            name = writer.name,
+            profileImagePath = profileImagePath,
+            grade = grade,
+            classNum = classNum,
+            number = number,
+            email = email,
+            major = major
         )
     }
 }
