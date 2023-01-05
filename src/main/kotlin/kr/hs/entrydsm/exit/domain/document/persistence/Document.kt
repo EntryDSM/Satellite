@@ -44,8 +44,7 @@ class Document(
     fun updateProject(projectList: MutableList<ProjectElement>): Document =
         copy(projectList = projectList)
 
-
-    fun updateAwardList(toMutableList: MutableList<AwardElement>): Document =
+    fun updateAwardList(awardList: MutableList<AwardElement>): Document =
         copy(awardList = awardList)
 
     fun updateCertificateList(certificateList: MutableList<CertificateElement>): Document =
