@@ -4,9 +4,9 @@ import com.fasterxml.uuid.Generators
 import org.springframework.data.annotation.Id
 import java.util.*
 
-open class BaseMongoUUIDEntity {
-
+open class BaseMongoUUIDEntity(
+    id: UUID?
+) {
     @Id
-    open val id: UUID = Generators.timeBasedGenerator().generate()
-
+    open val id: UUID = id ?: Generators.timeBasedGenerator().generate()
 }

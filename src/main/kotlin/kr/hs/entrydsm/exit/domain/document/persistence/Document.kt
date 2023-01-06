@@ -1,13 +1,15 @@
 package kr.hs.entrydsm.exit.domain.document.persistence
 
-import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
 import kr.hs.entrydsm.exit.domain.document.persistence.element.*
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.global.entity.BaseMongoUUIDEntity
+import java.util.*
 
 @org.springframework.data.mongodb.core.mapping.Document(collection="documents")
 class Document(
+
+    val documentId: UUID? = null,
 
     val writer: WriterInfoElement,
 
@@ -23,7 +25,7 @@ class Document(
 
     val certificateList: MutableList<CertificateElement> = mutableListOf()
 
-): BaseMongoUUIDEntity() {
+): BaseMongoUUIDEntity(documentId) {
 
     fun isWriter(student: Student): Boolean {
         return writer.studentId == student.id
@@ -60,6 +62,7 @@ class Document(
         certificateList: MutableList<CertificateElement> = this.certificateList
     ): Document {
         return Document(
+            documentId = this.id,
             writer = writer,
             status = status,
             introduce = introduce,
