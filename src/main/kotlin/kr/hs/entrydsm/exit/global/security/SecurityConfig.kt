@@ -55,6 +55,11 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.PUT, "/document/award").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.PUT, "/document/certificate").hasAuthority(STUDENT)
 
+            // MAJOR
+            .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
+
             .anyRequest().permitAll()
 
         http
