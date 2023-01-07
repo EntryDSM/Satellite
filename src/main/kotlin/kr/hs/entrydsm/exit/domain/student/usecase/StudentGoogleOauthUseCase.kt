@@ -11,6 +11,7 @@ import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenProvider
 import org.springframework.stereotype.Service
+import java.util.regex.Pattern
 
 
 @Service
@@ -50,9 +51,7 @@ class StudentGoogleOauthUseCase(
     }
 
     private fun checkEmailSuffix(email: String) {
-        val emailSuffix: String = email.substring(email.length - schoolEmailLength)
-
-        if (emailSuffix != schoolEmail) {
+        if (!Pattern.matches("^[a-zA-Z0-9.]+${schoolEmail}$", email)) {
             throw EmailSuffixNotValidException
         }
     }
