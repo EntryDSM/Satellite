@@ -35,16 +35,14 @@ data class UpdateProjectRequest(
         @field:Length(max=225)
         val url: String?
     ) {
-        fun toProjectElement(): ProjectElement {
-            return ProjectElement(
-                name = name,
-                representImagePath = representImagePath,
-                startDate = startDate,
-                endDate = endDate,
-                skillSet = skillList,
-                description = description,
-                url = url
-            )
-        }
+        fun toProjectElement() =  ProjectElement(
+            name = name,
+            representImagePath = representImagePath,
+            startDate = startDate,
+            endDate = endDate,
+            skillSet = skillList,
+            description = description,
+            url = url
+        )
     }
 }

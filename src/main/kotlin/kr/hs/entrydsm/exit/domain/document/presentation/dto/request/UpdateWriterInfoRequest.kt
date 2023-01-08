@@ -45,7 +45,8 @@ data class UpdateWriterInfoRequest (
             classNum = classNum,
             number = number,
             email = email,
-            major = major
+            majorId = major.id,
+            majorName = major.name
         )
     }
 }

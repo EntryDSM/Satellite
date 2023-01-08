@@ -4,12 +4,9 @@ import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
 import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
 import java.util.*
-import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotBlank
 
 data class UpdateAwardRequest(
-
-    @field:NotNull
-    val documentId: UUID,
 
     @field:NotNull
     val awardList: List<AwardRequest>
@@ -17,11 +14,11 @@ data class UpdateAwardRequest(
     data class AwardRequest(
 
         @field:Length(max=30)
-        @field:NotEmpty
+        @field:NotBlank
         val name: String,
 
         @field:Length(max=30)
-        @field:NotEmpty
+        @field:NotBlank
         val awardingInstitution: String,
 
         @field:NotNull
@@ -34,15 +31,12 @@ data class UpdateAwardRequest(
         val url: String?,
 
     ) {
-        fun toAwardElement(): AwardElement {
-            return AwardElement(
-                name = name,
-                awardingInstitution = awardingInstitution,
-                date = awardDate,
-                description = description,
-                url = url
-            )
-        }
+        fun toAwardElement() = AwardElement(
+            name = name,
+            awardingInstitution = awardingInstitution,
+            date = awardDate,
+            description = description,
+            url = url
+        )
     }
-
 }
