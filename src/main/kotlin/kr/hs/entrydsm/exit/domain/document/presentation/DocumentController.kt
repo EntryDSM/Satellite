@@ -21,43 +21,43 @@ class DocumentController(
  
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createDocument(@RequestBody request: CreateDocumentRequest): CreateDocumentResponse {
+    fun createDocument(@RequestBody @Valid request: CreateDocumentRequest): CreateDocumentResponse {
         return createDocumentUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/writer-info")
-    fun updateWriterInfo(@RequestBody request: UpdateWriterInfoRequest) {
+    fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoRequest) {
         updateWriterInfoUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/introduce")
-    fun updateIntroduce(@RequestBody request: UpdateIntroduceRequest) {
+    fun updateIntroduce(@RequestBody @Valid request: UpdateIntroduceRequest) {
         updateIntroduceUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/skill-set")
-    fun updateSkillSet(@RequestBody request: UpdateSkillSetRequest) {
+    fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetRequest) {
         updateSkillSetUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/project")
-    fun updateProject(@RequestBody request: UpdateProjectRequest) {
+    fun updateProject(@RequestBody @Valid request: UpdateProjectRequest) {
         updateProjectUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/award")
-    fun updateAward(@RequestBody request: UpdateAwardRequest) {
+    fun updateAward(@RequestBody @Valid request: UpdateAwardRequest) {
         updateAwardUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/certificate")
-    fun updateCertificate(@RequestBody request: UpdateCertificateRequest) {
+    fun updateCertificate(@RequestBody @Valid request: UpdateCertificateRequest) {
         updateCertificateUseCase.execute(request)
     }
 
