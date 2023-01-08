@@ -4,5 +4,5 @@ import kr.hs.entrydsm.exit.domain.common.DomainErrorCode
 import kr.hs.entrydsm.exit.domain.common.error.DomainCustomException
 
 object MajorNotFoundException: DomainCustomException(
-    DomainErrorCode.DOCUMENT_ALREADY_EXIST
+    DomainErrorCode.MAJOR_NOT_FOUND
 )
