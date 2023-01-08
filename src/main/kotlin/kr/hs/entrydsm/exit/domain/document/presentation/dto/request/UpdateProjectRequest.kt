@@ -8,9 +8,6 @@ import java.util.*
 data class UpdateProjectRequest(
 
     @field:NotNull
-    val documentId: UUID,
-
-    @field:NotNull
     val projectList: List<ProjectRequest>
 ) {
     data class ProjectRequest(

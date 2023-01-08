@@ -6,8 +6,5 @@ import java.util.*
 data class UpdateSkillSetRequest (
 
     @field:NotNull
-    val documentId: UUID,
-
-    @field:NotNull
     val skillList: List<String>
 )

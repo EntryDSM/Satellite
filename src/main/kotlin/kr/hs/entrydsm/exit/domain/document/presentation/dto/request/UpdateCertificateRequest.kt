@@ -9,9 +9,6 @@ import javax.validation.constraints.NotEmpty
 data class UpdateCertificateRequest(
 
     @field:NotNull
-    val documentId: UUID,
-
-    @field:NotNull
     val certificateList: List<CertificateRequest>
 ) {
     data class CertificateRequest(

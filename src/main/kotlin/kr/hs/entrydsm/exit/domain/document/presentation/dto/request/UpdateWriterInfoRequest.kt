@@ -10,9 +10,6 @@ import java.util.*
 
 data class UpdateWriterInfoRequest (
 
-    @field:NotNull
-    val documentId: UUID,
-
     @field:Length(max=255)
     @field:NotNull
     val profileImagePath: String,
