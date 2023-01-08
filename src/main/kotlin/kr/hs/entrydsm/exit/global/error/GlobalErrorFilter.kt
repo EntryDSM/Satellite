@@ -20,13 +20,14 @@ class GlobalErrorFilter(
     ) {
         try {
             filterChain.doFilter(request, response)
+        } catch (e: CustomException) {
+            sendErrorMessage(response, e.errorProperty)
         } catch (e: Exception) {
-            when (e) {
-                is CustomException -> {
-                    sendErrorMessage(response, e.errorProperty)
-                }
+            when (e.cause) {
+                is CustomException -> sendErrorMessage(response, (e.cause as CustomException).errorProperty)
                 else -> {
                     e.printStackTrace()
+                    sendErrorMessage(response, GlobalErrorCode.INTERNAL_SERVER_ERROR)
                 }
             }
         }
