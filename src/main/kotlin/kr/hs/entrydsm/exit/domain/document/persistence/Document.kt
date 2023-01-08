@@ -9,7 +9,7 @@ import java.util.*
 @org.springframework.data.mongodb.core.mapping.Document(collection="documents")
 class Document(
 
-    val documentId: UUID? = null,
+    id: UUID? = null,
 
     val writer: WriterInfoElement,
 
