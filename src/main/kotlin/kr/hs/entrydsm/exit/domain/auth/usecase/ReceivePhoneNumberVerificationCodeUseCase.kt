@@ -3,18 +3,16 @@ package kr.hs.entrydsm.exit.domain.auth.usecase
 import kr.hs.entrydsm.exit.domain.auth.exception.PhoneNumberVerificationCodeNotFoundException
 import kr.hs.entrydsm.exit.domain.auth.exception.VerificationCodeMismatchedException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
+import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
 
-@Service
+@UseCase
 class ReceivePhoneNumberVerificationCodeUseCase(
     private val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository,
+    private val properties: PhoneNumberVerificationCodeProperties
 ) {
-
-    companion object{
-        private const val MAX_TIME_TO_LIVE = 999999L
-    }
 
     fun execute(phoneNumber: String, code: String) {
         val phoneNumberVerificationCode = phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber)
@@ -30,7 +28,7 @@ class ReceivePhoneNumberVerificationCodeUseCase(
                 code = phoneNumberVerificationCode.code,
                 isVerified = true,
                 countOfSend = phoneNumberVerificationCode.countOfSend,
-                timeToLive = MAX_TIME_TO_LIVE
+                timeToLive = properties.baseTimeToLive
             )
         )
     }

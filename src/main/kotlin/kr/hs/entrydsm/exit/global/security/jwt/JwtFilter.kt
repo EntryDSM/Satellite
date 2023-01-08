@@ -8,8 +8,8 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class JwtTokenFilter(
-    private val jwtTokenParser: JwtTokenParser
+class JwtFilter(
+    private val jwtParser: JwtParser
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -22,7 +22,7 @@ class JwtTokenFilter(
         SecurityContextHolder.clearContext()
 
         token?.let{
-            SecurityContextHolder.getContext().authentication = jwtTokenParser.getAuthentication(token)
+            SecurityContextHolder.getContext().authentication = jwtParser.getAuthentication(token)
         }
 
         filterChain.doFilter(request, response)
