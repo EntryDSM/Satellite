@@ -9,12 +9,12 @@ import javax.validation.Valid
 @RequestMapping("/student")
 @RestController
 class StudentController(
-    private val updateProfileUseCase: StudentSignUpUseCase
+    private val studentSignUpUseCase: StudentSignUpUseCase
 ) {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/profile")
-    fun updateProfile(@RequestBody @Valid request: StudentSignUpRequest) {
-        updateProfileUseCase.execute(request)
+    fun studentSignUp(@RequestBody @Valid request: StudentSignUpRequest) {
+        studentSignUpUseCase.execute(request)
     }
 }
