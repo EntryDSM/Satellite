@@ -8,10 +8,10 @@ import kr.hs.entrydsm.exit.domain.auth.oauth.GoogleEmail
 import kr.hs.entrydsm.exit.domain.auth.properties.GoogleOauthProperties
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
-import kr.hs.entrydsm.exit.domain.student.persistence.Student
+import kr.hs.entrydsm.exit.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenProvider
-import org.springframework.stereotype.Service
+import kr.hs.entrydsm.exit.global.security.jwt.JwtGenerator
+import kr.hs.entrydsm.exit.global.util.RegexUtil
 import java.util.regex.Pattern
 
 
@@ -27,8 +27,6 @@ class StudentGoogleOauthUseCase(
     companion object {
         private const val url = "%s?client_id=%s&redirect_uri=%s&response_type=code" +
                 "&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
-        private const val schoolEmail = "@dsm.hs.kr"
-        private const val schoolEmailLength = 10
     }
 
     fun getLink(): GoogleLoginLinkResponse {
@@ -46,19 +44,15 @@ class StudentGoogleOauthUseCase(
         checkEmailSuffix(email)
 
         val student = studentRepository.findByEmail(email)
-            ?: studentSignup(email)
+            ?: throw SignUpRequiredRedirection(email)
 
         return jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
     }
 
     private fun checkEmailSuffix(email: String) {
-        if (!Pattern.matches("^[a-zA-Z0-9.]+${schoolEmail}$", email)) {
+        if (!Pattern.matches(RegexUtil.EMAIL_EXP, email)) {
             throw EmailSuffixNotValidException
         }
-    }
-
-    private fun studentSignup(email: String): Student {
-        return studentRepository.save(Student(email = email))
     }
 
     private fun getAccessToken(code: String): String {

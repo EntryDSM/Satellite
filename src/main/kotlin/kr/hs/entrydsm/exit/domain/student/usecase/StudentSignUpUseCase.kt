@@ -20,15 +20,10 @@ class StudentSignUpUseCase(
         studentRepository.save(updatedStudent)
     }
 
-    private fun createUpdatedStudent(student: Student, request: StudentSignUpRequest): Student {
-        return Student(
-            student.email,
-            request.name,
-            request.grade,
-            request.classNum,
-            request.number,
-            request.profileImagePath
-        )
+    private fun checkEmailSuffix(email: String) {
+        if (!Pattern.matches(RegexUtil.EMAIL_EXP, email)) {
+            throw EmailSuffixNotValidException
+        }
     }
 
 }
