@@ -13,6 +13,9 @@ data class StudentSignUpRequest (
     @field:NotBlank
     val profileImagePath: String,
 
+    @field:NotBlank
+    val email: String,
+
     @field:Length(min=1, max=1)
     @field:Pattern(RegexUtil.NUMBER_EXP)
     @field:NotBlank
