@@ -25,7 +25,6 @@ class DocumentController(
     private val queryDocumentInfoUseCase: QueryDocumentInfoUseCase,
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
     private val querySharedDocumentUseCase: QuerySharedDocumentUseCase,
-    private val querySubmittedDocumentUseCase: QuerySubmittedDocumentUseCase,
 
     private val submitMyDocumentUseCase: SubmitMyDocumentUseCase,
     private val cancelSubmitMyDocumentUseCase: CancelSubmitMyDocumentUseCase,
@@ -78,11 +77,6 @@ class DocumentController(
     @GetMapping("/my")
     fun queryMyDocumentInfo(): DocumentInfoResponse {
         return queryMyDocumentInfoUseCase.execute()
-    }
-
-    @GetMapping("/submitted")
-    fun querySubmittedDocument(@ModelAttribute @Valid request: QueryDocumentRequest): DocumentListResponse {
-        return querySubmittedDocumentUseCase.execute(request)
     }
 
     @GetMapping("/shared")
