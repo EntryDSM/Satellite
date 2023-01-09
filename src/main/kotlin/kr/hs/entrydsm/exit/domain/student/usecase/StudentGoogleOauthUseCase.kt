@@ -21,7 +21,7 @@ class StudentGoogleOauthUseCase(
     private val googleProperties: GoogleOauthProperties,
     private val googleAuth: GoogleAuth,
     private val googleEmail: GoogleEmail,
-    private val tokenProvider: JwtTokenProvider
+    private val jwtGenerator: JwtGenerator
 ) {
 
     companion object {
@@ -48,7 +48,7 @@ class StudentGoogleOauthUseCase(
         val student = studentRepository.findByEmail(email)
             ?: studentSignup(email)
 
-        return tokenProvider.generateBothToken(student.id, Authority.STUDENT)
+        return jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
     }
 
     private fun checkEmailSuffix(email: String) {
