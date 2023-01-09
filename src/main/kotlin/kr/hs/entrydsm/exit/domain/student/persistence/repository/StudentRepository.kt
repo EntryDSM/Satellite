@@ -10,4 +10,6 @@ interface StudentRepository: CrudRepository<Student, UUID> {
 
     fun findByEmail(email: String): Student?
 
+    fun existsByEmail(email: String): Boolean
+
 }
