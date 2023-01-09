@@ -1,9 +1,10 @@
 package kr.hs.entrydsm.exit.domain.student.persistence
 
 import kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity
-import com.fasterxml.uuid.Generators
-import org.jetbrains.annotations.NotNull
+import kr.hs.entrydsm.exit.global.util.RegexUtil
+import org.intellij.lang.annotations.Pattern
 import java.util.*
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
 
@@ -11,26 +12,25 @@ import javax.persistence.Table
 @Table(name = "tbl_student")
 class Student(
 
-    override val id: UUID,
-
-    @field: NotNull
+    @Column(columnDefinition = "VARCHAR(40)", nullable = false)
     val email: String,
 
-    val name: String?,
+    @Column(columnDefinition = "VARCHAR(10)", nullable = false)
+    val name: String,
 
-    val grade: String?,
+    @Pattern(RegexUtil.NUMBER_EXP)
+    @Column(columnDefinition = "VARCHAR(1)", nullable = false)
+    val grade: String,
 
-    val classNum: String?,
+    @Pattern(RegexUtil.NUMBER_EXP)
+    @Column(columnDefinition = "VARCHAR(1)", nullable = false)
+    val classNum: String,
 
-    val number: String?,
+    @Pattern(RegexUtil.NUMBER_EXP)
+    @Column(columnDefinition = "VARCHAR(2)", nullable = false)
+    val number: String,
 
-    val major: String?,
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
+    val profileImagePath: String
 
-    val profileImagePath: String?
-
-) : BaseUUIDEntity() {
-    constructor(email: String) : this(
-        Generators.timeBasedGenerator().generate(), email,
-        null, null, null, null, null, null
-    )
-}
+) : BaseUUIDEntity()

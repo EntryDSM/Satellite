@@ -39,7 +39,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
             // STUDENT
-            .antMatchers("/student/profile").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.POST, "/student").permitAll()
 
             // COMPANY
             .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
