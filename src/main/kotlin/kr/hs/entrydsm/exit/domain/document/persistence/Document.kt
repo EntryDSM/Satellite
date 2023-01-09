@@ -25,7 +25,7 @@ class Document(
 
     val certificateList: MutableList<CertificateElement> = mutableListOf()
 
-): BaseMongoUUIDEntity(documentId) {
+): BaseMongoUUIDEntity(id) {
 
     fun isWriter(student: Student): Boolean {
         return writer.studentId == student.id
