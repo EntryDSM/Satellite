@@ -5,14 +5,13 @@ import kr.hs.entrydsm.exit.domain.auth.exception.TooManySendVerificationExceptio
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
 import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
-import kr.hs.entrydsm.exit.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse
-import kr.hs.entrydsm.exit.domain.auth.util.GenerateRandomCodeUtil
-import net.nurigo.java_sdk.api.Message;
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
+import kr.hs.entrydsm.exit.global.util.GenerateRandomCodeUtil
+import net.nurigo.java_sdk.api.Message
 import net.nurigo.java_sdk.exceptions.CoolsmsException
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
 
-@Service
+@UseCase
 class SendPhoneNumberVerificationCodeUseCase(
     private val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository,
     private val properties: PhoneNumberVerificationCodeProperties
@@ -22,24 +21,24 @@ class SendPhoneNumberVerificationCodeUseCase(
 
         val phoneNumberVerificationCode = phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber)
 
-        val code = GenerateRandomCodeUtil.randomNumber(properties.codeLength)
-
         val countOfSend = phoneNumberVerificationCode?.countOfSend ?: 0
 
         if (countOfSend >= properties.limitCountOfSend) {
             throw TooManySendVerificationException
         }
 
-        if ((phoneNumberVerificationCode?.timeToLive ?: false) == true) {
+        if (phoneNumberVerificationCode?.isVerified == true) {
             throw AlreadyVerifiedException
         }
+
+        val code = GenerateRandomCodeUtil.randomNumber(properties.codeLength)
 
         phoneNumberVerificationCodeRepository.save(
             PhoneNumberVerificationCode(
                 phoneNumber = phoneNumber,
                 code = code,
                 timeToLive = properties.baseTimeToLive,
-                countOfSend = countOfSend,
+                countOfSend = countOfSend + 1,
                 isVerified = false
             )
         )
