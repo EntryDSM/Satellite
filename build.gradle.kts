@@ -27,15 +27,13 @@ dependencies {
 
     // security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     // oauth
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
-
-    // jwt token
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     // time base uuid
     implementation("com.fasterxml.uuid:java-uuid-generator:3.1.4")
@@ -48,7 +46,8 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
 
     // cool sms
-    implementation ("net.nurigo:javaSDK:2.2")
+    implementation("net.nurigo:javaSDK:2.2")
+    
     //AWS
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 
@@ -59,11 +58,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb:2.6.3")
-    runtimeOnly("org.mongodb:mongodb-driver:3.5.1")
+    runtimeOnly("org.mongodb:mongodb-driver-sync:4.8.1")
 
     // test
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+    testImplementation("io.mockk:mockk:1.13.2")
 
 }
 
