@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.exit.global.security.auth.details.service
 
 import kr.hs.entrydsm.exit.domain.company.persistence.repository.CompanyRepository
+import kr.hs.entrydsm.exit.global.exception.jwt.InvalidTokenException
 import kr.hs.entrydsm.exit.global.security.auth.details.CompanyDetails
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UserDetails
@@ -14,8 +15,8 @@ class CompanyDetailService (
 ): UserDetailsService {
 
     override fun loadUserByUsername(username: String?): UserDetails {
-        val company = companyRepository.findByIdOrNull(UUID.fromString(username)) ?: throw kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidTokenException
 
+        val company = companyRepository.findByIdOrNull(UUID.fromString(username)) ?: throw InvalidTokenException
         return CompanyDetails(company)
     }
 

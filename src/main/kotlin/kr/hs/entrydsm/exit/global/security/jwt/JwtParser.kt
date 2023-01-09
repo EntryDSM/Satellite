@@ -2,11 +2,10 @@ package kr.hs.entrydsm.exit.global.security.jwt
 
 import io.jsonwebtoken.*
 import kr.hs.entrydsm.exit.domain.auth.Authority
-import kr.hs.entrydsm.exit.global.exception.GlobalInternalServerException
-import kr.hs.entrydsm.exit.global.exception.jwt.GlobalExpiredTokenException
-import kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidClaimException
-import kr.hs.entrydsm.exit.global.exception.jwt.GlobalInvalidTokenException
-import kr.hs.entrydsm.exit.global.exception.jwt.GlobalUnexpectedTokenException
+import kr.hs.entrydsm.exit.global.exception.InternalServerException
+import kr.hs.entrydsm.exit.global.exception.jwt.ExpiredTokenException
+import kr.hs.entrydsm.exit.global.exception.jwt.InvalidTokenException
+import kr.hs.entrydsm.exit.global.exception.jwt.UnexpectedTokenException
 import kr.hs.entrydsm.exit.global.security.auth.details.service.CompanyDetailService
 import kr.hs.entrydsm.exit.global.security.auth.details.service.StudentDetailService
 import kr.hs.entrydsm.exit.global.security.auth.details.service.TeacherDetailService
@@ -20,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 
 @Component
-class JwtTokenParser(
+class JwtParser(
     private val securityProperties: SecurityProperties,
     private val teacherDetailService: TeacherDetailService,
     private val studentDetailService: StudentDetailService,
@@ -31,7 +30,7 @@ class JwtTokenParser(
         val claims = getClaims(token)
 
         if (claims.header[TYPE_CLAIM] != ACCESS) {
-            throw GlobalInvalidTokenException
+            throw InvalidTokenException
         }
 
         val userDetails = getDetails(claims.body)
@@ -45,16 +44,17 @@ class JwtTokenParser(
                 .setSigningKey(securityProperties.secretKey)
                 .parseClaimsJws(token)
         } catch (e: Exception) {
-            when (e) {
-                is GlobalInvalidClaimException -> throw GlobalInvalidClaimException
-                is ExpiredJwtException -> throw GlobalExpiredTokenException
-                is JwtException -> throw GlobalUnexpectedTokenException
-                else -> throw GlobalInternalServerException
+            when (e){
+                is InvalidClaimException -> throw InvalidTokenException
+                is ExpiredJwtException -> throw ExpiredTokenException
+                is JwtException -> throw UnexpectedTokenException
+                else -> throw InternalServerException
             }
         }
-    };
+    }
 
     private fun getDetails(body: Claims): UserDetails {
+
         val authority = body.get(ROLE_CLAIM, Authority::class.java)
 
         return when (authority) {
