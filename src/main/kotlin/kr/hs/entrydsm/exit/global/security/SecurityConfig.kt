@@ -2,7 +2,8 @@ package kr.hs.entrydsm.exit.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.exit.domain.auth.Authority
-import kr.hs.entrydsm.exit.global.security.jwt.JwtTokenParser
+import kr.hs.entrydsm.exit.global.config.FilterConfig
+import kr.hs.entrydsm.exit.global.security.jwt.JwtParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -13,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 internal class SecurityConfig(
-    private val jwtTokenParser: JwtTokenParser,
+    private val jwtParser: JwtParser,
     private val objectMapper: ObjectMapper
 ) {
 
@@ -63,7 +64,7 @@ internal class SecurityConfig(
             .anyRequest().permitAll()
 
         http
-            .apply(FilterConfig(jwtTokenParser, objectMapper))
+            .apply(FilterConfig(jwtParser, objectMapper))
 
         return http.build()
     }
