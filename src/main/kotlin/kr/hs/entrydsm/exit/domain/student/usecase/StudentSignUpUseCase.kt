@@ -1,34 +1,51 @@
 package kr.hs.entrydsm.exit.domain.student.usecase
 
+import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
+import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
+import kr.hs.entrydsm.exit.domain.student.exception.StudentAlreadyExistException
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.exit.domain.student.presentation.dto.request.StudentSignUpRequest
-import kr.hs.entrydsm.exit.global.security.SecurityUtil
+import kr.hs.entrydsm.exit.global.security.jwt.JwtGenerator
+import kr.hs.entrydsm.exit.global.util.RegexUtil
+import java.util.regex.Pattern
 
 @UseCase
 class StudentSignUpUseCase(
-    private val studentRepository: StudentRepository
+    private val studentRepository: StudentRepository,
+    private val jwtGenerator: JwtGenerator
 ) {
 
-    fun execute(request: StudentSignUpRequest) {
+    fun execute(request: StudentSignUpRequest): TokenResponse {
 
-        val student = SecurityUtil.getCurrentStudent()
+        checkEmailSuffix(request.email)
 
-        val updatedStudent = createUpdatedStudent(student, request)
+        if (studentRepository.existsByEmail(request.email)) {
+            throw StudentAlreadyExistException
+        }
 
-        studentRepository.save(updatedStudent)
+        val student = request.run {
+            studentRepository.save(
+                Student(
+                    email = email,
+                    name = name,
+                    grade = grade,
+                    classNum = classNum,
+                    number = number,
+                    profileImagePath = profileImagePath
+                )
+            )
+        }
+
+        return jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
     }
 
-    private fun createUpdatedStudent(student: Student, request: StudentSignUpRequest): Student {
-        return Student(
-            student.email,
-            request.name,
-            request.grade,
-            request.classNum,
-            request.number,
-            request.profileImagePath
-        )
+    private fun checkEmailSuffix(email: String) {
+        if (!Pattern.matches(RegexUtil.EMAIL_EXP, email)) {
+            throw EmailSuffixNotValidException
+        }
     }
 
 }

@@ -12,6 +12,7 @@ enum class DomainErrorCode(
     EMAIL_SUFFIX_NOT_VALID(400, "COMMON-400-2", "Email not ends with @dsm.hs.kr"),
 
     STUDENT_NOT_FOUND(404, "STUDENT-404-1", "Student Not Found"),
+    STUDENT_ALREADY_EXIST(404, "STUDENT-404-1", "Student Already Exist"),
 
     TEACHER_NOT_FOUND(404, "TEACHER-404-1", "Teacher Not Found"),
 
