@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.*
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.domain.auth.exception.AlreadyVerifiedException
 import kr.hs.entrydsm.exit.domain.auth.exception.TooManySendVerificationException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
@@ -103,6 +102,4 @@ internal class SendPhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })

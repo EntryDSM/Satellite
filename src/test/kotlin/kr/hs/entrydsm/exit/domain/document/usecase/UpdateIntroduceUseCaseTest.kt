@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.*
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
@@ -42,8 +41,6 @@ internal class UpdateIntroduceUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })
 
 private fun onlyIntroduceIsDifferent(
