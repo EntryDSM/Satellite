@@ -12,7 +12,7 @@ import javax.persistence.Table
 @Table(name = "tbl_student")
 class Student(
 
-    @Column(columnDefinition = "VARCHAR(40)", nullable = false)
+    id: UUID? = null,
     val email: String,
 
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
@@ -33,4 +33,4 @@ class Student(
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     val profileImagePath: String
 
-) : BaseUUIDEntity()
+) : BaseUUIDEntity(id) {

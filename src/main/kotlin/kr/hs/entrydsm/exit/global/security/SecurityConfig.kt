@@ -49,12 +49,22 @@ internal class SecurityConfig(
 
             // DOCUMENT
             .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/writer-info").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/introduce").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/skill-set").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/project").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/award").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PUT, "/document/certificate").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/introduce").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/skill-set").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/project").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/award").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.PATCH, "/document/certificate").hasAuthority(STUDENT)
+
+            .antMatchers(HttpMethod.POST, "/document/submit").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.POST, "/document/submit/cancel").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.POST, "/document/share/{document-id}").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
+
+            .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.GET, "/document/submitted").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
 
             // MAJOR
             .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER, COMPANY)

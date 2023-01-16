@@ -25,31 +25,29 @@ class Document(
 
     val certificateList: MutableList<CertificateElement> = mutableListOf()
 
-): BaseMongoUUIDEntity(documentId) {
+): BaseMongoUUIDEntity(id) {
 
-    fun isWriter(student: Student): Boolean {
-        return writer.studentId == student.id
-    }
+    fun isWriter(student: Student?) = writer.studentId == student?.id
 
-    fun updateWriterInfo(writer: WriterInfoElement): Document =
+    fun updateWriterInfo(writer: WriterInfoElement) =
         copy(writer = writer)
 
-    fun updateStatus(status: Status): Document =
+    fun updateStatus(status: Status) =
         copy(status = status)
 
-    fun updateIntroduce(introduce: IntroduceElement): Document =
+    fun updateIntroduce(introduce: IntroduceElement) =
         copy(introduce = introduce)
 
-    fun updateSkillSet(skillSet: MutableList<String>): Document =
+    fun updateSkillSet(skillSet: MutableList<String>) =
         copy(skillSet = skillSet)
 
-    fun updateProject(projectList: MutableList<ProjectElement>): Document =
+    fun updateProject(projectList: MutableList<ProjectElement>) =
         copy(projectList = projectList)
 
-    fun updateAwardList(awardList: MutableList<AwardElement>): Document =
+    fun updateAwardList(awardList: MutableList<AwardElement>) =
         copy(awardList = awardList)
 
-    fun updateCertificateList(certificateList: MutableList<CertificateElement>): Document =
+    fun updateCertificateList(certificateList: MutableList<CertificateElement>) =
         copy(certificateList = certificateList)
 
     private fun copy(
@@ -62,7 +60,7 @@ class Document(
         certificateList: MutableList<CertificateElement> = this.certificateList
     ): Document {
         return Document(
-            documentId = this.id,
+            id = this.id,
             writer = writer,
             status = status,
             introduce = introduce,
@@ -72,6 +70,4 @@ class Document(
             certificateList = certificateList
         )
     }
-
-
 }

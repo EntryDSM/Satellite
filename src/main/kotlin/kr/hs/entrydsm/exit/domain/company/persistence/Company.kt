@@ -11,7 +11,7 @@ import javax.persistence.Table
 @Table(name = "tbl_company")
 class Company(
 
-    @field: NotNull
+    id: UUID? = null,
     val name: String,
 
     @field: NotNull
@@ -32,4 +32,4 @@ class Company(
     @field: NotNull
     val location: String
 
-) : BaseUUIDEntity()
+) : BaseUUIDEntity(id)
