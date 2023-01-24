@@ -25,8 +25,10 @@ enum class DomainErrorCode(
     ALREADY_VERIFIED_EXCEPTION(409, "AUTH-409-1", "Is Alreadt verified"),
     TOO_MANY_SEND_VERIFICATION_CODE(429, "AUTH-429-1", "Too Many Send Verification Code / Please Confirm Later"),
 
+    DOCUMENT_ACCESS_RIGHT(403, "DOCUMENT-403-1", "Have No Access To Documents"),
     DOCUMENT_NOT_FOUND(404, "DOCUMENT-404-1", "Document Not Found"),
     DOCUMENT_ALREADY_EXIST(409, "DOCUMENT-409-1", "Document Already Exist"),
+    ILLEGAL_STATUS(409, "DOCUMENT-409-2", "Unable To Perform This Action"),
 
     MAJOR_NOT_FOUND(404, "MAJOR-404-1", "Major Not Found"),
 
