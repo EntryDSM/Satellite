@@ -6,7 +6,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.domain.auth.exception.VerificationCodeMismatchedException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
 import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
@@ -56,6 +55,4 @@ internal class ReceivePhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })

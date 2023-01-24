@@ -7,7 +7,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAlreadyExistException
 import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
@@ -77,8 +76,5 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
                 }
             }
         }
-
     }
-
-    afterContainer()
 })

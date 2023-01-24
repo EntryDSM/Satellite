@@ -2,7 +2,6 @@ package kr.hs.entrydsm.exit.global.util
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import kr.hs.entrydsm.exit.common.afterContainer
 import java.util.regex.Pattern
 
 
@@ -49,6 +48,4 @@ internal class RegexUtilTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })

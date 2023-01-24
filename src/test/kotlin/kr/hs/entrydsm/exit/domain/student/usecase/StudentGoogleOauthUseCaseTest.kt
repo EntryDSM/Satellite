@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.domain.auth.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
@@ -24,7 +23,7 @@ import java.time.LocalDateTime
 internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
     val studentRepository = mockk<StudentRepository>()
-    val googleProperties = GoogleOauthProperties("","","","")
+    val googleProperties = anyValueObject<GoogleOauthProperties>()
     val googleAuth =  mockk<GoogleAuth>()
     val googleEmail = mockk<GoogleEmail>()
     val jwtGenerator = mockk<JwtGenerator>()
@@ -98,8 +97,5 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
                 }
             }
         }
-
     }
-
-    afterContainer()
 })

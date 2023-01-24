@@ -7,7 +7,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
@@ -71,6 +70,4 @@ internal class CancelShareDocumentUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })

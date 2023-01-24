@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
@@ -84,6 +83,4 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })
