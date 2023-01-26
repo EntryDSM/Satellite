@@ -6,8 +6,8 @@ import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
 import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
-import kr.hs.entrydsm.exit.global.util.GenerateRandomCodeUtil
-import net.nurigo.java_sdk.api.Message
+import kr.hs.entrydsm.exit.global.thirdparty.sms.CoolSmsAdapter
+import org.apache.commons.lang.RandomStringUtils
 import net.nurigo.java_sdk.exceptions.CoolsmsException
 import org.springframework.data.repository.findByIdOrNull
 
@@ -31,7 +31,7 @@ class SendPhoneNumberVerificationCodeUseCase(
             throw AlreadyVerifiedException
         }
 
-        val code = GenerateRandomCodeUtil.randomNumber(properties.codeLength)
+        val code = getRandomCode()
 
         phoneNumberVerificationCodeRepository.save(
             PhoneNumberVerificationCode(
@@ -48,7 +48,7 @@ class SendPhoneNumberVerificationCodeUseCase(
         return SendPhoneNumberCodeResponse(code)
     }
 
-    companion object{
+    private fun getRandomCode(): String = RandomStringUtils.randomNumeric(6)
         private const val TYPE = "SMS"
         private const val APP_VERSION = "app 1.0"
     }
