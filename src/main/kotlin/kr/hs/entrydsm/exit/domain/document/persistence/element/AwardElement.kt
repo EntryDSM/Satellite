@@ -4,6 +4,7 @@ import java.util.*
 
 class AwardElement(
 
+    val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val awardingInstitution: String,
     val date: Date,

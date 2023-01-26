@@ -4,6 +4,7 @@ import java.util.*
 
 class CertificateElement(
 
+    val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val issuingInstitution: String,
     val date: Date
