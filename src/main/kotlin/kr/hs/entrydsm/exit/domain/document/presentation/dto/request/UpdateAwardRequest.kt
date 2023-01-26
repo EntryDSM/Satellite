@@ -22,7 +22,7 @@ data class UpdateAwardRequest(
         val awardingInstitution: String,
 
         @field:NotNull
-        val awardDate: Date,
+        val date: Date,
 
         @field:Length(max=255)
         val description: String?,
@@ -34,7 +34,7 @@ data class UpdateAwardRequest(
         fun toAwardElement() = AwardElement(
             name = name,
             awardingInstitution = awardingInstitution,
-            date = awardDate,
+            date = date,
             description = description,
             url = url
         )
