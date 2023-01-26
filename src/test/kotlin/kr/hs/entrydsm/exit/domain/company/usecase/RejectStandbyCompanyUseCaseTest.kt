@@ -6,7 +6,6 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.domain.company.persistence.StandbyCompany
 import kr.hs.entrydsm.exit.domain.company.persistence.repository.StandbyCompanyRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -33,6 +32,4 @@ internal class RejectStandbyCompanyUseCaseTest : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })

@@ -7,7 +7,6 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.common.afterContainer
 import kr.hs.entrydsm.exit.domain.auth.exception.NotVerifiedException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
@@ -77,6 +76,4 @@ internal class CompanySignUpUseCaseTest  : DescribeSpec({
             }
         }
     }
-
-    afterContainer()
 })
