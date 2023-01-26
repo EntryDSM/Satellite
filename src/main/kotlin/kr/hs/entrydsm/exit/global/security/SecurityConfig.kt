@@ -26,6 +26,7 @@ internal class SecurityConfig(
 
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
+
         http
             .csrf().disable()
             .formLogin().disable()
@@ -70,6 +71,12 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
             .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
+
+            // FEEDBACK
+            .antMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
+            .antMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
 
             .anyRequest().permitAll()
 
