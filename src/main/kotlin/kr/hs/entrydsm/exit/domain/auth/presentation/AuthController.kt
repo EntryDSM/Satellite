@@ -3,7 +3,7 @@ package kr.hs.entrydsm.exit.domain.auth.presentation
 import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.ReceivePhoneNumberCodeRequest
 import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.SendPhoneNumberCodeRequest
 import kr.hs.entrydsm.exit.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse
-import kr.hs.entrydsm.exit.domain.auth.usecase.ReceivePhoneNumberVerificationCodeUseCase
+import kr.hs.entrydsm.exit.domain.auth.usecase.VerifyPhoneNumberUseCase
 import kr.hs.entrydsm.exit.domain.auth.usecase.SendPhoneNumberVerificationCodeUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PatchMapping
@@ -18,7 +18,7 @@ import javax.validation.Valid
 @RestController
 class AuthController(
     private val sendPhoneNumberVerificationCodeUseCase: SendPhoneNumberVerificationCodeUseCase,
-    private val receivePhoneNumberVerificationCodeUseCase: ReceivePhoneNumberVerificationCodeUseCase
+    private val verifyPhoneNumberUseCase: VerifyPhoneNumberUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,7 +32,7 @@ class AuthController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/phone")
     fun receivePhoneNumberVerificationCode(@RequestBody @Valid request: ReceivePhoneNumberCodeRequest) {
-        receivePhoneNumberVerificationCodeUseCase.execute(
+        verifyPhoneNumberUseCase.execute(
             code = request.code,
             phoneNumber = request.phoneNumber
         )
