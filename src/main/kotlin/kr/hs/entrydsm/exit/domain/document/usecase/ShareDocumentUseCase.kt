@@ -5,12 +5,14 @@ import kr.hs.entrydsm.exit.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.exit.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
+import kr.hs.entrydsm.exit.domain.feedback.persistence.repository.FeedbackRepository
 import org.springframework.data.repository.findByIdOrNull
 import java.util.*
 
 @UseCase
 class ShareDocumentUseCase(
-    private val documentRepository: DocumentRepository
+    private val documentRepository: DocumentRepository,
+    private val feedbackRepository: FeedbackRepository
 ) {
 
     fun execute(documentId: UUID) {
@@ -20,6 +22,9 @@ class ShareDocumentUseCase(
         if(document.status != Status.SUBMITTED) {
             throw IllegalStatusException
         }
+
+        val feedbackList = feedbackRepository.findByDocumentId(document.id)
+        feedbackRepository.deleteAll(feedbackList)
 
         documentRepository.save(
             document.updateStatus(Status.SHARED)
