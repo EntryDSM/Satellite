@@ -2,7 +2,7 @@ package kr.hs.entrydsm.exit.domain.document.usecase
 
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
+import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.UpdateWriterInfoRequest
@@ -24,22 +24,21 @@ class UpdateWriterInfoUseCase(
         val student = SecurityUtil.getCurrentStudent()
         val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
+        studentRepository.save(
+            studentWithUpdatedInfo(student, request)
+        )
+
         documentRepository.save(
             documentWithUpdatedWriterInfo(document, request)
         )
-
-        request.run {
-            studentRepository.save(studentWithUpdatedWriterInfo(student))
-        }
-
     }
 
-    private fun UpdateWriterInfoRequest.studentWithUpdatedWriterInfo(student: Student) =
+    private fun studentWithUpdatedInfo(student: Student, request: UpdateWriterInfoRequest) =
         student.updateVariableInfo(
-            grade = grade,
-            classNum = classNum,
-            number = number,
-            profileImagePath = profileImagePath
+            grade = request.grade,
+            classNum = request.classNum,
+            number = request.number,
+            profileImagePath = request.profileImagePath
         )
 
     private fun documentWithUpdatedWriterInfo(
@@ -52,11 +51,11 @@ class UpdateWriterInfoUseCase(
         return request.run {
             document.updateWriterInfo(
                 document.writer.updateVariableInfo(
-                    profileImagePath = profileImagePath,
                     grade = grade,
                     classNum = classNum,
                     number = number,
                     email = email,
+                    profileImagePath = profileImagePath,
                     major = major
                 )
             )

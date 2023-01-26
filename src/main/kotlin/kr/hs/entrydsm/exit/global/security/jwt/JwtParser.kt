@@ -55,7 +55,9 @@ class JwtParser(
 
     private fun getDetails(body: Claims): UserDetails {
 
-        val authority = body.get(ROLE_CLAIM, Authority::class.java)
+        val authority = Authority.valueOf(
+            body.get(ROLE_CLAIM, String::class.java)
+        )
 
         return when (authority) {
             Authority.STUDENT -> studentDetailService

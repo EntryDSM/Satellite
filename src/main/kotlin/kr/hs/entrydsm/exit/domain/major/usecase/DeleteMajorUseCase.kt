@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.domain.major.usecase
 
-import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
+import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.major.persistence.repository.MajorRepository
 import kr.hs.entrydsm.exit.domain.major.presentation.dto.request.DeleteMajorRequest
 import org.springframework.data.repository.findByIdOrNull

@@ -9,7 +9,7 @@ import io.mockk.mockkObject
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAlreadyExistException
-import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
+import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.CreateDocumentRequest
 import kr.hs.entrydsm.exit.domain.major.persistence.Major

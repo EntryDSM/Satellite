@@ -9,21 +9,20 @@ import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.domain.auth.exception.AlreadyVerifiedException
 import kr.hs.entrydsm.exit.domain.auth.exception.TooManySendVerificationException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
-import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
-import kr.hs.entrydsm.exit.global.util.GenerateRandomCodeUtil
+import kr.hs.entrydsm.exit.domain.auth.properties.VerificationCodeProperties
+import kr.hs.entrydsm.exit.global.thirdparty.sms.CoolSmsAdapter
 import org.springframework.data.repository.findByIdOrNull
 
 internal class SendPhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
     val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository = mockk()
-    val properties: PhoneNumberVerificationCodeProperties = anyValueObject(
-        "limitCountOfSend" to 3,
-        "codeLength" to 6
+    val properties: VerificationCodeProperties = anyValueObject(
+        "limitCountOfSend" to 3
     )
-    mockkObject(GenerateRandomCodeUtil)
+    val coolSmsAdapter: CoolSmsAdapter = mockk()
 
-    val sendPhoneNumberVerificationCodeUseCase = SendPhoneNumberVerificationCodeUseCase(phoneNumberVerificationCodeRepository, properties)
+    val sendPhoneNumberVerificationCodeUseCase = SendPhoneNumberVerificationCodeUseCase(phoneNumberVerificationCodeRepository, properties, coolSmsAdapter)
 
     describe("sendPhoneNumberVerificationCode") {
 
@@ -35,6 +34,7 @@ internal class SendPhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
             every { phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber) } returns null
             every { phoneNumberVerificationCodeRepository.save(capture(slot)) } returnsArgument 0
+            justRun { coolSmsAdapter.sendAuthCode(phoneNumber, any()) }
 
             it("랜덤 코드를 생성하여 sms로 전송한다.") {
 
@@ -56,6 +56,7 @@ internal class SendPhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
             every { phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber) } returns phoneNumberVerificationCode
             every { phoneNumberVerificationCodeRepository.save(capture(slot)) } returnsArgument 0
+            justRun { coolSmsAdapter.sendAuthCode(phoneNumber, any()) }
 
             it("전송 횟수를 증가시킨 후 새 랜덤 코드를 sms로 전송한다.") {
 

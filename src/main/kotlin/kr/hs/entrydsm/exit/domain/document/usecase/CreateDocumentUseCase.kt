@@ -2,7 +2,7 @@ package kr.hs.entrydsm.exit.domain.document.usecase
 
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAlreadyExistException
-import kr.hs.entrydsm.exit.domain.document.exception.MajorNotFoundException
+import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status

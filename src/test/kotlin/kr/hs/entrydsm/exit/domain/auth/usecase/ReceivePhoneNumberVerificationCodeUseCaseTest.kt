@@ -8,16 +8,16 @@ import io.mockk.verify
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.domain.auth.exception.VerificationCodeMismatchedException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
-import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
+import kr.hs.entrydsm.exit.domain.auth.properties.VerificationCodeProperties
 import org.springframework.data.repository.findByIdOrNull
 
 internal class ReceivePhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
     val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository = mockk()
-    val properties: PhoneNumberVerificationCodeProperties = anyValueObject()
+    val properties: VerificationCodeProperties = anyValueObject()
 
-    val receivePhoneNumberVerificationCodeUseCase = ReceivePhoneNumberVerificationCodeUseCase(phoneNumberVerificationCodeRepository, properties)
+    val verifyPhoneNumberUseCase = VerifyPhoneNumberUseCase(phoneNumberVerificationCodeRepository, properties)
 
     describe("receivePhoneNumberVerificationCode"){
 
@@ -34,7 +34,7 @@ internal class ReceivePhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
             it("저장된 코드를 인증상태로 변경한다.") {
 
-                receivePhoneNumberVerificationCodeUseCase.execute(phoneNumber, code)
+                verifyPhoneNumberUseCase.execute(phoneNumber, code)
 
                 verify(exactly = 1) { phoneNumberVerificationCodeRepository.save(any()) }
             }
@@ -49,7 +49,7 @@ internal class ReceivePhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
 
             it("VerificationCodeMismatched 예외를 던진다.") {
                 shouldThrow<VerificationCodeMismatchedException> {
-                    receivePhoneNumberVerificationCodeUseCase.execute(phoneNumber, wrongCode)
+                    verifyPhoneNumberUseCase.execute(phoneNumber, wrongCode)
                 }
                 verify(exactly = 0) { phoneNumberVerificationCodeRepository.save(any()) }
             }

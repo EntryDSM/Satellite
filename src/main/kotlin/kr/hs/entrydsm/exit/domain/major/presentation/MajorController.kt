@@ -30,7 +30,7 @@ class MajorController(
     }
 
     @GetMapping
-    fun queryMajor(@RequestParam(value = "name") name: String = ""): MajorListResponse {
+    fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
         return queryMajorUseCase.execute(name)
     }
 

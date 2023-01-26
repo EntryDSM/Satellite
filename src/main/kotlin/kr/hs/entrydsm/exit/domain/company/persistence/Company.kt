@@ -1,9 +1,8 @@
 package kr.hs.entrydsm.exit.domain.company.persistence
 
-import org.hibernate.validator.constraints.Length
-
 import kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity
-import org.jetbrains.annotations.NotNull
+import java.util.*
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
 
@@ -12,24 +11,23 @@ import javax.persistence.Table
 class Company(
 
     id: UUID? = null,
+
+    @Column(columnDefinition = "VARCHAR(30)", nullable = false)
     val name: String,
 
-    @field: NotNull
-    @Length(min = 5)
+    @Column(columnDefinition = "VARCHAR(40)", nullable = false)
     val email: String,
 
-    @field: NotNull
-    @Length(min = 8, max = 60)
+    @Column(columnDefinition = "VARCHAR(60)", nullable = false)
     val password: String,
 
-    @field: NotNull
+    @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     val managerName: String,
 
-    @field: NotNull
-    @Length(max = 11)
+    @Column(columnDefinition = "VARCHAR(11)", nullable = false)
     val managerNumber: String,
 
-    @field: NotNull
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     val location: String
 
 ) : BaseUUIDEntity(id)

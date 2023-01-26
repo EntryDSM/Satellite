@@ -12,12 +12,12 @@ import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.exit.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.exit.global.oauth.GoogleAuth
-import kr.hs.entrydsm.exit.global.oauth.GoogleEmail
-import kr.hs.entrydsm.exit.global.oauth.dto.response.GoogleAccessTokenResponse
-import kr.hs.entrydsm.exit.global.oauth.dto.response.GoogleEmailResponse
-import kr.hs.entrydsm.exit.global.oauth.properties.GoogleOauthProperties
 import kr.hs.entrydsm.exit.global.security.jwt.JwtGenerator
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.GoogleAuth
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.GoogleEmail
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.dto.response.GoogleEmailResponse
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.properties.GoogleOauthProperties
 import java.time.LocalDateTime
 
 internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
