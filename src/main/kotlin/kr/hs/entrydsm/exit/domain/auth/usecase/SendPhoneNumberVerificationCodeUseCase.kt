@@ -15,6 +15,7 @@ import org.springframework.data.repository.findByIdOrNull
 class SendPhoneNumberVerificationCodeUseCase(
     private val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository,
     private val properties: PhoneNumberVerificationCodeProperties
+    private val coolSmsAdapter: CoolSmsAdapter
 ) {
 
     fun execute(phoneNumber: String): SendPhoneNumberCodeResponse {
@@ -22,7 +23,6 @@ class SendPhoneNumberVerificationCodeUseCase(
         val phoneNumberVerificationCode = phoneNumberVerificationCodeRepository.findByIdOrNull(phoneNumber)
 
         val countOfSend = phoneNumberVerificationCode?.countOfSend ?: 0
-
         if (countOfSend >= properties.limitCountOfSend) {
             throw TooManySendVerificationException
         }
@@ -43,30 +43,11 @@ class SendPhoneNumberVerificationCodeUseCase(
             )
         )
 
-        sendAuthCode(phoneNumber, code)
+        coolSmsAdapter.sendAuthCode(phoneNumber, code)
 
         return SendPhoneNumberCodeResponse(code)
     }
 
     private fun getRandomCode(): String = RandomStringUtils.randomNumeric(6)
-        private const val TYPE = "SMS"
-        private const val APP_VERSION = "app 1.0"
-    }
-    fun sendAuthCode(phoneNumber: String, authCode: String?) {
-        val message = Message(properties.key, properties.secret)
-
-        val params: HashMap<String, String> = HashMap()
-        params["to"] = phoneNumber
-        params["from"] = properties.phoneNumber
-        params["type"] = TYPE
-        params["text"] = "인증번호 " + authCode + "를 입력하세요."
-        params["app_version"] = APP_VERSION
-
-        try {
-            message.send(params)
-        } catch (e: CoolsmsException) {
-            e.stackTrace
-        }
-    }
 }
 
