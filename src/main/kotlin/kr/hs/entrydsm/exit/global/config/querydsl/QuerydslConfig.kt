@@ -16,5 +16,4 @@ class QuerydslConfig(
     fun JPAQueryFactory(): JPAQueryFactory {
         return JPAQueryFactory(entityManager)
     }
-
 }

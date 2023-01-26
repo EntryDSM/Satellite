@@ -2,7 +2,7 @@ package kr.hs.entrydsm.exit.domain.image.presentation
 
 import kr.hs.entrydsm.exit.domain.image.presentation.dto.response.ImageUrlResponse
 import kr.hs.entrydsm.exit.domain.image.usecase.UploadImageUseCase
-import kr.hs.entrydsm.exit.global.aws.s3.ImageType
+import kr.hs.entrydsm.exit.global.thirdparty.aws.s3.ImageType
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile

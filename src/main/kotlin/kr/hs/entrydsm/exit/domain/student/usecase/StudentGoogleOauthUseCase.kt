@@ -3,14 +3,14 @@ package kr.hs.entrydsm.exit.domain.student.usecase
 import kr.hs.entrydsm.exit.domain.auth.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.GoogleLoginLinkResponse
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
-import kr.hs.entrydsm.exit.domain.auth.oauth.GoogleAuth
-import kr.hs.entrydsm.exit.domain.auth.oauth.GoogleEmail
-import kr.hs.entrydsm.exit.domain.auth.properties.GoogleOauthProperties
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.exit.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.exit.global.security.jwt.JwtGenerator
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.GoogleAuth
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.GoogleEmail
+import kr.hs.entrydsm.exit.global.thirdparty.oauth.properties.GoogleOauthProperties
 import kr.hs.entrydsm.exit.global.util.RegexUtil
 import java.util.regex.Pattern
 

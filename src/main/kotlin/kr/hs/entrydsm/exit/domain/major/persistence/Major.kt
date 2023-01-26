@@ -11,5 +11,4 @@ class Major(
 
      @Column(columnDefinition = "VARCHAR(30)", nullable = false)
      val name: String
-
-): BaseUUIDEntity()
+): BaseUUIDEntity(null)
