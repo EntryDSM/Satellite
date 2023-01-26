@@ -3,18 +3,18 @@ package kr.hs.entrydsm.exit.domain.auth.usecase
 import kr.hs.entrydsm.exit.domain.auth.exception.AlreadyVerifiedException
 import kr.hs.entrydsm.exit.domain.auth.exception.TooManySendVerificationException
 import kr.hs.entrydsm.exit.domain.auth.persistence.PhoneNumberVerificationCode
-import kr.hs.entrydsm.exit.domain.auth.persistence.properties.PhoneNumberVerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.PhoneNumberVerificationCodeRepository
+import kr.hs.entrydsm.exit.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse
+import kr.hs.entrydsm.exit.domain.auth.properties.VerificationCodeProperties
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.global.thirdparty.sms.CoolSmsAdapter
 import org.apache.commons.lang.RandomStringUtils
-import net.nurigo.java_sdk.exceptions.CoolsmsException
 import org.springframework.data.repository.findByIdOrNull
 
 @UseCase
 class SendPhoneNumberVerificationCodeUseCase(
     private val phoneNumberVerificationCodeRepository: PhoneNumberVerificationCodeRepository,
-    private val properties: PhoneNumberVerificationCodeProperties
+    private val properties: VerificationCodeProperties,
     private val coolSmsAdapter: CoolSmsAdapter
 ) {
 
@@ -37,7 +37,7 @@ class SendPhoneNumberVerificationCodeUseCase(
             PhoneNumberVerificationCode(
                 phoneNumber = phoneNumber,
                 code = code,
-                timeToLive = properties.baseTimeToLive,
+                timeToLive = properties.timeToLive,
                 countOfSend = countOfSend + 1,
                 isVerified = false
             )
