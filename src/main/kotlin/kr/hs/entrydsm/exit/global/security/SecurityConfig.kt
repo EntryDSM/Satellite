@@ -43,6 +43,7 @@ internal class SecurityConfig(
 
             // STUDENT
             .antMatchers(HttpMethod.POST, "/student").permitAll()
+            .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
             // COMPANY
             .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
