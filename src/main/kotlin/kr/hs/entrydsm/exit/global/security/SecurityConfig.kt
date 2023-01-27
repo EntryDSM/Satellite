@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
@@ -26,6 +27,7 @@ internal class SecurityConfig(
 
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
+
         http
             .csrf().disable()
             .formLogin().disable()
@@ -71,6 +73,12 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
 
+            // FEEDBACK
+            .antMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
+            .antMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
+
             .anyRequest().permitAll()
 
         http
@@ -80,5 +88,5 @@ internal class SecurityConfig(
     }
 
     @Bean
-    protected fun passwordEncoder() = BCryptPasswordEncoder()
+    protected fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 }
