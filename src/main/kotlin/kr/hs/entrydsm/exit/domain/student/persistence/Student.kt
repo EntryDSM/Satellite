@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.exit.domain.student.persistence
 
+import kr.hs.entrydsm.exit.domain.image.domain.DefaultImage
 import kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity
 import java.util.*
 import javax.persistence.Column
@@ -28,7 +29,7 @@ class Student(
     val number: String,
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
-    val profileImagePath: String
+    val profileImagePath: String = DefaultImage.USER_PROFILE
 
 
 ) : BaseUUIDEntity(id) {

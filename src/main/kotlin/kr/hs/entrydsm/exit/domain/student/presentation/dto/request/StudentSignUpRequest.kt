@@ -10,8 +10,7 @@ data class StudentSignUpRequest (
     @field:NotBlank
     val name: String,
 
-    @field:NotBlank
-    val profileImagePath: String,
+    val profileImagePath: String?,
 
     @field:NotBlank
     val email: String,
