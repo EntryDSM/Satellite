@@ -42,7 +42,13 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
             // STUDENT
+            .antMatchers(HttpMethod.GET, "/student/google/link").permitAll()
+            .antMatchers(HttpMethod.POST, "/student/sign").permitAll()
             .antMatchers(HttpMethod.POST, "/student").permitAll()
+            .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
+
+            // TEST
+            .antMatchers(HttpMethod.POST, "/student/sign/test").permitAll()
 
             // COMPANY
             .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
