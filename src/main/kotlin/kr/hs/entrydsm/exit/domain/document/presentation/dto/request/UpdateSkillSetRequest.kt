@@ -4,6 +4,6 @@ import org.jetbrains.annotations.NotNull
 
 data class UpdateSkillSetRequest (
 
-    @field:NotNull
+    
     val skillList: List<String>
 )

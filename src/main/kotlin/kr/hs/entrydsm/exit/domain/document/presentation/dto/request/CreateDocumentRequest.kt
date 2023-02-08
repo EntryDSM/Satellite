@@ -5,6 +5,6 @@ import java.util.*
 
 data class CreateDocumentRequest(
 
-    @field:NotNull
+    
     val majorId: UUID
 )

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 
 data class UpdateAwardRequest(
 
-    @field:NotNull
+    
     val awardList: List<AwardRequest>
 ) {
     data class AwardRequest(
@@ -21,7 +21,7 @@ data class UpdateAwardRequest(
         @field:NotBlank
         val awardingInstitution: String,
 
-        @field:NotNull
+        
         val date: Date,
 
         @field:Length(max=255)

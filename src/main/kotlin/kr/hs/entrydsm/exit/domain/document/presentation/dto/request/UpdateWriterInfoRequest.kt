@@ -11,28 +11,28 @@ import java.util.*
 data class UpdateWriterInfoRequest (
 
     @field:Length(max=255)
-    @field:NotNull
+    
     val profileImagePath: String,
 
-    @field:NotNull
+    
     val majorId: UUID,
 
-    @field:NotNull
+    
     val email: String,
 
     @field:Length(min=1, max=1)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    @field:NotNull
+    
     val grade: String,
 
     @field:Length(min=1, max=1)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    @field:NotNull
+    
     val classNum: String,
 
     @field:Length(min=2, max=2)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    @field:NotNull
+    
     val number: String
 
 ) {

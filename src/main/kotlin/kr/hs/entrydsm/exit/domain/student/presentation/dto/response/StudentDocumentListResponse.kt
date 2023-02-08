@@ -14,7 +14,7 @@ data class StudentDocumentListResponse(
         val documentStatus: Status,
         val documentId: UUID,
         val profileImagePath: String,
-        val studentNumber: String,
+        val studentNumber: Int,
         val email: String,
         val major: MajorVO
     ) {

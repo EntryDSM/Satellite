@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.domain.student.presentation
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.auth.persistence.RefreshToken
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.RefreshTokenRepository

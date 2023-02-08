@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.domain.student.usecase
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
@@ -11,7 +11,7 @@ import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentReposito
 import kr.hs.entrydsm.exit.domain.student.presentation.dto.request.StudentSignUpRequest
 import kr.hs.entrydsm.exit.global.security.jwt.JwtGenerator
 import kr.hs.entrydsm.exit.global.util.RegexUtil
-import java.util.regex.Pattern
+import java.util.regex.*
 
 @UseCase
 class StudentSignUpUseCase(
