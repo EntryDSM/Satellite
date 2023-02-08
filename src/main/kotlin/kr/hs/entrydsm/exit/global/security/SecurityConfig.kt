@@ -42,6 +42,8 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
             // STUDENT
+            .antMatchers(HttpMethod.GET, "/student/google/link").permitAll()
+            .antMatchers(HttpMethod.POST, "/student/sign").permitAll()
             .antMatchers(HttpMethod.POST, "/student").permitAll()
             .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
@@ -49,6 +51,8 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
             .antMatchers(HttpMethod.POST, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.GET, "/company").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.GET, "/company/standby").hasAuthority(TEACHER)
 
             // DOCUMENT
             .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)

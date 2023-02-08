@@ -7,8 +7,8 @@ spring:
     timeout-per-shutdown-phase: "60s"
 
   datasource:
-    username: ${DB_USERNAME:cos}
-    password: ${DB_PASSWORD:cos1234}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${JDBC_URL:jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true}
 
@@ -24,26 +24,28 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+  redis:
+    port: ${REDIS_PORT:6379}
+    host: ${REDIS_HOST:localhost}
+    password: ${REDIS_PASS}
+
   data:
     mongodb:
-      uri: mongodb://${MONGO_DB_URL:localhost}:27017
-      database: ${MONGO_DB_NAME}
+      uri: mongodb://${MONGO_DB_HOST:localhost}:${MONGO_DB_PORT:27017}
+      database: ${MONGO_DB_NAME:test}
+      username: ${MONGO_DB_USERNAME:admin}
+      password: ${MONGO_DB_PASSWORD:pass}
 
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
-  access-exp: ${JWT_ACCESS_EXP}
-  refresh-exp: ${JWT_REFRESH_EXP}
-
-redis:
-  port: ${REDIS_PORT}
-  host: ${REDIS_HOST}
-  password: ${REDIS_PASS}
+  secret-key: ${JWT_SECRET_KEY:tmp}
+  access-exp: ${JWT_ACCESS_EXP:1000000}
+  refresh-exp: ${JWT_REFRESH_EXP:1000000}
 
 auth:
-  base-url: ${GOOGLE_BASE_URL}
-  redirect-url: ${REDIRECT_URL}
-  client-id: ${GOOGLE_CLIENT_ID}
-  secret-key: ${GOOGLE_SECRET_KEY}
+  base-url: ${GOOGLE_BASE_URL:tmp}
+  redirect-url: ${REDIRECT_URL:tmp}
+  client-id: ${GOOGLE_CLIENT_ID:tmp}
+  secret-key: ${GOOGLE_SECRET_KEY:tmp}
 
 cloud:
   aws:
@@ -62,11 +64,13 @@ aws:
     profile-folder: ${AWS_S3_PROFILE_FOLDER:pro-image/}
     document-folder: ${AWS_S3_PREVIEW_FOLDER:doc-image/}
 
-verification:
-  phone:
-    limit-count-of-send: ${PHONE_LIMIT_COUNT}
-    base-time-to-live: ${PHONE_EXP}
-    code-length: ${PHONE_LENGTH}
-    key: ${SMS_KEY}
-    secret: ${SMS_SECRET}
-    phoneNumber: ${SMS_PHONE_NUMBER}
+cool-sms:
+  key: ${SMS_KEY:tmp}
+  secret: ${SMS_SECRET:tmp}
+  phoneNumber: ${SMS_PHONE_NUMBER:01012345678}
+
+domain:
+  auth:
+    code:
+      limit-count-of-send: ${PHONE_LIMIT_COUNT:10}
+      time-to-live: ${PHONE_EXP:100000}

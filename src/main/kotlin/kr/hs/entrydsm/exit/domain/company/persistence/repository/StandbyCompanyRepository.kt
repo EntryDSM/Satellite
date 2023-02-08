@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface StandbyCompanyRepository : CrudRepository<StandbyCompany, UUID>
+interface StandbyCompanyRepository : CrudRepository<StandbyCompany, UUID> {
+
+    fun findByNameContaining(name: String): List<StandbyCompany>
+}

@@ -6,7 +6,7 @@ import javax.persistence.Column
 import javax.persistence.Embeddable
 
 @Embeddable
-class FeedbackId(
+data class FeedbackId(
 
     @Column(nullable = false)
     val elementId: UUID,
@@ -14,4 +14,4 @@ class FeedbackId(
     @Column(nullable = false)
     val documentId: UUID
 
-) : Serializable
+): Serializable
