@@ -24,6 +24,11 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+  redis:
+    port: ${REDIS_PORT:6379}
+    host: ${REDIS_HOST:localhost}
+    password: ${REDIS_PASS}
+
   data:
     mongodb:
       uri: mongodb://${MONGO_DB_URL:localhost}:27017
@@ -33,11 +38,6 @@ jwt:
   secret-key: ${JWT_SECRET_KEY:tmp}
   access-exp: ${JWT_ACCESS_EXP:1000000}
   refresh-exp: ${JWT_REFRESH_EXP:1000000}
-
-redis:
-  port: ${REDIS_PORT:6379}
-  host: ${REDIS_HOST:localhost}
-  password: ${REDIS_PASS}
 
 auth:
   base-url: ${GOOGLE_BASE_URL:tmp}
@@ -62,12 +62,10 @@ aws:
     profile-folder: ${AWS_S3_PROFILE_FOLDER:pro-image/}
     document-folder: ${AWS_S3_PREVIEW_FOLDER:doc-image/}
 
-verification:
-  phone:
-    code-length: ${PHONE_LENGTH:tmp}
-    key: ${SMS_KEY:tmp}
-    secret: ${SMS_SECRET:tmp}
-    phoneNumber: ${SMS_PHONE_NUMBER:01012345678}
+cool-sms:
+  key: ${SMS_KEY:tmp}
+  secret: ${SMS_SECRET:tmp}
+  phoneNumber: ${SMS_PHONE_NUMBER:01012345678}
 
 domain:
   auth:
