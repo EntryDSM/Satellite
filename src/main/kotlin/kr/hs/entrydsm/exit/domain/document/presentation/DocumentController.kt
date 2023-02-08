@@ -1,9 +1,11 @@
 package kr.hs.entrydsm.exit.domain.document.presentation
 
+import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.*
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.CreateDocumentResponse
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.DocumentInfoResponse
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.DocumentListResponse
+import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.QueryDocumentPagingInfoResponse
 import kr.hs.entrydsm.exit.domain.document.usecase.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -25,6 +27,7 @@ class DocumentController(
     private val queryDocumentInfoUseCase: QueryDocumentInfoUseCase,
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
     private val querySharedDocumentUseCase: QuerySharedDocumentUseCase,
+    private val queryDocumentPagingInfoUseCase: QueryDocumentPagingInfoUseCase,
 
     private val submitMyDocumentUseCase: SubmitMyDocumentUseCase,
     private val cancelSubmitMyDocumentUseCase: CancelSubmitMyDocumentUseCase,
@@ -79,14 +82,22 @@ class DocumentController(
         return queryMyDocumentInfoUseCase.execute()
     }
 
+    @GetMapping("/{document-id}")
+    fun queryDocumentInfo(@PathVariable("document-id") documentId: UUID): DocumentInfoResponse {
+        return queryDocumentInfoUseCase.execute(documentId)
+    }
+
     @GetMapping("/shared")
     fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentRequest): DocumentListResponse {
         return querySharedDocumentUseCase.execute(request)
     }
 
-    @GetMapping("/{document-id}")
-    fun queryDocumentInfo(@PathVariable("document-id") documentId: UUID): DocumentInfoResponse {
-        return queryDocumentInfoUseCase.execute(documentId)
+    @GetMapping("/{document-id}/paging")
+    fun queryDocumentPagingInfoUseCase(
+        @PathVariable("document-id") documentId: UUID,
+        @RequestParam(defaultValue = "SHARED") status: Status
+    ): QueryDocumentPagingInfoResponse {
+        return queryDocumentPagingInfoUseCase.execute(documentId, status)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
