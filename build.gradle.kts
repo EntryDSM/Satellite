@@ -62,6 +62,7 @@ dependencies {
 
     // AWS
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+    implementation("com.amazonaws:aws-java-sdk-ses:1.12.144")
 
     // cool sms
     implementation("net.nurigo:javaSDK:2.2")
