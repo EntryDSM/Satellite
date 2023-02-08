@@ -15,16 +15,14 @@ class WriterInfoElement (
     val grade: String,
     val classNum: String,
     val number: String,
+    val studentNumber: Int = toStudentNumber(grade, classNum, number),
 
     val email: String,
 
     val majorId: UUID,
-    val majorName: String // TODO: Element로 묶고싶은데 묶으면 querydsl에서 SimplePath 처리돼서 query를 못함, 해결방안 찾을시 수정
+    val majorName: String
 
 ) {
-
-    val studentNumber: String
-        get() = grade + classNum + String.format("%02d", Integer.parseInt(number))
 
     constructor(
         student: Student,
@@ -84,4 +82,13 @@ class WriterInfoElement (
         )
     }
 
+    companion object {
+        fun toStudentNumber(
+            grade: String,
+            classNum: String,
+            number: String
+        ) = Integer.valueOf(
+            grade + classNum + String.format("%02d", Integer.parseInt(number))
+        )
+    }
 }
