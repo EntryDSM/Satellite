@@ -8,7 +8,7 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.common.getTestDocument
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.company.persistence.Company
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status

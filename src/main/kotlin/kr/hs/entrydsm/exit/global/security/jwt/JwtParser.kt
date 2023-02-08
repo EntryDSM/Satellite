@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.exit.global.security.jwt
 
 import io.jsonwebtoken.*
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.global.exception.InternalServerException
 import kr.hs.entrydsm.exit.global.exception.jwt.ExpiredTokenException
 import kr.hs.entrydsm.exit.global.exception.jwt.InvalidTokenException

@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.global.security
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.company.persistence.Company
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.teacher.persistence.Teacher

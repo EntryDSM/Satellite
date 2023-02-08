@@ -2,7 +2,7 @@ package kr.hs.entrydsm.exit.global.security.jwt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.global.security.jwt.properties.JwtConstants.ACCESS
 import kr.hs.entrydsm.exit.global.security.jwt.properties.JwtConstants.REFRESH
