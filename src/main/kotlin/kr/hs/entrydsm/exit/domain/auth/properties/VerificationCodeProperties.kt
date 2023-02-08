@@ -7,5 +7,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties(prefix = "domain.auth.code")
 class VerificationCodeProperties(
     val limitCountOfSend: Int,
-    val timeToLive: Long
+    val timeToLive: Long,
+    val codeLength: Int = 6
 )
