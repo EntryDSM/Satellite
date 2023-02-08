@@ -8,7 +8,7 @@ spring:
 
   datasource:
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:Mydptmzbdpf!1}
+    password: ${DB_PASSWORD:pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${JDBC_URL:jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true}
 
@@ -31,8 +31,10 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://${MONGO_DB_URL:localhost}:27017
+      uri: mongodb://${MONGO_DB_HOST:localhost}:${MONGO_DB_PORT:27017}
       database: ${MONGO_DB_NAME:test}
+      username: ${MONGO_DB_USERNAME:admin}
+      password: ${MONGO_DB_PASSWORD:pass}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY:tmp}
