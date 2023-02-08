@@ -7,6 +7,6 @@ import java.util.*
 
 @Repository
 interface CompanyRepository : CrudRepository<Company, UUID> {
-
+    fun findByEmail(email: String): Company?
     fun findByNameContaining(name: String): List<Company>
 }
