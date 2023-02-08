@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.domain.teacher.usecase
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.auth.persistence.RefreshToken
 import kr.hs.entrydsm.exit.domain.auth.persistence.repository.RefreshTokenRepository
@@ -32,16 +32,14 @@ class TeacherLoginUseCase(
             throw PasswordMismatchedException
         }
 
-        val tokenResponse = jwtGenerator.generateBothToken(teacher.id, Authority.TEACHER)
-
-        refreshTokenRepository.save(
-            RefreshToken(
-                userId = teacher.id,
-                token = tokenResponse.refreshToken,
-                timeToLive = securityProperties.refreshExp
+        return jwtGenerator.generateBothToken(teacher.id, Authority.TEACHER).also {  response ->
+            refreshTokenRepository.save(
+                RefreshToken(
+                    userId = teacher.id,
+                    token = response.refreshToken,
+                    timeToLive = securityProperties.refreshExp
+                )
             )
-        )
-
-        return tokenResponse
+        }
     }
 }

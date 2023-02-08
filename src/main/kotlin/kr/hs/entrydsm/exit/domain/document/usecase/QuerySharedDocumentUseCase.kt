@@ -18,7 +18,7 @@ class QuerySharedDocumentUseCase(
         val documentList = request.run {
             documentRepository.findByStatusAndWriterInfo(
                 status = Status.SHARED,
-                name = name,
+                name = name ?: "",
                 grade = grade,
                 classNum = classNum,
                 majorId = request.majorId
