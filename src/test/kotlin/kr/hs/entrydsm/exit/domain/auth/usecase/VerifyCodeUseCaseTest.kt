@@ -12,7 +12,7 @@ import kr.hs.entrydsm.exit.domain.auth.persistence.repository.VerificationCodeRe
 import kr.hs.entrydsm.exit.domain.auth.properties.VerificationCodeProperties
 import org.springframework.data.repository.findByIdOrNull
 
-internal class ReceivePhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
+internal class VerifyCodeUseCaseTest : DescribeSpec({
 
     val verificationCodeRepository: VerificationCodeRepository = mockk()
     val properties: VerificationCodeProperties = anyValueObject()

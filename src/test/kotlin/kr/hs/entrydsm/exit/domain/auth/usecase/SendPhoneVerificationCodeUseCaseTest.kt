@@ -4,7 +4,11 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.*
+import io.mockk.every
+import io.mockk.justRun
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.domain.auth.exception.AlreadyVerifiedException
 import kr.hs.entrydsm.exit.domain.auth.exception.TooManySendVerificationException
@@ -14,7 +18,7 @@ import kr.hs.entrydsm.exit.domain.auth.properties.VerificationCodeProperties
 import kr.hs.entrydsm.exit.global.thirdparty.sms.CoolSmsAdapter
 import org.springframework.data.repository.findByIdOrNull
 
-internal class SendPhoneNumberVerificationCodeUseCaseTest : DescribeSpec({
+internal class SendPhoneVerificationCodeUseCaseTest : DescribeSpec({
 
     val verificationCodeRepository: VerificationCodeRepository = mockk()
     val properties: VerificationCodeProperties = anyValueObject(
