@@ -10,6 +10,7 @@ data class StudentDocumentListResponse(
     val studentList: List<StudentDocumentResponse>
 ) {
     data class StudentDocumentResponse(
+        val studentId: UUID,
         val name: String,
         val documentStatus: Status,
         val documentId: UUID,
@@ -19,6 +20,7 @@ data class StudentDocumentListResponse(
         val major: MajorVO
     ) {
         constructor(document: Document): this(
+            studentId = document.writer.studentId,
             name = document.writer.name,
             documentStatus = document.status,
             documentId = document.id,
