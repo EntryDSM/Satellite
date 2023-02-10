@@ -4,9 +4,11 @@ import kr.hs.entrydsm.exit.domain.feedback.presentation.dto.request.ApplyFeedbac
 import kr.hs.entrydsm.exit.domain.feedback.presentation.dto.request.CreateFeedbackRequest
 import kr.hs.entrydsm.exit.domain.feedback.presentation.dto.request.DeleteFeedbackRequest
 import kr.hs.entrydsm.exit.domain.feedback.presentation.dto.request.UpdateFeedbackRequest
+import kr.hs.entrydsm.exit.domain.feedback.presentation.dto.response.FeedbackListResponse
 import kr.hs.entrydsm.exit.domain.feedback.usecase.ApplyFeedbackUseCase
 import kr.hs.entrydsm.exit.domain.feedback.usecase.CreateFeedbackUseCase
 import kr.hs.entrydsm.exit.domain.feedback.usecase.DeleteFeedbackUseCase
+import kr.hs.entrydsm.exit.domain.feedback.usecase.QueryMyDocumentFeedbackUseCase
 import kr.hs.entrydsm.exit.domain.feedback.usecase.UpdateFeedbackUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -18,7 +20,8 @@ class FeedbackController(
     private val createFeedbackUseCase: CreateFeedbackUseCase,
     private val deleteFeedbackUseCase: DeleteFeedbackUseCase,
     private val updateFeedbackUseCase: UpdateFeedbackUseCase,
-    private val applyFeedbackUseCase: ApplyFeedbackUseCase
+    private val applyFeedbackUseCase: ApplyFeedbackUseCase,
+    private val queryMyDocumentFeedbackUseCase: QueryMyDocumentFeedbackUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,5 +48,9 @@ class FeedbackController(
         applyFeedbackUseCase.execute(request)
     }
 
+    @GetMapping("/my")
+    fun queryMyDocumentFeedback(): FeedbackListResponse {
+        return queryMyDocumentFeedbackUseCase.execute()
+    }
 
 }

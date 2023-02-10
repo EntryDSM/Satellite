@@ -74,7 +74,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
 
             .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.GET, "/document/submitted").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.GET, "/document/student/{student-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
             .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
             .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
@@ -89,6 +89,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.GET, "/feedback/my").hasAuthority(STUDENT)
 
             .anyRequest().authenticated()
 
