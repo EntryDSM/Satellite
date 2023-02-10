@@ -1,6 +1,10 @@
 package kr.hs.entrydsm.exit.domain.document.persistence
 
-import kr.hs.entrydsm.exit.domain.document.persistence.element.*
+import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.CertificateElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.IntroduceElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.ProjectElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.global.entity.BaseMongoUUIDEntity
@@ -28,6 +32,17 @@ class Document(
 ): BaseMongoUUIDEntity(id) {
 
     fun isWriter(student: Student?) = writer.studentId == student?.id
+
+    fun getElementNameMap(): Map<UUID, String> {
+        val elementList = listOf(
+            writer,
+            introduce,
+            *projectList.toTypedArray(),
+            *awardList.toTypedArray(),
+            *certificateList.toTypedArray()
+        )
+        return elementList.associate { it.elementId to it.elementName}
+    }
 
     fun updateWriterInfo(writer: WriterInfoElement) =
         copy(writer = writer)
