@@ -9,13 +9,15 @@ object RandomUtil {
     private val RANDOM = Random()
 
     fun randomNumeric(length: Int): String {
-        if (length > 19) throw InternalServerException
+        if(length == 0) return ""
+        else if (length > 19) throw InternalServerException
         val bound = (10.0).pow(length).toLong()
         return String.format("%0${length}d", RANDOM.nextLong(bound))
     }
 
     fun random(length: Int): String {
-        if (length > 32) throw InternalServerException
+        if(length == 0) return ""
+        else if (length > 32) throw InternalServerException
         return UUID.randomUUID()
             .toString()
             .replace("-","")

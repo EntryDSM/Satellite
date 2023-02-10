@@ -3,8 +3,12 @@ package kr.hs.entrydsm.exit.domain.document.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.*
-import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
+import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
@@ -22,7 +26,7 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
 
     describe("submitMyDocumentUseCase") {
 
-        val student = AnyValueObjectGenerator.anyValueObject<Student>()
+        val student = anyValueObject<Student>("number" to "1")
         val document = getTestDocument(
             student = student,
             status = Status.CREATED

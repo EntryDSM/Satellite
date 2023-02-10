@@ -3,26 +3,32 @@ package kr.hs.entrydsm.exit.domain.document.persistence.element
 import kr.hs.entrydsm.exit.domain.major.persistence.Major
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import java.util.*
+import javax.persistence.Transient
 
 class WriterInfoElement (
 
-    val elementId: UUID = UUID.randomUUID(),
-    val studentId: UUID,
+    elementId: UUID? = null,
 
+    val studentId: UUID,
     val name: String,
+    val email: String,
     val profileImagePath: String,
 
     val grade: String,
     val classNum: String,
     val number: String,
-    val studentNumber: Int = toStudentNumber(grade, classNum, number),
-
-    val email: String,
 
     val majorId: UUID,
     val majorName: String
 
-) {
+) : AbstractElement(elementId) {
+    @get:Transient
+    override val elementName: String
+        get() = "내 정보"
+
+    @get:Transient
+    val studentNumber: Int
+        get() = toStudentNumber(grade, classNum, number)
 
     constructor(
         student: Student,

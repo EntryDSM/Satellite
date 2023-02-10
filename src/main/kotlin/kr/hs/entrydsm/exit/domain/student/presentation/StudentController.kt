@@ -16,12 +16,12 @@ class StudentController(
     private val queryStudentDocumentListUseCase: QueryStudentDocumentListUseCase
 ) {
 
-    @PostMapping("/")
+    @PostMapping
     fun studentSignUp(@RequestBody @Valid request: StudentSignUpRequest): TokenResponse {
         return studentSignUpUseCase.execute(request)
     }
 
-    @GetMapping("/")
+    @GetMapping
     fun queryStudentDocumentList(@ModelAttribute @Valid request: QueryDocumentRequest): StudentDocumentListResponse {
         return queryStudentDocumentListUseCase.execute(request)
     }

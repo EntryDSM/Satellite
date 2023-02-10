@@ -3,7 +3,11 @@ package kr.hs.entrydsm.exit.domain.document.usecase
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.exit.common.getTestDocument
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
@@ -22,7 +26,7 @@ internal class UpdateProjectUseCaseTest : DescribeSpec({
 
     describe("updateProject") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<Student>("number" to "1")
         val document = getTestDocument(student)
 
         val request = anyValueObject<UpdateProjectRequest>(

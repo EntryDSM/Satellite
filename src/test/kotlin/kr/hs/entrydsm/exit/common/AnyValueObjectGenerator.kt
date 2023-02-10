@@ -13,20 +13,15 @@ object AnyValueObjectGenerator {
 
         val params = constructor.parameters.map {
             val cls = it.type.classifier as KClass<*>
-            if (parameterMap[it.name] != null) parameterMap.remove(it.name) else anyValue(cls, it.isOptional)
+            if (parameterMap[it.name] != null) parameterMap.remove(it.name)
+            else anyValue(cls)
         }
-
-        if (parameterMap.isNotEmpty()) {
-            throw IllegalArgumentException("Map contains pairs with invalid name or type. $parameterMap")
-        }
+        require(parameterMap.isEmpty())
 
         return constructor.call(*params.toTypedArray())
     }
 
-    fun anyValue(cls: KClass<*>, isNullable: Boolean): Any? {
-
-        if (isNullable) return null
-
+    fun anyValue(cls: KClass<*>): Any? {
         return when (cls) {
             Boolean::class -> false
             Byte::class -> 0.toByte()
@@ -54,7 +49,9 @@ object AnyValueObjectGenerator {
             HashMap::class -> HashMap<Any, Any>()
             HashSet::class -> HashSet<Any>()
 
-            else -> { throw IllegalArgumentException("Fields of type ${cls.qualifiedName} cannot automatically generate values") }
+            else -> { throw IllegalArgumentException(
+                "Fields of type ${cls.qualifiedName} cannot automatically generate values"
+            ) }
         }
     }
 }

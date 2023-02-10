@@ -26,6 +26,7 @@ class DocumentController(
 
     private val queryDocumentInfoUseCase: QueryDocumentInfoUseCase,
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
+    private val queryStudentDocumentInfoUseCase: QueryStudentDocumentInfoUseCase,
     private val querySharedDocumentUseCase: QuerySharedDocumentUseCase,
     private val queryDocumentPagingInfoUseCase: QueryDocumentPagingInfoUseCase,
 
@@ -80,6 +81,11 @@ class DocumentController(
     @GetMapping("/my")
     fun queryMyDocumentInfo(): DocumentInfoResponse {
         return queryMyDocumentInfoUseCase.execute()
+    }
+
+    @GetMapping("/student/{student-id}")
+    fun queryStudentDocumentInfo(@PathVariable("student-id") studentId: UUID): DocumentInfoResponse {
+        return queryStudentDocumentInfoUseCase.execute(studentId)
     }
 
     @GetMapping("/{document-id}")

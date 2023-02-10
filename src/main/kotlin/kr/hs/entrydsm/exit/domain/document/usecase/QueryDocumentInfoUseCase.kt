@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.exit.domain.document.usecase
 
 import kr.hs.entrydsm.exit.domain.auth.constant.Authority
-import kr.hs.entrydsm.exit.domain.auth.constant.Authority.TEACHER
 import kr.hs.entrydsm.exit.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentNotFoundException
@@ -36,7 +35,7 @@ class QueryDocumentInfoUseCase(
     private fun hasAccess(status: Status, authority: Authority): Boolean {
         return when(status) {
             Status.CREATED -> false
-            Status.SUBMITTED -> authority == TEACHER
+            Status.SUBMITTED -> authority == Authority.TEACHER
             Status.SHARED -> true
         }
     }

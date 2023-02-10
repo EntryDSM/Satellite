@@ -13,13 +13,15 @@ import kr.hs.entrydsm.exit.domain.auth.persistence.repository.VerificationCodeRe
 import kr.hs.entrydsm.exit.domain.company.persistence.repository.StandbyCompanyRepository
 import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.CompanySignUpRequest
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.password.PasswordEncoder
 
 internal class CompanySignUpUseCaseTest  : DescribeSpec({
 
     val standByCompanyRepository = mockk<StandbyCompanyRepository>()
     val verificationCodeRepository = mockk<VerificationCodeRepository>()
+    val passwordEncoder = mockk<PasswordEncoder>()
 
-    val companySignUpUseCase = CompanySignUpUseCase(standByCompanyRepository, verificationCodeRepository)
+    val companySignUpUseCase = CompanySignUpUseCase(standByCompanyRepository, verificationCodeRepository, passwordEncoder)
 
     describe("companySignUp") {
 
@@ -35,6 +37,7 @@ internal class CompanySignUpUseCaseTest  : DescribeSpec({
             every { verificationCodeRepository.findByIdOrNull(request.phoneNumber) } returns verificationCode
             justRun { verificationCodeRepository.delete(verificationCode) }
             every { standByCompanyRepository.save(any()) } returnsArgument 0
+            every { passwordEncoder.encode(request.password) } returns ""
 
             it("승인 대기 회사로 저장한다.") {
 

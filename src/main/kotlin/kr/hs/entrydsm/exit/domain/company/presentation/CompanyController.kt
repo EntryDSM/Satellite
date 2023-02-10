@@ -36,7 +36,7 @@ class CompanyController(
         return passwordChangeUseCase.execute(request)
     }
 
-    @GetMapping("/")
+    @GetMapping
     fun queryCompany(@ModelAttribute request: QueryCompanyRequest): CompanyListResponse {
         return queryCompanyUseCase.execute(request)
     }
