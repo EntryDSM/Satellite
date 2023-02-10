@@ -17,7 +17,6 @@ class WriterInfoElement (
     val grade: String,
     val classNum: String,
     val number: String,
-    val studentNumber: Int = toStudentNumber(grade, classNum, number),
 
     val majorId: UUID,
     val majorName: String
@@ -26,6 +25,10 @@ class WriterInfoElement (
     @get:Transient
     override val elementName: String
         get() = "내 정보"
+
+    @get:Transient
+    val studentNumber: Int
+        get() = toStudentNumber(grade, classNum, number)
 
     constructor(
         student: Student,

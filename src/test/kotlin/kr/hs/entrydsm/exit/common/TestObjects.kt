@@ -10,7 +10,7 @@ import java.util.*
 
 
 fun getTestDocument(
-    student: Student = anyValueObject(),
+    student: Student = anyValueObject("number" to "1"),
     major: Major = anyValueObject(),
     status: Status = Status.CREATED
 ) = Document(

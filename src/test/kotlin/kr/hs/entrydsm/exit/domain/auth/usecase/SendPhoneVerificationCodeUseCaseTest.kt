@@ -22,7 +22,8 @@ internal class SendPhoneVerificationCodeUseCaseTest : DescribeSpec({
 
     val verificationCodeRepository: VerificationCodeRepository = mockk()
     val properties: VerificationCodeProperties = anyValueObject(
-        "limitCountOfSend" to 3
+        "limitCountOfSend" to 3,
+        "codeLength" to 6
     )
     val coolSmsAdapter: CoolSmsAdapter = mockk()
 

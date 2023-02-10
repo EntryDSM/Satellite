@@ -16,6 +16,7 @@ object AnyValueObjectGenerator {
             if (parameterMap[it.name] != null) parameterMap.remove(it.name)
             else anyValue(cls)
         }
+        require(parameterMap.isEmpty())
 
         return constructor.call(*params.toTypedArray())
     }

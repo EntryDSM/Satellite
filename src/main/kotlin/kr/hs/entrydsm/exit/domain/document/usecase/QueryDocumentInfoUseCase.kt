@@ -35,7 +35,7 @@ class QueryDocumentInfoUseCase(
     private fun hasAccess(status: Status, authority: Authority): Boolean {
         return when(status) {
             Status.CREATED -> false
-            Status.SUBMITTED -> false
+            Status.SUBMITTED -> authority == Authority.TEACHER
             Status.SHARED -> true
         }
     }
