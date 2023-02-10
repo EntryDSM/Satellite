@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.exit.domain.document.persistence.element
 
 import java.util.*
+import javax.persistence.Transient
 
 
 class ProjectElement (
 
-    val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val representImagePath: String,
     val startDate: Date,
@@ -14,4 +14,8 @@ class ProjectElement (
     val description: String,
     val url: String?
 
-)
+)  : AbstractElement() {
+    @get:Transient
+    override val elementName: String
+        get() = "프로젝트 $name"
+}
