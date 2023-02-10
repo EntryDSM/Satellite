@@ -5,34 +5,27 @@ import kr.hs.entrydsm.exit.domain.major.persistence.Major
 import kr.hs.entrydsm.exit.global.util.RegexUtil
 import org.hibernate.validator.constraints.Length
 import org.intellij.lang.annotations.Pattern
-import org.jetbrains.annotations.NotNull
 import java.util.*
 
 data class UpdateWriterInfoRequest (
 
     @field:Length(max=255)
-    
     val profileImagePath: String,
 
-    
     val majorId: UUID,
-
     
     val email: String,
 
     @field:Length(min=1, max=1)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    
     val grade: String,
 
     @field:Length(min=1, max=1)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    
     val classNum: String,
 
     @field:Length(min=2, max=2)
     @field:Pattern(RegexUtil.NUMBER_EXP)
-    
     val number: String
 
 ) {
