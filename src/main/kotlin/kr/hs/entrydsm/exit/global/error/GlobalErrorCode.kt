@@ -15,6 +15,7 @@ enum class GlobalErrorCode(
     IMAGE_EXTENSION_INVALID(400, "COMMON-400-1", "Image extension invalid"),
     IMAGE_NOT_FOUND(404, "COMMON-404-1", "Image not found"),
 
+    BAD_REQUEST(400, "COMMON-400-1", "Bad request"),
     INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal server error")
     ;
 
