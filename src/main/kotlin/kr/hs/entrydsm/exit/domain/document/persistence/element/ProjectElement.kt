@@ -6,6 +6,7 @@ import javax.persistence.Transient
 
 class ProjectElement (
 
+    elementId: UUID? = null,
     val name: String,
     val representImagePath: String,
     val startDate: Date,
@@ -14,7 +15,7 @@ class ProjectElement (
     val description: String,
     val url: String?
 
-)  : AbstractElement() {
+)  : AbstractElement(elementId) {
     @get:Transient
     override val elementName: String
         get() = "프로젝트 $name"

@@ -4,8 +4,10 @@ import java.util.*
 import javax.persistence.Transient
 
 abstract class AbstractElement(
-    val elementId: UUID = UUID.randomUUID()
+    elementId: UUID? = UUID.randomUUID()
 ) {
+    open val elementId: UUID = elementId ?: UUID.randomUUID()
+
     @get:Transient
     open val elementName: String
         get() = ""

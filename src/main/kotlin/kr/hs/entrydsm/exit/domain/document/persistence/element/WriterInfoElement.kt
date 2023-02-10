@@ -7,6 +7,8 @@ import javax.persistence.Transient
 
 class WriterInfoElement (
 
+    elementId: UUID? = null,
+
     val studentId: UUID,
     val name: String,
     val email: String,
@@ -20,7 +22,7 @@ class WriterInfoElement (
     val majorId: UUID,
     val majorName: String
 
-) : AbstractElement() {
+) : AbstractElement(elementId) {
     @get:Transient
     override val elementName: String
         get() = "내 정보"
