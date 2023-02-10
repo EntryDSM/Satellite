@@ -1,10 +1,12 @@
 package kr.hs.entrydsm.exit.domain.auth.presentation
 
-import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.ReceivePhoneNumberCodeRequest
-import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.SendPhoneNumberCodeRequest
+import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.SendMailVerificationCodeRequest
+import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.SendPhoneVerificationCodeRequest
+import kr.hs.entrydsm.exit.domain.auth.presentation.dto.request.VerifyCodeRequest
 import kr.hs.entrydsm.exit.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse
-import kr.hs.entrydsm.exit.domain.auth.usecase.VerifyPhoneNumberUseCase
-import kr.hs.entrydsm.exit.domain.auth.usecase.SendPhoneNumberVerificationCodeUseCase
+import kr.hs.entrydsm.exit.domain.auth.usecase.SendMailVerificationCodeUseCase
+import kr.hs.entrydsm.exit.domain.auth.usecase.SendPhoneVerificationCodeUseCase
+import kr.hs.entrydsm.exit.domain.auth.usecase.VerifyCodeUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,24 +19,40 @@ import javax.validation.Valid
 @RequestMapping("/auth")
 @RestController
 class AuthController(
-    private val sendPhoneNumberVerificationCodeUseCase: SendPhoneNumberVerificationCodeUseCase,
-    private val verifyPhoneNumberUseCase: VerifyPhoneNumberUseCase
+    private val sendPhoneVerificationCodeUseCase: SendPhoneVerificationCodeUseCase,
+    private val sendMailVerificationCodeUseCase: SendMailVerificationCodeUseCase,
+    private val verifyCodeUseCase: VerifyCodeUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/phone")
-    fun sendPhoneNumberVerificationCode(@RequestBody @Valid request: SendPhoneNumberCodeRequest): SendPhoneNumberCodeResponse {
-        return sendPhoneNumberVerificationCodeUseCase.execute(
+    fun sendPhoneVerificationCode(
+        @RequestBody @Valid request: SendPhoneVerificationCodeRequest
+    ): SendPhoneNumberCodeResponse {
+        return sendPhoneVerificationCodeUseCase.execute(
             phoneNumber = request.phoneNumber
         )
     }
 
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping("/phone")
-    fun receivePhoneNumberVerificationCode(@RequestBody @Valid request: ReceivePhoneNumberCodeRequest) {
-        verifyPhoneNumberUseCase.execute(
-            code = request.code,
-            phoneNumber = request.phoneNumber
+    @PostMapping("/mail")
+    fun sendMailVerificationCode(
+        @RequestBody @Valid request: SendMailVerificationCodeRequest
+    ) {
+        return sendMailVerificationCodeUseCase.execute(
+            email = request.email
+        )
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping("/verify")
+    fun verifyCode(
+        @RequestBody @Valid request: VerifyCodeRequest
+    ) {
+        verifyCodeUseCase.execute(
+            key = request.key,
+            code = request.code
         )
     }
 }

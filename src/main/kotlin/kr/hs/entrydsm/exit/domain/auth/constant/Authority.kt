@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.exit.domain.auth
+package kr.hs.entrydsm.exit.domain.auth.constant
 
 enum class Authority {
     STUDENT,

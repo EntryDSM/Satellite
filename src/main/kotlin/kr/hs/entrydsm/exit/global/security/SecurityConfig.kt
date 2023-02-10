@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.exit.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.global.config.FilterConfig
 import kr.hs.entrydsm.exit.global.security.jwt.JwtParser
 import org.springframework.context.annotation.Bean
@@ -26,7 +26,7 @@ internal class SecurityConfig(
     }
 
     @Bean
-    protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
 
         http
             .csrf().disable()
@@ -47,11 +47,16 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/student").permitAll()
             .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
+            .antMatchers(HttpMethod.POST, "/student/sign/test").permitAll()
+
             // COMPANY
+            .antMatchers(HttpMethod.POST, "/company/auth").permitAll()
+            .antMatchers(HttpMethod.PATCH, "/company/password").permitAll()
+            .antMatchers(HttpMethod.GET, "/company").hasAuthority(TEACHER)
+
             .antMatchers(HttpMethod.POST, "/company/sing-up").permitAll()
             .antMatchers(HttpMethod.POST, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/company/standby/{standby-company-id}").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.GET, "/company").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/company/standby").hasAuthority(TEACHER)
 
             // DOCUMENT
@@ -71,6 +76,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.GET, "/document/submitted").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
             .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
 
             // MAJOR
@@ -84,7 +90,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
 
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
 
         http
             .apply(FilterConfig(jwtParser, objectMapper))

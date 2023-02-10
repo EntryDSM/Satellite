@@ -1,5 +1,8 @@
 package kr.hs.entrydsm.exit.domain.company.presentation
 
+import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
+import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.CompanyPasswordChangeRequest
+import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.CompanySignInRequest
 import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.CompanySignUpRequest
 import kr.hs.entrydsm.exit.domain.company.presentation.dto.request.QueryCompanyRequest
 import kr.hs.entrydsm.exit.domain.company.presentation.dto.response.CompanyListResponse
@@ -12,13 +15,33 @@ import javax.validation.Valid
 @RequestMapping("/company")
 @RestController
 class CompanyController(
+    private val signInUseCase: CompanySignInUseCase,
+    private val passwordChangeUseCase: CompanyPasswordChangeUseCase,
+    private val queryCompanyUseCase: QueryCompanyUseCase,
+
     private val companySignUpUseCase: CompanySignUpUseCase,
     private val allowStandByCompanyUseCase: AllowStandbyCompanyUseCase,
     private val rejectStandByCompanyUseCase: RejectStandbyCompanyUseCase,
     private val queryStandbyCompanyUseCase: QueryStandbyCompanyUseCase,
-    private val queryCompanyUseCase: QueryCompanyUseCase,
 ) {
 
+    @PostMapping("/auth")
+    fun signIn(@ModelAttribute request: CompanySignInRequest): TokenResponse {
+        return signInUseCase.execute(request)
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @GetMapping("/password")
+    fun passwordChange(@ModelAttribute request: CompanyPasswordChangeRequest) {
+        return passwordChangeUseCase.execute(request)
+    }
+
+    @GetMapping("/")
+    fun queryCompany(@ModelAttribute request: QueryCompanyRequest): CompanyListResponse {
+        return queryCompanyUseCase.execute(request)
+    }
+
+    // TODO: 보류
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
     fun signUp(@RequestBody @Valid request: CompanySignUpRequest) {
@@ -42,8 +65,4 @@ class CompanyController(
         return queryStandbyCompanyUseCase.execute(request)
     }
 
-    @GetMapping("/")
-    fun queryCompany(@ModelAttribute request: QueryCompanyRequest): CompanyListResponse {
-        return queryStandbyCompanyUseCase.execute(request)
-    }
 }

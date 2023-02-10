@@ -54,15 +54,22 @@ cloud:
     stack:
       auto: false
     credentials:
-      access-key: ${AWS_S3_ACCESS:s3_access}
-      secret-key: ${AWS_S3_SECRET:s3_secret}
+      access-key: ${AWS_S3_ACCESS:tmp}
+      secret-key: ${AWS_S3_SECRET:tmp}
+  ses:
+    access-key: ${AWS_SES_ACCESS:tmp}
+    secret-key: ${AWS_SES_SECRET:tmp}
 
 aws:
   s3:
-    url: ${AWS_S3_URL:https://}
-    bucket: ${AWS_S3_BUCKET:bucket}
-    profile-folder: ${AWS_S3_PROFILE_FOLDER:pro-image/}
-    document-folder: ${AWS_S3_PREVIEW_FOLDER:doc-image/}
+    url: ${AWS_S3_URL:tmp}
+    bucket: ${AWS_S3_BUCKET:tmp}
+    profile-folder: ${AWS_S3_PROFILE_FOLDER:tmp}
+    document-folder: ${AWS_S3_PREVIEW_FOLDER:tmp}
+  ses:
+    access-key: ${AWS_SES_ACCESS:tmp}
+    secret-key: ${AWS_SES_SECRET:tmp}
+    region: ${AWS_SES_REGION:tmp}
 
 cool-sms:
   key: ${SMS_KEY:tmp}

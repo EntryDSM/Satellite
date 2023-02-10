@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull
 
 data class DeleteFeedbackRequest(
 
-    @field:NotNull
+    
     val documentId: UUID,
 
-    @field:NotNull
+    
     val elementId: UUID,
 )

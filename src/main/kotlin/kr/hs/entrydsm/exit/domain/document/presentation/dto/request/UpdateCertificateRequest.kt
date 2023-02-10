@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty
 
 data class UpdateCertificateRequest(
 
-    @field:NotNull
+    
     val certificateList: List<CertificateRequest>
 ) {
     data class CertificateRequest(
@@ -21,7 +21,7 @@ data class UpdateCertificateRequest(
         @field:NotEmpty
         val issuingInstitution: String,
 
-        @field:NotNull
+        
         val date: Date
     ) {
         fun toCertificateElement(): CertificateElement {

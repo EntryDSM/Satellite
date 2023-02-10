@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.exit.global.security.auth.details
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.company.persistence.Company
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

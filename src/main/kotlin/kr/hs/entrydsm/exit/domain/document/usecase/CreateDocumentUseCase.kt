@@ -2,13 +2,13 @@ package kr.hs.entrydsm.exit.domain.document.usecase
 
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAlreadyExistException
-import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.request.CreateDocumentRequest
 import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.CreateDocumentResponse
+import kr.hs.entrydsm.exit.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.exit.domain.major.persistence.repository.MajorRepository
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.global.security.SecurityUtil
@@ -24,7 +24,7 @@ class CreateDocumentUseCase(
 
         val student = SecurityUtil.getCurrentStudent()
 
-        if(writerIsExist(student)){
+        if (documentIsExist(student)){
             throw DocumentAlreadyExistException
         }
 
@@ -40,7 +40,7 @@ class CreateDocumentUseCase(
         return CreateDocumentResponse(document.id)
     }
 
-    private fun writerIsExist(student: Student): Boolean {
+    private fun documentIsExist(student: Student): Boolean {
        return documentRepository.findByWriterStudentId(student.id) != null
     }
 

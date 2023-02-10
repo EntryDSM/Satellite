@@ -1,7 +1,11 @@
 package kr.hs.entrydsm.exit.domain.document.presentation.dto.response
 
 import kr.hs.entrydsm.exit.domain.document.persistence.Document
-import kr.hs.entrydsm.exit.domain.document.persistence.element.*
+import kr.hs.entrydsm.exit.domain.document.persistence.element.AwardElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.CertificateElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.IntroduceElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.ProjectElement
+import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.major.presentation.dto.response.MajorVO
 import java.util.*
@@ -51,7 +55,7 @@ data class DocumentInfoResponse(
         val studentId: UUID,
         val name: String,
         val profileImagePath: String,
-        val studentNumber: String,
+        val studentNumber: Int,
         val email: String,
         val major: MajorVO,
         val feedback: String?

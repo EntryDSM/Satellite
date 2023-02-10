@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kr.hs.entrydsm.exit.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.exit.domain.auth.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.exit.domain.student.exception.SignUpRequiredRedirection

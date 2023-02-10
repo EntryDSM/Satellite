@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.exit.domain.document.usecase
 
-import kr.hs.entrydsm.exit.domain.auth.Authority
-import kr.hs.entrydsm.exit.domain.auth.Authority.TEACHER
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority
+import kr.hs.entrydsm.exit.domain.auth.constant.Authority.TEACHER
 import kr.hs.entrydsm.exit.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.exit.domain.document.exception.DocumentNotFoundException

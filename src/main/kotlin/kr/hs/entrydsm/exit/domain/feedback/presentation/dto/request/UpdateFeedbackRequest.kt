@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull
 
 data class UpdateFeedbackRequest(
 
-    @field:NotNull
+    
     val documentId: UUID,
 
-    @field:NotNull
+    
     val elementId: UUID,
 
     @field:NotBlank
