@@ -4,7 +4,6 @@ import kr.hs.entrydsm.exit.domain.auth.dto.response.GoogleLoginLinkResponse
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.student.usecase.StudentGoogleOauthUseCase
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -20,7 +19,7 @@ class StudentGoogleOauthController(
         return studentAuthService.getLink()
     }
 
-    @PostMapping("/sign")
+    @GetMapping("/sign")
     fun studentSingUpOrIn(@RequestParam("code") code: String): TokenResponse {
         return studentAuthService.signUpOrIn(code)
     }
