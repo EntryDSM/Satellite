@@ -8,12 +8,14 @@ import kr.hs.entrydsm.exit.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.global.entity.BaseMongoUUIDEntity
-import java.util.*
+import java.util.UUID
 
 @org.springframework.data.mongodb.core.mapping.Document(collection="documents")
 class Document(
 
     id: UUID? = null,
+
+    val year: Int,
 
     val writer: WriterInfoElement,
 
@@ -67,6 +69,7 @@ class Document(
 
     private fun copy(
         writer: WriterInfoElement = this.writer,
+        year: Int = this.year,
         status: Status = this.status,
         introduce: IntroduceElement = this.introduce,
         skillSet: MutableList<String> = this.skillSet,
@@ -77,6 +80,7 @@ class Document(
         return Document(
             id = this.id,
             writer = writer,
+            year = year,
             status = status,
             introduce = introduce,
             skillSet = skillSet,

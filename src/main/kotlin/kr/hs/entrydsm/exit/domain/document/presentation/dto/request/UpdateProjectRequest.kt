@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.exit.domain.document.presentation.dto.request
 
 import kr.hs.entrydsm.exit.domain.document.persistence.element.ProjectElement
-import kr.hs.entrydsm.exit.domain.image.domain.DefaultImage
+import kr.hs.entrydsm.exit.domain.file.domain.DefaultImage
 import org.hibernate.validator.constraints.Length
 import java.util.*
 
