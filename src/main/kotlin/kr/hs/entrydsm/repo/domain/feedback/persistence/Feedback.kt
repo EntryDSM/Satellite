@@ -1,7 +1,11 @@
 package kr.hs.entrydsm.repo.domain.feedback.persistence
 
 import java.util.UUID
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.IdClass
+import javax.persistence.Table
 
 @IdClass(FeedbackId::class)
 @Entity
