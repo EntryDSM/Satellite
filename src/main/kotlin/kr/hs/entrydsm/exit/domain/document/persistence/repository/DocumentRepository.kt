@@ -5,12 +5,14 @@ import kr.hs.entrydsm.exit.domain.document.persistence.Document
 import kr.hs.entrydsm.exit.domain.document.persistence.enums.Status
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.querydsl.QuerydslPredicateExecutor
-import java.util.*
+import java.util.UUID
 
 
 interface DocumentRepository: MongoRepository<Document, UUID>, QuerydslPredicateExecutor<Document> {
 
     fun findByWriterStudentId(studentId: UUID): Document?
+
+    fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<Document>
 
     fun findTopByStatusAndWriterStudentNumberIsGreaterThanOrderByWriterStudentNumber(
         status: Status,
@@ -21,4 +23,6 @@ interface DocumentRepository: MongoRepository<Document, UUID>, QuerydslPredicate
         status: Status,
         studentNumber: Int
     ): Document?
+
+    fun deleteByYear(year: Int)
 }

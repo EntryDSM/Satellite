@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.exit.domain.major.persistence
+package kr.hs.entrydsm.exit.domain.school.persistence
 
 import kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity
 import java.util.UUID
@@ -6,13 +6,13 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
 
-@Table(name = "tbl_major")
+@Table(name = "tbl_school_year")
 @Entity
-class Major(
+class SchoolYear(
 
-     id: UUID? = null,
+    id: UUID? = null,
 
-     @Column(columnDefinition = "VARCHAR(30)", nullable = false)
-     val name: String
+    @Column(columnDefinition = "INT", nullable = false)
+    val year: Int
 
 ): BaseUUIDEntity(id)

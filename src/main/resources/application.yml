@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: ${DDL:update}
+      ddl-auto: ${DDL:validate}
     properties:
       hibernate:
         format_sql: ${FORMAT_SQL:true}
@@ -36,6 +36,12 @@ spring:
       database: ${MONGO_DB_NAME:test}
       username: ${MONGO_DB_USERNAME:admin}
       password: ${MONGO_DB_PASSWORD:pass}
+
+  thymeleaf:
+    prefix: classpath:/templates
+
+  main:
+    allow-bean-definition-overriding: true
 
 jwt:
   secret-key: ${JWT_SECRET_KEY:tmp}
@@ -65,8 +71,9 @@ aws:
   s3:
     url: ${AWS_S3_URL:tmp}
     bucket: ${AWS_S3_BUCKET:tmp}
-    profile-folder: ${AWS_S3_PROFILE_FOLDER:tmp}
-    document-folder: ${AWS_S3_PREVIEW_FOLDER:tmp}
+    profile-folder: ${AWS_S3_PROFILE_FOLDER:repo-pof}
+    document-folder: ${AWS_S3_DOC_FOLDER:repo-doc}
+    pdf-folder: ${AWS_S3_PDF_FOLDER:repo-pdf}
   ses:
     access-key: ${AWS_SES_ACCESS:tmp}
     secret-key: ${AWS_SES_SECRET:tmp}
@@ -82,3 +89,7 @@ domain:
     code:
       limit-count-of-send: ${PHONE_LIMIT_COUNT:10}
       time-to-live: ${PHONE_EXP:100000}
+  school:
+    year:
+      id: ${SCHOOL_YEAR_ID}
+      secret: ${SCHOOL_YEAR_ADMIN_KEY}

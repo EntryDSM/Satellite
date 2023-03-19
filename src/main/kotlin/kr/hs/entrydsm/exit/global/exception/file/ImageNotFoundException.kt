@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.exit.global.exception.image
+package kr.hs.entrydsm.exit.global.exception.file
 
 import kr.hs.entrydsm.exit.global.error.GlobalErrorCode
 import kr.hs.entrydsm.exit.global.error.custom.GlobalCustomException

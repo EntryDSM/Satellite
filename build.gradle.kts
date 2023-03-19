@@ -67,6 +67,11 @@ dependencies {
     // cool sms
     implementation("net.nurigo:javaSDK:2.2")
 
+    // pdf
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("com.itextpdf:itext7-core:7.1.9")
+    implementation("com.itextpdf:html2pdf:3.0.1")
+
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

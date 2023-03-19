@@ -11,7 +11,7 @@ import kr.hs.entrydsm.exit.domain.document.presentation.dto.response.DocumentInf
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.exit.global.security.SecurityUtil
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import java.util.UUID
 
 @ReadOnlyUseCase
 class QueryDocumentInfoUseCase(
@@ -22,7 +22,6 @@ class QueryDocumentInfoUseCase(
     fun execute(documentId: UUID): DocumentInfoResponse {
 
         val authority = SecurityUtil.getCurrentUserAuthority()
-        
         val document = documentRepository.findByIdOrNull(documentId) ?: throw DocumentNotFoundException
 
         if(!isWriter(document) && !hasAccess(document.status, authority)) {

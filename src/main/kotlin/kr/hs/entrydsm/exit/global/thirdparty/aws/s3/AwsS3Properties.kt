@@ -8,5 +8,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class AwsS3Properties(
     val bucket: String,
     val profileFolder: String,
-    val documentFolder: String
+    val documentFolder: String,
+    val pdfFolder: String
 )
