@@ -6,13 +6,12 @@ import kr.hs.entrydsm.repo.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @UseCase
 class CancelShareDocumentUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(documentId: UUID) {
 
         val document = documentRepository.findByIdOrNull(documentId) ?: throw DocumentNotFoundException

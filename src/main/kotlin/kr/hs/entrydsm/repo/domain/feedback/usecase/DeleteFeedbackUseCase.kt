@@ -13,7 +13,6 @@ class DeleteFeedbackUseCase(
     private val documentRepository: DocumentRepository,
     private val feedbackRepository: FeedbackRepository
 ) {
-
     fun execute(request: DeleteFeedbackRequest) {
 
         val document = documentRepository.findByIdOrNull(request.documentId) ?: throw DocumentNotFoundException

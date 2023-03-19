@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.global.security.SecurityUtil
 class UpdateProjectUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(request: UpdateProjectRequest) {
 
         val student = SecurityUtil.getCurrentStudent()

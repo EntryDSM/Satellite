@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.global.security.SecurityUtil
 class UpdateCertificateUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(request: UpdateCertificateRequest) {
 
         val student = SecurityUtil.getCurrentStudent()

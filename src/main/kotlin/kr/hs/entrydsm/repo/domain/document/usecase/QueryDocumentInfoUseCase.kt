@@ -10,14 +10,13 @@ import kr.hs.entrydsm.repo.domain.document.presentation.dto.response.DocumentInf
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.repo.global.security.SecurityUtil
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @ReadOnlyUseCase
 class QueryDocumentInfoUseCase(
     private val documentRepository: DocumentRepository,
     private val studentRepository: StudentRepository
 ) {
-
     fun execute(documentId: UUID): DocumentInfoResponse {
 
         val authority = SecurityUtil.getCurrentUserAuthority()

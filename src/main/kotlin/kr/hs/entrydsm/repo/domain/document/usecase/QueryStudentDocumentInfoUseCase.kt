@@ -8,7 +8,7 @@ import kr.hs.entrydsm.repo.domain.feedback.persistence.repository.FeedbackReposi
 import kr.hs.entrydsm.repo.domain.student.exception.StudentNotFoundException
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @ReadOnlyUseCase
 class QueryStudentDocumentInfoUseCase(
@@ -16,7 +16,6 @@ class QueryStudentDocumentInfoUseCase(
     private val documentRepository: DocumentRepository,
     private val feedbackRepository: FeedbackRepository
 ) {
-
     fun execute(studentId: UUID): DocumentInfoResponse {
 
         val student = studentRepository.findByIdOrNull(studentId) ?: throw StudentNotFoundException

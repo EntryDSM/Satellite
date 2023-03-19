@@ -18,7 +18,6 @@ class TeacherLoginUseCase(
     private val refreshTokenRepository: kr.hs.entrydsm.repo.domain.auth.persistence.repository.RefreshTokenRepository,
     private val securityProperties: SecurityProperties
 ) {
-
     fun execute(request: TeacherSignInRequest): kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse? {
 
         val teacher = teacherRepository.findByAccountId(request.accountId)

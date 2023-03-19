@@ -18,7 +18,6 @@ class UpdateWriterInfoUseCase(
     private val studentRepository: StudentRepository,
     private val majorRepository: MajorRepository
 ) {
-
     fun execute(request: UpdateWriterInfoRequest) {
 
         val student = SecurityUtil.getCurrentStudent()

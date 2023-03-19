@@ -6,13 +6,12 @@ import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.repo.domain.document.presentation.dto.response.QueryDocumentPagingInfoResponse
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @ReadOnlyUseCase
 class QueryDocumentPagingInfoUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(
         documentId: UUID,
         status: Status

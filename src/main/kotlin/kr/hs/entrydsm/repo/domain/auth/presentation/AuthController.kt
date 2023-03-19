@@ -1,5 +1,9 @@
 package kr.hs.entrydsm.repo.domain.auth.presentation
 
+import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendMailVerificationCodeRequest
+import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendPhoneVerificationCodeRequest
+import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.VerifyCodeRequest
+import kr.hs.entrydsm.repo.domain.auth.usecase.SendMailVerificationCodeUseCase
 import kr.hs.entrydsm.repo.domain.auth.usecase.SendPhoneVerificationCodeUseCase
 import kr.hs.entrydsm.repo.domain.auth.usecase.VerifyCodeUseCase
 import org.springframework.http.HttpStatus
@@ -15,14 +19,14 @@ import javax.validation.Valid
 @RestController
 class AuthController(
     private val sendPhoneVerificationCodeUseCase: SendPhoneVerificationCodeUseCase,
-    private val sendMailVerificationCodeUseCase: kr.hs.entrydsm.repo.domain.auth.usecase.SendMailVerificationCodeUseCase,
+    private val sendMailVerificationCodeUseCase: SendMailVerificationCodeUseCase,
     private val verifyCodeUseCase: VerifyCodeUseCase
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/phone")
     fun sendPhoneVerificationCode(
-        @RequestBody @Valid request: kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendPhoneVerificationCodeRequest
+        @RequestBody @Valid request: SendPhoneVerificationCodeRequest
     ): kr.hs.entrydsm.repo.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse {
         return sendPhoneVerificationCodeUseCase.execute(
             phoneNumber = request.phoneNumber
@@ -33,7 +37,7 @@ class AuthController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/mail")
     fun sendMailVerificationCode(
-        @RequestBody @Valid request: kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendMailVerificationCodeRequest
+        @RequestBody @Valid request: SendMailVerificationCodeRequest
     ) {
         return sendMailVerificationCodeUseCase.execute(
             email = request.email
@@ -43,7 +47,7 @@ class AuthController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/verify")
     fun verifyCode(
-        @RequestBody @Valid request: kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.VerifyCodeRequest
+        @RequestBody @Valid request: VerifyCodeRequest
     ) {
         verifyCodeUseCase.execute(
             key = request.key,

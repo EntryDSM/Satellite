@@ -12,7 +12,6 @@ class QueryMyDocumentInfoUseCase(
     private val documentRepository: DocumentRepository,
     private val feedbackRepository: FeedbackRepository
 ) {
-
     fun execute(): DocumentInfoResponse {
 
         val student = SecurityUtil.getCurrentStudent()

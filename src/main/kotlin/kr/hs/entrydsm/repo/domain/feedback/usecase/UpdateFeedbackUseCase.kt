@@ -14,7 +14,6 @@ class UpdateFeedbackUseCase(
     private val documentRepository: DocumentRepository,
     private val feedbackRepository: FeedbackRepository
 ) {
-
     fun execute(request: UpdateFeedbackRequest) {
 
         val document = documentRepository.findByIdOrNull(request.documentId) ?: throw DocumentNotFoundException

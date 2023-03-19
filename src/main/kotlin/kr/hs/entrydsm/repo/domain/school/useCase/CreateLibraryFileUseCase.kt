@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.school.useCase
 
+import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.repo.domain.school.facade.SchoolYearFacade
 import kr.hs.entrydsm.repo.domain.school.persistence.AccessRight
@@ -12,11 +13,10 @@ import kr.hs.entrydsm.repo.global.thirdparty.aws.s3.AwsS3Adapter
 import kr.hs.entrydsm.repo.global.thirdparty.pdf.PdfAdapter
 import kr.hs.entrydsm.repo.global.util.FileUtil.toFileDateFormat
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
 import java.io.File
 import java.time.LocalDateTime
 
-@Component
+@UseCase
 class CreateLibraryFileUseCase(
     private val passwordEncoder: PasswordEncoder,
     private val schoolYearProperties: SchoolYearProperties,

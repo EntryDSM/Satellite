@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.domain.student.presentation.dto.response.StudentDocum
 class QueryStudentDocumentListUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(request: QueryDocumentRequest): StudentDocumentListResponse {
 
         val documentList = request.run {

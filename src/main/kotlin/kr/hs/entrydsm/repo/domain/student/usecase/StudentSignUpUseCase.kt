@@ -16,7 +16,6 @@ class StudentSignUpUseCase(
     private val studentRepository: StudentRepository,
     private val jwtGenerator: JwtGenerator
 ) {
-
     fun execute(request: StudentSignUpRequest): kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse {
 
         checkEmailSuffix(request.email)

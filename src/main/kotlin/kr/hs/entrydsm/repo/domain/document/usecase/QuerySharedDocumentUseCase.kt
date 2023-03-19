@@ -12,7 +12,6 @@ import kr.hs.entrydsm.repo.domain.document.presentation.dto.response.DocumentLis
 class QuerySharedDocumentUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute(request: QueryDocumentRequest): DocumentListResponse {
 
         val documentList = request.run {

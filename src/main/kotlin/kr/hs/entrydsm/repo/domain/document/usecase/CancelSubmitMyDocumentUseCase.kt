@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.global.security.SecurityUtil
 class CancelSubmitMyDocumentUseCase(
     private val documentRepository: DocumentRepository
 ) {
-
     fun execute() {
 
         val student = SecurityUtil.getCurrentStudent()

@@ -21,7 +21,6 @@ class CreateDocumentUseCase(
     private val majorRepository: MajorRepository,
     private val schoolYearFacade: SchoolYearFacade
 ) {
-
     fun execute(request: CreateDocumentRequest): CreateDocumentResponse {
 
         val student = SecurityUtil.getCurrentStudent()

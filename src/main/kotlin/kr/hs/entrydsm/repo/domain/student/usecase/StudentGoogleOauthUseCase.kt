@@ -20,7 +20,6 @@ class StudentGoogleOauthUseCase(
     private val googleEmail: GoogleEmail,
     private val jwtGenerator: JwtGenerator
 ) {
-
     companion object {
         private const val url = "%s?client_id=%s&redirect_uri=%s&response_type=code" +
                 "&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"

@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.school.useCase
 
+import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.school.persistence.SchoolYear
 import kr.hs.entrydsm.repo.domain.school.persistence.repository.SchoolYearRepository
 import kr.hs.entrydsm.repo.domain.school.properties.SchoolYearProperties
@@ -7,9 +8,8 @@ import kr.hs.entrydsm.repo.global.exception.ForbiddenException
 import kr.hs.entrydsm.repo.global.exception.InternalServerException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
 
-@Component
+@UseCase
 class ChangeSchoolYearUseCase(
     private val schoolYearProperties: SchoolYearProperties,
     private val schoolYearRepository: SchoolYearRepository,

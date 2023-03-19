@@ -12,7 +12,6 @@ class QueryMyDocumentFeedbackUseCase(
     private val documentRepository: DocumentRepository,
     private val feedbackRepository: FeedbackRepository
 ) {
-
     fun execute(): FeedbackListResponse {
 
         val student = SecurityUtil.getCurrentStudent()
