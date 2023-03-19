@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.repo.domain.document.persistence.element
 
-import java.util.*
+import java.util.Date
+import java.util.UUID
 import javax.persistence.Transient
 
 class CertificateElement(

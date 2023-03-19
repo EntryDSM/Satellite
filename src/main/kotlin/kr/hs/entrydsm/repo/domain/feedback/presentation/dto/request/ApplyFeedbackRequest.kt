@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.repo.domain.feedback.presentation.dto.request
 
-import java.util.*
-import javax.validation.constraints.NotNull
+import java.util.UUID
 
 data class ApplyFeedbackRequest (
 

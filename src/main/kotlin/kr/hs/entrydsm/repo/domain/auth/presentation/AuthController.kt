@@ -1,10 +1,5 @@
 package kr.hs.entrydsm.repo.domain.auth.presentation
 
-import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendMailVerificationCodeRequest
-import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendPhoneVerificationCodeRequest
-import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.VerifyCodeRequest
-import kr.hs.entrydsm.repo.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse
-import kr.hs.entrydsm.repo.domain.auth.usecase.SendMailVerificationCodeUseCase
 import kr.hs.entrydsm.repo.domain.auth.usecase.SendPhoneVerificationCodeUseCase
 import kr.hs.entrydsm.repo.domain.auth.usecase.VerifyCodeUseCase
 import org.springframework.http.HttpStatus

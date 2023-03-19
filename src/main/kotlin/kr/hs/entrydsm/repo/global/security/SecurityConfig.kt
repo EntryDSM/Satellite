@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.repo.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.global.config.FilterConfig
 import kr.hs.entrydsm.repo.global.security.jwt.JwtParser
 import org.springframework.context.annotation.Bean

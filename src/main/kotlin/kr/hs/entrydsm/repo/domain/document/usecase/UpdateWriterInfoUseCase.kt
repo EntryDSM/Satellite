@@ -2,10 +2,10 @@ package kr.hs.entrydsm.repo.domain.document.usecase
 
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.repo.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.repo.domain.document.presentation.dto.request.UpdateWriterInfoRequest
+import kr.hs.entrydsm.repo.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.repo.domain.major.persistence.repository.MajorRepository
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository

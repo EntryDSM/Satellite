@@ -3,7 +3,7 @@ package kr.hs.entrydsm.repo.domain.student.presentation.dto.response
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.major.presentation.dto.response.MajorVO
-import java.util.*
+import java.util.UUID
 
 data class StudentDocumentListResponse(
 

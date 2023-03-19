@@ -21,12 +21,8 @@ class GlobalErrorFilter(
         try {
             filterChain.doFilter(request, response)
         } catch (e: CustomException) {
-            println("ce")
             sendErrorMessage(response, e.errorProperty)
         } catch (e: Exception) {
-            println("e")
-            println(e.javaClass)
-            println(e.cause)
             when (e.cause) {
                 is CustomException -> sendErrorMessage(response, (e.cause as CustomException).errorProperty)
                 else -> {

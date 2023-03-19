@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.repo.global.entity
 
 import com.fasterxml.uuid.Generators
-import java.util.*
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Id
 import javax.persistence.MappedSuperclass

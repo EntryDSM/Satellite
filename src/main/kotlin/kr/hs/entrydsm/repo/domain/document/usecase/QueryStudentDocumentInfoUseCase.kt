@@ -8,7 +8,7 @@ import kr.hs.entrydsm.repo.domain.feedback.persistence.repository.FeedbackReposi
 import kr.hs.entrydsm.repo.domain.student.exception.StudentNotFoundException
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import java.util.UUID
 
 @ReadOnlyUseCase
 class QueryStudentDocumentInfoUseCase(

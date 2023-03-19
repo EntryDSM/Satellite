@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.auth.persistence
 
-import kr.hs.entrydsm.repo.domain.auth.exception.TooManySendVerificationException
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive

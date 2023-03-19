@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.teacher.presentation
 
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.repo.domain.teacher.presentation.dto.request.TeacherSignInRequest
 import kr.hs.entrydsm.repo.domain.teacher.usecase.TeacherLoginUseCase
 import org.springframework.http.HttpStatus

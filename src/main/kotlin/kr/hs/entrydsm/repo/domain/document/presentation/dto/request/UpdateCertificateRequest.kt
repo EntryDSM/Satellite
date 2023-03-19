@@ -2,8 +2,7 @@ package kr.hs.entrydsm.repo.domain.document.presentation.dto.request
 
 import kr.hs.entrydsm.repo.domain.document.persistence.element.CertificateElement
 import org.hibernate.validator.constraints.Length
-import org.jetbrains.annotations.NotNull
-import java.util.*
+import java.util.Date
 import javax.validation.constraints.NotEmpty
 
 data class UpdateCertificateRequest(

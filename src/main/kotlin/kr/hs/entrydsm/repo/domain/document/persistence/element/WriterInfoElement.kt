@@ -2,7 +2,7 @@ package kr.hs.entrydsm.repo.domain.document.persistence.element
 
 import kr.hs.entrydsm.repo.domain.major.persistence.Major
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
-import java.util.*
+import java.util.UUID
 import javax.persistence.Transient
 
 class WriterInfoElement (

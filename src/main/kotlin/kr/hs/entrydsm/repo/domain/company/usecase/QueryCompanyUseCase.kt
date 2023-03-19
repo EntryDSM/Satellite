@@ -9,11 +9,8 @@ import kr.hs.entrydsm.repo.domain.company.presentation.dto.response.CompanyListR
 class QueryCompanyUseCase(
     private val companyRepository: CompanyRepository
 ) {
-
     fun execute(request: QueryCompanyRequest): CompanyListResponse {
-
         val companyList = companyRepository.findByNameContaining(request.name)
-
         return CompanyListResponse(
             companyList.map { CompanyListResponse.CompanyResponse(it) }
         )

@@ -3,7 +3,7 @@ package kr.hs.entrydsm.repo.domain.document.presentation.dto.request
 import kr.hs.entrydsm.repo.domain.document.persistence.element.ProjectElement
 import kr.hs.entrydsm.repo.domain.file.domain.DefaultImage
 import org.hibernate.validator.constraints.Length
-import java.util.*
+import java.util.Date
 
 data class UpdateProjectRequest(
     val projectList: List<ProjectRequest>

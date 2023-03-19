@@ -2,7 +2,7 @@ package kr.hs.entrydsm.repo.global.entity
 
 import com.fasterxml.uuid.Generators
 import org.springframework.data.annotation.Id
-import java.util.*
+import java.util.UUID
 
 open class BaseMongoUUIDEntity(
     id: UUID?

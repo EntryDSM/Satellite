@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.repo.domain.company.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.exception.NotVerifiedException
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.company.persistence.StandbyCompany
 import kr.hs.entrydsm.repo.domain.company.persistence.repository.StandbyCompanyRepository

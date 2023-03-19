@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.global.security.auth.details
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.company.persistence.Company
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

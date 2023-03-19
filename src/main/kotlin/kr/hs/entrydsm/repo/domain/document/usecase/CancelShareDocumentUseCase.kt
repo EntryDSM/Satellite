@@ -6,7 +6,7 @@ import kr.hs.entrydsm.repo.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import java.util.UUID
 
 @UseCase
 class CancelShareDocumentUseCase(

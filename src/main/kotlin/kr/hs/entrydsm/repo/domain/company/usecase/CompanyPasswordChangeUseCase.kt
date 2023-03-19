@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @UseCase
 class CompanyPasswordChangeUseCase(
     private val companyRepository: CompanyRepository,
-    private val verificationCodeRepository: kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val verificationCodeRepository: VerificationCodeRepository,
+    private val passwordEncoder: PasswordEncoder,
 ) {
     fun execute(request: CompanyPasswordChangeRequest) {
 
@@ -21,7 +21,7 @@ class CompanyPasswordChangeUseCase(
 
         val verificationCode = verificationCodeRepository.findByIdOrNull(company.email)
         if (verificationCode?.isVerified == false) {
-            throw kr.hs.entrydsm.repo.domain.auth.exception.NotVerifiedException
+            throw NotVerifiedException
         }
 
         company = company.changePassword(

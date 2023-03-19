@@ -5,14 +5,12 @@ import com.amazonaws.services.s3.internal.Mimetypes
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
-import com.amazonaws.util.IOUtils
 import kr.hs.entrydsm.repo.global.exception.file.ImageExtensionInvalidException
-import kr.hs.entrydsm.repo.global.exception.file.ImageNotFoundException
 import kr.hs.entrydsm.repo.global.exception.file.PdfExtensionInvaildException
-
 import org.springframework.stereotype.Component
-import java.io.*
-import java.util.*
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.util.UUID
 
 
 @Component

@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.repo.domain.feedback.presentation.dto.response
 
-import java.util.*
+import java.util.UUID
 
 data class FeedbackListResponse(
     val documentId: UUID,

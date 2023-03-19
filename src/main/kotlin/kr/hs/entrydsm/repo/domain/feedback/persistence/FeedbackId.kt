@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.repo.domain.feedback.persistence
 
 import java.io.Serializable
-import java.util.*
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Embeddable
 

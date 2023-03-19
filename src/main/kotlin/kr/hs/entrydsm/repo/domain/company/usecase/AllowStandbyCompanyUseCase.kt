@@ -6,14 +6,13 @@ import kr.hs.entrydsm.repo.domain.company.persistence.Company
 import kr.hs.entrydsm.repo.domain.company.persistence.repository.CompanyRepository
 import kr.hs.entrydsm.repo.domain.company.persistence.repository.StandbyCompanyRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import java.util.UUID
 
 @UseCase
 class AllowStandbyCompanyUseCase(
     private val standbyCompanyRepository: StandbyCompanyRepository,
     private val companyRepository: CompanyRepository
 ) {
-
     fun execute(standByCompanyId: UUID) {
 
         val standByCompany = standbyCompanyRepository.findByIdOrNull(standByCompanyId)

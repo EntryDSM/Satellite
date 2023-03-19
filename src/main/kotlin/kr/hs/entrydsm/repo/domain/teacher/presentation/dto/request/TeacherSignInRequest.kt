@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.repo.domain.teacher.presentation.dto.request
 
-import javax.validation.constraints.NotNull
-
 
 data class TeacherSignInRequest(
 

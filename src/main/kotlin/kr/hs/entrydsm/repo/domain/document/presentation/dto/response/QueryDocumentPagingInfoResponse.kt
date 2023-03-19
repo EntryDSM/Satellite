@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.repo.domain.document.presentation.dto.response
 
-import java.util.*
+import java.util.UUID
 
 data class QueryDocumentPagingInfoResponse(
     val hasNext: Boolean,

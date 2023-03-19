@@ -1,9 +1,5 @@
 package kr.hs.entrydsm.repo.domain.company.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
-import kr.hs.entrydsm.repo.domain.auth.persistence.RefreshToken
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.RefreshTokenRepository
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.PasswordMismatchedException
 import kr.hs.entrydsm.repo.domain.company.exception.CompanyInitRequiredException

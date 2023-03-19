@@ -1,10 +1,5 @@
 package kr.hs.entrydsm.repo.domain.auth.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.constant.MailType
-import kr.hs.entrydsm.repo.domain.auth.exception.AlreadyVerifiedException
-import kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository
-import kr.hs.entrydsm.repo.domain.auth.properties.VerificationCodeProperties
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.global.thirdparty.aws.ses.AwsSESAdapter
 import kr.hs.entrydsm.repo.global.util.RandomUtil

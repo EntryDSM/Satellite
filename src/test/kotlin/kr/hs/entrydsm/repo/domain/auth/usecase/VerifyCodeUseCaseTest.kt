@@ -6,10 +6,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.repo.domain.auth.exception.VerificationCodeMismatchedException
-import kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository
-import kr.hs.entrydsm.repo.domain.auth.properties.VerificationCodeProperties
 import org.springframework.data.repository.findByIdOrNull
 
 internal class VerifyCodeUseCaseTest : DescribeSpec({
@@ -19,7 +15,7 @@ internal class VerifyCodeUseCaseTest : DescribeSpec({
 
     val verifyCodeUseCase = VerifyCodeUseCase(verificationCodeRepository, properties)
 
-    describe("receivePhoneNumberVerificationCode"){
+    describe("receivePhoneNumberVerificationCode") {
 
         val phoneNumber = "01012345678"
         val code = "123456"

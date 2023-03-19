@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.student.presentation
 
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.repo.domain.document.presentation.dto.request.QueryDocumentRequest
 import kr.hs.entrydsm.repo.domain.student.presentation.dto.request.StudentSignUpRequest
 import kr.hs.entrydsm.repo.domain.student.presentation.dto.response.StudentDocumentListResponse

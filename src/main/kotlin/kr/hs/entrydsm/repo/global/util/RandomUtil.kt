@@ -1,7 +1,8 @@
 package kr.hs.entrydsm.repo.global.util
 
 import kr.hs.entrydsm.repo.global.exception.InternalServerException
-import java.util.*
+import java.util.Random
+import java.util.UUID
 import kotlin.math.pow
 
 object RandomUtil {

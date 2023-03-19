@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.repo.domain.major.presentation.dto.request
 
-import org.jetbrains.annotations.NotNull
-import java.util.*
+import java.util.UUID
 
 data class DeleteMajorRequest(
 

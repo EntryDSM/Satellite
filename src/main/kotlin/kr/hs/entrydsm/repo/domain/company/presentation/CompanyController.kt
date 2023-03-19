@@ -26,7 +26,7 @@ class CompanyController(
 ) {
 
     @PostMapping("/auth")
-    fun signIn(@ModelAttribute request: CompanySignInRequest): kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse {
+    fun signIn(@ModelAttribute request: CompanySignInRequest): TokenResponse {
         return signInUseCase.execute(request)
     }
 

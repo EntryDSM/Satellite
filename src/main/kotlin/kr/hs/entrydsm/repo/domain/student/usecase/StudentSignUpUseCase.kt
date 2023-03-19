@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.repo.domain.student.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.repo.domain.file.domain.DefaultImage
@@ -11,7 +9,7 @@ import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentReposito
 import kr.hs.entrydsm.repo.domain.student.presentation.dto.request.StudentSignUpRequest
 import kr.hs.entrydsm.repo.global.security.jwt.JwtGenerator
 import kr.hs.entrydsm.repo.global.util.RegexUtil
-import java.util.regex.*
+import java.util.regex.Pattern
 
 @UseCase
 class StudentSignUpUseCase(

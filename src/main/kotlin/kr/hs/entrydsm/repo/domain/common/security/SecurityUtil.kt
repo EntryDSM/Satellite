@@ -7,7 +7,7 @@ import kr.hs.entrydsm.repo.global.security.auth.details.CompanyDetails
 import kr.hs.entrydsm.repo.global.security.auth.details.StudentDetails
 import kr.hs.entrydsm.repo.global.security.auth.details.TeacherDetails
 import org.springframework.security.core.context.SecurityContextHolder
-import java.util.*
+import java.util.UUID
 
 
 object SecurityUtil {

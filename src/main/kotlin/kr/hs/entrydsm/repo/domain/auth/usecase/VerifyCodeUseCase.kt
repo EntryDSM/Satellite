@@ -1,10 +1,5 @@
 package kr.hs.entrydsm.repo.domain.auth.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.exception.VerificationCodeMismatchedException
-import kr.hs.entrydsm.repo.domain.auth.exception.VerificationCodeNotFoundException
-import kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository
-import kr.hs.entrydsm.repo.domain.auth.properties.VerificationCodeProperties
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import org.springframework.data.repository.findByIdOrNull
 

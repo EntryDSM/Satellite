@@ -5,7 +5,7 @@ import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.QDocument.document
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.global.config.querydsl.findBy
-import java.util.*
+import java.util.UUID
 
 fun DocumentRepository.findByStatusAndWriterInfo(
     status: Status,

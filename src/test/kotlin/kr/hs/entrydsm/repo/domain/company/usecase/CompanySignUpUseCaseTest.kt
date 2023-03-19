@@ -15,18 +15,19 @@ import kr.hs.entrydsm.repo.domain.company.presentation.dto.request.CompanySignUp
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 
-internal class CompanySignUpUseCaseTest  : DescribeSpec({
+internal class CompanySignUpUseCaseTest : DescribeSpec({
 
     val standByCompanyRepository = mockk<StandbyCompanyRepository>()
-    val verificationCodeRepository = mockk<kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository>()
+    val verificationCodeRepository = mockk<VerificationCodeRepository>()
     val passwordEncoder = mockk<PasswordEncoder>()
 
-    val companySignUpUseCase = CompanySignUpUseCase(standByCompanyRepository, verificationCodeRepository, passwordEncoder)
+    val companySignUpUseCase =
+        CompanySignUpUseCase(standByCompanyRepository, verificationCodeRepository, passwordEncoder)
 
     describe("companySignUp") {
 
         val verificationCode =
-            anyValueObject<kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode>(
+            anyValueObject<VerificationCode>(
                 "isVerified" to true
             )
 
@@ -53,7 +54,7 @@ internal class CompanySignUpUseCaseTest  : DescribeSpec({
 
             it("NotVerified 예외를 던진다.") {
 
-                shouldThrow<kr.hs.entrydsm.repo.domain.auth.exception.NotVerifiedException> {
+                shouldThrow<NotVerifiedException> {
                     companySignUpUseCase.execute(request)
                 }
                 verify(exactly = 0) { verificationCodeRepository.delete(verificationCode) }
@@ -61,7 +62,7 @@ internal class CompanySignUpUseCaseTest  : DescribeSpec({
             }
         }
 
-        val notVerifiedCode = anyValueObject<kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode>(
+        val notVerifiedCode = anyValueObject<VerificationCode>(
             "isVerified" to false
         )
 
@@ -71,7 +72,7 @@ internal class CompanySignUpUseCaseTest  : DescribeSpec({
 
             it("NotVerified 예외를 던진다.") {
 
-                shouldThrow<kr.hs.entrydsm.repo.domain.auth.exception.NotVerifiedException> {
+                shouldThrow<NotVerifiedException> {
                     companySignUpUseCase.execute(request)
                 }
                 verify(exactly = 0) { verificationCodeRepository.delete(verificationCode) }

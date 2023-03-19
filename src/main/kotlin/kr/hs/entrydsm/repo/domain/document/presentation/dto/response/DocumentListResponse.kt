@@ -2,7 +2,7 @@ package kr.hs.entrydsm.repo.domain.document.presentation.dto.response
 
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.major.presentation.dto.response.MajorVO
-import java.util.*
+import java.util.UUID
 
 data class DocumentListResponse(
     val documentList: List<DocumentResponse>

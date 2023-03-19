@@ -10,9 +10,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
-import kr.hs.entrydsm.repo.domain.auth.exception.AlreadyVerifiedException
-import kr.hs.entrydsm.repo.domain.auth.exception.TooManySendVerificationException
-import kr.hs.entrydsm.repo.domain.auth.persistence.VerificationCode
 import kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository
 import kr.hs.entrydsm.repo.domain.auth.properties.VerificationCodeProperties
 import kr.hs.entrydsm.repo.global.thirdparty.sms.CoolSmsAdapter
@@ -20,8 +17,8 @@ import org.springframework.data.repository.findByIdOrNull
 
 internal class SendPhoneVerificationCodeUseCaseTest : DescribeSpec({
 
-    val verificationCodeRepository: kr.hs.entrydsm.repo.domain.auth.persistence.repository.VerificationCodeRepository = mockk()
-    val properties: kr.hs.entrydsm.repo.domain.auth.properties.VerificationCodeProperties = anyValueObject(
+    val verificationCodeRepository: VerificationCodeRepository = mockk()
+    val properties: VerificationCodeProperties = anyValueObject(
         "limitCountOfSend" to 3,
         "codeLength" to 6
     )

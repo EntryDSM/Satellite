@@ -1,8 +1,5 @@
 package kr.hs.entrydsm.repo.domain.student.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
-import kr.hs.entrydsm.repo.domain.auth.dto.response.GoogleLoginLinkResponse
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.repo.domain.student.exception.SignUpRequiredRedirection

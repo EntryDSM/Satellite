@@ -11,16 +11,20 @@ import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants.TYPE_CLAI
 import kr.hs.entrydsm.repo.global.security.jwt.properties.SecurityProperties
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 
 @Component
 class JwtGenerator(
-    private val securityProperties: SecurityProperties
+    private val securityProperties: SecurityProperties,
 ) {
 
-    fun generateBothToken(userId: UUID, auth: kr.hs.entrydsm.repo.domain.auth.constant.Authority): kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse {
-        return kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse(
+    fun generateBothToken(
+        userId: UUID,
+        auth: Authority,
+    ): TokenResponse {
+        return TokenResponse(
             accessToken = this.generateAccessToken(userId, auth),
             accessExpiredAt = nowPlusSeconds(securityProperties.accessExp),
             refreshToken = this.generateRefreshToken(userId, auth),
@@ -28,28 +32,19 @@ class JwtGenerator(
         )
     }
 
-    private fun nowPlusSeconds(exp: Long): LocalDateTime =
-        LocalDateTime.now().withNano(0).plusSeconds(exp)
+    private fun nowPlusSeconds(exp: Long): LocalDateTime = LocalDateTime.now().withNano(0).plusSeconds(exp)
 
-    private fun generateRefreshToken(userId: UUID, auth: kr.hs.entrydsm.repo.domain.auth.constant.Authority): String {
-        return Jwts.builder()
-            .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
-            .setSubject(userId.toString())
-            .setHeaderParam(TYPE_CLAIM, REFRESH)
-            .claim(ROLE_CLAIM, auth.name)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp * 1000))
+    private fun generateRefreshToken(userId: UUID, auth: Authority): String {
+        return Jwts.builder().signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
+            .setSubject(userId.toString()).setHeaderParam(TYPE_CLAIM, REFRESH).claim(ROLE_CLAIM, auth.name)
+            .setIssuedAt(Date()).setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp * 1000))
             .compact()
     }
 
-    private fun generateAccessToken(userId: UUID, auth: kr.hs.entrydsm.repo.domain.auth.constant.Authority): String {
-        return Jwts.builder()
-            .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
-            .setSubject(userId.toString())
-            .setHeaderParam(TYPE_CLAIM, ACCESS)
-            .claim(ROLE_CLAIM, auth.name)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp * 1000))
+    private fun generateAccessToken(userId: UUID, auth: Authority): String {
+        return Jwts.builder().signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)
+            .setSubject(userId.toString()).setHeaderParam(TYPE_CLAIM, ACCESS).claim(ROLE_CLAIM, auth.name)
+            .setIssuedAt(Date()).setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp * 1000))
             .compact()
     }
 }

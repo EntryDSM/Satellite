@@ -5,7 +5,6 @@ import com.amazonaws.services.simpleemail.model.Destination
 import com.amazonaws.services.simpleemail.model.MessageRejectedException
 import com.amazonaws.services.simpleemail.model.SendTemplatedEmailRequest
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.repo.domain.auth.constant.MailType
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.document.usecase
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentNotFoundException

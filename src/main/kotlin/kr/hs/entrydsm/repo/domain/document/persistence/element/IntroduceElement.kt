@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.repo.domain.document.persistence.element
 
-import java.util.*
+import java.util.UUID
 import javax.persistence.Transient
 
 class IntroduceElement (

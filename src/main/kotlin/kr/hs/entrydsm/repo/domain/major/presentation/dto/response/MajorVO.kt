@@ -2,8 +2,7 @@ package kr.hs.entrydsm.repo.domain.major.presentation.dto.response
 
 
 import kr.hs.entrydsm.repo.domain.major.persistence.Major
-import java.util.*
-import javax.persistence.Embeddable
+import java.util.UUID
 
 data class MajorVO(
     val id: UUID,

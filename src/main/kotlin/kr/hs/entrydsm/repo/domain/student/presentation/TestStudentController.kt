@@ -1,9 +1,5 @@
 package kr.hs.entrydsm.repo.domain.student.presentation
 
-import kr.hs.entrydsm.repo.domain.auth.constant.Authority
-import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
-import kr.hs.entrydsm.repo.domain.auth.persistence.RefreshToken
-import kr.hs.entrydsm.repo.domain.auth.persistence.repository.RefreshTokenRepository
 import kr.hs.entrydsm.repo.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.repo.global.security.jwt.JwtGenerator
