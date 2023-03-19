@@ -1,1 +1,1 @@
-rootProject.name = "exit"
+rootProject.name = "repo"
