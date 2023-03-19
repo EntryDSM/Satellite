@@ -1,16 +1,16 @@
-package kr.hs.entrydsm.exit.domain.image.usecase
+package kr.hs.entrydsm.exit.domain.file.usecase
 
-import kr.hs.entrydsm.exit.domain.image.exception.InvalidImageException
-import kr.hs.entrydsm.exit.domain.image.presentation.dto.response.ImageUrlResponse
+import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
+import kr.hs.entrydsm.exit.domain.file.exception.InvalidImageException
+import kr.hs.entrydsm.exit.domain.file.presentation.dto.response.ImageUrlResponse
 import kr.hs.entrydsm.exit.global.thirdparty.aws.s3.AwsS3Adapter
 import kr.hs.entrydsm.exit.global.thirdparty.aws.s3.ImageType
-import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-@Service
+@UseCase
 class UploadImageUseCase(
     private val awsS3Adapter: AwsS3Adapter
 ) {

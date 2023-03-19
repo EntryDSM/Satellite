@@ -41,6 +41,10 @@ internal class SecurityConfig(
             // AUTH
             .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
+            // FILE
+            .antMatchers(HttpMethod.POST, "/file/image").permitAll()
+            .antMatchers(HttpMethod.GET, "/file").permitAll()
+
             // STUDENT
             .antMatchers(HttpMethod.GET, "/student/google/link").permitAll()
             .antMatchers(HttpMethod.GET, "/student/google/sign").permitAll()

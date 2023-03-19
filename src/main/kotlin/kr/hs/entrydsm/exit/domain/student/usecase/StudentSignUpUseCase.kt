@@ -4,7 +4,7 @@ import kr.hs.entrydsm.exit.domain.auth.constant.Authority
 import kr.hs.entrydsm.exit.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.exit.domain.common.annotation.UseCase
 import kr.hs.entrydsm.exit.domain.common.exception.EmailSuffixNotValidException
-import kr.hs.entrydsm.exit.domain.image.domain.DefaultImage
+import kr.hs.entrydsm.exit.domain.file.domain.DefaultImage
 import kr.hs.entrydsm.exit.domain.student.exception.StudentAlreadyExistException
 import kr.hs.entrydsm.exit.domain.student.persistence.Student
 import kr.hs.entrydsm.exit.domain.student.persistence.repository.StudentRepository

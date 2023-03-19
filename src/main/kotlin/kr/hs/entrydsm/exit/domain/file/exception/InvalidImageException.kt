@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.exit.domain.image.exception
+package kr.hs.entrydsm.exit.domain.file.exception
 
 import kr.hs.entrydsm.exit.domain.common.DomainErrorCode
 import kr.hs.entrydsm.exit.domain.common.error.DomainCustomException
