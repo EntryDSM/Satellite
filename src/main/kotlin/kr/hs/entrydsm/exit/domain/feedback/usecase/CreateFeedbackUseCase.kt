@@ -28,12 +28,14 @@ class CreateFeedbackUseCase(
             throw IllegalStatusException
         }
 
-        feedbackRepository.save(Feedback(
-            documentId = document.id,
-            elementId = request.elementId,
-            comment = request.comment,
-            isApply = false
-        ))
+        feedbackRepository.save(
+            Feedback(
+                documentId = document.id,
+                elementId = request.elementId,
+                comment = request.comment,
+                isApply = false
+            )
+        )
     }
 
     private fun checkFeedbackIsNotExist(request: CreateFeedbackRequest) {

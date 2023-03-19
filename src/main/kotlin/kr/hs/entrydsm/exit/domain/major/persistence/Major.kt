@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.exit.domain.major.persistence
 
 import kr.hs.entrydsm.exit.global.entity.BaseUUIDEntity
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -9,6 +10,9 @@ import javax.persistence.Table
 @Entity
 class Major(
 
+     id: UUID? = null,
+
      @Column(columnDefinition = "VARCHAR(30)", nullable = false)
      val name: String
-): BaseUUIDEntity(null)
+
+): BaseUUIDEntity(id)
