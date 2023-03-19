@@ -6,8 +6,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
 import com.amazonaws.util.IOUtils
-import kr.hs.entrydsm.exit.global.exception.image.ImageExtensionInvalidException
-import kr.hs.entrydsm.exit.global.exception.image.ImageNotFoundException
+import kr.hs.entrydsm.exit.global.exception.file.ImageExtensionInvalidException
+import kr.hs.entrydsm.exit.global.exception.file.ImageNotFoundException
+import kr.hs.entrydsm.exit.global.exception.file.PdfExtensionInvaildException
 
 import org.springframework.stereotype.Component
 import java.io.*
@@ -17,67 +18,57 @@ import java.util.*
 @Component
 class AwsS3Adapter(
     private val amazonS3: AmazonS3,
-    private val awsS3Properties: AwsS3Properties
+    private val awsS3Properties: AwsS3Properties,
 ) {
+
+    fun savePdf(file: File): String {
+
+        val extension = getExtension(file)
+        if (extension != ".pdf") {
+            throw PdfExtensionInvaildException
+        }
+
+        val folder = awsS3Properties.documentFolder
+
+        return "${folder}/${file.name}${extension}"
+            .also { uploadFile(file, it) }
+    }
 
     fun saveImage(file: File, imageType: ImageType): String {
 
         val extension = getExtension(file)
+        if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic")) {
+            throw ImageExtensionInvalidException
+        }
 
-        val folder = when(imageType) {
+        val folder = when (imageType) {
             ImageType.PROFILE -> awsS3Properties.profileFolder
             ImageType.DOCUMENT -> awsS3Properties.documentFolder
         }
 
-        val filePath = folder + UUID.randomUUID().toString() + extension
-
-        uploadImage(file, filePath)
-        return filePath
+        return "${folder}/${UUID.randomUUID()}${extension}"
+            .also { uploadFile(file, it) }
     }
 
     private fun getExtension(file: File): String {
-
         val originalFilename = file.name
-        val extension = originalFilename.substring(originalFilename.lastIndexOf("."))
-
-        if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic")) {
-            throw ImageExtensionInvalidException
-        }
-        return extension
+        return originalFilename.substring(originalFilename.lastIndexOf("."))
     }
 
-    private fun uploadImage(file: File, filePath: String) {
-
-        val bytes: ByteArray
-        val objectMetadata: ObjectMetadata
-        val byteArrayInputStream: ByteArrayInputStream
-
-        try {
-            val inputStream: InputStream = FileInputStream(file)
-            bytes = IOUtils.toByteArray(inputStream)
-            objectMetadata = objectMetadata(file, bytes)
-            byteArrayInputStream = ByteArrayInputStream(bytes)
-        } catch (e: IOException) {
-            throw ImageNotFoundException
-        }
-
+    private fun uploadFile(file: File, filePath: String) {
+        val bytes = file.readBytes()
         amazonS3.putObject(
             PutObjectRequest(
                 awsS3Properties.bucket,
                 filePath,
-                byteArrayInputStream,
-                objectMetadata
+                ByteArrayInputStream(bytes),
+                ObjectMetadata().apply {
+                    contentType = Mimetypes.getInstance().getMimetype(file)
+                    contentLength = bytes.size.toLong()
+                }
             ).withCannedAcl(CannedAccessControlList.AuthenticatedRead)
         )
-
         file.delete()
-    }
-
-    private fun objectMetadata(file: File, bytes: ByteArray): ObjectMetadata {
-        val objectMetadata = ObjectMetadata()
-        objectMetadata.contentType = Mimetypes.getInstance().getMimetype(file)
-        objectMetadata.contentLength = bytes.size.toLong()
-        return objectMetadata
     }
 
 }
