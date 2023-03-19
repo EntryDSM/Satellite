@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.global.security
 
+import java.util.UUID
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.company.persistence.Company
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.domain.teacher.persistence.Teacher
@@ -8,15 +10,13 @@ import kr.hs.entrydsm.repo.global.security.auth.details.StudentDetails
 import kr.hs.entrydsm.repo.global.security.auth.details.TeacherDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
-import java.util.UUID
-
 
 object SecurityUtil {
 
-    fun getCurrentUserAuthority(): kr.hs.entrydsm.repo.domain.auth.constant.Authority {
+    fun getCurrentUserAuthority(): Authority {
 
         val authorities = SecurityContextHolder.getContext().authentication.authorities
-        return kr.hs.entrydsm.repo.domain.auth.constant.Authority.valueOf(authorities.toList()[0].authority)
+        return Authority.valueOf(authorities.toList()[0].authority)
     }
 
     fun getCurrentUserId(): UUID {

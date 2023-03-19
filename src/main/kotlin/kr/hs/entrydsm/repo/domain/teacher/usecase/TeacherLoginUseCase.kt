@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.teacher.usecase
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.PasswordMismatchedException
 import kr.hs.entrydsm.repo.domain.teacher.exception.TeacherNotFoundException
@@ -8,7 +9,6 @@ import kr.hs.entrydsm.repo.domain.teacher.presentation.dto.request.TeacherSignIn
 import kr.hs.entrydsm.repo.global.security.jwt.JwtGenerator
 import kr.hs.entrydsm.repo.global.security.jwt.properties.SecurityProperties
 import org.springframework.security.crypto.password.PasswordEncoder
-
 
 @UseCase
 class TeacherLoginUseCase(
@@ -27,7 +27,7 @@ class TeacherLoginUseCase(
             throw PasswordMismatchedException
         }
 
-        return jwtGenerator.generateBothToken(teacher.id, kr.hs.entrydsm.repo.domain.auth.constant.Authority.TEACHER).also { response ->
+        return jwtGenerator.generateBothToken(teacher.id, Authority.TEACHER).also { response ->
             refreshTokenRepository.save(
                 kr.hs.entrydsm.repo.domain.auth.persistence.RefreshToken(
                     userId = teacher.id,

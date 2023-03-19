@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.global.security.auth.details
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.teacher.persistence.Teacher
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -10,10 +11,10 @@ class TeacherDetails(
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority(kr.hs.entrydsm.repo.domain.auth.constant.Authority.TEACHER.name))
+        return mutableListOf(SimpleGrantedAuthority(Authority.TEACHER.name))
     }
 
-    override fun getPassword(): String? =  null
+    override fun getPassword(): String? = null
 
     override fun getUsername(): String {
         return teacher.id.toString()

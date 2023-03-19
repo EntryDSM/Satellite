@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.repo.global.security.jwt.properties
 
+import java.util.Base64
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
-import java.util.Base64
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "jwt")

@@ -24,10 +24,9 @@ class UpdateIntroduceUseCase(
     private fun documentWithUpdatedIntroduce(
         document: Document,
         request: UpdateIntroduceRequest
-    ) : Document {
+    ): Document {
         return document.updateIntroduce(
             request.toIntroduceElement()
         )
     }
-
 }

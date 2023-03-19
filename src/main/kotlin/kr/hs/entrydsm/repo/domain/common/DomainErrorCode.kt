@@ -39,7 +39,6 @@ enum class DomainErrorCode(
     INVALID_IMAGE(400, "IMAGE-400-1", "Invalid image"),
     ;
 
-
     override fun status(): Int = status
     override fun code(): String = code
     override fun message(): String = message

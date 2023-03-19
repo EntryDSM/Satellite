@@ -25,7 +25,7 @@ class CreateDocumentUseCase(
 
         val student = SecurityUtil.getCurrentStudent()
 
-        if (documentIsExist(student)){
+        if (documentIsExist(student)) {
             throw DocumentAlreadyExistException
         }
 
@@ -43,7 +43,6 @@ class CreateDocumentUseCase(
     }
 
     private fun documentIsExist(student: Student): Boolean {
-       return documentRepository.findByWriterStudentId(student.id) != null
+        return documentRepository.findByWriterStudentId(student.id) != null
     }
-
 }

@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.global.error
 
+import javax.validation.ConstraintViolation
+import javax.validation.ConstraintViolationException
 import kr.hs.entrydsm.repo.global.error.response.BindErrorResponse
 import kr.hs.entrydsm.repo.global.error.response.DefaultErrorResponse
 import org.springframework.http.HttpStatus
@@ -9,9 +11,6 @@ import org.springframework.validation.FieldError
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import javax.validation.ConstraintViolation
-import javax.validation.ConstraintViolationException
-
 
 @RestControllerAdvice
 class GlobalErrorHandler {
@@ -38,7 +37,7 @@ class GlobalErrorHandler {
 
         for (violation: ConstraintViolation<*> in e.constraintViolations) {
             errorMap[violation.rootBeanClass.name] =
-                violation.propertyPath.toString() + ": " +violation.message
+                violation.propertyPath.toString() + ": " + violation.message
         }
 
         return BindErrorResponse(
@@ -52,10 +51,9 @@ class GlobalErrorHandler {
     fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): DefaultErrorResponse {
 
         return DefaultErrorResponse(
-            status =  HttpStatus.BAD_REQUEST.value(),
+            status = HttpStatus.BAD_REQUEST.value(),
             code = GlobalErrorCode.BAD_REQUEST.code(),
             message = e.localizedMessage
         )
     }
-
 }

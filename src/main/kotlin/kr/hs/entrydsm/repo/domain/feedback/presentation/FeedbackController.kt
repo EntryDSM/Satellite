@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.feedback.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.repo.domain.feedback.presentation.dto.request.ApplyFeedbackRequest
 import kr.hs.entrydsm.repo.domain.feedback.presentation.dto.request.CreateFeedbackRequest
 import kr.hs.entrydsm.repo.domain.feedback.presentation.dto.request.DeleteFeedbackRequest
@@ -12,7 +13,6 @@ import kr.hs.entrydsm.repo.domain.feedback.usecase.QueryMyDocumentFeedbackUseCas
 import kr.hs.entrydsm.repo.domain.feedback.usecase.UpdateFeedbackUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RequestMapping("/feedback")
 @RestController
@@ -52,5 +52,4 @@ class FeedbackController(
     fun queryMyDocumentFeedback(): FeedbackListResponse {
         return queryMyDocumentFeedbackUseCase.execute()
     }
-
 }

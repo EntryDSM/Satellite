@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.domain.document.usecase
 
+import java.util.UUID
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentNotFoundException
@@ -10,7 +12,6 @@ import kr.hs.entrydsm.repo.domain.document.presentation.dto.response.DocumentInf
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.repo.global.security.SecurityUtil
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
 
 @ReadOnlyUseCase
 class QueryDocumentInfoUseCase(
@@ -22,22 +23,22 @@ class QueryDocumentInfoUseCase(
         val authority = SecurityUtil.getCurrentUserAuthority()
         val document = documentRepository.findByIdOrNull(documentId) ?: throw DocumentNotFoundException
 
-        if(!isWriter(document) && !hasAccess(document.status, authority)) {
+        if (!isWriter(document) && !hasAccess(document.status, authority)) {
             throw DocumentAccessRightException
         }
 
         return DocumentInfoResponse(document)
     }
 
-    private fun hasAccess(status: Status, authority: kr.hs.entrydsm.repo.domain.auth.constant.Authority): Boolean {
-        return when(status) {
+    private fun hasAccess(status: Status, authority: Authority): Boolean {
+        return when (status) {
             Status.CREATED -> false
-            Status.SUBMITTED -> authority == kr.hs.entrydsm.repo.domain.auth.constant.Authority.TEACHER
+            Status.SUBMITTED -> authority == Authority.TEACHER
             Status.SHARED -> true
         }
     }
 
-    private fun isWriter(document: Document) : Boolean {
+    private fun isWriter(document: Document): Boolean {
         val student = studentRepository.findByIdOrNull(SecurityUtil.getCurrentUserId())
         return document.isWriter(student)
     }

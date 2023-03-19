@@ -1,15 +1,13 @@
 package kr.hs.entrydsm.repo.domain.feedback.presentation.dto.request
 
-import org.hibernate.validator.constraints.Length
 import java.util.UUID
 import javax.validation.constraints.NotBlank
+import org.hibernate.validator.constraints.Length
 
 data class UpdateFeedbackRequest(
 
-    
     val documentId: UUID,
 
-    
     val elementId: UUID,
 
     @field:NotBlank

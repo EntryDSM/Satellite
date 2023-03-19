@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.repo.domain.company.persistence.repository
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.company.persistence.StandbyCompany
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import java.util.UUID
 
 @Repository
 interface StandbyCompanyRepository : CrudRepository<StandbyCompany, UUID> {

@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.global.security.auth.details
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -10,10 +11,10 @@ class StudentDetails(
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority(kr.hs.entrydsm.repo.domain.auth.constant.Authority.STUDENT.name))
+        return mutableListOf(SimpleGrantedAuthority(Authority.STUDENT.name))
     }
 
-    override fun getPassword(): String? =  null
+    override fun getPassword(): String? = null
 
     override fun getUsername(): String {
         return student.id.toString()
@@ -26,5 +27,4 @@ class StudentDetails(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-
 }

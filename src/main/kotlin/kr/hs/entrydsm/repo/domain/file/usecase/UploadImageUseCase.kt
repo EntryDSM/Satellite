@@ -1,14 +1,14 @@
 package kr.hs.entrydsm.repo.domain.file.usecase
 
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.file.exception.InvalidImageException
 import kr.hs.entrydsm.repo.domain.file.presentation.dto.response.ImageUrlResponse
 import kr.hs.entrydsm.repo.global.thirdparty.aws.s3.AwsS3Adapter
 import kr.hs.entrydsm.repo.global.thirdparty.aws.s3.ImageType
 import org.springframework.web.multipart.MultipartFile
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 @UseCase
 class UploadImageUseCase(
@@ -36,5 +36,4 @@ class UploadImageUseCase(
         }
         return file
     }
-
 }

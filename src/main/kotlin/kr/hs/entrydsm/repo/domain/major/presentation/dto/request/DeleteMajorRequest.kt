@@ -4,7 +4,6 @@ import java.util.UUID
 
 data class DeleteMajorRequest(
 
-    
     val majorId: UUID
 
 )

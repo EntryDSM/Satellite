@@ -5,13 +5,12 @@ import com.amazonaws.services.s3.internal.Mimetypes
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
-import kr.hs.entrydsm.repo.global.exception.file.ImageExtensionInvalidException
-import kr.hs.entrydsm.repo.global.exception.file.PdfExtensionInvaildException
-import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.UUID
-
+import kr.hs.entrydsm.repo.global.exception.file.ImageExtensionInvalidException
+import kr.hs.entrydsm.repo.global.exception.file.PdfExtensionInvaildException
+import org.springframework.stereotype.Component
 
 @Component
 class AwsS3Adapter(
@@ -28,7 +27,7 @@ class AwsS3Adapter(
 
         val folder = awsS3Properties.documentFolder
 
-        return "${folder}/${file.name}${extension}"
+        return "$folder/${file.name}$extension"
             .also { uploadFile(file, it) }
     }
 
@@ -44,7 +43,7 @@ class AwsS3Adapter(
             ImageType.DOCUMENT -> awsS3Properties.documentFolder
         }
 
-        return "${folder}/${UUID.randomUUID()}${extension}"
+        return "$folder/${UUID.randomUUID()}$extension"
             .also { uploadFile(file, it) }
     }
 
@@ -68,5 +67,4 @@ class AwsS3Adapter(
         )
         file.delete()
     }
-
 }

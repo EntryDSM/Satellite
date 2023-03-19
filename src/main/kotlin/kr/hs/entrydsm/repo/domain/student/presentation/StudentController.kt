@@ -1,12 +1,12 @@
 package kr.hs.entrydsm.repo.domain.student.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.repo.domain.document.presentation.dto.request.QueryDocumentRequest
 import kr.hs.entrydsm.repo.domain.student.presentation.dto.request.StudentSignUpRequest
 import kr.hs.entrydsm.repo.domain.student.presentation.dto.response.StudentDocumentListResponse
 import kr.hs.entrydsm.repo.domain.student.usecase.QueryStudentDocumentListUseCase
 import kr.hs.entrydsm.repo.domain.student.usecase.StudentSignUpUseCase
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RequestMapping("/student")
 @RestController

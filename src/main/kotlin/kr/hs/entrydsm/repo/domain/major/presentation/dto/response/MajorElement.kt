@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.repo.domain.major.presentation.dto.response
 
-import kr.hs.entrydsm.repo.domain.major.persistence.Major
 import java.util.UUID
+import kr.hs.entrydsm.repo.domain.major.persistence.Major
 
 data class MajorElement(
     val majorId: UUID,

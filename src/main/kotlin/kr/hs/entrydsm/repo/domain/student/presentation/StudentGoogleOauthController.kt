@@ -21,5 +21,4 @@ class StudentGoogleOauthController(
     fun studentSingUpOrIn(@RequestParam("code") code: String): kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse {
         return studentAuthService.signUpOrIn(code)
     }
-
 }

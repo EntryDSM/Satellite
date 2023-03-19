@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.repo.domain.company.presentation.dto.request
 
-import kr.hs.entrydsm.repo.global.util.RegexUtil
-import org.hibernate.validator.constraints.Length
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
+import kr.hs.entrydsm.repo.global.util.RegexUtil
+import org.hibernate.validator.constraints.Length
 
 data class CompanySignUpRequest(
     @field:Length(min = 10, max = 11)
@@ -19,7 +19,7 @@ data class CompanySignUpRequest(
     val name: String,
 
     @field:NotBlank
-    @field:Pattern(regexp=RegexUtil.PASSWORD_EXP)
+    @field:Pattern(regexp = RegexUtil.PASSWORD_EXP)
     val password: String,
 
     @field:NotBlank

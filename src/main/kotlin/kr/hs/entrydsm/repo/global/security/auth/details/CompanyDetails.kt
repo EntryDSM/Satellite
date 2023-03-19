@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.global.security.auth.details
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.company.persistence.Company
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -7,13 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class CompanyDetails(
     val company: Company
-) : UserDetails{
+) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority(kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY.name))
+        return mutableListOf(SimpleGrantedAuthority(Authority.COMPANY.name))
     }
 
-    override fun getPassword(): String? =  null
+    override fun getPassword(): String? = null
 
     override fun getUsername(): String {
         return company.id.toString()
@@ -26,6 +27,4 @@ class CompanyDetails(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-
 }
-

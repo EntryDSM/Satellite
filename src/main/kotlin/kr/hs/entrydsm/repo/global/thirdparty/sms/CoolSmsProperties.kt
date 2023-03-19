@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties("cool-sms")
-class CoolSmsProperties (
+class CoolSmsProperties(
     val key: String,
     val secret: String,
     val phoneNumber: String

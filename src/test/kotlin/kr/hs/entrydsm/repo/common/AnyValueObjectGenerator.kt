@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.repo.common
 
-import java.util.*
+import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 

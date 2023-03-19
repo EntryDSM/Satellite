@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.school.presentation
 
+import javax.validation.constraints.NotNull
 import kr.hs.entrydsm.repo.domain.school.useCase.ChangeSchoolYearUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.constraints.NotNull
 
 @RequestMapping("/school-year")
 @RestController

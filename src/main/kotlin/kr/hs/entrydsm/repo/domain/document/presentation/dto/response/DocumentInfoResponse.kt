@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.domain.document.presentation.dto.response
 
+import java.util.Date
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.element.AwardElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.CertificateElement
@@ -8,8 +10,6 @@ import kr.hs.entrydsm.repo.domain.document.persistence.element.ProjectElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.major.presentation.dto.response.MajorVO
-import java.util.Date
-import java.util.UUID
 
 data class DocumentInfoResponse(
 

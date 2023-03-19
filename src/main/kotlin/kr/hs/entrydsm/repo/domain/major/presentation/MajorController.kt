@@ -33,5 +33,4 @@ class MajorController(
     fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
         return queryMajorUseCase.execute(name)
     }
-
 }

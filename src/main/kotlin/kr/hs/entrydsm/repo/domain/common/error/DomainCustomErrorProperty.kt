@@ -7,5 +7,4 @@ interface DomainCustomErrorProperty {
     fun message(): String
 
     fun code(): String
-
 }

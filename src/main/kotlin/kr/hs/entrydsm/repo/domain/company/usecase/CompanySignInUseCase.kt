@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.company.usecase
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.PasswordMismatchedException
 import kr.hs.entrydsm.repo.domain.company.exception.CompanyInitRequiredException
@@ -32,7 +33,7 @@ class CompanySignInUseCase(
             throw PasswordMismatchedException
         }
 
-        return jwtGenerator.generateBothToken(company.id, kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY).also { response ->
+        return jwtGenerator.generateBothToken(company.id, Authority.COMPANY).also { response ->
             refreshTokenRepository.save(
                 kr.hs.entrydsm.repo.domain.auth.persistence.RefreshToken(
                     userId = company.id,

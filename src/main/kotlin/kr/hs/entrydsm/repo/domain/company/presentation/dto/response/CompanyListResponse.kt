@@ -13,7 +13,7 @@ class CompanyListResponse(
         val managerNumber: String,
         val location: String
     ) {
-        constructor(standbyCompany: StandbyCompany): this(
+        constructor(standbyCompany: StandbyCompany) : this(
             name = standbyCompany.name,
             email = standbyCompany.email,
             managerName = standbyCompany.managerName,
@@ -21,7 +21,7 @@ class CompanyListResponse(
             location = standbyCompany.location
         )
 
-        constructor(company: Company): this(
+        constructor(company: Company) : this(
             name = company.name,
             email = company.email,
             managerName = company.managerName,

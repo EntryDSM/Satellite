@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.document.persistence
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.element.AwardElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.CertificateElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.IntroduceElement
@@ -8,9 +9,8 @@ import kr.hs.entrydsm.repo.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.global.entity.BaseMongoUUIDEntity
-import java.util.UUID
 
-@org.springframework.data.mongodb.core.mapping.Document(collection="documents")
+@org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
 class Document(
 
     id: UUID? = null,
@@ -31,7 +31,7 @@ class Document(
 
     val certificateList: MutableList<CertificateElement> = mutableListOf()
 
-): BaseMongoUUIDEntity(id) {
+) : BaseMongoUUIDEntity(id) {
 
     fun isWriter(student: Student?) = writer.studentId == student?.id
 
@@ -43,7 +43,7 @@ class Document(
             *awardList.toTypedArray(),
             *certificateList.toTypedArray()
         )
-        return elementList.associate { it.elementId to it.elementName}
+        return elementList.associate { it.elementId to it.elementName }
     }
 
     fun updateWriterInfo(writer: WriterInfoElement) =

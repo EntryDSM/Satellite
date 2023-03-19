@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.repo.domain.document.persistence.repository
 
 import com.querydsl.core.types.dsl.BooleanExpression
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.QDocument.document
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.global.config.querydsl.findBy
-import java.util.UUID
 
 fun DocumentRepository.findByStatusAndWriterInfo(
     status: Status,

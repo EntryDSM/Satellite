@@ -8,7 +8,7 @@ import kr.hs.entrydsm.repo.domain.document.presentation.dto.request.UpdateAwardR
 import kr.hs.entrydsm.repo.global.security.SecurityUtil
 
 @UseCase
-class UpdateAwardUseCase (
+class UpdateAwardUseCase(
     private val documentRepository: DocumentRepository
 ) {
     fun execute(request: UpdateAwardRequest) {
@@ -31,5 +31,4 @@ class UpdateAwardUseCase (
             }.toMutableList()
         )
     }
-
 }

@@ -40,4 +40,3 @@ class SendPhoneVerificationCodeUseCase(
         return kr.hs.entrydsm.repo.domain.auth.presentation.dto.response.SendPhoneNumberCodeResponse(code)
     }
 }
-

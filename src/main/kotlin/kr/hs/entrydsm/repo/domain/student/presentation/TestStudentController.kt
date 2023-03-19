@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.student.presentation
 
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.repo.domain.student.persistence.repository.StudentRepository
 import kr.hs.entrydsm.repo.global.security.jwt.JwtGenerator
@@ -22,7 +23,7 @@ class TestStudentController(
         val student = studentRepository.findByEmail(email)
             ?: throw SignUpRequiredRedirection(email)
 
-        val tokenResponse = jwtGenerator.generateBothToken(student.id, kr.hs.entrydsm.repo.domain.auth.constant.Authority.STUDENT)
+        val tokenResponse = jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
 
         refreshTokenRepository.save(
             kr.hs.entrydsm.repo.domain.auth.persistence.RefreshToken(

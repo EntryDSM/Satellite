@@ -1,12 +1,11 @@
 package kr.hs.entrydsm.repo.global.security.jwt
 
-
-import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtFilter(
     private val jwtParser: JwtParser
@@ -21,7 +20,7 @@ class JwtFilter(
         val token = resolvedToken(request)
         SecurityContextHolder.clearContext()
 
-        token?.let{
+        token?.let {
             SecurityContextHolder.getContext().authentication = jwtParser.getAuthentication(token)
         }
 

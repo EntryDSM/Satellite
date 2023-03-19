@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.domain.student.usecase
 
+import java.util.regex.Pattern
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.common.exception.EmailSuffixNotValidException
 import kr.hs.entrydsm.repo.domain.student.exception.SignUpRequiredRedirection
@@ -9,8 +11,6 @@ import kr.hs.entrydsm.repo.global.thirdparty.oauth.GoogleAuth
 import kr.hs.entrydsm.repo.global.thirdparty.oauth.GoogleEmail
 import kr.hs.entrydsm.repo.global.thirdparty.oauth.properties.GoogleOauthProperties
 import kr.hs.entrydsm.repo.global.util.RegexUtil
-import java.util.regex.Pattern
-
 
 @UseCase
 class StudentGoogleOauthUseCase(
@@ -22,7 +22,7 @@ class StudentGoogleOauthUseCase(
 ) {
     companion object {
         private const val url = "%s?client_id=%s&redirect_uri=%s&response_type=code" +
-                "&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            "&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
     }
 
     fun getLink(): kr.hs.entrydsm.repo.domain.auth.dto.response.GoogleLoginLinkResponse {
@@ -42,7 +42,7 @@ class StudentGoogleOauthUseCase(
         val student = studentRepository.findByEmail(email)
             ?: throw SignUpRequiredRedirection(email)
 
-        return jwtGenerator.generateBothToken(student.id, kr.hs.entrydsm.repo.domain.auth.constant.Authority.STUDENT)
+        return jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
     }
 
     private fun checkEmailSuffix(email: String) {

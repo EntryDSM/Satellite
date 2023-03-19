@@ -4,9 +4,7 @@ import java.util.UUID
 
 data class DeleteFeedbackRequest(
 
-    
     val documentId: UUID,
 
-    
     val elementId: UUID,
 )

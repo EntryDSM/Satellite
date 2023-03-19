@@ -16,7 +16,7 @@ class SubmitMyDocumentUseCase(
         val student = SecurityUtil.getCurrentStudent()
         val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        if(document.status != Status.CREATED) {
+        if (document.status != Status.CREATED) {
             throw IllegalStatusException
         }
 

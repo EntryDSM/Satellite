@@ -3,7 +3,7 @@ package kr.hs.entrydsm.repo.domain.document.persistence.element
 import java.util.UUID
 import javax.persistence.Transient
 
-class IntroduceElement (
+class IntroduceElement(
 
     elementId: UUID? = null,
     val heading: String = "",

@@ -16,6 +16,4 @@ interface GoogleAuth {
         @RequestParam("redirectUri") redirectUri: String,
         @RequestParam("grantType") grantType: String = "authorization_code",
     ): GoogleAccessTokenResponse
-
-
 }

@@ -13,5 +13,4 @@ interface GoogleEmail {
         @RequestParam("access_token") accessToken: String,
         @RequestParam("alt") alt: String = "json"
     ): GoogleEmailResponse
-
 }

@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.repo.domain.student.presentation.dto.response
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.major.presentation.dto.response.MajorVO
-import java.util.UUID
 
 data class StudentDocumentListResponse(
 
@@ -19,7 +19,7 @@ data class StudentDocumentListResponse(
         val email: String,
         val major: MajorVO
     ) {
-        constructor(document: Document): this(
+        constructor(document: Document) : this(
             studentId = document.writer.studentId,
             name = document.writer.name,
             documentStatus = document.status,

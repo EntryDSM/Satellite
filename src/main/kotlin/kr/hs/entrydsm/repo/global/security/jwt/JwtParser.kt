@@ -6,6 +6,7 @@ import io.jsonwebtoken.InvalidClaimException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
+import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.global.exception.InternalServerException
 import kr.hs.entrydsm.repo.global.exception.jwt.ExpiredTokenException
 import kr.hs.entrydsm.repo.global.exception.jwt.InvalidTokenException
@@ -48,7 +49,7 @@ class JwtParser(
                 .setSigningKey(securityProperties.secretKey)
                 .parseClaimsJws(token)
         } catch (e: Exception) {
-            when (e){
+            when (e) {
                 is InvalidClaimException -> throw InvalidTokenException
                 is ExpiredJwtException -> throw ExpiredTokenException
                 is JwtException -> throw UnexpectedTokenException
@@ -59,15 +60,14 @@ class JwtParser(
 
     private fun getDetails(body: Claims): UserDetails {
 
-        val authority = kr.hs.entrydsm.repo.domain.auth.constant.Authority.valueOf(
+        val authority = Authority.valueOf(
             body.get(ROLE_CLAIM, String::class.java)
         )
 
         return when (authority) {
-            kr.hs.entrydsm.repo.domain.auth.constant.Authority.STUDENT -> studentDetailService
-            kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY -> companyDetailService
-            kr.hs.entrydsm.repo.domain.auth.constant.Authority.TEACHER -> teacherDetailService
+            Authority.STUDENT -> studentDetailService
+            Authority.COMPANY -> companyDetailService
+            Authority.TEACHER -> teacherDetailService
         }.loadUserByUsername(body.subject)
     }
-
 }

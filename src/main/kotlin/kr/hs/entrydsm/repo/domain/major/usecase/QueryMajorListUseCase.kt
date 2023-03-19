@@ -17,5 +17,4 @@ class QueryMajorListUseCase(
 
         return MajorListResponse(tags)
     }
-
 }

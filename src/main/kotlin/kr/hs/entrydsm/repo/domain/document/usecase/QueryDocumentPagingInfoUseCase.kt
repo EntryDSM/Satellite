@@ -1,12 +1,12 @@
 package kr.hs.entrydsm.repo.domain.document.usecase
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.repo.domain.document.presentation.dto.response.QueryDocumentPagingInfoResponse
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
 
 @ReadOnlyUseCase
 class QueryDocumentPagingInfoUseCase(

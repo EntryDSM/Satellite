@@ -1,12 +1,12 @@
 package kr.hs.entrydsm.repo.domain.feedback.persistence
 
-import java.util.*
+import java.util.UUID
 import javax.persistence.*
 
 @IdClass(FeedbackId::class)
 @Entity
 @Table(name = "tbl_feedback")
-class Feedback (
+class Feedback(
 
     @Id
     @Column(nullable = false)

@@ -14,4 +14,4 @@ data class FeedbackId(
     @Column(nullable = false)
     val documentId: UUID
 
-): Serializable
+) : Serializable

@@ -7,7 +7,6 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsyncClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
 class AwsSESConfig(
     private val awsSESProperties: AwsSESProperties

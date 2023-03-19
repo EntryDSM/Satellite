@@ -16,7 +16,7 @@ class CancelSubmitMyDocumentUseCase(
         val student = SecurityUtil.getCurrentStudent()
         val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        if(document.status != Status.SUBMITTED) {
+        if (document.status != Status.SUBMITTED) {
             throw IllegalStatusException
         }
 

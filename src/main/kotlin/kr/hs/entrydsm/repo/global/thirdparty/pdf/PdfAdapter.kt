@@ -4,7 +4,6 @@ import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.global.thirdparty.pdf.util.PdfUtil
 import org.springframework.stereotype.Component
 
-
 @Component
 class PdfAdapter(
     private val templateProcessor: TemplateProcessor
@@ -16,5 +15,4 @@ class PdfAdapter(
             .map(PdfUtil::convertHtmlToPdf)
             .reduce(PdfUtil::concatPdf)
             .toByteArray()
-
 }

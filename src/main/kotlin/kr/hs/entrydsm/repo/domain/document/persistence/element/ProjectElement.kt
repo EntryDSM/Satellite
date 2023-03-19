@@ -4,8 +4,7 @@ import java.util.Date
 import java.util.UUID
 import javax.persistence.Transient
 
-
-class ProjectElement (
+class ProjectElement(
 
     elementId: UUID? = null,
     val name: String,

@@ -2,6 +2,9 @@ package kr.hs.entrydsm.repo.global.security.jwt
 
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import java.time.LocalDateTime
+import java.util.Date
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants.ACCESS
@@ -10,10 +13,6 @@ import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants.ROLE_CLAI
 import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants.TYPE_CLAIM
 import kr.hs.entrydsm.repo.global.security.jwt.properties.SecurityProperties
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
-import java.util.Date
-import java.util.UUID
-
 
 @Component
 class JwtGenerator(

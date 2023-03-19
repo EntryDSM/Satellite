@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.repo.domain.document.persistence.element
 
-import kr.hs.entrydsm.repo.domain.major.persistence.Major
-import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import java.util.UUID
 import javax.persistence.Transient
+import kr.hs.entrydsm.repo.domain.major.persistence.Major
+import kr.hs.entrydsm.repo.domain.student.persistence.Student
 
-class WriterInfoElement (
+class WriterInfoElement(
 
     elementId: UUID? = null,
 
@@ -70,7 +70,7 @@ class WriterInfoElement (
         profileImagePath: String = this.profileImagePath,
         grade: String = this.grade,
         classNum: String = this.classNum,
-        number: String  = this.number,
+        number: String = this.number,
         email: String = this.email,
         majorId: UUID = this.majorId,
         majorName: String = this.majorName

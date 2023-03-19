@@ -17,9 +17,11 @@ class DeleteFeedbackUseCase(
 
         val document = documentRepository.findByIdOrNull(request.documentId) ?: throw DocumentNotFoundException
 
-        feedbackRepository.deleteById(FeedbackId(
-            documentId = document.id,
-            elementId = request.elementId
-        ))
+        feedbackRepository.deleteById(
+            FeedbackId(
+                documentId = document.id,
+                elementId = request.elementId
+            )
+        )
     }
 }

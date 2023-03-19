@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.repo.domain.major.presentation.dto.request
 
-import org.hibernate.validator.constraints.Length
 import javax.validation.constraints.NotEmpty
+import org.hibernate.validator.constraints.Length
 
 data class CreateMajorRequest(
 

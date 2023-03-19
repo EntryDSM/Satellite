@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.auth.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendMailVerificationCodeRequest
 import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.SendPhoneVerificationCodeRequest
 import kr.hs.entrydsm.repo.domain.auth.presentation.dto.request.VerifyCodeRequest
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
 
 @RequestMapping("/auth")
 @RestController
@@ -32,7 +32,6 @@ class AuthController(
             phoneNumber = request.phoneNumber
         )
     }
-
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/mail")
