@@ -68,8 +68,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
                 anyValueObject("elementId" to elementIds[3]),
             ),
             certificateList = mutableListOf(
-                anyValueObject("elementId" to elementIds[4]),
-            )
+                anyValueObject("elementId" to elementIds[4])
+            ),
+            year = 2023
         )
 
         val feedbacks = listOf(

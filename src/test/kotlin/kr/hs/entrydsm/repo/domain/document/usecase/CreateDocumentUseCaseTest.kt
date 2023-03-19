@@ -14,6 +14,7 @@ import kr.hs.entrydsm.repo.domain.document.presentation.dto.request.CreateDocume
 import kr.hs.entrydsm.repo.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.repo.domain.major.persistence.Major
 import kr.hs.entrydsm.repo.domain.major.persistence.repository.MajorRepository
+import kr.hs.entrydsm.repo.domain.school.facade.SchoolYearFacade
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.global.security.SecurityUtil
 import org.springframework.data.repository.findByIdOrNull
@@ -22,9 +23,10 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
 
     val documentRepository: DocumentRepository = mockk()
     val majorRepository: MajorRepository = mockk()
+    val schoolYearFacade: SchoolYearFacade = mockk()
     mockkObject(SecurityUtil)
 
-    val createDocumentUseCase = CreateDocumentUseCase(documentRepository, majorRepository)
+    val createDocumentUseCase = CreateDocumentUseCase(documentRepository, majorRepository, schoolYearFacade)
 
     describe("createDocument") {
 
@@ -41,6 +43,7 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
         context("아직 문서를 생성하지 않은 학생과 전공의 정보가 주어지면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
+            every { schoolYearFacade.getSchoolYear() } returns 2023
             every { documentRepository.findByWriterStudentId(student.id) } returns null
             every { majorRepository.findByIdOrNull(request.majorId) } returns major
             every { documentRepository.save(any()) } returns document

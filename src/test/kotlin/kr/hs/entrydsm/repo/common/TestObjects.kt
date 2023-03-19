@@ -13,7 +13,7 @@ fun getTestDocument(
     student: Student = anyValueObject("number" to "1"),
     major: Major = anyValueObject(),
     status: Status = Status.CREATED,
-    year: Int = anyValueObject()
+    year: Int = 2023
 ) = Document(
     id = UUID.randomUUID(),
     writer = WriterInfoElement(
