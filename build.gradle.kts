@@ -4,6 +4,8 @@ plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
 
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
@@ -14,6 +16,15 @@ plugins {
 group = "kr.hs.entrydsm.repo"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+buildscript {
+    repositories {
+        maven(url = "https://plugins.gradle.org/m2/")
+    }
+    dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.0.0")
+    }
+}
 
 repositories {
     mavenCentral()
@@ -42,7 +53,7 @@ dependencies {
     // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    // DB
+    // database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
 
@@ -56,7 +67,7 @@ dependencies {
     api("com.querydsl:querydsl-jpa:5.0.0")
     kapt("com.querydsl:querydsl-apt:5.0.0")
 
-    // Fegin Client
+    // feign Client
     implementation("io.github.openfeign:feign-httpclient:11.9.1")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
 
