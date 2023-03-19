@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.exit.domain.school.presentation
 
 import kr.hs.entrydsm.exit.domain.school.useCase.ChangeSchoolYearUseCase
-import kr.hs.entrydsm.exit.domain.school.useCase.CreateLibraryFileUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,8 +12,7 @@ import javax.validation.constraints.NotNull
 @RequestMapping("/school-year")
 @RestController
 class SchoolYearController(
-    private val changeSchoolYearUseCase: ChangeSchoolYearUseCase,
-    private val createLibraryFileUseCase: CreateLibraryFileUseCase
+    private val changeSchoolYearUseCase: ChangeSchoolYearUseCase
 ) {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -24,14 +22,5 @@ class SchoolYearController(
         @RequestParam(name = "secret") @NotNull secret: String?
     ) {
         return changeSchoolYearUseCase.execute(year!!, secret!!)
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PostMapping
-    fun createLibraryFile(
-        @RequestParam(name = "grade") @NotNull grade: Int?,
-        @RequestParam(name = "secret") @NotNull secret: String?
-    ) {
-        return createLibraryFileUseCase.execute(grade!!, secret!!)
     }
 }
