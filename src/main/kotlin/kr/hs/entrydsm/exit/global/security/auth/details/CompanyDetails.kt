@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class CompanyDetails(
     val company: Company
-): UserDetails{
+) : UserDetails{
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(SimpleGrantedAuthority(Authority.COMPANY.name))

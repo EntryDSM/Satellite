@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class TeacherDetails(
     val teacher: Teacher
-): UserDetails {
+) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(SimpleGrantedAuthority(Authority.TEACHER.name))
