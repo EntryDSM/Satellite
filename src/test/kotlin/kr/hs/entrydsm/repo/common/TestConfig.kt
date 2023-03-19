@@ -13,7 +13,7 @@ import io.mockk.clearAllMocks
 @AutoScan
 object TestConfig : AbstractProjectConfig(), TestListener {
 
-    //AbstractProjectConfig
+    // AbstractProjectConfig
     override val parallelism = 1
     override val assertionMode = AssertionMode.None
     override val globalAssertSoftly = true
@@ -22,6 +22,6 @@ object TestConfig : AbstractProjectConfig(), TestListener {
 
     override fun extensions() = listOf(SpringExtension)
 
-    //TestListener
+    // TestListener
     override suspend fun afterEach(testCase: TestCase, result: TestResult) = clearAllMocks()
 }

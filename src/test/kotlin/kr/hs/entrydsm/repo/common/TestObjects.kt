@@ -1,13 +1,12 @@
 package kr.hs.entrydsm.repo.common
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.major.persistence.Major
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
-import java.util.UUID
-
 
 fun getTestDocument(
     student: Student = anyValueObject("number" to "1"),

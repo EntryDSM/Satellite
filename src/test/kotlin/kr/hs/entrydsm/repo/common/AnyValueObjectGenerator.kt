@@ -1,6 +1,10 @@
 package kr.hs.entrydsm.repo.common
 
+import java.util.Date
 import java.util.UUID
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -49,9 +53,11 @@ object AnyValueObjectGenerator {
             HashMap::class -> HashMap<Any, Any>()
             HashSet::class -> HashSet<Any>()
 
-            else -> { throw IllegalArgumentException(
-                "Fields of type ${cls.qualifiedName} cannot automatically generate values"
-            ) }
+            else -> {
+                throw IllegalArgumentException(
+                    "Fields of type ${cls.qualifiedName} cannot automatically generate values"
+                )
+            }
         }
     }
 }

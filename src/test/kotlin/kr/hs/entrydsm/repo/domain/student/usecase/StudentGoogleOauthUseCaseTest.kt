@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import java.time.LocalDateTime
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.repo.domain.auth.constant.Authority
 import kr.hs.entrydsm.repo.domain.auth.dto.response.TokenResponse
@@ -18,13 +19,12 @@ import kr.hs.entrydsm.repo.global.thirdparty.oauth.GoogleEmail
 import kr.hs.entrydsm.repo.global.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
 import kr.hs.entrydsm.repo.global.thirdparty.oauth.dto.response.GoogleEmailResponse
 import kr.hs.entrydsm.repo.global.thirdparty.oauth.properties.GoogleOauthProperties
-import java.time.LocalDateTime
 
 internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
     val studentRepository = mockk<StudentRepository>()
     val googleProperties = anyValueObject<GoogleOauthProperties>()
-    val googleAuth =  mockk<GoogleAuth>()
+    val googleAuth = mockk<GoogleAuth>()
     val googleEmail = mockk<GoogleEmail>()
     val jwtGenerator = mockk<JwtGenerator>()
 

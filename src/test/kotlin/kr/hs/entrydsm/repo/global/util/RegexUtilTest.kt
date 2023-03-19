@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.util.regex.Pattern
 
-
 internal class RegexUtilTest : DescribeSpec({
 
     describe("NUMBER_EXP") {

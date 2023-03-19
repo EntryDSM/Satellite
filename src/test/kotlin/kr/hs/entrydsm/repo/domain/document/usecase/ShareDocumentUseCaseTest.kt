@@ -3,7 +3,11 @@ package kr.hs.entrydsm.repo.domain.document.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.every
+import io.mockk.justRun
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kr.hs.entrydsm.repo.common.getTestDocument
 import kr.hs.entrydsm.repo.domain.document.exception.IllegalStatusException
 import kr.hs.entrydsm.repo.domain.document.persistence.Document

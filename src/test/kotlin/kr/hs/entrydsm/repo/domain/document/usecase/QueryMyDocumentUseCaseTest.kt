@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import java.util.UUID.randomUUID
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.repo.common.getTestDocument
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentNotFoundException
@@ -19,7 +20,6 @@ import kr.hs.entrydsm.repo.domain.feedback.persistence.Feedback
 import kr.hs.entrydsm.repo.domain.feedback.persistence.repository.FeedbackRepository
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.global.security.SecurityUtil
-import java.util.UUID.randomUUID
 
 internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 

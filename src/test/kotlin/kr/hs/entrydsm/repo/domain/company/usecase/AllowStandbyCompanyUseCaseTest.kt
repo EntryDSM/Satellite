@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.domain.company.persistence.repository.CompanyReposito
 import kr.hs.entrydsm.repo.domain.company.persistence.repository.StandbyCompanyRepository
 import org.springframework.data.repository.findByIdOrNull
 
-
 internal class AllowStandbyCompanyUseCaseTest : DescribeSpec({
 
     val standbyCompanyRepository = mockk<StandbyCompanyRepository>()
