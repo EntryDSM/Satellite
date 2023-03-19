@@ -1,4 +1,4 @@
-name: exit - CD
+name: repo - CD
 
 on:
   push:
