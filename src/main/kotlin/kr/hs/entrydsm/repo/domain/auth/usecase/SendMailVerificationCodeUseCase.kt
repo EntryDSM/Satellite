@@ -2,7 +2,7 @@ package kr.hs.entrydsm.repo.domain.auth.usecase
 
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.global.thirdparty.aws.ses.AwsSESAdapter
-import kr.hs.entrydsm.repo.global.util.RandomUtil
+import org.apache.commons.lang.RandomStringUtils
 import org.springframework.data.repository.findByIdOrNull
 
 @UseCase
@@ -23,7 +23,7 @@ class SendMailVerificationCodeUseCase(
             throw kr.hs.entrydsm.repo.domain.auth.exception.AlreadyVerifiedException
         }
 
-        val code = RandomUtil.randomNumeric(properties.codeLength)
+        val code = RandomStringUtils.randomNumeric(properties.codeLength)
 
         awsSESAdapter.sendMail(
             email = email,

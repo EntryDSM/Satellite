@@ -11,7 +11,6 @@ import kr.hs.entrydsm.repo.global.exception.InternalServerException
 import kr.hs.entrydsm.repo.global.exception.jwt.ExpiredTokenException
 import kr.hs.entrydsm.repo.global.exception.jwt.InvalidTokenException
 import kr.hs.entrydsm.repo.global.exception.jwt.UnexpectedTokenException
-import kr.hs.entrydsm.repo.global.security.auth.details.service.CompanyDetailService
 import kr.hs.entrydsm.repo.global.security.auth.details.service.StudentDetailService
 import kr.hs.entrydsm.repo.global.security.auth.details.service.TeacherDetailService
 import kr.hs.entrydsm.repo.global.security.jwt.properties.JwtConstants.ACCESS
@@ -27,8 +26,7 @@ import org.springframework.stereotype.Component
 class JwtParser(
     private val securityProperties: SecurityProperties,
     private val teacherDetailService: TeacherDetailService,
-    private val studentDetailService: StudentDetailService,
-    private val companyDetailService: CompanyDetailService
+    private val studentDetailService: StudentDetailService
 ) {
 
     fun getAuthentication(token: String): Authentication? {
@@ -66,7 +64,6 @@ class JwtParser(
 
         return when (authority) {
             Authority.STUDENT -> studentDetailService
-            Authority.COMPANY -> companyDetailService
             Authority.TEACHER -> teacherDetailService
         }.loadUserByUsername(body.subject)
     }

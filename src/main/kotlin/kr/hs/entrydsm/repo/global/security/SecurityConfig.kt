@@ -22,7 +22,6 @@ internal class SecurityConfig(
     companion object {
         private val TEACHER = Authority.TEACHER.name
         private val STUDENT = Authority.STUDENT.name
-        private val COMPANY = Authority.COMPANY.name
     }
 
     @Bean
@@ -70,11 +69,11 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.GET, "/document/student/{student-id}").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
-            .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
-            .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER)
+            .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER)
+            .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER)
             // MAJOR
-            .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER, COMPANY)
+            .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER)
             .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
             // FEEDBACK
