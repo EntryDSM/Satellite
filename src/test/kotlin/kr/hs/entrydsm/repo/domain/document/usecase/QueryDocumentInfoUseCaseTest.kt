@@ -8,7 +8,6 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import kr.hs.entrydsm.repo.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.repo.common.getTestDocument
-import kr.hs.entrydsm.repo.domain.company.persistence.Company
 import kr.hs.entrydsm.repo.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
@@ -35,7 +34,6 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
         )
         val otherStudent = anyValueObject<Student>()
         val teacher = anyValueObject<Teacher>()
-        val company = anyValueObject<Company>()
 
         val createdDocument = getTestDocument(
             student = student,
@@ -84,20 +82,6 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
             }
         }
 
-        context("회사가 CREATED 상태의 문서를 조회하면") {
-
-            every { SecurityUtil.getCurrentUserAuthority() } returns kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY
-            every { documentRepository.findByIdOrNull(createdDocument.id) } returns createdDocument
-            every { SecurityUtil.getCurrentUserId() } returns company.id
-            every { studentRepository.findByIdOrNull(company.id) } returns null
-
-            it("DocumentAccessRight 예외를 던진다.") {
-                shouldThrow<DocumentAccessRightException> {
-                    queryDocumentInfoUseCase.execute(createdDocument.id)
-                }
-            }
-        }
-
         val submittedDocument = getTestDocument(
             student = student,
             status = Status.SUBMITTED
@@ -131,20 +115,6 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
             }
         }
 
-        context("회사가 SUBMITTED 상태의 문서를 조회하면") {
-
-            every { SecurityUtil.getCurrentUserAuthority() } returns kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY
-            every { documentRepository.findByIdOrNull(submittedDocument.id) } returns submittedDocument
-            every { SecurityUtil.getCurrentUserId() } returns company.id
-            every { studentRepository.findByIdOrNull(company.id) } returns null
-
-            it("DocumentAccessRight 예외를 던진다.") {
-                shouldThrow<DocumentAccessRightException> {
-                    queryDocumentInfoUseCase.execute(submittedDocument.id)
-                }
-            }
-        }
-
         val sharedDocument = getTestDocument(
             student = student,
             status = Status.SHARED
@@ -170,20 +140,6 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
             every { documentRepository.findByIdOrNull(sharedDocument.id) } returns sharedDocument
             every { SecurityUtil.getCurrentUserId() } returns teacher.id
             every { studentRepository.findByIdOrNull(teacher.id) } returns null
-
-            it("문서의 상세 정보를 반환한다.") {
-                shouldNotThrow<Exception> {
-                    queryDocumentInfoUseCase.execute(sharedDocument.id)
-                }
-            }
-        }
-
-        context("회사가 SHARED 상태의 문서를 조회하면") {
-
-            every { SecurityUtil.getCurrentUserAuthority() } returns kr.hs.entrydsm.repo.domain.auth.constant.Authority.COMPANY
-            every { documentRepository.findByIdOrNull(sharedDocument.id) } returns sharedDocument
-            every { SecurityUtil.getCurrentUserId() } returns company.id
-            every { studentRepository.findByIdOrNull(company.id) } returns null
 
             it("문서의 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
