@@ -9,7 +9,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kr.hs.entrydsm.repo.common.getTestDocument
-import kr.hs.entrydsm.repo.domain.document.exception.IllegalStatusException
+import kr.hs.entrydsm.repo.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.repo.domain.document.persistence.Document
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
@@ -57,7 +57,7 @@ internal class ShareDocumentUseCaseTest : DescribeSpec({
 
             it("IllegalStatus 예외를 던진다.") {
 
-                shouldThrow<IllegalStatusException> {
+                shouldThrow<DocumentIllegalStatusException> {
                     shareDocumentUseCase.execute(createdDocument.id)
                 }
                 verify(exactly = 0) { documentRepository.save(any()) }
@@ -72,7 +72,7 @@ internal class ShareDocumentUseCaseTest : DescribeSpec({
 
             it("IllegalStatus 예외를 던진다.") {
 
-                shouldThrow<IllegalStatusException> {
+                shouldThrow<DocumentIllegalStatusException> {
                     shareDocumentUseCase.execute(sharedDocument.id)
                 }
                 verify(exactly = 0) { documentRepository.save(any()) }
