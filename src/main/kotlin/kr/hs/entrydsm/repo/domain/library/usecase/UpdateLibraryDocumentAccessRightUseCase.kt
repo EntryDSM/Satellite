@@ -1,12 +1,11 @@
 package kr.hs.entrydsm.repo.domain.library.usecase
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.repo.domain.library.exception.LibraryDocumentNotFoundException
 import kr.hs.entrydsm.repo.domain.library.persistence.AccessRight
 import kr.hs.entrydsm.repo.domain.library.persistence.repository.LibraryDocumentRepository
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
-
 
 @ReadOnlyUseCase
 class UpdateLibraryDocumentAccessRightUseCase(

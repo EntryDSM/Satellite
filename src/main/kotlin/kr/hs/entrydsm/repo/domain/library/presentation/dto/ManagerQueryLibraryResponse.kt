@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.repo.domain.library.presentation.dto
 
-import kr.hs.entrydsm.repo.domain.library.persistence.AccessRight
 import java.util.UUID
+import kr.hs.entrydsm.repo.domain.library.persistence.AccessRight
 
 data class ManagerQueryLibraryResponse(
     val libraryDocumentList: List<LibraryDocumentElement>

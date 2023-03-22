@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.library.persistence
 
-import kr.hs.entrydsm.repo.global.entity.BaseUUIDEntity
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -8,6 +7,7 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 import javax.persistence.Table
+import kr.hs.entrydsm.repo.global.entity.BaseUUIDEntity
 
 @Table(name = "tbl_library")
 @Entity
@@ -47,13 +47,12 @@ class LibraryDocument(
         createdAt: LocalDateTime = this.createdAt
     ): LibraryDocument {
         return LibraryDocument(
-            id = this.id,
-            year = this.year,
-            grade = this.grade,
-            fileUrl = this.fileUrl,
-            accessRight = this.accessRight,
-            createdAt = this.createdAt
+            id = id,
+            year = year,
+            grade = grade,
+            fileUrl = fileUrl,
+            accessRight = accessRight,
+            createdAt = createdAt
         )
     }
-
 }

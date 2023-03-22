@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.repo.domain.library.presentation
 
+import java.util.UUID
+import javax.validation.constraints.NotNull
 import kr.hs.entrydsm.repo.domain.library.persistence.AccessRight
 import kr.hs.entrydsm.repo.domain.library.presentation.dto.ManagerQueryLibraryResponse
 import kr.hs.entrydsm.repo.domain.library.presentation.dto.StudentQueryLibraryResponse
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
-import javax.validation.constraints.NotNull
 
 @RequestMapping("/document/library")
 @RestController

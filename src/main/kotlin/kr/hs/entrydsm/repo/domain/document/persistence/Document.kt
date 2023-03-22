@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.repo.domain.document.persistence
 
+import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.element.AwardElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.CertificateElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.IntroduceElement
@@ -9,7 +10,6 @@ import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.global.entity.BaseMongoUUIDEntity
 import org.hibernate.annotations.Where
-import java.util.UUID
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
 @Where(clause = "is_deleted is false")
