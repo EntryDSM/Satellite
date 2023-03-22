@@ -1,12 +1,12 @@
-package kr.hs.entrydsm.repo.domain.school.useCase
+package kr.hs.entrydsm.repo.domain.library.usecase
 
 import kr.hs.entrydsm.repo.domain.common.annotation.UseCase
 import kr.hs.entrydsm.repo.domain.document.persistence.repository.DocumentRepository
+import kr.hs.entrydsm.repo.domain.library.persistence.AccessRight
+import kr.hs.entrydsm.repo.domain.library.persistence.LibraryDocument
+import kr.hs.entrydsm.repo.domain.library.persistence.repository.LibraryDocumentRepository
+import kr.hs.entrydsm.repo.domain.library.presentation.dto.CreateLibraryFileResponse
 import kr.hs.entrydsm.repo.domain.school.facade.SchoolYearFacade
-import kr.hs.entrydsm.repo.domain.school.persistence.AccessRight
-import kr.hs.entrydsm.repo.domain.school.persistence.LibraryDocument
-import kr.hs.entrydsm.repo.domain.school.persistence.repository.LibraryDocumentRepository
-import kr.hs.entrydsm.repo.domain.school.presentation.dto.CreateLibraryFileResponse
 import kr.hs.entrydsm.repo.domain.school.properties.SchoolYearProperties
 import kr.hs.entrydsm.repo.global.exception.ForbiddenException
 import kr.hs.entrydsm.repo.global.thirdparty.aws.s3.AwsS3Adapter
