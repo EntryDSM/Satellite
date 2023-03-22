@@ -31,7 +31,9 @@ enum class DomainErrorCode(
     DOCUMENT_ACCESS_RIGHT(403, "DOCUMENT-403-1", "Have no access to documents"),
     DOCUMENT_NOT_FOUND(404, "DOCUMENT-404-1", "Document not found"),
     DOCUMENT_ALREADY_EXIST(409, "DOCUMENT-409-1", "Document already exist"),
-    ILLEGAL_STATUS(409, "DOCUMENT-409-2", "Unable to perform that action"),
+    DOCUMENT_ILLEGAL_STATUS(409, "DOCUMENT-409-2", "Unable to perform that action"),
+
+    LIBRARY_DOCUMENT_NOT_FOUND(404, "LIBRARY-404-1", "Library document not found"),
 
     FEEDBACK_NOT_FOUND(404, "FEEDBACK-404-1", "Feedback not found"),
     FEEDBACK_ALREADY_EXIST(409, "FEEDBACK-409-1", "Feedback already exist"),

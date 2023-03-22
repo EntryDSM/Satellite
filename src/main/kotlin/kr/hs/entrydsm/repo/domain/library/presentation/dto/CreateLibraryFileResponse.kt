@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.repo.domain.school.presentation.dto
+package kr.hs.entrydsm.repo.domain.library.presentation.dto
 
 import java.util.UUID
 

@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.repo.domain.school.persistence
+package kr.hs.entrydsm.repo.domain.library.persistence
 
 enum class AccessRight {
     PUBLIC,
