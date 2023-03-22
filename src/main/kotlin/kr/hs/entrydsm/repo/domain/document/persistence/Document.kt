@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.repo.domain.document.persistence
 
-import java.util.UUID
 import kr.hs.entrydsm.repo.domain.document.persistence.element.AwardElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.CertificateElement
 import kr.hs.entrydsm.repo.domain.document.persistence.element.IntroduceElement
@@ -9,8 +8,11 @@ import kr.hs.entrydsm.repo.domain.document.persistence.element.WriterInfoElement
 import kr.hs.entrydsm.repo.domain.document.persistence.enums.Status
 import kr.hs.entrydsm.repo.domain.student.persistence.Student
 import kr.hs.entrydsm.repo.global.entity.BaseMongoUUIDEntity
+import org.hibernate.annotations.Where
+import java.util.UUID
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
+@Where(clause = "is_deleted is false")
 class Document(
 
     id: UUID? = null,
@@ -29,7 +31,9 @@ class Document(
 
     val awardList: MutableList<AwardElement> = mutableListOf(),
 
-    val certificateList: MutableList<CertificateElement> = mutableListOf()
+    val certificateList: MutableList<CertificateElement> = mutableListOf(),
+
+    val isDeleted: Boolean = false
 
 ) : BaseMongoUUIDEntity(id) {
 
@@ -67,6 +71,9 @@ class Document(
     fun updateCertificateList(certificateList: MutableList<CertificateElement>) =
         copy(certificateList = certificateList)
 
+    fun delete() =
+        copy(isDeleted = true)
+
     private fun copy(
         writer: WriterInfoElement = this.writer,
         year: Int = this.year,
@@ -75,7 +82,8 @@ class Document(
         skillSet: MutableList<String> = this.skillSet,
         projectList: MutableList<ProjectElement> = this.projectList,
         awardList: MutableList<AwardElement> = this.awardList,
-        certificateList: MutableList<CertificateElement> = this.certificateList
+        certificateList: MutableList<CertificateElement> = this.certificateList,
+        isDeleted: Boolean = this.isDeleted
     ): Document {
         return Document(
             id = this.id,
@@ -86,7 +94,8 @@ class Document(
             skillSet = skillSet,
             projectList = projectList,
             awardList = awardList,
-            certificateList = certificateList
+            certificateList = certificateList,
+            isDeleted = isDeleted
         )
     }
 }
