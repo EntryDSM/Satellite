@@ -4,8 +4,8 @@ plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
+    // id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    // id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
 
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
@@ -17,14 +17,14 @@ group = "kr.hs.entrydsm.repo"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-buildscript {
+/*buildscript {
     repositories {
         maven(url = "https://plugins.gradle.org/m2/")
     }
     dependencies {
         classpath("org.jlleitschuh.gradle:ktlint-gradle:11.0.0")
     }
-}
+}*/
 
 repositories {
     mavenCentral()

@@ -85,10 +85,6 @@ cool-sms:
   phoneNumber: ${SMS_PHONE_NUMBER:01012345678}
 
 domain:
-  auth:
-    code:
-      limit-count-of-send: ${PHONE_LIMIT_COUNT:10}
-      time-to-live: ${PHONE_EXP:100000}
   school:
     year:
       id: ${SCHOOL_YEAR_ID}
