@@ -7,6 +7,8 @@ object PdfFont {
 }
 
 object TemplateFileName {
+    const val COVER = "/cover"
     const val INDEX = "/index_page"
-    const val DOCUMENT = "/document"
+    const val CHAPTER = "/chapter"
+    const val DOCUMENT = "/resume"
 }

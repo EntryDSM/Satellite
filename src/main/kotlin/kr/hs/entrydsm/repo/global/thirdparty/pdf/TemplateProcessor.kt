@@ -10,7 +10,7 @@ class TemplateProcessor(
 ) {
     fun process(
         template: String,
-        data: Any,
+        data: Any?,
     ): String {
         val context = Context().apply { setVariable("data", data) }
         return templateEngine.process(template, context)
