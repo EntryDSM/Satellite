@@ -1,12 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("java")
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
-    // id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    // id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
 
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
@@ -16,16 +11,7 @@ plugins {
 
 group = "kr.hs.entrydsm.repo"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
-/*buildscript {
-    repositories {
-        maven(url = "https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.0.0")
-    }
-}*/
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -80,7 +66,7 @@ dependencies {
     implementation("net.nurigo:javaSDK:2.2")
 
     // pdf
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.thymeleaf:thymeleaf")
     implementation("com.itextpdf:html2pdf:3.0.1")
 
     // test
@@ -110,13 +96,6 @@ querydsl {
     jpa = true
     library = "com.querydsl:querydsl-apt:5.0.0"
     querydslSourcesDir = "$projectDir/build/generated"
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
 }
 
 tasks.withType<Test> {
