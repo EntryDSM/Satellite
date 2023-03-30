@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
 import java.util.Date
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.ProjectElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImage
 import org.hibernate.validator.constraints.Length
 

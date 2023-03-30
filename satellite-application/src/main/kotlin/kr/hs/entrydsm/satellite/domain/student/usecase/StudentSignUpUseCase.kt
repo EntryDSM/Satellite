@@ -43,7 +43,7 @@ class StudentSignUpUseCase(
     }
 
     private fun checkEmailSuffix(email: String) {
-        if (!Pattern.matches(RegexUtil.EMAIL_EXP, email)) {
+        if (!Pattern.matches(RegexUtil.EMAIL_SUFFIX_EXP, email)) {
             throw EmailSuffixNotValidException
         }
     }

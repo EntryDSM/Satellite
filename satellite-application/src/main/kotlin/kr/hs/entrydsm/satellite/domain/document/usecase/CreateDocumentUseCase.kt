@@ -1,48 +1,47 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAlreadyExistException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.WriterInfoElement
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.CreateDocumentResponse
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.major.exception.MajorNotFoundException
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
-import kr.hs.entrydsm.satellite.domain.school.facade.SchoolYearFacade
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
+import kr.hs.entrydsm.satellite.domain.school.spi.SchoolYearPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import java.util.*
 
 @UseCase
 class CreateDocumentUseCase(
-    private val documentRepository: DocumentRepository,
-    private val majorRepository: MajorRepository,
-    private val schoolYearFacade: SchoolYearFacade
+    private val securityPort: SecurityPort,
+    private val documentPort: DocumentPort,
+    private val majorPort: MajorPort,
+    private val schoolYearPort: SchoolYearPort
 ) {
-    fun execute(request: CreateDocumentRequest): CreateDocumentResponse {
+    fun execute(majorId: UUID): UUID {
 
-        val student = SecurityUtil.getCurrentStudent()
+        val student = securityPort.getCurrentStudent()
 
-        if (documentIsExist(student)) {
+        if (documentPort.existByWriterStudentId(student.id)) {
             throw DocumentAlreadyExistException
         }
 
-        val major = majorRepository.findByIdOrNull(request.majorId) ?: throw MajorNotFoundException
+        val major = majorPort.queryById(majorId) ?: throw MajorNotFoundException
 
-        val document = documentRepository.save(
+        val document = documentPort.save(
             Document(
                 writer = WriterInfoElement(student, major),
-                year = schoolYearFacade.getSchoolYear(),
-                status = Status.CREATED
+                year = schoolYearPort.getSchoolYear().year,
+                documentStatus = DocumentStatus.CREATED
             )
         )
 
-        return CreateDocumentResponse(document.id)
+        return document.id
     }
 
-    private fun documentIsExist(student: Student): Boolean {
-        return documentRepository.findByWriterStudentId(student.id) != null
+    private fun studentDocumentIsExist(student: Student): Boolean {
+        return documentPort.queryByWriterStudentId(student.id) != null
     }
 }

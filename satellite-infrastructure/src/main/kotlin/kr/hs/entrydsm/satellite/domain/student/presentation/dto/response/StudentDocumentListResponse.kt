@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.satellite.domain.student.presentation.dto.response
 
-import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.response.MajorVO
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.major.dto.MajorElement
+import java.util.*
 
 data class StudentDocumentListResponse(
 
@@ -12,22 +12,22 @@ data class StudentDocumentListResponse(
     data class StudentDocumentResponse(
         val studentId: UUID,
         val name: String,
-        val documentStatus: Status,
+        val documentStatus: DocumentStatus,
         val documentId: UUID,
         val profileImagePath: String,
         val studentNumber: Int,
         val email: String,
-        val major: MajorVO
+        val major: MajorElement
     ) {
         constructor(document: Document) : this(
             studentId = document.writer.studentId,
             name = document.writer.name,
-            documentStatus = document.status,
+            documentStatus = document.documentStatus,
             documentId = document.id,
             profileImagePath = document.writer.profileImagePath,
             studentNumber = document.writer.studentNumber,
             email = document.writer.email,
-            major = MajorVO(
+            major = MajorElement(
                 id = document.writer.majorId,
                 name = document.writer.majorName
             )

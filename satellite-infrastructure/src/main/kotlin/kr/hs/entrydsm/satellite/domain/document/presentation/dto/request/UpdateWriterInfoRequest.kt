@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
 import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.WriterInfoElement
-import kr.hs.entrydsm.satellite.domain.major.persistence.Major
+import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
+import kr.hs.entrydsm.satellite.domain.major.persistence.MajorJpaEntity
 import kr.hs.entrydsm.satellite.common.util.RegexUtil
 import org.hibernate.validator.constraints.Length
 import org.intellij.lang.annotations.Pattern
@@ -29,7 +29,7 @@ data class UpdateWriterInfoRequest(
     val number: String
 
 ) {
-    fun toElement(writer: WriterInfoElement, major: Major): WriterInfoElement {
+    fun toElement(writer: WriterInfoElement, majorJpaEntity: MajorJpaEntity): WriterInfoElement {
         return WriterInfoElement(
             studentId = writer.studentId,
             name = writer.name,
@@ -38,8 +38,8 @@ data class UpdateWriterInfoRequest(
             classNum = classNum,
             number = number,
             email = email,
-            majorId = major.id,
-            majorName = major.name
+            majorId = majorJpaEntity.id,
+            majorName = majorJpaEntity.name
         )
     }
 }

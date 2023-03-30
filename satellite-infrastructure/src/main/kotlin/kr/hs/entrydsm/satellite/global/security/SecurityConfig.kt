@@ -1,8 +1,7 @@
 package kr.hs.entrydsm.satellite.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.satellite.domain.student.persistence.Authority
-import kr.hs.entrydsm.satellite.global.config.FilterConfig
+import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.common.security.jwt.JwtParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

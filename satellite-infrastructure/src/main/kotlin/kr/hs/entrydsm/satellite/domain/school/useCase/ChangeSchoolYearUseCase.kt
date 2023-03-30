@@ -1,32 +1,25 @@
 package kr.hs.entrydsm.satellite.domain.school.useCase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
-import kr.hs.entrydsm.satellite.domain.school.persistence.SchoolYear
+import kr.hs.entrydsm.satellite.domain.school.exception.SecretMismatchException
+import kr.hs.entrydsm.satellite.domain.school.persistence.SchoolYearJpaEntity
 import kr.hs.entrydsm.satellite.domain.school.persistence.repository.SchoolYearRepository
-import kr.hs.entrydsm.satellite.domain.school.properties.SchoolYearProperties
-import kr.hs.entrydsm.satellite.common.exception.ForbiddenException
-import kr.hs.entrydsm.satellite.common.exception.InternalServerException
-import org.springframework.data.repository.findByIdOrNull
-import org.springframework.security.crypto.password.PasswordEncoder
+import kr.hs.entrydsm.satellite.domain.school.spi.SchoolYearPort
 
 @UseCase
 class ChangeSchoolYearUseCase(
-    private val schoolYearProperties: SchoolYearProperties,
-    private val schoolYearRepository: SchoolYearRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val schoolYearPort: SchoolYearPort,
+    private val schoolYearRepository: SchoolYearRepository
 ) {
     fun execute(year: Int, secret: String) {
-        if (passwordEncoder.matches(secret, schoolYearProperties.secret)) {
-            throw ForbiddenException
+
+        if (schoolYearPort.secretMatches(secret)) {
+            throw SecretMismatchException
         }
 
-        val schoolYear = schoolYearRepository.findByIdOrNull(schoolYearProperties.id) ?: throw InternalServerException
-
-        schoolYearRepository.save(
-            SchoolYear(
-                id = schoolYear.id,
-                year = year
-            )
+        val schoolYear = schoolYearPort.getSchoolYear()
+        schoolYearPort.save(
+            schoolYear.copy(year = year)
         )
     }
 }

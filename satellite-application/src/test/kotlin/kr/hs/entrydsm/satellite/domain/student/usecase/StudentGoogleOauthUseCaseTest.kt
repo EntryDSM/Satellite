@@ -63,7 +63,7 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
             every { jwtGenerator.generateBothToken(student.id, Authority.STUDENT) } returns tokenResponse
 
             it("토큰을 반환한다.") {
-                val response = googleOauthUseCase.oAuthSignIn(code)
+                val response = googleOauthUseCase.oauthSignIn(code)
                 response shouldBe tokenResponse
             }
         }
@@ -78,7 +78,7 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
             it("SignUpRequiredRedirection를 던진다.") {
                 shouldThrow<SignUpRequiredRedirection> {
-                    googleOauthUseCase.oAuthSignIn(code)
+                    googleOauthUseCase.oauthSignIn(code)
                 }
             }
         }
@@ -94,7 +94,7 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
             it("EmailSuffixNotValid 예외를 던진다.") {
                 shouldThrow<EmailSuffixNotValidException> {
-                    googleOauthUseCase.oAuthSignIn(code)
+                    googleOauthUseCase.oauthSignIn(code)
                 }
             }
         }

@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation
 
-import java.util.UUID
-import javax.validation.Valid
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
+import kr.hs.entrydsm.satellite.domain.document.dto.CreateDocumentResponse
+import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
+import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardRequest
@@ -11,15 +11,10 @@ import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateI
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateSkillSetRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.CreateDocumentResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.DocumentInfoResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.DocumentListResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.QueryDocumentPagingInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelShareDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelSubmitMyDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.CreateDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryDocumentInfoUseCase
-import kr.hs.entrydsm.satellite.domain.document.usecase.QueryDocumentPagingInfoUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryMyDocumentInfoUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QuerySharedDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryStudentDocumentInfoUseCase
@@ -39,9 +34,10 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
+import javax.validation.Valid
 
 @RequestMapping("/document")
 @RestController
@@ -59,7 +55,6 @@ class DocumentController(
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
     private val queryStudentDocumentInfoUseCase: QueryStudentDocumentInfoUseCase,
     private val querySharedDocumentUseCase: QuerySharedDocumentUseCase,
-    private val queryDocumentPagingInfoUseCase: QueryDocumentPagingInfoUseCase,
 
     private val submitMyDocumentUseCase: SubmitMyDocumentUseCase,
     private val cancelSubmitMyDocumentUseCase: CancelSubmitMyDocumentUseCase,
@@ -70,7 +65,8 @@ class DocumentController(
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createDocument(@RequestBody @Valid request: CreateDocumentRequest): CreateDocumentResponse {
-        return createDocumentUseCase.execute(request)
+        val documentId = createDocumentUseCase.execute(request.majorId!!)
+        return CreateDocumentResponse(documentId)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -126,15 +122,14 @@ class DocumentController(
 
     @GetMapping("/shared")
     fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentRequest): DocumentListResponse {
-        return querySharedDocumentUseCase.execute(request)
-    }
-
-    @GetMapping("/{document-id}/paging")
-    fun queryDocumentPagingInfoUseCase(
-        @PathVariable("document-id") documentId: UUID,
-        @RequestParam(defaultValue = "SHARED") status: Status
-    ): QueryDocumentPagingInfoResponse {
-        return queryDocumentPagingInfoUseCase.execute(documentId, status)
+        return request.run {
+            querySharedDocumentUseCase.execute(
+                name = name,
+                grade = grade,
+                classNum = classNum,
+                majorId = majorId
+            )
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

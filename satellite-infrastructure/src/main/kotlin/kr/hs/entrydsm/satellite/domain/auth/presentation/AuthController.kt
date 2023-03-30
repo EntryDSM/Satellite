@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.auth.presentation
 
-import kr.hs.entrydsm.satellite.domain.auth.dto.GoogleLoginLinkResponse
+import kr.hs.entrydsm.satellite.domain.auth.dto.OauthLinkResponse
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.usecase.GoogleOauthUseCase
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,12 +15,12 @@ class AuthController(
 ) {
 
     @GetMapping("/google/link")
-    fun getGoogleClientId(): GoogleLoginLinkResponse {
-        return studentAuthService.getLink()
+    fun getGoogleClientId(): OauthLinkResponse {
+        return studentAuthService.getGoogleLoginLink()
     }
 
     @GetMapping("/oauth/sign")
-    fun oAuthSingIn(@RequestParam("code") code: String): TokenResponse {
-        return studentAuthService.oAuthSignIn(code)
+    fun oauthSignIn(@RequestParam("code") code: String): TokenResponse {
+        return studentAuthService.oauthSignIn(code)
     }
 }

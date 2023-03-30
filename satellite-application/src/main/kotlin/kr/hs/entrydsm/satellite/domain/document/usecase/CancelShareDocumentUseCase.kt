@@ -1,27 +1,26 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
-import java.util.UUID
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import java.util.*
 
 @UseCase
 class CancelShareDocumentUseCase(
-    private val documentRepository: DocumentRepository
+    private val documentPort: DocumentPort
 ) {
     fun execute(documentId: UUID) {
 
-        val document = documentRepository.findByIdOrNull(documentId) ?: throw DocumentNotFoundException
+        val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (document.status != Status.SHARED) {
+        if (document.documentStatus != DocumentStatus.SHARED) {
             throw DocumentIllegalStatusException
         }
 
-        documentRepository.save(
-            document.updateStatus(Status.SUBMITTED)
+        documentPort.save(
+            document.copy(documentStatus = DocumentStatus.SUBMITTED)
         )
     }
 }

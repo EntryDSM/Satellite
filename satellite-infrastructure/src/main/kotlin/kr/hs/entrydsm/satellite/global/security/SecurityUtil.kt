@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.satellite.global.security
 
 import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.student.persistence.Authority
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.domain.teacher.persistence.Teacher
+import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.student.persistence.StudentJpaEntity
+import kr.hs.entrydsm.satellite.domain.teacher.persistence.TeacherJpaEntity
 import kr.hs.entrydsm.satellite.common.security.auth.details.StudentDetails
 import kr.hs.entrydsm.satellite.common.security.auth.details.TeacherDetails
 import org.springframework.security.core.context.SecurityContextHolder
@@ -21,9 +21,9 @@ object SecurityUtil {
         return UUID.fromString(id)
     }
 
-    fun getCurrentStudent(): Student =
+    fun getCurrentStudent(): StudentJpaEntity =
         (SecurityContextHolder.getContext().authentication.principal as StudentDetails).student
 
-    fun getCurrentTeacher(): Teacher =
+    fun getCurrentTeacher(): TeacherJpaEntity =
         (SecurityContextHolder.getContext().authentication.principal as TeacherDetails).teacher
 }

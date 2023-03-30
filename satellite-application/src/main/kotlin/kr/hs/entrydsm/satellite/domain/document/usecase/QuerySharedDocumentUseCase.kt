@@ -1,32 +1,33 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.findByStatusAndWriterInfo
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.DocumentListResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.response.DocumentListResponse.DocumentResponse
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import java.util.*
 
 @ReadOnlyUseCase
 class QuerySharedDocumentUseCase(
-    private val documentRepository: DocumentRepository
+    private val documentPort: DocumentPort
 ) {
-    fun execute(request: QueryDocumentRequest): DocumentListResponse {
+    fun execute(
+        name: String?,
+        grade: String?,
+        classNum: String?,
+        majorId: UUID?
+    ): DocumentListResponse {
 
-        val documentList = request.run {
-            documentRepository.findByStatusAndWriterInfo(
-                status = Status.SHARED,
-                name = name ?: "",
-                grade = grade,
-                classNum = classNum,
-                majorId = request.majorId
-            )
-        }
+        val documentList = documentPort.queryByStatusAndWriterInfo(
+            documentStatus = DocumentStatus.SHARED,
+            name = name,
+            grade = grade,
+            classNum = classNum,
+            majorId = majorId
+        )
 
         return DocumentListResponse(
             documentList.map {
-                DocumentResponse(it)
+                DocumentListResponse.DocumentResponse(it)
             }
         )
     }

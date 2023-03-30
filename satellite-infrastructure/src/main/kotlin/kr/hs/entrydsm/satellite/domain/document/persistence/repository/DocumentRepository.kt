@@ -1,26 +1,26 @@
 package kr.hs.entrydsm.satellite.domain.document.persistence.repository
 
 import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
+import kr.hs.entrydsm.satellite.domain.document.persistence.DocumentJpaEntity
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.querydsl.QuerydslPredicateExecutor
 
-interface DocumentRepository : MongoRepository<Document, UUID>, QuerydslPredicateExecutor<Document> {
+interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, QuerydslPredicateExecutor<DocumentJpaEntity> {
 
-    fun findByWriterStudentId(studentId: UUID): Document?
+    fun findByWriterStudentId(studentId: UUID): DocumentJpaEntity?
 
-    fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<Document>
+    fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<DocumentJpaEntity>
 
     fun findTopByStatusAndWriterStudentNumberIsGreaterThanOrderByWriterStudentNumber(
-        status: Status,
+        documentStatus: DocumentStatus,
         studentNumber: Int
-    ): Document?
+    ): DocumentJpaEntity?
 
     fun findTopByStatusAndWriterStudentNumberIsLessThanOrderByWriterStudentNumberDesc(
-        status: Status,
+        documentStatus: DocumentStatus,
         studentNumber: Int
-    ): Document?
+    ): DocumentJpaEntity?
 
     fun deleteByYear(year: Int)
 }

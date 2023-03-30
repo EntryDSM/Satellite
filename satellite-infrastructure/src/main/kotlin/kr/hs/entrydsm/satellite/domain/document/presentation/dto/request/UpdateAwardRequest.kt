@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
 import java.util.Date
 import javax.validation.constraints.NotBlank
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.AwardElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import org.hibernate.validator.constraints.Length
 
 data class UpdateAwardRequest(

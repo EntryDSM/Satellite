@@ -1,13 +1,13 @@
 package kr.hs.entrydsm.satellite.global.security.auth.details
 
-import kr.hs.entrydsm.satellite.domain.student.persistence.Authority
-import kr.hs.entrydsm.satellite.domain.teacher.persistence.Teacher
+import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.teacher.persistence.TeacherJpaEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class TeacherDetails(
-    val teacher: Teacher
+    val teacherJpaEntity: TeacherJpaEntity
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -17,7 +17,7 @@ class TeacherDetails(
     override fun getPassword(): String? = null
 
     override fun getUsername(): String {
-        return teacher.id.toString()
+        return teacherJpaEntity.id.toString()
     }
 
     override fun isAccountNonExpired(): Boolean = true
