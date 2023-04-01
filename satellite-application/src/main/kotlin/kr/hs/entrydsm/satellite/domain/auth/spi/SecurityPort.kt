@@ -8,4 +8,5 @@ interface SecurityPort {
     fun getCurrentStudent(): Student
     fun getCurrentUserAuthority(): Authority
     fun getCurrentUserId(): UUID
+    fun encyptMatches(rawString: String, encryptedString: String): Boolean
 }
