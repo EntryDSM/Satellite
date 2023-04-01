@@ -1,19 +1,17 @@
 package kr.hs.entrydsm.satellite.domain.major.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
-import kr.hs.entrydsm.satellite.domain.major.persistence.Major
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.request.CreateMajorRequest
+import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
 
 @UseCase
 class CreateMajorUseCase(
-    private val majorRepository: MajorRepository
+    private val majorPort: MajorPort
 ) {
-    fun execute(request: CreateMajorRequest) {
-
-        majorRepository.save(
+    fun execute(majorName: String) {
+        majorPort.save(
             Major(
-                name = request.majorName
+                name = majorName
             )
         )
     }

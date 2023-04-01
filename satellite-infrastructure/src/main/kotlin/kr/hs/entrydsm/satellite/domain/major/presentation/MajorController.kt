@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.major.presentation
 
 import kr.hs.entrydsm.satellite.domain.major.presentation.dto.request.CreateMajorRequest
 import kr.hs.entrydsm.satellite.domain.major.presentation.dto.request.DeleteMajorRequest
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.response.MajorListResponse
+import kr.hs.entrydsm.satellite.domain.major.dto.MajorListResponse
 import kr.hs.entrydsm.satellite.domain.major.usecase.CreateMajorUseCase
 import kr.hs.entrydsm.satellite.domain.major.usecase.DeleteMajorUseCase
 import kr.hs.entrydsm.satellite.domain.major.usecase.QueryMajorListUseCase

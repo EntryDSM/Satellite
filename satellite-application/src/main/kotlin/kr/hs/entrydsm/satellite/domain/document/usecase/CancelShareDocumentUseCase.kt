@@ -15,12 +15,12 @@ class CancelShareDocumentUseCase(
 
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (document.documentStatus != DocumentStatus.SHARED) {
+        if (document.status != DocumentStatus.SHARED) {
             throw DocumentIllegalStatusException
         }
 
         documentPort.save(
-            document.copy(documentStatus = DocumentStatus.SUBMITTED)
+            document.copy(status = DocumentStatus.SUBMITTED)
         )
     }
 }

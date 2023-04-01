@@ -1,8 +1,12 @@
 package kr.hs.entrydsm.satellite.domain.teacher.presentation.dto.request
 
+import javax.validation.constraints.NotBlank
+
 data class TeacherSignInRequest(
 
-    val accountId: String,
+    @NotBlank
+    val accountId: String?,
 
-    val password: String
+    @NotBlank
+    val password: String?
 )

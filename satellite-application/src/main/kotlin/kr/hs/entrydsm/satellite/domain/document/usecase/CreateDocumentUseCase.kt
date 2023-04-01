@@ -34,7 +34,7 @@ class CreateDocumentUseCase(
             Document(
                 writer = WriterInfoElement(student, major),
                 year = schoolYearPort.getSchoolYear().year,
-                documentStatus = DocumentStatus.CREATED
+                status = DocumentStatus.CREATED
             )
         )
 

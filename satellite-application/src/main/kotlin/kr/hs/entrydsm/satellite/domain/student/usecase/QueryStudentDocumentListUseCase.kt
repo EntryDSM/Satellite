@@ -1,29 +1,30 @@
 package kr.hs.entrydsm.satellite.domain.student.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.findByWriterInfo
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentRequest
-import kr.hs.entrydsm.satellite.domain.student.presentation.dto.response.StudentDocumentListResponse
-import kr.hs.entrydsm.satellite.domain.student.presentation.dto.response.StudentDocumentListResponse.StudentDocumentResponse
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.student.dto.StudentDocumentListResponse
+import java.util.*
 
 @ReadOnlyUseCase
 class QueryStudentDocumentListUseCase(
-    private val documentRepository: DocumentRepository
+    private val documentPort: DocumentPort
 ) {
-    fun execute(request: QueryDocumentRequest): StudentDocumentListResponse {
+    fun execute(
+        name: String?,
+        grade: String?,
+        classNum: String?,
+        majorId: UUID?
+    ): StudentDocumentListResponse {
 
-        val documentList = request.run {
-            documentRepository.findByWriterInfo(
-                name = name!!,
-                grade = grade,
-                classNum = classNum,
-                majorId = request.majorId
-            )
-        }
+        val documentList = documentPort.queryByWriterInfo(
+            name = name,
+            grade = grade,
+            classNum = classNum,
+            majorId = majorId
+        )
 
         return StudentDocumentListResponse(
-            documentList.map { StudentDocumentResponse(it) }
+            documentList.map { StudentDocumentListResponse.StudentDocumentResponse(it) }
         )
     }
 }

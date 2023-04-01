@@ -1,50 +1,46 @@
 package kr.hs.entrydsm.satellite.domain.student.usecase
 
-import kr.hs.entrydsm.satellite.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
-import kr.hs.entrydsm.satellite.domain.common.exception.EmailSuffixNotValidException
+import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
+import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
 import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImage
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.Student.Companion.checkEmailSuffix
 import kr.hs.entrydsm.satellite.domain.student.exception.StudentAlreadyExistException
-import kr.hs.entrydsm.satellite.domain.student.persistence.Authority
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.satellite.domain.student.presentation.dto.request.StudentSignUpRequest
-import kr.hs.entrydsm.satellite.common.security.jwt.JwtGenerator
-import kr.hs.entrydsm.satellite.common.util.RegexUtil
-import java.util.regex.Pattern
+import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 
 @UseCase
 class StudentSignUpUseCase(
-    private val studentRepository: StudentRepository,
-    private val jwtGenerator: JwtGenerator
+    private val studentPort: StudentPort,
+    private val tokenPort: TokenPort
 ) {
-    fun execute(request: StudentSignUpRequest): TokenResponse {
+    fun execute(
+        name: String,
+        profileImagePath: String?,
+        email: String,
+        grade: String,
+        classNum: String,
+        number: String
+    ): TokenResponse {
 
-        checkEmailSuffix(request.email)
+        checkEmailSuffix(email)
 
-        if (studentRepository.existsByEmail(request.email)) {
+        if (studentPort.existsByEmail(email)) {
             throw StudentAlreadyExistException
         }
 
-        val student = request.run {
-            studentRepository.save(
-                Student(
-                    email = email,
-                    name = name,
-                    grade = grade,
-                    classNum = classNum,
-                    number = number,
-                    profileImagePath = profileImagePath ?: DefaultImage.USER_PROFILE
-                )
+        val student = studentPort.save(
+            Student(
+                email = email,
+                name = name,
+                grade = grade,
+                classNum = classNum,
+                number = number,
+                profileImagePath = profileImagePath ?: DefaultImage.USER_PROFILE
             )
-        }
+        )
 
-        return jwtGenerator.generateBothToken(student.id, Authority.STUDENT)
-    }
-
-    private fun checkEmailSuffix(email: String) {
-        if (!Pattern.matches(RegexUtil.EMAIL_SUFFIX_EXP, email)) {
-            throw EmailSuffixNotValidException
-        }
+        return tokenPort.generateBothToken(student.id, Authority.STUDENT)
     }
 }

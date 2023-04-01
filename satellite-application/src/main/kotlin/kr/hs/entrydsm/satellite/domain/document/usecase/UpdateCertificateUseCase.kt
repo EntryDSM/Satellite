@@ -1,32 +1,33 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.dto.CertificateRequest
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateRequest
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 
 @UseCase
 class UpdateCertificateUseCase(
-    private val documentRepository: DocumentRepository
+    private val securityPort: SecurityPort,
+    private val documentPort: DocumentPort
 ) {
-    fun execute(request: UpdateCertificateRequest) {
+    fun execute(certificateList: List<CertificateRequest>) {
 
-        val student = SecurityUtil.getCurrentStudent()
-        val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
+        val student = securityPort.getCurrentStudent()
+        val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        documentRepository.save(
-            documentWithUpdatedCertificate(document, request)
+        documentPort.save(
+            documentWithUpdatedCertificate(document, certificateList)
         )
     }
 
     private fun documentWithUpdatedCertificate(
         document: Document,
-        request: UpdateCertificateRequest
+        certificateRequest: List<CertificateRequest>
     ): Document {
-        return document.updateCertificateList(
-            request.certificateList.map {
+        return document.copy(
+            certificateList = certificateRequest.map {
                 it.toCertificateElement()
             }.toMutableList()
         )

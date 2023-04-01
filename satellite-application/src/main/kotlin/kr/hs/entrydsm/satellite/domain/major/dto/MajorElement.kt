@@ -1,13 +1,14 @@
 package kr.hs.entrydsm.satellite.domain.major.dto
 
-import java.util.UUID
+import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import java.util.*
 
 data class MajorElement(
     val id: UUID,
     val name: String
 ) {
-    constructor(majorJpaEntity: kr.hs.entrydsm.satellite.domain.major.persistence.MajorJpaEntity) : this(
-        id = majorJpaEntity.id,
-        name = majorJpaEntity.name
+    constructor(major: Major) : this(
+        id = major.id,
+        name = major.name
     )
 }

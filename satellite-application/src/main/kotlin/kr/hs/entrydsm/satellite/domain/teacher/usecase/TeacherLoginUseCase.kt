@@ -1,30 +1,29 @@
 package kr.hs.entrydsm.satellite.domain.teacher.usecase
 
-import kr.hs.entrydsm.satellite.domain.auth.dto.response.TokenResponse
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
-import kr.hs.entrydsm.satellite.domain.common.exception.PasswordMismatchedException
-import kr.hs.entrydsm.satellite.domain.student.persistence.Authority
+import kr.hs.entrydsm.satellite.common.exception.PasswordMismatchException
+import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
 import kr.hs.entrydsm.satellite.domain.teacher.exception.TeacherNotFoundException
-import kr.hs.entrydsm.satellite.domain.teacher.persistence.repository.TeacherRepository
-import kr.hs.entrydsm.satellite.domain.teacher.presentation.dto.request.TeacherSignInRequest
-import kr.hs.entrydsm.satellite.common.security.jwt.JwtGenerator
-import org.springframework.security.crypto.password.PasswordEncoder
+import kr.hs.entrydsm.satellite.domain.teacher.spi.TeacherPort
 
 @UseCase
 class TeacherLoginUseCase(
-    private val jwtGenerator: JwtGenerator,
-    private val passwordEncoder: PasswordEncoder,
-    private val teacherRepository: TeacherRepository
+    private val tokenPort: TokenPort,
+    private val securityPort: SecurityPort,
+    private val teacherPort: TeacherPort
 ) {
-    fun execute(request: TeacherSignInRequest): TokenResponse? {
+    fun execute(accountId: String, password: String): TokenResponse? {
 
-        val teacher = teacherRepository.findByAccountId(request.accountId)
+        val teacher = teacherPort.queryByAccountId(accountId)
             ?: throw TeacherNotFoundException
 
-        if (!passwordEncoder.matches(request.password, teacher.password)) {
-            throw PasswordMismatchedException
+        if (!securityPort.encyptMatches(password, teacher.password)) {
+            throw PasswordMismatchException
         }
 
-        return jwtGenerator.generateBothToken(teacher.id, Authority.TEACHER)
+        return tokenPort.generateBothToken(teacher.id, Authority.TEACHER)
     }
 }

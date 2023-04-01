@@ -1,55 +1,58 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoRequest
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.major.exception.MajorNotFoundException
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 
 @UseCase
 class UpdateWriterInfoUseCase(
-    private val documentRepository: DocumentRepository,
-    private val studentRepository: StudentRepository,
-    private val majorRepository: MajorRepository
+    private val securityPort: SecurityPort,
+    private val studentPort: StudentPort,
+    private val documentPort: DocumentPort,
+    private val majorPort: MajorPort
 ) {
-    fun execute(request: UpdateWriterInfoRequest) {
+    fun execute(writerInfo: WriterInfoRequest) {
 
-        val student = SecurityUtil.getCurrentStudent()
-        val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
+        val student = securityPort.getCurrentStudent()
+        val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        studentRepository.save(
-            studentWithUpdatedInfo(student, request)
+        studentPort.save(
+            studentWithUpdatedInfo(student, writerInfo)
         )
 
-        documentRepository.save(
-            documentWithUpdatedWriterInfo(document, request)
+        documentPort.save(
+            documentWithUpdatedWriterInfo(document, writerInfo)
         )
     }
 
-    private fun studentWithUpdatedInfo(student: Student, request: UpdateWriterInfoRequest) =
-        student.updateVariableInfo(
-            grade = request.grade,
-            classNum = request.classNum,
-            number = request.number,
-            profileImagePath = request.profileImagePath
-        )
+    private fun studentWithUpdatedInfo(student: Student, writerInfo: WriterInfoRequest) =
+        writerInfo.run {
+            student.copy(
+                grade = grade,
+                classNum = classNum,
+                number = number,
+                profileImagePath = profileImagePath
+            )
+        }
+
 
     private fun documentWithUpdatedWriterInfo(
         document: Document,
-        request: UpdateWriterInfoRequest,
+        writerInfo: WriterInfoRequest
     ): Document {
 
-        val major = majorRepository.findByIdOrNull(request.majorId) ?: throw MajorNotFoundException
+        val major = majorPort.queryById(writerInfo.majorId) ?: throw MajorNotFoundException
 
-        return request.run {
-            document.updateWriterInfo(
-                document.writer.updateVariableInfo(
+        return writerInfo.run {
+            document.copy(
+                writer = document.writer.updateVariableInfo(
                     grade = grade,
                     classNum = classNum,
                     number = number,

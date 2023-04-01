@@ -23,7 +23,7 @@ class QueryDocumentInfoUseCase(
         val authority = securityPort.getCurrentUserAuthority()
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (!isWriter(document) && !hasAccess(document.documentStatus, authority)) {
+        if (!isWriter(document) && !hasAccess(document.status, authority)) {
             throw DocumentAccessRightException
         }
 

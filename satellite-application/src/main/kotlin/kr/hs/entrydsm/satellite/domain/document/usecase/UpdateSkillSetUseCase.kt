@@ -1,32 +1,32 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateSkillSetRequest
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 
 @UseCase
 class UpdateSkillSetUseCase(
-    private val documentRepository: DocumentRepository
+    private val securityPort: SecurityPort,
+    private val documentPort: DocumentPort
 ) {
-    fun execute(request: UpdateSkillSetRequest) {
+    fun execute(skillSet: List<String>) {
 
-        val student = SecurityUtil.getCurrentStudent()
-        val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
+        val student = securityPort.getCurrentStudent()
+        val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        documentRepository.save(
-            documentWithUpdatedSkillSet(document, request)
+        documentPort.save(
+            documentWithUpdatedSkillSet(document, skillSet)
         )
     }
 
     private fun documentWithUpdatedSkillSet(
         document: Document,
-        request: UpdateSkillSetRequest
+        skillSet: List<String>
     ): Document {
-        return document.updateSkillSet(
-            request.skillList.toMutableList()
+        return document.copy(
+            skillSet = skillSet.toMutableList()
         )
     }
 }

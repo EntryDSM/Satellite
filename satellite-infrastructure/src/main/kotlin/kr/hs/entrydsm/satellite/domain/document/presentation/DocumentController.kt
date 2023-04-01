@@ -3,14 +3,14 @@ package kr.hs.entrydsm.satellite.domain.document.presentation
 import kr.hs.entrydsm.satellite.domain.document.dto.CreateDocumentResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateIntroduceRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateSkillSetRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateIntroduceWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateSkillSetWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoWebRequest
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelShareDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelSubmitMyDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.CreateDocumentUseCase
@@ -64,44 +64,44 @@ class DocumentController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createDocument(@RequestBody @Valid request: CreateDocumentRequest): CreateDocumentResponse {
+    fun createDocument(@RequestBody @Valid request: CreateDocumentWebRequest): CreateDocumentResponse {
         val documentId = createDocumentUseCase.execute(request.majorId!!)
         return CreateDocumentResponse(documentId)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/writer-info")
-    fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoRequest) {
+    fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoWebRequest) {
         updateWriterInfoUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/introduce")
-    fun updateIntroduce(@RequestBody @Valid request: UpdateIntroduceRequest) {
+    fun updateIntroduce(@RequestBody @Valid request: UpdateIntroduceWebRequest) {
         updateIntroduceUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/skill-set")
-    fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetRequest) {
+    fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetWebRequest) {
         updateSkillSetUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/project")
-    fun updateProject(@RequestBody @Valid request: UpdateProjectRequest) {
+    fun updateProject(@RequestBody @Valid request: UpdateProjectWebRequest) {
         updateProjectUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/award")
-    fun updateAward(@RequestBody @Valid request: UpdateAwardRequest) {
-        updateAwardUseCase.execute(request)
+    fun updateAward(@RequestBody @Valid request: UpdateAwardWebRequest) {
+        updateAwardUseCase.execute(request.awardList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/certificate")
-    fun updateCertificate(@RequestBody @Valid request: UpdateCertificateRequest) {
+    fun updateCertificate(@RequestBody @Valid request: UpdateCertificateWebRequest) {
         updateCertificateUseCase.execute(request)
     }
 
@@ -121,7 +121,7 @@ class DocumentController(
     }
 
     @GetMapping("/shared")
-    fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentRequest): DocumentListResponse {
+    fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentWebRequest): DocumentListResponse {
         return request.run {
             querySharedDocumentUseCase.execute(
                 name = name,

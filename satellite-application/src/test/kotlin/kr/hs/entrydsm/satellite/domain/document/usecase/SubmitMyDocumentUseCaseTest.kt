@@ -37,7 +37,7 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
             val slot = slot<Document>()
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns document
+            every { documentRepository.queryByWriterStudentId(student.id) } returns document
             every { documentRepository.save(capture(slot)) } returnsArgument 0
 
             it("SUBMITTED 상태로 변경하여 저장한다.") {
@@ -57,7 +57,7 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
         context("SUBMITTED 상태의 문서를 가진 학생(유저)가 주어지면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns submittedDocument
+            every { documentRepository.queryByWriterStudentId(student.id) } returns submittedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
@@ -76,7 +76,7 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
         context("SHARED 상태의 문서를 가진 학생(유저)가 주어지면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns sharedDocument
+            every { documentRepository.queryByWriterStudentId(student.id) } returns sharedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 

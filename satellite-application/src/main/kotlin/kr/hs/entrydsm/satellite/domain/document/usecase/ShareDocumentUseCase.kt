@@ -1,32 +1,31 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
-import java.util.UUID
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.repository.FeedbackRepository
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import java.util.*
 
 @UseCase
 class ShareDocumentUseCase(
-    private val documentRepository: DocumentRepository,
-    private val feedbackRepository: FeedbackRepository
+    private val documentPort: DocumentPort,
+    private val feedbackPort: FeedbackPort
 ) {
     fun execute(documentId: UUID) {
 
-        val document = documentRepository.findByIdOrNull(documentId) ?: throw DocumentNotFoundException
+        val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (document.status != Status.SUBMITTED) {
+        if (document.status != DocumentStatus.SUBMITTED) {
             throw DocumentIllegalStatusException
         }
 
-        val feedbackList = feedbackRepository.findByDocumentId(document.id)
-        feedbackRepository.deleteAll(feedbackList)
+        val feedbackList = feedbackPort.queryByDocumentId(document.id)
+        feedbackPort.deleteAll(feedbackList)
 
-        documentRepository.save(
-            document.updateStatus(Status.SHARED)
+        documentPort.save(
+            document.copy(status = DocumentStatus.SHARED)
         )
     }
 }

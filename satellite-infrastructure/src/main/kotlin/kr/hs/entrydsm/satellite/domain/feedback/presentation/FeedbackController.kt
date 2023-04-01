@@ -4,8 +4,8 @@ import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.ApplyFeedbackRequest
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.CreateFeedbackRequest
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.DeleteFeedbackRequest
-import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.UpdateFeedbackRequest
-import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.response.FeedbackListResponse
+import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.UpdateFeedbackWebRequest
+import kr.hs.entrydsm.satellite.domain.feedback.dto.FeedbackListResponse
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.ApplyFeedbackUseCase
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.CreateFeedbackUseCase
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.DeleteFeedbackUseCase
@@ -39,7 +39,7 @@ class FeedbackController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PatchMapping
-    fun updateFeedback(@RequestBody @Valid request: UpdateFeedbackRequest) {
+    fun updateFeedback(@RequestBody @Valid request: UpdateFeedbackWebRequest) {
         updateFeedbackUseCase.execute(request)
     }
 

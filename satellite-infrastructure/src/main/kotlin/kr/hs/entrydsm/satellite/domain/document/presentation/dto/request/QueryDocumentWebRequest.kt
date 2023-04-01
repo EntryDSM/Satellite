@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
-import java.util.UUID
+import java.util.*
 
-data class QueryDocumentRequest(
+data class QueryDocumentWebRequest(
     val name: String?,
     val grade: String?,
     val classNum: String?,

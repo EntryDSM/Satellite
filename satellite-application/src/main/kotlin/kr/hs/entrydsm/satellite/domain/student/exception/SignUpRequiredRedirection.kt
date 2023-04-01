@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.student.exception
 
+import kr.hs.entrydsm.satellite.common.error.CustomErrorProperty
 import kr.hs.entrydsm.satellite.common.error.DomainCustomException
-import kr.hs.entrydsm.satellite.common.error.custom.CustomErrorProperty
 
 class SignUpRequiredRedirection(
     val email: String

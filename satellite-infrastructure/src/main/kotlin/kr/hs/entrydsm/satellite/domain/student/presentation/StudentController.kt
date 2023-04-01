@@ -2,9 +2,8 @@ package kr.hs.entrydsm.satellite.domain.student.presentation
 
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import javax.validation.Valid
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.student.presentation.dto.request.StudentSignUpRequest
-import kr.hs.entrydsm.satellite.domain.student.presentation.dto.response.StudentDocumentListResponse
 import kr.hs.entrydsm.satellite.domain.student.usecase.QueryStudentDocumentListUseCase
 import kr.hs.entrydsm.satellite.domain.student.usecase.StudentSignUpUseCase
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,7 +26,7 @@ class StudentController(
     }
 
     @GetMapping
-    fun queryStudentDocumentList(@ModelAttribute @Valid request: QueryDocumentRequest): StudentDocumentListResponse {
+    fun queryStudentDocumentList(@ModelAttribute @Valid request: QueryDocumentWebRequest): StudentDocumentListResponse {
         return queryStudentDocumentListUseCase.execute(request)
     }
 }

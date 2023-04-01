@@ -44,7 +44,7 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
 
             every { SecurityUtil.getCurrentStudent() } returns student
             every { schoolYearFacade.getSchoolYear() } returns 2023
-            every { documentRepository.findByWriterStudentId(student.id) } returns null
+            every { documentRepository.queryByWriterStudentId(student.id) } returns null
             every { majorRepository.findByIdOrNull(request.majorId) } returns major
             every { documentRepository.save(any()) } returns document
 
@@ -58,7 +58,7 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
         context("이미 문서를 생성한 학생과 전공의 정보가 주어지면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns document
+            every { documentRepository.queryByWriterStudentId(student.id) } returns document
             every { majorRepository.findByIdOrNull(request.majorId) } returns major
             every { documentRepository.save(any()) } returns document
 
@@ -73,7 +73,7 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
         context("주어진 Major의 id가 잘못되었으면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns null
+            every { documentRepository.queryByWriterStudentId(student.id) } returns null
             every { majorRepository.findByIdOrNull(request.majorId) } returns null
 
             it("MajorNotFound 예외를 던진다.") {

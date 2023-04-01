@@ -39,7 +39,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         context("내 문서를 조회하면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns document
+            every { documentRepository.queryByWriterStudentId(student.id) } returns document
             every { feedbackRepository.findByDocumentId(document.id) } returns listOf()
 
             it("문서 상세 정보를 반환한다.") {
@@ -84,7 +84,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         context("피드백이 있는 내 문서를 조회하면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns documentWithFeedbacks
+            every { documentRepository.queryByWriterStudentId(student.id) } returns documentWithFeedbacks
             every { feedbackRepository.findByDocumentId(documentWithFeedbacks.id) } returns feedbacks
 
             it("문서 상세, 피드백 정보를 반환한다.") {
@@ -105,7 +105,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         context("내 문서가 존재하지 않으면") {
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns null
+            every { documentRepository.queryByWriterStudentId(student.id) } returns null
 
             it("DocumentNotFound 예외를 던진다.") {
                 shouldThrow<DocumentNotFoundException> {

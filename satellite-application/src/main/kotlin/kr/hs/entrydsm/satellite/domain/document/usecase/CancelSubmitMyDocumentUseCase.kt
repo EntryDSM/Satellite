@@ -17,12 +17,12 @@ class CancelSubmitMyDocumentUseCase(
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        if (document.documentStatus != DocumentStatus.SUBMITTED) {
+        if (document.status != DocumentStatus.SUBMITTED) {
             throw DocumentIllegalStatusException
         }
 
         documentPort.save(
-            document.copy(documentStatus = DocumentStatus.CREATED)
+            document.copy(status = DocumentStatus.CREATED)
         )
     }
 }

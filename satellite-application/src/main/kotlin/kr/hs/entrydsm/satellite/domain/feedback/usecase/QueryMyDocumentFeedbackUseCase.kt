@@ -1,23 +1,24 @@
 package kr.hs.entrydsm.satellite.domain.feedback.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.repository.FeedbackRepository
-import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.response.FeedbackListResponse
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.feedback.dto.FeedbackListResponse
+import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 
 @ReadOnlyUseCase
 class QueryMyDocumentFeedbackUseCase(
-    private val documentRepository: DocumentRepository,
-    private val feedbackRepository: FeedbackRepository
+    private val securityPort: SecurityPort,
+    private val documentPort: DocumentPort,
+    private val feedbackPort: FeedbackPort
 ) {
     fun execute(): FeedbackListResponse {
 
-        val student = SecurityUtil.getCurrentStudent()
-        val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
+        val student = securityPort.getCurrentStudent()
+        val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        val feedbackList = feedbackRepository.findByDocumentId(document.id)
+        val feedbackList = feedbackPort.queryByDocumentId(document.id)
         val feedbackNameMap = document.getElementNameMap()
 
         return FeedbackListResponse(

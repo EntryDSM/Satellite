@@ -1,51 +1,42 @@
 package kr.hs.entrydsm.satellite.domain.feedback.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
 import kr.hs.entrydsm.satellite.domain.feedback.exception.FeedbackAlreadyExistException
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.Feedback
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.FeedbackId
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.repository.FeedbackRepository
-import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.CreateFeedbackRequest
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import java.util.*
 
 @UseCase
 class CreateFeedbackUseCase(
-    private val documentRepository: DocumentRepository,
-    private val feedbackRepository: FeedbackRepository
+    private val documentPort: DocumentPort,
+    private val feedbackPort: FeedbackPort
 ) {
-    fun execute(request: CreateFeedbackRequest) {
+    fun execute(
+        documentId: UUID,
+        elementId: UUID,
+        comment: String
+    ) {
+        val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        val document = documentRepository.findByIdOrNull(request.documentId) ?: throw DocumentNotFoundException
+        if (feedbackPort.existsByDocumentIdAndFeedbackId(documentId, elementId)) {
+            throw FeedbackAlreadyExistException
+        }
 
-        checkFeedbackIsNotExist(request)
-
-        if (document.status != Status.SUBMITTED) {
+        if (document.status != DocumentStatus.SUBMITTED) {
             throw DocumentIllegalStatusException
         }
 
-        feedbackRepository.save(
+        feedbackPort.save(
             Feedback(
-                documentId = document.id,
-                elementId = request.elementId,
-                comment = request.comment,
+                documentId = documentId,
+                elementId = elementId,
+                comment = comment,
                 isApply = false
             )
         )
-    }
-
-    private fun checkFeedbackIsNotExist(request: CreateFeedbackRequest) {
-
-        val feedbackId = FeedbackId(
-            documentId = request.documentId,
-            elementId = request.elementId
-        )
-
-        if (feedbackRepository.existsById(feedbackId)) {
-            throw FeedbackAlreadyExistException
-        }
     }
 }

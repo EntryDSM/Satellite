@@ -1,18 +1,18 @@
 package kr.hs.entrydsm.satellite.domain.major.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.response.MajorListResponse
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.response.MajorVO
+import kr.hs.entrydsm.satellite.domain.major.dto.MajorElement
+import kr.hs.entrydsm.satellite.domain.major.dto.MajorListResponse
+import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
 
 @ReadOnlyUseCase
 class QueryMajorListUseCase(
-    private val majorRepository: MajorRepository
+    private val majorPort: MajorPort
 ) {
     fun execute(name: String): MajorListResponse {
 
-        val tags = majorRepository.findByNameContaining(name)
-            .map { MajorVO(it) }
+        val tags = majorPort.queryByNameContaining(name)
+            .map { MajorElement(it) }
             .toList()
 
         return MajorListResponse(tags)

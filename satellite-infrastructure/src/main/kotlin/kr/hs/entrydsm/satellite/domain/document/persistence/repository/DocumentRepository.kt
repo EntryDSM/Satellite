@@ -8,7 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor
 
 interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, QuerydslPredicateExecutor<DocumentJpaEntity> {
 
-    fun findByWriterStudentId(studentId: UUID): DocumentJpaEntity?
+    fun queryByWriterStudentId(studentId: UUID): DocumentJpaEntity?
 
     fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<DocumentJpaEntity>
 

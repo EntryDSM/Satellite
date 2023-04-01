@@ -4,7 +4,7 @@ import java.util.UUID
 import javax.validation.constraints.NotBlank
 import org.hibernate.validator.constraints.Length
 
-data class UpdateFeedbackRequest(
+data class UpdateFeedbackWebRequest(
 
     val documentId: UUID,
 

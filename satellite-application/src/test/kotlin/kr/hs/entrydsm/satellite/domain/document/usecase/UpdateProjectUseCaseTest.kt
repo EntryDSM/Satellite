@@ -38,7 +38,7 @@ internal class UpdateProjectUseCaseTest : DescribeSpec({
             val slot = slot<Document>()
 
             every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.findByWriterStudentId(student.id) } returns document
+            every { documentRepository.queryByWriterStudentId(student.id) } returns document
             every { documentRepository.save(capture(slot)) } returnsArgument 0
 
             it("본인(학생) 문서의 프로젝트 정보를 수정한다.") {

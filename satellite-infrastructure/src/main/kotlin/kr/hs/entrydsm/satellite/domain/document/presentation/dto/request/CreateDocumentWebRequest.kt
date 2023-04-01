@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
-import java.util.UUID
+import java.util.*
 import javax.validation.constraints.NotNull
 
-data class CreateDocumentRequest(
+data class CreateDocumentWebRequest(
     @get:NotNull
     val majorId: UUID?
 )

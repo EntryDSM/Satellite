@@ -1,34 +1,33 @@
 package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectRequest
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 
 @UseCase
 class UpdateProjectUseCase(
-    private val documentRepository: DocumentRepository
+    private val securityPort: SecurityPort,
+    private val documentPort: DocumentPort
 ) {
-    fun execute(request: UpdateProjectRequest) {
+    fun execute(projectList: List<ProjectRequest>) {
 
-        val student = SecurityUtil.getCurrentStudent()
-        val document = documentRepository.findByWriterStudentId(student.id) ?: throw DocumentNotFoundException
+        val student = securityPort.getCurrentStudent()
+        val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        documentRepository.save(
-            documentWithUpdatedProject(document, request)
+        documentPort.save(
+            documentWithUpdatedProject(document, projectList)
         )
     }
 
     private fun documentWithUpdatedProject(
         document: Document,
-        request: UpdateProjectRequest
+        projectList: List<ProjectRequest>
     ): Document {
-        return document.updateProject(
-            request.projectList.map {
-                it.toProjectElement()
-            }.toMutableList()
+        return document.copy(
+            projectList = projectList.map { it.toProjectElement() }.toMutableList()
         )
     }
 }
