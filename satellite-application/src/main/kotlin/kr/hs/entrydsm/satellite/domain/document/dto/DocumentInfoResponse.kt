@@ -1,15 +1,14 @@
 package kr.hs.entrydsm.satellite.domain.document.dto
 
-import java.util.Date
-import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.document.persistence.DocumentJpaEntity
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
-import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
-import kr.hs.entrydsm.satellite.domain.major.presentation.dto.response.MajorVO
+import kr.hs.entrydsm.satellite.domain.major.dto.MajorElement
+import java.util.*
 
 data class DocumentInfoResponse(
 
@@ -29,26 +28,26 @@ data class DocumentInfoResponse(
 
     val certificateList: List<CertificateResponse>
 ) {
-    constructor(documentJpaEntity: DocumentJpaEntity) : this(
-        documentId = documentJpaEntity.id,
-        writer = WriterInfoResponse(documentJpaEntity.writer, null),
-        documentStatus = documentJpaEntity.status,
-        introduce = IntroduceResponse(documentJpaEntity.introduce, null),
-        skillSet = documentJpaEntity.skillSet,
-        projectList = documentJpaEntity.projectList.map { ProjectResponse(it, null) },
-        awardList = documentJpaEntity.awardList.map { AwardResponse(it, null) },
-        certificateList = documentJpaEntity.certificateList.map { CertificateResponse(it, null) }
+    constructor(document: Document) : this(
+        documentId = document.id,
+        writer = WriterInfoResponse(document.writer, null),
+        documentStatus = document.status,
+        introduce = IntroduceResponse(document.introduce, null),
+        skillSet = document.skillSet,
+        projectList = document.projectList.map { ProjectResponse(it, null) },
+        awardList = document.awardList.map { AwardResponse(it, null) },
+        certificateList = document.certificateList.map { CertificateResponse(it, null) }
     )
 
-    constructor(documentJpaEntity: DocumentJpaEntity, feedbackMap: Map<UUID, String>) : this(
-        documentId = documentJpaEntity.id,
-        writer = WriterInfoResponse(documentJpaEntity.writer, feedbackMap[documentJpaEntity.writer.elementId]),
-        documentStatus = documentJpaEntity.status,
-        introduce = IntroduceResponse(documentJpaEntity.introduce, feedbackMap[documentJpaEntity.introduce.elementId]),
-        skillSet = documentJpaEntity.skillSet,
-        projectList = documentJpaEntity.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
-        awardList = documentJpaEntity.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
-        certificateList = documentJpaEntity.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) }
+    constructor(document: Document, feedbackMap: Map<UUID, String>) : this(
+        documentId = document.id,
+        writer = WriterInfoResponse(document.writer, feedbackMap[document.writer.elementId]),
+        documentStatus = document.status,
+        introduce = IntroduceResponse(document.introduce, feedbackMap[document.introduce.elementId]),
+        skillSet = document.skillSet,
+        projectList = document.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
+        awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
+        certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) }
     )
 
     data class WriterInfoResponse(
@@ -58,7 +57,7 @@ data class DocumentInfoResponse(
         val profileImagePath: String,
         val studentNumber: Int,
         val email: String,
-        val major: MajorVO,
+        val major: MajorElement,
         val feedback: String?
     ) {
         constructor(element: WriterInfoElement, feedback: String?) : this(
@@ -68,7 +67,7 @@ data class DocumentInfoResponse(
             profileImagePath = element.profileImagePath,
             studentNumber = element.studentNumber,
             email = element.email,
-            major = MajorVO(
+            major = MajorElement(
                 id = element.majorId,
                 name = element.majorName
             ),
