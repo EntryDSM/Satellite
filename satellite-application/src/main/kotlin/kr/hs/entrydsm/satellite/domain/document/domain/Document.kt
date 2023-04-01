@@ -15,7 +15,7 @@ data class Document(
 
     val writer: WriterInfoElement,
 
-    val documentStatus: DocumentStatus,
+    val status: DocumentStatus,
 
     val introduce: IntroduceElement = IntroduceElement(),
 

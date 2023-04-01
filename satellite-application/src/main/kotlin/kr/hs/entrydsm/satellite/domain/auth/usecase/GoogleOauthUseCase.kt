@@ -1,16 +1,14 @@
 package kr.hs.entrydsm.satellite.domain.auth.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
-import kr.hs.entrydsm.satellite.common.exception.EmailSuffixNotValidException
-import kr.hs.entrydsm.satellite.common.util.RegexUtil
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.dto.OauthLinkResponse
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.spi.OauthPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student.Companion.checkEmailSuffix
 import kr.hs.entrydsm.satellite.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
-import java.util.regex.Pattern
 
 @UseCase
 class GoogleOauthUseCase(
@@ -33,11 +31,5 @@ class GoogleOauthUseCase(
             ?: throw SignUpRequiredRedirection(email)
 
         return tokenPort.generateBothToken(student.id, Authority.STUDENT)
-    }
-
-    private fun checkEmailSuffix(email: String) {
-        if (!Pattern.matches(RegexUtil.EMAIL_SUFFIX_EXP, email)) {
-            throw EmailSuffixNotValidException
-        }
     }
 }
