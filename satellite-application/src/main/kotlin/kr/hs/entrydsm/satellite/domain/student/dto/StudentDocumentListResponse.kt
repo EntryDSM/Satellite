@@ -1,9 +1,10 @@
-package kr.hs.entrydsm.satellite.domain.student.presentation.dto.response
+package kr.hs.entrydsm.satellite.domain.student.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.major.dto.MajorElement
 import java.util.*
+
 
 data class StudentDocumentListResponse(
 
@@ -22,7 +23,7 @@ data class StudentDocumentListResponse(
         constructor(document: Document) : this(
             studentId = document.writer.studentId,
             name = document.writer.name,
-            documentStatus = document.documentStatus,
+            documentStatus = document.status,
             documentId = document.id,
             profileImagePath = document.writer.profileImagePath,
             studentNumber = document.writer.studentNumber,

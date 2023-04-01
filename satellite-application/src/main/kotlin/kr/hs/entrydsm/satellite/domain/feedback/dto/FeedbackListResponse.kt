@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.response
+package kr.hs.entrydsm.satellite.domain.feedback.dto
 
 import java.util.UUID
 
