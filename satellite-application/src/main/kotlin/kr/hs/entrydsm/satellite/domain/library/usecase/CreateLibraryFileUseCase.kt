@@ -38,7 +38,7 @@ class CreateLibraryFileUseCase(
         )
 
         val bytes = pdfPort.generateGradeLibraryDocument(documents)
-        val filePath = filePort.saveFile(
+        val filePath = filePort.savePdf(
             File("${year}_${grade}_${LocalDateTime.now().toFileDateFormat()}")
                 .apply { writeBytes(bytes) }
         )

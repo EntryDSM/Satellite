@@ -6,9 +6,21 @@ import kr.hs.entrydsm.satellite.domain.auth.persistence.repository.RefreshTokenR
 import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
 
 @Adapter
-class RefreshTokenAdapter(
+class RefreshTokenPersistenceAdapter(
     private val refreshTokenRepository: RefreshTokenRepository
 ) : RefreshTokenPort {
+
+    override fun save(refreshToken: RefreshToken) = refreshToken.run {
+        refreshTokenRepository.save(
+            RefreshTokenEntity(
+                id = id,
+                token = token,
+                authority = authority,
+                timeToLive = timeToLive
+            )
+        )
+    }
+
     override fun queryByToken(token: String) =
         refreshTokenRepository.findByToken(token)
 }

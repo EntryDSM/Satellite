@@ -6,6 +6,7 @@ import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.persistence.RefreshTokenEntity
 import kr.hs.entrydsm.satellite.domain.auth.persistence.repository.RefreshTokenRepository
+import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.ACCESS
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.REFRESH
@@ -19,7 +20,7 @@ import java.util.*
 @Component
 class JwtGenerateAdapter(
     private val securityProperties: SecurityProperties,
-    private val refreshTokenRepository: RefreshTokenRepository
+    private val refreshTokenPort: RefreshTokenPort
 ) : TokenPort {
 
     override fun generateBothToken(
@@ -54,7 +55,7 @@ class JwtGenerateAdapter(
             authority = authority,
             timeToLive = securityProperties.refreshExp
         )
-        refreshTokenRepository.save(refreshTokenEntity)
+        refreshTokenPort.save(refreshTokenEntity)
 
         return token
     }

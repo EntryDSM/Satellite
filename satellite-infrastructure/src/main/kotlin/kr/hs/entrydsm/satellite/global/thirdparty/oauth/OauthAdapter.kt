@@ -1,8 +1,10 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
+import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.spi.OauthPort
 import kr.hs.entrydsm.satellite.global.thirdparty.oauth.properties.GoogleOauthProperties
 
+@Adapter
 class OauthAdapter(
     private val googleProperties: GoogleOauthProperties,
     private val googleAuth: GoogleAuth,

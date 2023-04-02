@@ -7,6 +7,10 @@ object ImageNotFoundException : GlobalCustomException(
     GlobalErrorCode.IMAGE_NOT_FOUND
 )
 
+object InvalidFileException : GlobalCustomException(
+    GlobalErrorCode.INVALID_EXTENSION
+)
+
 object InvalidExtensionException : GlobalCustomException(
     GlobalErrorCode.INVALID_EXTENSION
 )

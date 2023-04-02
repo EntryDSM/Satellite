@@ -1,20 +1,37 @@
 package kr.hs.entrydsm.satellite.domain.document.persistence
 
+import com.querydsl.core.types.dsl.BooleanExpression
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.persistence.QDocument.document
 import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.global.config.querydsl.findBy
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @Adapter
 class DocumentPersistenceAdapter(
     private val documentRepository: DocumentRepository
 ) : DocumentPort {
 
-    override fun save(document: Document) =
-        documentRepository.save(document as DocumentJpaEntity)
+    override fun save(document: Document) = document.run {
+        documentRepository.save(
+            DocumentJpaEntity(
+                id = id,
+                year = year,
+                writer = writer,
+                status = status,
+                introduce = introduce,
+                skillSet = skillSet,
+                projectList = projectList,
+                awardList = awardList,
+                certificateList = certificateList,
+                isDeleted = isDeleted
+            )
+        )
+    }
 
     override fun saveAll(documents: List<Document>) =
         documentRepository.saveAll(documents.map { it as DocumentJpaEntity })
@@ -32,16 +49,29 @@ class DocumentPersistenceAdapter(
         documentRepository.existsByWriterStudentId(studentId)
 
     override fun queryByStatusAndWriterInfo(
-        documentStatus: DocumentStatus?,
+        status: DocumentStatus,
         name: String?,
         grade: String?,
         classNum: String?,
         majorId: UUID?
-    ) = documentRepository.
-
-    override fun queryByWriterInfo(name: String?, grade: String?, classNum: String?, majorId: UUID?): List<Document> {
+    ): List<Document> {
         return documentRepository.findBy(
-            document.writer.name.contains(name),
+            document.status.eq(status),
+            document.writer.name.contains(name ?: ""),
+            eqGrade(grade),
+            eqClassNum(classNum),
+            eqMajorId(majorId)
+        )
+    }
+
+    override fun queryByWriterInfo(
+        name: String?,
+        grade: String?,
+        classNum: String?,
+        majorId: UUID?
+    ): List<Document> {
+        return documentRepository.findBy(
+            document.writer.name.contains(name ?: ""),
             eqGrade(grade),
             eqClassNum(classNum),
             eqMajorId(majorId)

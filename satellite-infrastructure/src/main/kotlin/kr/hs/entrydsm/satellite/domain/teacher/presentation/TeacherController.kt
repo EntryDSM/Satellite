@@ -18,6 +18,9 @@ class TeacherController(
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth")
     fun teacherLogin(@RequestBody request: TeacherSignInRequest): TokenResponse? {
-        return teacherLoginUseCase.execute(request)
+        return teacherLoginUseCase.execute(
+            accountId = request.accountId!!,
+            password = request.password!!
+        )
     }
 }

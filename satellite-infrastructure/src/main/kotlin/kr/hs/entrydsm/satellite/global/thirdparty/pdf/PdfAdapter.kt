@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.pdf
 
 import com.itextpdf.io.source.ByteArrayOutputStream
+import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.persistence.DocumentJpaEntity
-import kr.hs.entrydsm.satellite.common.thirdparty.pdf.util.PdfUtil
-import org.springframework.stereotype.Component
+import kr.hs.entrydsm.satellite.global.thirdparty.pdf.util.PdfUtil
 
-@Component
+@Adapter
 class PdfAdapter(
     private val templateProcessor: TemplateProcessor
 ) {
@@ -13,16 +13,14 @@ class PdfAdapter(
     fun generateGradeLibraryDocument(documentJpaEntities: List<DocumentJpaEntity>): ByteArray {
 
         val bookCover = templateProcessor.process(
-            TemplateFileName.COVER,
-            null
-        )
-            .run(PdfUtil::convertHtmlToPdf)
-        val documentsByClassRoom = getPdfDocumentChapteredByClassNum(documentJpaEntities)
+            TemplateFileName.COVER, null
+        ).run(PdfUtil::convertHtmlToPdf)
+        val documentsByClassRoom = getPdfDocumentChapterByClassNum(documentJpaEntities)
 
         return PdfUtil.concatPdf(bookCover, documentsByClassRoom).toByteArray()
     }
 
-    private fun getPdfDocumentChapteredByClassNum(documentJpaEntities: List<DocumentJpaEntity>): ByteArrayOutputStream {
+    private fun getPdfDocumentChapterByClassNum(documentJpaEntities: List<DocumentJpaEntity>): ByteArrayOutputStream {
 
         val documentClassNumMap = getDocumentClassNumMap(documentJpaEntities)
 

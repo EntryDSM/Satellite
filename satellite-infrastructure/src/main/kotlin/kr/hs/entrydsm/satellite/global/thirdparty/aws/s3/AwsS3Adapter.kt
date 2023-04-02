@@ -5,19 +5,21 @@ import com.amazonaws.services.s3.internal.Mimetypes
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
+import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.UUID
-import kr.hs.entrydsm.satellite.common.exception.file.InvalidExtensionException
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
+import kr.hs.entrydsm.satellite.global.exception.InvalidExtensionException
 import org.springframework.stereotype.Component
 
 @Component
 class AwsS3Adapter(
     private val amazonS3: AmazonS3,
     private val awsS3Properties: AwsS3Properties,
-) {
+) : FilePort {
 
-    fun savePdf(file: File): String {
+    override fun savePdf(file: File): String {
 
         val extension = getExtension(file)
         if (extension != ".pdf") {
@@ -30,7 +32,7 @@ class AwsS3Adapter(
             .also { uploadFile(file, it) }
     }
 
-    fun saveImage(file: File, imageType: ImageType): String {
+    override fun saveImage(file: File, imageType: ImageType): String {
 
         val extension = getExtension(file)
         if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic")) {

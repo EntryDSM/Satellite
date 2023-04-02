@@ -1,7 +1,9 @@
 package kr.hs.entrydsm.satellite.domain.file.spi
 
+import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import java.io.File
 
 interface FilePort {
-    fun saveFile(file: File): String
+    fun savePdf(file: File): String
+    fun saveImage(file: File, imageType: ImageType): String
 }
