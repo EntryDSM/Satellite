@@ -12,6 +12,8 @@ interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, Queryds
 
     fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<DocumentJpaEntity>
 
+    fun existsByWriterStudentId(studentId: UUID): Boolean
+
     fun findTopByStatusAndWriterStudentNumberIsGreaterThanOrderByWriterStudentNumber(
         documentStatus: DocumentStatus,
         studentNumber: Int

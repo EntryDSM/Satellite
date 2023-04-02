@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.global.exception
 
-import kr.hs.entrydsm.satellite.common.error.GlobalCustomException
-import kr.hs.entrydsm.satellite.common.error.GlobalErrorCode
+import kr.hs.entrydsm.satellite.global.error.GlobalCustomException
+import kr.hs.entrydsm.satellite.global.error.GlobalErrorCode
 
 object ExpiredTokenException : GlobalCustomException(
     GlobalErrorCode.EXPIRED_TOKEN

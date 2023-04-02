@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.global.security.token
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kr.hs.entrydsm.satellite.common.security.jwt.properties.JwtConstants
+import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 

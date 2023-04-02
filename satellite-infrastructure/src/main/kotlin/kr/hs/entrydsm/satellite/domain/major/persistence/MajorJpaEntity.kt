@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.major.persistence
 
-import kr.hs.entrydsm.satellite.global.entity.BaseUUIDEntity
-import java.util.*
+import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -10,9 +10,12 @@ import javax.persistence.Table
 @Entity
 class MajorJpaEntity(
 
-    id: UUID? = null,
+    override val id: UUID,
 
     @Column(columnDefinition = "VARCHAR(30)", nullable = false)
-    val name: String
+    override val name: String
 
-) : BaseUUIDEntity(id)
+) : Major(
+    id = id,
+    name = name
+)

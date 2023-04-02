@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.feedback.persistence
 
+import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
 import java.io.Serializable
 import java.util.*
 import javax.persistence.Column
@@ -16,19 +17,19 @@ class FeedbackJpaEntity(
 
     @Id
     @Column(nullable = false)
-    val documentId: UUID,
+    override val documentId: UUID,
 
     @Id
     @Column(nullable = false)
-    val elementId: UUID,
+    override val elementId: UUID,
 
     @Column(columnDefinition = "VARCHAR(1000)", nullable = false)
-    val comment: String,
+    override val comment: String,
 
     @Column(columnDefinition = "BIT(1)", nullable = false)
-    val isApply: Boolean
+    override val isApply: Boolean
 
-)
+) : Feedback(documentId, elementId, comment, isApply)
 
 @Embeddable
 data class FeedbackId(

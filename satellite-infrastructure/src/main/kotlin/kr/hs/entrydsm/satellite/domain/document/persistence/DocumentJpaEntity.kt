@@ -1,37 +1,50 @@
 package kr.hs.entrydsm.satellite.domain.document.persistence
 
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
-import kr.hs.entrydsm.satellite.global.entity.BaseMongoUUIDEntity
 import org.hibernate.annotations.Where
 import java.util.*
+import javax.persistence.Id
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
 @Where(clause = "is_deleted is false")
 class DocumentJpaEntity(
 
-    id: UUID? = null,
+    @Id
+    override val id: UUID,
 
-    val year: Int,
+    year: Int,
 
-    val writer: WriterInfoElement,
+    writer: WriterInfoElement,
 
-    val documentStatus: DocumentStatus,
+    status: DocumentStatus,
 
-    val introduce: IntroduceElement = IntroduceElement(),
+    introduce: IntroduceElement,
 
-    val skillSet: MutableList<String> = mutableListOf(),
+    skillSet: MutableList<String>,
 
-    val projectList: MutableList<ProjectElement> = mutableListOf(),
+    projectList: MutableList<ProjectElement>,
 
-    val awardList: MutableList<AwardElement> = mutableListOf(),
+    awardList: MutableList<AwardElement>,
 
-    val certificateList: MutableList<CertificateElement> = mutableListOf(),
+    certificateList: MutableList<CertificateElement>,
 
-    val isDeleted: Boolean = false
+    isDeleted: Boolean
 
-) : BaseMongoUUIDEntity(id)
+) : Document(
+    id = id,
+    year = year,
+    writer = writer,
+    status = status,
+    introduce = introduce,
+    skillSet = skillSet,
+    projectList = projectList,
+    awardList = awardList,
+    certificateList = certificateList,
+    isDeleted = isDeleted
+)

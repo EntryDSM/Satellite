@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.satellite.global.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.satellite.common.error.GlobalErrorFilter
-import kr.hs.entrydsm.satellite.common.security.jwt.JwtFilter
-import kr.hs.entrydsm.satellite.common.security.jwt.JwtParser
+import kr.hs.entrydsm.satellite.global.error.GlobalErrorFilter
+import kr.hs.entrydsm.satellite.global.security.token.JwtFilter
+import kr.hs.entrydsm.satellite.global.security.token.JwtParser
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.DefaultSecurityFilterChain

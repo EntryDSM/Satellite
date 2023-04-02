@@ -42,7 +42,6 @@ class UpdateWriterInfoUseCase(
             )
         }
 
-
     private fun documentWithUpdatedWriterInfo(
         document: Document,
         writerInfo: WriterInfoRequest

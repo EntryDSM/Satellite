@@ -4,15 +4,34 @@ import kr.hs.entrydsm.satellite.common.exception.EmailSuffixNotValidException
 import java.util.*
 import java.util.regex.Pattern
 
-data class Student(
-    val id: UUID = UUID.randomUUID(),
-    val email: String,
-    val name: String,
-    val grade: String,
-    val classNum: String,
-    val number: String,
-    val profileImagePath: String
+open class Student(
+    open val id: UUID = UUID.randomUUID(),
+    open val email: String,
+    open val name: String,
+    open val grade: String,
+    open val classNum: String,
+    open val number: String,
+    open val profileImagePath: String
 ) {
+
+    fun copy(
+        id: UUID = this.id,
+        email: String = this.email,
+        name: String = this.name,
+        grade: String = this.grade,
+        classNum: String = this.classNum,
+        number: String = this.number,
+        profileImagePath: String = this.profileImagePath
+    ) = Student(
+        id = id,
+        email = email,
+        name = name,
+        grade = grade,
+        classNum = classNum,
+        number = number,
+        profileImagePath = profileImagePath
+    )
+
     companion object {
 
         const val PASSWORD_EXP = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+\$).{8,30}"

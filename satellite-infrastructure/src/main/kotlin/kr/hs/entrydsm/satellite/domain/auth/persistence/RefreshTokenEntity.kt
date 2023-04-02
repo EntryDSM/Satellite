@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.auth.persistence
 
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive
@@ -11,14 +12,14 @@ import javax.validation.constraints.NotBlank
 class RefreshTokenEntity(
 
     @field:Id
-    val id: UUID,
+    override val id: UUID,
 
     @field:NotBlank
-    val token: String,
+    override val token: String,
 
-    val authority: Authority,
+    override val authority: Authority,
 
     @field:TimeToLive
-    val timeToLive: Long
+    override val timeToLive: Long
 
-)
+) : RefreshToken(id, token, authority, timeToLive)

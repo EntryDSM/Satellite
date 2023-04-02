@@ -1,49 +1,43 @@
 package kr.hs.entrydsm.satellite.domain.student.persistence
 
-import kr.hs.entrydsm.satellite.global.entity.BaseUUIDEntity
-import java.util.*
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
 @Table(name = "tbl_student")
 class StudentJpaEntity(
 
-    id: UUID? = null,
+    @Id
+    override val id: UUID,
 
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
-    val email: String,
+    override val email: String,
 
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
-    val name: String,
+    override val name: String,
 
     @Column(columnDefinition = "VARCHAR(1)", nullable = false)
-    val grade: String,
+    override val grade: String,
 
     @Column(columnDefinition = "VARCHAR(1)", nullable = false)
-    val classNum: String,
+    override val classNum: String,
 
     @Column(columnDefinition = "VARCHAR(2)", nullable = false)
-    val number: String,
+    override val number: String,
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
-    val profileImagePath: String
+    override val profileImagePath: String
 
-) : BaseUUIDEntity(id) {
-
-    fun updateVariableInfo(
-        grade: String,
-        classNum: String,
-        number: String,
-        profileImagePath: String
-    ): StudentJpaEntity = StudentJpaEntity(
-        id = this.id,
-        email = this.email,
-        name = this.name,
-        grade = grade,
-        classNum = classNum,
-        number = number,
-        profileImagePath = profileImagePath
-    )
-}
+) : Student(
+    id = id,
+    email = email,
+    name = name,
+    grade = grade,
+    classNum = classNum,
+    number = number,
+    profileImagePath = profileImagePath
+)

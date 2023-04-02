@@ -15,11 +15,8 @@ import java.io.IOException
 class UploadImageUseCase(
     private val filePort: FilePort
 ) {
-
     fun execute(file: File, imageType: ImageType): ImageUrlResponse {
-
         val filePath = filePort.saveImage(multipartToFile(file), imageType)
-
         return ImageUrlResponse(filePath)
     }
 }

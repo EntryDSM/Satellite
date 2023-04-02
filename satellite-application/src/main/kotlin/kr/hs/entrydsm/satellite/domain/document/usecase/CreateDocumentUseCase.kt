@@ -9,7 +9,7 @@ import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAlreadyExistEx
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
-import kr.hs.entrydsm.satellite.domain.school.spi.SchoolYearPort
+import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 

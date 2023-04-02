@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.satellite.domain.teacher.domain
 
-import java.util.UUID
+import java.util.*
 
-data class Teacher(
-    val id: UUID = UUID.randomUUID(),
-    val accountId: String,
-    val password: String
+open class Teacher(
+    open val id: UUID = UUID.randomUUID(),
+    open val accountId: String,
+    open val password: String
 )

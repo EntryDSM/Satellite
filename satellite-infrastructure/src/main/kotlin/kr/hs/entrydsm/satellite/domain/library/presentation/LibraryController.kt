@@ -2,9 +2,9 @@ package kr.hs.entrydsm.satellite.domain.library.presentation
 
 import java.util.UUID
 import javax.validation.constraints.NotNull
-import kr.hs.entrydsm.satellite.domain.library.persistence.AccessRight
-import kr.hs.entrydsm.satellite.domain.library.presentation.dto.ManagerQueryLibraryResponse
-import kr.hs.entrydsm.satellite.domain.library.presentation.dto.StudentQueryLibraryResponse
+import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
+import kr.hs.entrydsm.satellite.domain.library.dto.ManagerQueryLibraryResponse
+import kr.hs.entrydsm.satellite.domain.library.dto.StudentQueryLibraryResponse
 import kr.hs.entrydsm.satellite.domain.library.usecase.CreateLibraryFileUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.ManagerQueryLibraryUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.StudentQueryLibraryUseCase

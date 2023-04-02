@@ -7,9 +7,11 @@ import java.util.*
 interface DocumentPort {
 
     fun save(document: Document): Document
+    fun saveAll(documents: List<Document>): List<Document>
     fun queryById(documentId: UUID): Document?
     fun queryByWriterStudentId(studentId: UUID): Document?
-    fun existByWriterStudentId(id: UUID): Boolean
+    fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document>
+    fun existByWriterStudentId(studentId: UUID): Boolean
 
     fun queryByStatusAndWriterInfo(
         documentStatus: DocumentStatus?,
@@ -25,4 +27,5 @@ interface DocumentPort {
         classNum: String?,
         majorId: UUID?
     ): List<Document>
+
 }

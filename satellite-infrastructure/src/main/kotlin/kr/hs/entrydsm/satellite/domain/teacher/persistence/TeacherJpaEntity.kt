@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.teacher.persistence
 
-import kr.hs.entrydsm.satellite.global.entity.BaseUUIDEntity
-import java.util.*
+import kr.hs.entrydsm.satellite.domain.teacher.domain.Teacher
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -10,12 +10,16 @@ import javax.persistence.Table
 @Table(name = "tbl_teacher")
 class TeacherJpaEntity(
 
-    id: UUID? = null,
+    override val id: UUID,
 
     @Column(columnDefinition = "VARCHAR(30)", nullable = false)
-    val accountId: String,
+    override val accountId: String,
 
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)
-    val password: String
+    override val password: String
 
-) : BaseUUIDEntity(id)
+) : Teacher(
+    id = id,
+    accountId = accountId,
+    password = password
+)

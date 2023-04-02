@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.satellite.global.error
 
+import kr.hs.entrydsm.satellite.common.error.CustomErrorProperty
+
 enum class GlobalErrorCode(
     private val status: Int,
     private val message: String,
