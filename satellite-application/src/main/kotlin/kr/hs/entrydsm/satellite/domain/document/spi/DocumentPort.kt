@@ -14,7 +14,7 @@ interface DocumentPort {
     fun existByWriterStudentId(studentId: UUID): Boolean
 
     fun queryByStatusAndWriterInfo(
-        documentStatus: DocumentStatus?,
+        status: DocumentStatus,
         name: String?,
         grade: String?,
         classNum: String?,

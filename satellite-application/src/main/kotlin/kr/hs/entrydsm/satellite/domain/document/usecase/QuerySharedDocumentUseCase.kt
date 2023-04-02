@@ -18,7 +18,7 @@ class QuerySharedDocumentUseCase(
     ): DocumentListResponse {
 
         val documentList = documentPort.queryByStatusAndWriterInfo(
-            documentStatus = DocumentStatus.SHARED,
+            status = DocumentStatus.SHARED,
             name = name,
             grade = grade,
             classNum = classNum,
