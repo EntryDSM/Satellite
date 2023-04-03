@@ -2,13 +2,12 @@ package kr.hs.entrydsm.satellite.global.security.auth.details
 
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import kr.hs.entrydsm.satellite.domain.student.persistence.StudentJpaEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class StudentDetails(
-    private val student: Student
+    val student: Student
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
