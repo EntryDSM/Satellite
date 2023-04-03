@@ -27,13 +27,13 @@ class MajorController(
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createMajor(@RequestBody request: CreateMajorRequest) {
-        createMajorUseCase.execute(request)
+        createMajorUseCase.execute(request.majorName)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
     fun deleteMajor(@RequestBody request: DeleteMajorRequest) {
-        deleteMajorUseCase.execute(request)
+        deleteMajorUseCase.execute(request.majorId)
     }
 
     @GetMapping

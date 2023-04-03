@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
-import kr.hs.entrydsm.satellite.common.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
+import kr.hs.entrydsm.satellite.global.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam

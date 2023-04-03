@@ -84,7 +84,7 @@ class DocumentController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/skill-set")
     fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetWebRequest) {
-        updateSkillSetUseCase.execute(request)
+        updateSkillSetUseCase.execute(request.skillList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -102,7 +102,7 @@ class DocumentController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/certificate")
     fun updateCertificate(@RequestBody @Valid request: UpdateCertificateWebRequest) {
-        updateCertificateUseCase.execute(request)
+        updateCertificateUseCase.execute(request.certificateList)
     }
 
     @GetMapping("/my")

@@ -11,7 +11,7 @@ import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.kernel.utils.PdfMerger
 import java.io.ByteArrayInputStream
 import java.io.IOException
-import kr.hs.entrydsm.satellite.common.thirdparty.pdf.PdfFont
+import kr.hs.entrydsm.satellite.global.thirdparty.pdf.PdfFont
 
 object PdfUtil {
 

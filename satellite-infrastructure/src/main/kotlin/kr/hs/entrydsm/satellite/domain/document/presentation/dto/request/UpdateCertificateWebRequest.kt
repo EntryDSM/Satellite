@@ -6,7 +6,6 @@ import java.util.*
 import javax.validation.constraints.NotEmpty
 
 data class UpdateCertificateWebRequest(
-
     val certificateList: List<CertificateWebRequest>
 ) {
     data class CertificateWebRequest(

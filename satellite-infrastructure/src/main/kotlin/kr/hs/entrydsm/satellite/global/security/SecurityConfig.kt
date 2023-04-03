@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.global.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
-import kr.hs.entrydsm.satellite.common.security.jwt.JwtParser
+import kr.hs.entrydsm.satellite.global.security.token.JwtParser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod

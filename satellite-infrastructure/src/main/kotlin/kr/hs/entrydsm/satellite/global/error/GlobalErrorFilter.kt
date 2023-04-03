@@ -1,7 +1,9 @@
 package kr.hs.entrydsm.satellite.global.error
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.hs.entrydsm.satellite.common.error.response.DefaultErrorResponse
+import kr.hs.entrydsm.satellite.common.error.CustomErrorProperty
+import kr.hs.entrydsm.satellite.common.error.CustomException
+import kr.hs.entrydsm.satellite.global.error.response.DefaultErrorResponse
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest

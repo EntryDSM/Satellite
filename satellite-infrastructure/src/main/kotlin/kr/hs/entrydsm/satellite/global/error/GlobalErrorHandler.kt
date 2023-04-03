@@ -2,8 +2,8 @@ package kr.hs.entrydsm.satellite.global.error
 
 import javax.validation.ConstraintViolation
 import javax.validation.ConstraintViolationException
-import kr.hs.entrydsm.satellite.common.error.response.BindErrorResponse
-import kr.hs.entrydsm.satellite.common.error.response.DefaultErrorResponse
+import kr.hs.entrydsm.satellite.global.error.response.BindErrorResponse
+import kr.hs.entrydsm.satellite.global.error.response.DefaultErrorResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException

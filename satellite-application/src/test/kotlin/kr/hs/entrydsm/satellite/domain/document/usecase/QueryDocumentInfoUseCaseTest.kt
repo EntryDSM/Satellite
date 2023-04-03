@@ -14,7 +14,6 @@ import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAccessRightExc
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
-import kr.hs.entrydsm.satellite.domain.teacher.domain.Teacher
 
 internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
@@ -32,7 +31,6 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
             "number" to "1"
         )
         val otherStudent = anyValueObject<Student>()
-        val teacher = anyValueObject<Teacher>()
 
         val createdDocument = getTestDocument(
             student = student,
