@@ -6,40 +6,36 @@ import io.kotest.matchers.shouldNotBe
 import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.slot
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectRequest
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectRequest.ProjectRequest
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
 
 internal class UpdateProjectUseCaseTest : DescribeSpec({
 
-    val documentRepository: DocumentRepository = mockk()
-    mockkObject(SecurityUtil)
+    val securityPort: SecurityPort = mockk()
+    val documentPort: DocumentPort = mockk()
 
-    val updateProjectUseCase = UpdateProjectUseCase(documentRepository)
+    val updateProjectUseCase = UpdateProjectUseCase(securityPort, documentPort)
 
     describe("updateProject") {
 
         val student = anyValueObject<Student>("number" to "1")
         val document = getTestDocument(student)
 
-        val request = anyValueObject<UpdateProjectRequest>(
-            "projectList" to listOf(anyValueObject<ProjectRequest>())
-        )
+        val request = listOf(anyValueObject<ProjectRequest>())
 
         context("프로젝트 데이터를 받으면") {
 
             val slot = slot<Document>()
 
-            every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.queryByWriterStudentId(student.id) } returns document
-            every { documentRepository.save(capture(slot)) } returnsArgument 0
+            every { securityPort.getCurrentStudent() } returns student
+            every { documentPort.queryByWriterStudentId(student.id) } returns document
+            every { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("본인(학생) 문서의 프로젝트 정보를 수정한다.") {
 

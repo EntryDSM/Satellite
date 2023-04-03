@@ -6,29 +6,27 @@ import io.kotest.matchers.shouldNotBe
 import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoRequest
-import kr.hs.entrydsm.satellite.domain.major.persistence.Major
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.domain.student.persistence.repository.StudentRepository
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
-import org.springframework.data.repository.findByIdOrNull
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 
 internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
 
-    val documentRepository: DocumentRepository = mockk()
-    val studentRepository: StudentRepository = mockk()
-    val majorRepository: MajorRepository = mockk()
-    mockkObject(SecurityUtil)
+    val securityPort: SecurityPort = mockk()
+    val documentPort: DocumentPort = mockk()
+    val studentPort: StudentPort = mockk()
+    val majorPort: MajorPort = mockk()
 
-    val updateWriterInfoUseCase = UpdateWriterInfoUseCase(documentRepository, studentRepository, majorRepository)
+    val updateWriterInfoUseCase = UpdateWriterInfoUseCase(securityPort, studentPort, documentPort, majorPort)
 
     describe("updateWriterInfo") {
 
@@ -36,24 +34,24 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
         val document = getTestDocument(student)
         val major = anyValueObject<Major>()
 
-        val request = anyValueObject<UpdateWriterInfoRequest>()
+        val request = anyValueObject<WriterInfoRequest>()
 
         context("작성자 정보 데이터를 받으면") {
 
             val slot = slot<Document>()
 
-            every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.queryByWriterStudentId(student.id) } returns document
-            every { majorRepository.findByIdOrNull(request.majorId) } returns major
-            every { documentRepository.save(capture(slot)) } returnsArgument 0
-            every { studentRepository.save(any()) } returnsArgument 0
+            every { securityPort.getCurrentStudent() } returns student
+            every { documentPort.queryByWriterStudentId(student.id) } returns document
+            every { majorPort.queryById(request.majorId) } returns major
+            every { documentPort.save(capture(slot)) } returnsArgument 0
+            every { studentPort.save(any()) } returnsArgument 0
 
             it("본인(학생) 문서의 작성자 정보를 수정한다.") {
 
                 updateWriterInfoUseCase.execute(request)
 
-                verify(exactly = 1) { documentRepository.save(slot.captured) }
-                verify(exactly = 1) { studentRepository.save(any()) }
+                verify(exactly = 1) { documentPort.save(slot.captured) }
+                verify(exactly = 1) { studentPort.save(any()) }
                 onlyWriterIsDifferent(slot, document)
             }
         }

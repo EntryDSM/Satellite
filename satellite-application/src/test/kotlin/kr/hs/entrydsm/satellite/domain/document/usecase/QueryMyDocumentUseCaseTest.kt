@@ -6,28 +6,27 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
+import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
-import kr.hs.entrydsm.satellite.domain.document.persistence.Document
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.IntroduceElement
-import kr.hs.entrydsm.satellite.domain.document.persistence.element.WriterInfoElement
-import kr.hs.entrydsm.satellite.domain.document.persistence.enums.Status
-import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.Feedback
-import kr.hs.entrydsm.satellite.domain.feedback.persistence.repository.FeedbackRepository
-import kr.hs.entrydsm.satellite.domain.student.persistence.Student
-import kr.hs.entrydsm.satellite.common.security.SecurityUtil
+import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
+import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.UUID.randomUUID
 
 internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
-    val documentRepository: DocumentRepository = mockk()
-    val feedbackRepository: FeedbackRepository = mockk()
-    mockkObject(SecurityUtil)
+    val securityPort: SecurityPort = mockk()
+    val documentPort: DocumentPort = mockk()
+    val feedbackPort: FeedbackPort = mockk()
 
-    val queryMyDocumentInfoUseCase = QueryMyDocumentInfoUseCase(documentRepository, feedbackRepository)
+    val queryMyDocumentInfoUseCase = QueryMyDocumentInfoUseCase(securityPort, documentPort, feedbackPort)
 
     describe("updateAward") {
 
@@ -38,9 +37,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("내 문서를 조회하면") {
 
-            every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.queryByWriterStudentId(student.id) } returns document
-            every { feedbackRepository.findByDocumentId(document.id) } returns listOf()
+            every { securityPort.getCurrentStudent() } returns student
+            every { documentPort.queryByWriterStudentId(student.id) } returns document
+            every { feedbackPort.queryByDocumentId(document.id) } returns listOf()
 
             it("문서 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
@@ -59,7 +58,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
             introduce = IntroduceElement(
                 elementId = elementIds[0]
             ),
-            status = Status.SUBMITTED,
+            status = DocumentStatus.SUBMITTED,
             projectList = mutableListOf(
                 anyValueObject("elementId" to elementIds[1]),
                 anyValueObject("elementId" to elementIds[2])
@@ -83,9 +82,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("피드백이 있는 내 문서를 조회하면") {
 
-            every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.queryByWriterStudentId(student.id) } returns documentWithFeedbacks
-            every { feedbackRepository.findByDocumentId(documentWithFeedbacks.id) } returns feedbacks
+            every { securityPort.getCurrentStudent() } returns student
+            every { documentPort.queryByWriterStudentId(student.id) } returns documentWithFeedbacks
+            every { feedbackPort.queryByDocumentId(documentWithFeedbacks.id) } returns feedbacks
 
             it("문서 상세, 피드백 정보를 반환한다.") {
 
@@ -104,8 +103,8 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("내 문서가 존재하지 않으면") {
 
-            every { SecurityUtil.getCurrentStudent() } returns student
-            every { documentRepository.queryByWriterStudentId(student.id) } returns null
+            every { securityPort.getCurrentStudent() } returns student
+            every { documentPort.queryByWriterStudentId(student.id) } returns null
 
             it("DocumentNotFound 예외를 던진다.") {
                 shouldThrow<DocumentNotFoundException> {
