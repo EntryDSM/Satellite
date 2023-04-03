@@ -23,7 +23,7 @@ class QueryDocumentInfoUseCase(
         val authority = securityPort.getCurrentUserAuthority()
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (!isWriter(document) && !hasAccess(document.status, authority)) {
+        if (!isWriter(document, authority) && !hasAccess(document.status, authority)) {
             throw DocumentAccessRightException
         }
 
@@ -38,8 +38,10 @@ class QueryDocumentInfoUseCase(
         }
     }
 
-    private fun isWriter(document: Document): Boolean {
-        val student = studentPort.queryById(securityPort.getCurrentUserId())
-        return document.isWriter(student?.id)
+    private fun isWriter(document: Document, authority: Authority): Boolean {
+        return if (authority == Authority.STUDENT) {
+            val student = securityPort.getCurrentStudent()
+            document.isWriter(student.id)
+        } else false
     }
 }
