@@ -1,7 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
+import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import org.hibernate.validator.constraints.Length
-import java.util.Date
+import java.util.*
 
 data class UpdateProjectWebRequest(
     val projectList: List<ProjectWebRequest>
@@ -9,21 +10,21 @@ data class UpdateProjectWebRequest(
     data class ProjectWebRequest(
 
         @field:Length(max = 30)
-        val name: String,
+        override val name: String,
 
         @field:Length(max = 255)
-        val representImagePath: String?,
+        override val representImagePath: String?,
 
-        val startDate: Date,
+        override val startDate: Date,
 
-        val endDate: Date,
+        override val endDate: Date,
 
-        val skillList: List<String>,
+        override val skillList: List<String>,
 
-        val description: String,
+        override val description: String,
 
         @field:Length(max = 225)
-        val url: String?
+        override val url: String?
 
     ) : ProjectRequest(
         name, representImagePath, startDate, endDate, skillList, description, url

@@ -1,10 +1,11 @@
 package kr.hs.entrydsm.satellite.domain.document.domain.element
 
-import java.util.*
+import java.util.UUID
+import java.util.Date
 
-class AwardElement(
+data class AwardElement(
 
-    elementId: UUID? = null,
+    override val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val awardingInstitution: String,
     val date: Date,

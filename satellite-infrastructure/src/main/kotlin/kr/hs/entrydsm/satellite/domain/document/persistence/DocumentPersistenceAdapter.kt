@@ -4,12 +4,12 @@ import com.querydsl.core.types.dsl.BooleanExpression
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
-import kr.hs.entrydsm.satellite.domain.document.persistence.QDocument.document
+import kr.hs.entrydsm.satellite.domain.document.domain.QDocument.document
 import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.global.config.querydsl.findBy
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @Adapter
 class DocumentPersistenceAdapter(

@@ -2,9 +2,9 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.*
 
-class ProjectElement(
+data class ProjectElement(
 
-    elementId: UUID? = null,
+    override val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val representImagePath: String,
     val startDate: Date,

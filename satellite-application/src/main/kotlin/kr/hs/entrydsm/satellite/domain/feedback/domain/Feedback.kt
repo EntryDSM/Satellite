@@ -1,13 +1,13 @@
 package kr.hs.entrydsm.satellite.domain.feedback.domain
 
 import kr.hs.entrydsm.satellite.global.domain.Domain
-import java.util.UUID
+import java.util.*
 
-open class Feedback(
-    open val documentId: UUID,
-    open val elementId: UUID,
-    open val comment: String,
-    open val isApply: Boolean
+class Feedback(
+    val documentId: UUID,
+    val elementId: UUID,
+    val comment: String,
+    val isApply: Boolean
 ) : Domain {
     fun updateComment(comment: String) = copy(comment = comment)
 

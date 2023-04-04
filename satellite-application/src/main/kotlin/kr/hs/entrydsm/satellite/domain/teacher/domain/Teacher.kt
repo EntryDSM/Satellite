@@ -1,9 +1,10 @@
 package kr.hs.entrydsm.satellite.domain.teacher.domain
 
+import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 
-open class Teacher(
-    open val id: UUID = UUID.randomUUID(),
-    open val accountId: String,
-    open val password: String
-)
+class Teacher(
+    val id: UUID = UUID.randomUUID(),
+    val accountId: String,
+    val password: String
+) : Domain

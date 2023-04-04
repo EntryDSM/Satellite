@@ -2,9 +2,9 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.UUID
 
-class IntroduceElement(
+data class IntroduceElement(
 
-    elementId: UUID? = null,
+    override val elementId: UUID = UUID.randomUUID(),
     val heading: String = "",
     val introduce: String = ""
 

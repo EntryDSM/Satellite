@@ -18,23 +18,23 @@ class DocumentJpaEntity(
     @Id
     override val id: UUID,
 
-    year: Int,
+    override val year: Int,
 
-    writer: WriterInfoElement,
+    override val writer: WriterInfoElement,
 
-    status: DocumentStatus,
+    override val status: DocumentStatus,
 
-    introduce: IntroduceElement,
+    override val introduce: IntroduceElement,
 
-    skillSet: MutableList<String>,
+    override val skillSet: MutableList<String>,
 
-    projectList: MutableList<ProjectElement>,
+    override val projectList: MutableList<ProjectElement>,
 
-    awardList: MutableList<AwardElement>,
+    override val awardList: MutableList<AwardElement>,
 
-    certificateList: MutableList<CertificateElement>,
+    override val certificateList: MutableList<CertificateElement>,
 
-    isDeleted: Boolean
+    override val isDeleted: Boolean
 
 ) : Document(
     id = id,

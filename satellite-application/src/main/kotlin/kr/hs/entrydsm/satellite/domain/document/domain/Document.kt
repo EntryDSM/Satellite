@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.domain
 
+import kr.hs.entrydsm.satellite.common.annotation.Aggregate
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -8,27 +9,28 @@ import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 
-open class Document(
+@Aggregate
+class Document(
 
-    open val id: UUID = UUID.randomUUID(),
+    val id: UUID = UUID.randomUUID(),
 
-    open val year: Int,
+    val year: Int,
 
-    open val writer: WriterInfoElement,
+    val writer: WriterInfoElement,
 
-    open val status: DocumentStatus,
+    val status: DocumentStatus,
 
-    open val introduce: IntroduceElement = IntroduceElement(),
+    val introduce: IntroduceElement = IntroduceElement(),
 
-    open val skillSet: MutableList<String> = mutableListOf(),
+    val skillSet: MutableList<String> = mutableListOf(),
 
-    open val projectList: MutableList<ProjectElement> = mutableListOf(),
+    val projectList: MutableList<ProjectElement> = mutableListOf(),
 
-    open val awardList: MutableList<AwardElement> = mutableListOf(),
+    val awardList: MutableList<AwardElement> = mutableListOf(),
 
-    open val certificateList: MutableList<CertificateElement> = mutableListOf(),
+    val certificateList: MutableList<CertificateElement> = mutableListOf(),
 
-    open val isDeleted: Boolean = false
+    val isDeleted: Boolean = false
 
 ) : Domain {
 

@@ -4,9 +4,9 @@ import kr.hs.entrydsm.satellite.domain.major.domain.Major
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
-class WriterInfoElement(
+data class WriterInfoElement(
 
-    elementId: UUID? = null,
+    override val elementId: UUID = UUID.randomUUID(),
 
     val studentId: UUID,
     val name: String,
@@ -62,36 +62,12 @@ class WriterInfoElement(
         )
     }
 
-    private fun copy(
-        studentId: UUID = this.studentId,
-        name: String = this.name,
-        profileImagePath: String = this.profileImagePath,
-        grade: String = this.grade,
-        classNum: String = this.classNum,
-        number: String = this.number,
-        email: String = this.email,
-        majorId: UUID = this.majorId,
-        majorName: String = this.majorName
-    ): WriterInfoElement {
-        return WriterInfoElement(
-            studentId = studentId,
-            name = name,
-            profileImagePath = profileImagePath,
-            grade = grade,
-            classNum = classNum,
-            number = number,
-            email = email,
-            majorId = majorId,
-            majorName = majorName
-        )
-    }
-
     companion object {
         fun toStudentNumber(
             grade: String,
             classNum: String,
             number: String
-        ) = Integer.valueOf(
+        ): Int = Integer.valueOf(
             grade + classNum + String.format("%02d", Integer.parseInt(number))
         )
     }

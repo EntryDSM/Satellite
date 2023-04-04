@@ -4,13 +4,13 @@ import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.time.LocalDateTime
 import java.util.*
 
-open class LibraryDocument(
-    open val id: UUID = UUID.randomUUID(),
-    open val year: Int,
-    open val grade: Int,
-    open val fileUrl: String,
-    open val accessRight: AccessRight,
-    open val createdAt: LocalDateTime = LocalDateTime.now()
+class LibraryDocument(
+    val id: UUID = UUID.randomUUID(),
+    val year: Int,
+    val grade: Int,
+    val fileUrl: String,
+    val accessRight: AccessRight,
+    val createdAt: LocalDateTime = LocalDateTime.now()
 ) : Domain {
     val generation: Int
         get() = year - grade - 2013

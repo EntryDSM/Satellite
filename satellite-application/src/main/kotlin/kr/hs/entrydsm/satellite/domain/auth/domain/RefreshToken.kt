@@ -1,10 +1,11 @@
 package kr.hs.entrydsm.satellite.domain.auth.domain
 
-import java.util.UUID
+import kr.hs.entrydsm.satellite.global.domain.Domain
+import java.util.*
 
-open class RefreshToken(
-    open val id: UUID,
-    open val token: String,
-    open val authority: Authority,
-    open val timeToLive: Long
-)
+class RefreshToken(
+    val id: UUID,
+    val token: String,
+    val authority: Authority,
+    val timeToLive: Long
+) : Domain

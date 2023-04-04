@@ -65,6 +65,13 @@ allOpen {
     annotation("org.springframework.data.mongodb.core.mapping.Document")
 }
 
+noArg {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.data.mongodb.core.mapping.Document")
+}
+
 kapt {
     annotationProcessor("org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor")
     annotationProcessor("com.querydsl.apt.jpa.JPAAnnotationProcessor")

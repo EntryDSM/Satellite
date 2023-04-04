@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.student.presentation
 
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
-import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.student.dto.StudentDocumentListResponse
 import kr.hs.entrydsm.satellite.domain.student.presentation.dto.request.StudentSignUpWebRequest
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RequestMapping("/student")
 @RestController
@@ -23,7 +23,16 @@ class StudentController(
 
     @PostMapping
     fun studentSignUp(@RequestBody @Valid request: StudentSignUpWebRequest): TokenResponse {
-        return studentSignUpUseCase.execute(request)
+        return request.run {
+            studentSignUpUseCase.execute(
+                name = name,
+                profileImagePath = profileImagePath,
+                email = email,
+                grade = grade,
+                classNum = classNum,
+                number = number
+            )
+        }
     }
 
     @GetMapping

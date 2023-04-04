@@ -90,7 +90,7 @@ class DocumentController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/project")
     fun updateProject(@RequestBody @Valid request: UpdateProjectWebRequest) {
-        updateProjectUseCase.execute(request)
+        updateProjectUseCase.execute(request.projectList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

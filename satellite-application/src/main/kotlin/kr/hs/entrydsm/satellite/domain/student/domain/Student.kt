@@ -1,18 +1,19 @@
 package kr.hs.entrydsm.satellite.domain.student.domain
 
 import kr.hs.entrydsm.satellite.common.exception.EmailSuffixNotValidException
+import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 import java.util.regex.Pattern
 
-open class Student(
-    open val id: UUID = UUID.randomUUID(),
-    open val email: String,
-    open val name: String,
-    open val grade: String,
-    open val classNum: String,
-    open val number: String,
-    open val profileImagePath: String
-) {
+class Student(
+    val id: UUID = UUID.randomUUID(),
+    val email: String,
+    val name: String,
+    val grade: String,
+    val classNum: String,
+    val number: String,
+    val profileImagePath: String
+) : Domain {
 
     fun copy(
         id: UUID = this.id,

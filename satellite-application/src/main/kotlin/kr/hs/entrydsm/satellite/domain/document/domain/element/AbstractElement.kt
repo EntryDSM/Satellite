@@ -1,12 +1,13 @@
 package kr.hs.entrydsm.satellite.domain.document.domain.element
 
-import java.util.UUID
+import kr.hs.entrydsm.satellite.global.domain.Domain
+import java.util.*
 
 abstract class AbstractElement(
     elementId: UUID? = UUID.randomUUID()
-) {
-    open val elementId: UUID = elementId ?: UUID.randomUUID()
+) : Domain {
 
-    open val elementName: String
-        get() = ""
+    val elementId: UUID = elementId ?: UUID.randomUUID()
+
+    abstract val elementName: String
 }

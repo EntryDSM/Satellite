@@ -2,9 +2,9 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.*
 
-class CertificateElement(
+data class CertificateElement(
 
-    elementId: UUID? = null,
+    override val elementId: UUID = UUID.randomUUID(),
     val name: String,
     val issuingInstitution: String,
     val date: Date
