@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 open class WriterInfoRequest(
@@ -12,10 +13,10 @@ open class WriterInfoRequest(
     open val classNum: String,
     open val number: String
 ) {
-    fun toElement(writer: WriterInfoElement, major: Major): WriterInfoElement {
+    fun toElement(student: Student, major: Major): WriterInfoElement {
         return WriterInfoElement(
-            studentId = writer.studentId,
-            name = writer.name,
+            studentId = student.id,
+            name = student.name,
             profileImagePath = profileImagePath,
             grade = grade,
             classNum = classNum,
