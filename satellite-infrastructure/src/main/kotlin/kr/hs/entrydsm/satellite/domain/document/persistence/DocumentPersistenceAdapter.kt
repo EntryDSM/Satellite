@@ -16,25 +16,11 @@ class DocumentPersistenceAdapter(
     private val documentRepository: DocumentRepository
 ) : DocumentPort {
 
-    override fun save(document: Document) = document.run {
-        documentRepository.save(
-            DocumentJpaEntity(
-                id = id,
-                year = year,
-                writer = writer,
-                status = status,
-                introduce = introduce,
-                skillSet = skillSet,
-                projectList = projectList,
-                awardList = awardList,
-                certificateList = certificateList,
-                isDeleted = isDeleted
-            )
-        )
-    }
+    override fun save(document: Document): DocumentJpaEntity =
+        documentRepository.save(DocumentJpaEntity.of(document))
 
-    override fun saveAll(documents: List<Document>) =
-        documentRepository.saveAll(documents.map { it as DocumentJpaEntity })
+    override fun saveAll(documents: List<Document>): MutableList<DocumentJpaEntity> =
+        documentRepository.saveAll(documents.map(DocumentJpaEntity::of))
 
     override fun queryById(documentId: UUID) =
         documentRepository.findByIdOrNull(documentId)

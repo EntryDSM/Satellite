@@ -8,7 +8,6 @@ import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import org.hibernate.annotations.Where
-import org.springframework.data.mongodb.core.mapping.Field
 import java.util.*
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
@@ -16,33 +15,15 @@ import java.util.*
 class DocumentJpaEntity(
 
     id: UUID,
-
-    @Field("documentYear")
-    override val year: Int,
-
-    @Field("documentWriter")
-    override val writer: WriterInfoElement,
-
-    @Field("documentStatus")
-    override val status: DocumentStatus,
-
-    @Field("documentIntroduce")
-    override val introduce: IntroduceElement,
-
-    @Field("documentSkillSet")
-    override val skillSet: MutableList<String>,
-
-    @Field("documentProjectList")
-    override val projectList: MutableList<ProjectElement>,
-
-    @Field("documentAwardList")
-    override val awardList: MutableList<AwardElement>,
-
-    @Field("documentCertificateList")
-    override val certificateList: MutableList<CertificateElement>,
-
-    @Field("documentIsDeleted")
-    override val isDeleted: Boolean
+    year: Int,
+    writer: WriterInfoElement,
+    status: DocumentStatus,
+    introduce: IntroduceElement,
+    skillSet: MutableList<String>,
+    projectList: MutableList<ProjectElement>,
+    awardList: MutableList<AwardElement>,
+    certificateList: MutableList<CertificateElement>,
+    isDeleted: Boolean
 
 ) : Document(
     id = id,
@@ -55,4 +36,21 @@ class DocumentJpaEntity(
     awardList = awardList,
     certificateList = certificateList,
     isDeleted = isDeleted
-)
+) {
+    companion object {
+        fun of(document: Document) = document.run {
+            DocumentJpaEntity(
+                id = id,
+                year = year,
+                writer = writer,
+                status = status,
+                introduce = introduce,
+                skillSet = skillSet,
+                projectList = projectList,
+                awardList = awardList,
+                certificateList = certificateList,
+                isDeleted = isDeleted
+            )
+        }
+    }
+}

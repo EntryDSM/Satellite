@@ -15,8 +15,14 @@ class SchoolYearPersistenceAdapter(
     private val schoolYearProperties: SchoolYearProperties
 ) : SchoolYearPort {
 
-    override fun save(schoolYear: SchoolYear) =
-        schoolYearRepository.save(schoolYear as SchoolYearJpaEntity)
+    override fun save(schoolYear: SchoolYear): SchoolYearJpaEntity = schoolYear.run {
+        schoolYearRepository.save(
+            SchoolYearJpaEntity(
+                id = id,
+                year = year
+            )
+        )
+    }
 
     override fun getSchoolYear(): SchoolYear =
         schoolYearRepository.findByIdOrNull(schoolYearProperties.id)!!

@@ -22,4 +22,15 @@ class RefreshTokenEntity(
     @field:TimeToLive
     override val timeToLive: Long
 
-) : RefreshToken(id, token, authority, timeToLive)
+) : RefreshToken(id, token, authority, timeToLive) {
+    companion object {
+        fun of(refreshToken: RefreshToken) = refreshToken.run {
+            RefreshTokenEntity(
+                id = id,
+                token = token,
+                authority = authority,
+                timeToLive = timeToLive
+            )
+        }
+    }
+}

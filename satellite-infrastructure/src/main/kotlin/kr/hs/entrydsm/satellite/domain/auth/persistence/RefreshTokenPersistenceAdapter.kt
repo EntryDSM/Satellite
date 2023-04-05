@@ -10,16 +10,8 @@ class RefreshTokenPersistenceAdapter(
     private val refreshTokenRepository: RefreshTokenRepository
 ) : RefreshTokenPort {
 
-    override fun save(refreshToken: RefreshToken) = refreshToken.run {
-        refreshTokenRepository.save(
-            RefreshTokenEntity(
-                id = id,
-                token = token,
-                authority = authority,
-                timeToLive = timeToLive
-            )
-        )
-    }
+    override fun save(refreshToken: RefreshToken): RefreshTokenEntity =
+        refreshTokenRepository.save(RefreshTokenEntity.of(refreshToken))
 
     override fun queryByToken(token: String) =
         refreshTokenRepository.findByToken(token)

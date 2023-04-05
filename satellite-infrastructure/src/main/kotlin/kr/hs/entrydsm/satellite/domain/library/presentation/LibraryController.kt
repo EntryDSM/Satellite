@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.satellite.domain.library.presentation
 
-import java.util.UUID
-import javax.validation.constraints.NotNull
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.dto.ManagerQueryLibraryResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.StudentQueryLibraryResponse
@@ -18,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
+import javax.validation.constraints.NotNull
 
-@RequestMapping("/document/library")
+@RequestMapping("/library")
 @RestController
 class LibraryController(
     private val createLibraryFileUseCase: CreateLibraryFileUseCase,
@@ -37,13 +37,17 @@ class LibraryController(
         createLibraryFileUseCase.execute(grade!!, secret!!)
     }
 
-    @GetMapping("/teachers")
-    fun managerQueryLibrary(): ManagerQueryLibraryResponse {
+    @GetMapping("/teacher")
+    fun managerQueryLibrary(
+        @RequestParam(name = "year") @NotNull year: Int?,
+    ): ManagerQueryLibraryResponse {
         return managerQueryLibraryUseCase.execute()
     }
 
-    @GetMapping("/students")
-    fun studentQueryLibrary(): StudentQueryLibraryResponse {
+    @GetMapping("/student")
+    fun studentQueryLibrary(
+        @RequestParam(name = "year") @NotNull year: Int?,
+    ): StudentQueryLibraryResponse {
         return studentQueryLibraryUseCase.execute()
     }
 

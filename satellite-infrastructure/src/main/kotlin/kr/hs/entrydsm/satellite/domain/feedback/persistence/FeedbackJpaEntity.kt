@@ -29,7 +29,18 @@ class FeedbackJpaEntity(
     @Column(columnDefinition = "BIT(1)", nullable = false)
     override val isApply: Boolean
 
-) : Feedback(documentId, elementId, comment, isApply)
+) : Feedback(documentId, elementId, comment, isApply) {
+    companion object {
+        fun of(feedback: Feedback) = feedback.run {
+            FeedbackJpaEntity(
+                documentId = documentId,
+                elementId = elementId,
+                comment = comment,
+                isApply = isApply
+            )
+        }
+    }
+}
 
 @Embeddable
 data class FeedbackId(

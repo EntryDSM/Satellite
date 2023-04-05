@@ -12,16 +12,8 @@ class FeedbackPersistenceAdapter(
     private val feedbackRepository: FeedbackRepository
 ) : FeedbackPort {
 
-    override fun save(feedback: Feedback) = feedback.run {
-        feedbackRepository.save(
-            FeedbackJpaEntity(
-                documentId = documentId,
-                elementId = elementId,
-                comment = comment,
-                isApply = isApply
-            )
-        )
-    }
+    override fun save(feedback: Feedback): FeedbackJpaEntity =
+        feedbackRepository.save(FeedbackJpaEntity.of(feedback))
 
     override fun queryByDocumentId(documentId: UUID) =
         feedbackRepository.findByDocumentId(documentId)

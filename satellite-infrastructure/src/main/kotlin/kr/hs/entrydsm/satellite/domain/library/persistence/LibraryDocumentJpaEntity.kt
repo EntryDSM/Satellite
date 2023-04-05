@@ -31,7 +31,7 @@ class LibraryDocumentJpaEntity(
     @Column(columnDefinition = "VARCHAR(20)", nullable = false)
     override val accessRight: AccessRight,
 
-    @Column(columnDefinition = "DATE(6)", nullable = false)
+    @Column(columnDefinition = "DATE", nullable = false)
     override val createdAt: LocalDateTime = LocalDateTime.now()
 
 ) : LibraryDocument(
@@ -41,4 +41,17 @@ class LibraryDocumentJpaEntity(
     fileUrl = fileUrl,
     accessRight = accessRight,
     createdAt = createdAt
-)
+) {
+    companion object {
+        fun of(libraryDocument: LibraryDocument) = libraryDocument.run {
+            LibraryDocumentJpaEntity(
+                id = id,
+                year = year,
+                grade = grade,
+                fileUrl = fileUrl,
+                accessRight = accessRight,
+                createdAt = createdAt
+            )
+        }
+    }
+}

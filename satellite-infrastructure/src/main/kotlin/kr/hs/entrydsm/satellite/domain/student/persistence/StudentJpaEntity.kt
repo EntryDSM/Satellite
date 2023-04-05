@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.student.persistence
 
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import java.util.UUID
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -40,4 +40,18 @@ class StudentJpaEntity(
     classNum = classNum,
     number = number,
     profileImagePath = profileImagePath
-)
+) {
+    companion object {
+        fun of(student: Student) = student.run {
+            StudentJpaEntity(
+                id = id,
+                email = email,
+                name = name,
+                grade = grade,
+                classNum = classNum,
+                number = number,
+                profileImagePath = profileImagePath
+            )
+        }
+    }
+}

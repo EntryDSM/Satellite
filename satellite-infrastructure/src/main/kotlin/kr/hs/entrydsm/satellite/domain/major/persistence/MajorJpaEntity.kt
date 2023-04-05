@@ -20,4 +20,13 @@ class MajorJpaEntity(
 ) : Major(
     id = id,
     name = name
-)
+) {
+    companion object {
+        fun of(major: Major) = major.run {
+            MajorJpaEntity(
+                id = id,
+                name = name
+            )
+        }
+    }
+}

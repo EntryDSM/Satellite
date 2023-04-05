@@ -6,12 +6,15 @@ import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import kr.hs.entrydsm.satellite.domain.library.persistence.repository.LibraryDocumentRepository
 import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
 import org.springframework.data.repository.findByIdOrNull
-import java.util.UUID
+import java.util.*
 
 @Adapter
 class LibraryDocumentPersistenceAdapter(
     private val libraryDocumentRepository: LibraryDocumentRepository
 ) : LibraryDocumentPort {
+
+    override fun save(libraryDocument: LibraryDocument): LibraryDocumentJpaEntity =
+        libraryDocumentRepository.save(LibraryDocumentJpaEntity.of(libraryDocument))
 
     override fun queryById(libraryDocumentId: UUID) =
         libraryDocumentRepository.findByIdOrNull(libraryDocumentId)
@@ -21,8 +24,4 @@ class LibraryDocumentPersistenceAdapter(
 
     override fun queryByAccessRightNot(accessRight: AccessRight) =
         libraryDocumentRepository.findByAccessRightNot(accessRight)
-
-    override fun save(libraryDocument: LibraryDocument) =
-        libraryDocumentRepository.save(libraryDocument as LibraryDocumentJpaEntity)
-
 }
