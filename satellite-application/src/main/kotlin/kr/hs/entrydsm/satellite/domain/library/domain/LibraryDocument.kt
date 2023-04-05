@@ -32,4 +32,6 @@ class LibraryDocument(
             createdAt = createdAt
         )
     }
+
+    protected constructor(): this(UUID(0,0), 2023, 1, "", AccessRight.PRIVATE)
 }

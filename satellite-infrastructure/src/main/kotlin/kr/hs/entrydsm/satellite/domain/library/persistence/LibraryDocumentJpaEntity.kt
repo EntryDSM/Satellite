@@ -1,17 +1,17 @@
 package kr.hs.entrydsm.satellite.domain.library.persistence
 
+import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
+import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
-import javax.persistence.Table
-import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
-import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import javax.persistence.Id
+import javax.persistence.Table
 
-@Table(name = "tbl_library")
+@Table(name = "tbl_library_document")
 @Entity
 class LibraryDocumentJpaEntity(
 

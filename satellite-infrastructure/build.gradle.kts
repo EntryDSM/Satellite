@@ -49,9 +49,6 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
     implementation("com.amazonaws:aws-java-sdk-ses:1.12.144")
 
-    // cool sms
-    implementation("net.nurigo:javaSDK:2.2")
-
     // pdf
     implementation("org.thymeleaf:thymeleaf")
     implementation("com.itextpdf:html2pdf:3.0.1")

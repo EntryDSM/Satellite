@@ -7,4 +7,6 @@ class Teacher(
     val id: UUID = UUID.randomUUID(),
     val accountId: String,
     val password: String
-) : Domain
+) : Domain {
+    protected constructor(): this(UUID(0,0), "", "")
+}

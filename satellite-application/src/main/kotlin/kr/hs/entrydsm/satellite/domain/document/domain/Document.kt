@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.satellite.domain.document.domain
 
-import kr.hs.entrydsm.satellite.common.annotation.Aggregate
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -9,7 +8,6 @@ import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 
-@Aggregate
 class Document(
 
     val id: UUID = UUID.randomUUID(),
@@ -18,7 +16,7 @@ class Document(
 
     val writer: WriterInfoElement,
 
-    val status: DocumentStatus,
+    val status: DocumentStatus = DocumentStatus.CREATED,
 
     val introduce: IntroduceElement = IntroduceElement(),
 
@@ -74,4 +72,5 @@ class Document(
         isDeleted = isDeleted
     )
 
+    protected constructor() : this(year = 2023, writer = WriterInfoElement(UUID(0,0), "", "", "", "", "", "", UUID(0,0), ""))
 }

@@ -2,27 +2,28 @@ package kr.hs.entrydsm.satellite.global.thirdparty.pdf
 
 import com.itextpdf.io.source.ByteArrayOutputStream
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
-import kr.hs.entrydsm.satellite.domain.document.persistence.DocumentJpaEntity
+import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.file.spi.PdfPort
 import kr.hs.entrydsm.satellite.global.thirdparty.pdf.util.PdfUtil
 
 @Adapter
 class PdfAdapter(
     private val templateProcessor: TemplateProcessor
-) {
+) : PdfPort {
 
-    fun generateGradeLibraryDocument(documentJpaEntities: List<DocumentJpaEntity>): ByteArray {
+    override fun generateGradeLibraryDocument(documents: List<Document>): ByteArray {
 
         val bookCover = templateProcessor.process(
             TemplateFileName.COVER, null
         ).run(PdfUtil::convertHtmlToPdf)
-        val documentsByClassRoom = getPdfDocumentChapterByClassNum(documentJpaEntities)
+        val documentsByClassRoom = getPdfDocumentChapterByClassNum(documents)
 
         return PdfUtil.concatPdf(bookCover, documentsByClassRoom).toByteArray()
     }
 
-    private fun getPdfDocumentChapterByClassNum(documentJpaEntities: List<DocumentJpaEntity>): ByteArrayOutputStream {
+    private fun getPdfDocumentChapterByClassNum(documents: List<Document>): ByteArrayOutputStream {
 
-        val documentClassNumMap = getDocumentClassNumMap(documentJpaEntities)
+        val documentClassNumMap = getDocumentClassNumMap(documents)
 
         return documentClassNumMap.map { (classNum, documents) ->
 
@@ -45,10 +46,10 @@ class PdfAdapter(
         }.reduce(PdfUtil::concatPdf)
     }
 
-    private fun getDocumentClassNumMap(documentJpaEntities: List<DocumentJpaEntity>): MutableMap<String, MutableList<DocumentJpaEntity>> {
-        val documentsClassNumMap = mutableMapOf<String, MutableList<DocumentJpaEntity>>()
+    private fun getDocumentClassNumMap(documents: List<Document>): MutableMap<String, MutableList<Document>> {
+        val documentsClassNumMap = mutableMapOf<String, MutableList<Document>>()
 
-        documentJpaEntities.forEach { document ->
+        documents.forEach { document ->
             val classNum = document.writer.classNum
             if (documentsClassNumMap.containsKey(document.writer.grade)) {
                 documentsClassNumMap[classNum] = mutableListOf()

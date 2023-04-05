@@ -6,8 +6,6 @@ import java.util.*
 
 data class WriterInfoElement(
 
-    override val elementId: UUID = UUID.randomUUID(),
-
     val studentId: UUID,
     val name: String,
     val email: String,
@@ -20,7 +18,7 @@ data class WriterInfoElement(
     val majorId: UUID,
     val majorName: String
 
-) : AbstractElement(elementId) {
+) : AbstractElement() {
 
     override val elementName: String
         get() = "내 정보"
@@ -42,25 +40,6 @@ data class WriterInfoElement(
         majorId = major.id,
         majorName = major.name
     )
-
-    fun updateVariableInfo(
-        profileImagePath: String,
-        grade: String,
-        classNum: String,
-        number: String,
-        email: String,
-        major: Major
-    ): WriterInfoElement {
-        return copy(
-            profileImagePath = profileImagePath,
-            grade = grade,
-            classNum = classNum,
-            number = number,
-            email = email,
-            majorId = major.id,
-            majorName = major.name
-        )
-    }
 
     companion object {
         fun toStudentNumber(

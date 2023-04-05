@@ -33,6 +33,8 @@ class Student(
         profileImagePath = profileImagePath
     )
 
+    protected constructor(): this(UUID(0,0), "", "", "", "", "", "")
+
     companion object {
 
         private const val schoolEmail = "@dsm.hs.kr"

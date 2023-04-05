@@ -17,4 +17,6 @@ class SchoolYear(
         id = id,
         year = year
     )
+
+    protected constructor(): this(UUID(0,0), 2023)
 }

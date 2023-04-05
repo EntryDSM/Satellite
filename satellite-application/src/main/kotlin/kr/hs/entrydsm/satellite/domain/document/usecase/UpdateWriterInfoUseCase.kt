@@ -3,6 +3,7 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
@@ -23,12 +24,12 @@ class UpdateWriterInfoUseCase(
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        studentPort.save(
+        val savedStudent = studentPort.save(
             studentWithUpdatedInfo(student, writerInfo)
         )
 
         documentPort.save(
-            documentWithUpdatedWriterInfo(document, writerInfo)
+            documentWithUpdatedWriterInfo(document, savedStudent, writerInfo)
         )
     }
 
@@ -44,6 +45,7 @@ class UpdateWriterInfoUseCase(
 
     private fun documentWithUpdatedWriterInfo(
         document: Document,
+        student: Student,
         writerInfo: WriterInfoRequest
     ): Document {
 
@@ -51,12 +53,8 @@ class UpdateWriterInfoUseCase(
 
         return writerInfo.run {
             document.copy(
-                writer = document.writer.updateVariableInfo(
-                    grade = grade,
-                    classNum = classNum,
-                    number = number,
-                    email = email,
-                    profileImagePath = profileImagePath,
+                writer = WriterInfoElement(
+                    student = student,
                     major = major
                 )
             )

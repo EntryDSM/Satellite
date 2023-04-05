@@ -1,10 +1,9 @@
 package kr.hs.entrydsm.satellite.domain.document.persistence.repository
 
-import java.util.UUID
 import kr.hs.entrydsm.satellite.domain.document.persistence.DocumentJpaEntity
-import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.querydsl.QuerydslPredicateExecutor
+import java.util.*
 
 interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, QuerydslPredicateExecutor<DocumentJpaEntity> {
 
@@ -14,15 +13,4 @@ interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, Queryds
 
     fun existsByWriterStudentId(studentId: UUID): Boolean
 
-    fun findTopByStatusAndWriterStudentNumberIsGreaterThanOrderByWriterStudentNumber(
-        documentStatus: DocumentStatus,
-        studentNumber: Int
-    ): DocumentJpaEntity?
-
-    fun findTopByStatusAndWriterStudentNumberIsLessThanOrderByWriterStudentNumberDesc(
-        documentStatus: DocumentStatus,
-        studentNumber: Int
-    ): DocumentJpaEntity?
-
-    fun deleteByYear(year: Int)
 }

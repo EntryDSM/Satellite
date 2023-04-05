@@ -22,4 +22,6 @@ class Feedback(
         comment = comment,
         isApply = isApply
     )
+
+    protected constructor() : this(UUID(0,0), UUID(0,0), "", false)
 }
