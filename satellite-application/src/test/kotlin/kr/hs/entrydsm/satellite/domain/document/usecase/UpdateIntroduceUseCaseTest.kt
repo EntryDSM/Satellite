@@ -27,7 +27,7 @@ internal class UpdateIntroduceUseCaseTest : DescribeSpec({
         val student = anyValueObject<Student>("number" to "1")
         val document = getTestDocument(student)
 
-        val request = anyValueObject<IntroduceRequest>()
+        val request = IntroduceRequest("qwe", "ty")
 
         context("자기소개 데이터를 받으면") {
 

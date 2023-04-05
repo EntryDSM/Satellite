@@ -11,14 +11,16 @@ import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import java.util.UUID.randomUUID
 
 internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
@@ -48,27 +50,24 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
             }
         }
 
-        val elementIds = listOf(randomUUID(), randomUUID(), randomUUID(), randomUUID(), randomUUID())
+        val introduce: IntroduceElement = anyValueObject()
+        val project1: ProjectElement = anyValueObject()
+        val project2: ProjectElement = anyValueObject()
+        val award: AwardElement = anyValueObject()
+        val certificate: CertificateElement = anyValueObject()
+
+        val elementIds = listOf(introduce, project1, project2, award, certificate).map { it.elementId }
 
         val documentWithFeedbacks = Document(
             writer = WriterInfoElement(
                 student = student,
                 major = anyValueObject()
             ),
-            introduce = IntroduceElement(
-                elementId = elementIds[0]
-            ),
+            introduce = introduce,
             status = DocumentStatus.SUBMITTED,
-            projectList = mutableListOf(
-                anyValueObject("elementId" to elementIds[1]),
-                anyValueObject("elementId" to elementIds[2])
-            ),
-            awardList = mutableListOf(
-                anyValueObject("elementId" to elementIds[3]),
-            ),
-            certificateList = mutableListOf(
-                anyValueObject("elementId" to elementIds[4])
-            ),
+            projectList = mutableListOf(project1, project2),
+            awardList = mutableListOf(award),
+            certificateList = mutableListOf(certificate),
             year = 2023
         )
 
