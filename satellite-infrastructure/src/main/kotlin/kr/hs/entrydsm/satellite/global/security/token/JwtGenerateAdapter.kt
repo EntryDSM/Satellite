@@ -3,9 +3,8 @@ package kr.hs.entrydsm.satellite.global.security.token
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
+import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
-import kr.hs.entrydsm.satellite.domain.auth.persistence.RefreshTokenEntity
-import kr.hs.entrydsm.satellite.domain.auth.persistence.repository.RefreshTokenRepository
 import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.ACCESS
@@ -15,7 +14,8 @@ import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.TY
 import kr.hs.entrydsm.satellite.global.security.token.properties.SecurityProperties
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
 @Component
 class JwtGenerateAdapter(
@@ -49,13 +49,13 @@ class JwtGenerateAdapter(
             .setExpiration(Date(System.currentTimeMillis() + securityProperties.refreshExp * 1000))
             .compact()
 
-        val refreshTokenEntity = RefreshTokenEntity(
+        val refreshToken = RefreshToken(
             id = userId,
             token = token,
             authority = authority,
             timeToLive = securityProperties.refreshExp
         )
-        refreshTokenPort.save(refreshTokenEntity)
+        refreshTokenPort.save(refreshToken)
 
         return token
     }
