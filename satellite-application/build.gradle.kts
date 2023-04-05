@@ -1,9 +1,10 @@
 plugins {
-    kotlin("plugin.noarg") version "1.5.30"
-    kotlin("plugin.allopen") version "1.5.30"
+    kotlin("plugin.noarg") version "1.6.21"
+    kotlin("plugin.allopen") version "1.6.21"
 }
 
 dependencies {
+
 }
 
 allOpen {
