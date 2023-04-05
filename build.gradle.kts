@@ -5,12 +5,12 @@ plugins {
 subprojects {
     apply {
         plugin("org.jetbrains.kotlin.jvm")
-        version = "1.6.21"
+        version = KotlinVersion
     }
 
     apply {
         plugin("org.jetbrains.kotlin.kapt")
-        version = "1.7.10"
+        version = KotlinVersion
     }
 
     dependencies {
