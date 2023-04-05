@@ -22,7 +22,7 @@ class SubmitMyDocumentUseCase(
         }
 
         documentPort.save(
-            document.copy(status = DocumentStatus.SUBMITTED)
+            document.changeStatus(DocumentStatus.SUBMITTED)
         )
     }
 }

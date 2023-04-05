@@ -25,7 +25,7 @@ class ShareDocumentUseCase(
         feedbackPort.deleteAll(feedbackList)
 
         documentPort.save(
-            document.copy(status = DocumentStatus.SHARED)
+            document.changeStatus(DocumentStatus.SHARED)
         )
     }
 }
