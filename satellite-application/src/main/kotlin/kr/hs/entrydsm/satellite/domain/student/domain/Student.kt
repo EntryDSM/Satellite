@@ -38,7 +38,7 @@ class Student(
     companion object {
 
         private const val schoolEmail = "@dsm.hs.kr"
-        private const val EMAIL_SUFFIX_EXP = "^[a-zA-Z0-9.]+$schoolEmail$"
+        const val EMAIL_SUFFIX_EXP = "^[a-zA-Z0-9.]+$schoolEmail$"
 
         fun checkEmailSuffix(email: String) {
             if (!Pattern.matches(EMAIL_SUFFIX_EXP, email)) {
