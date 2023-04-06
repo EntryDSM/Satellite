@@ -36,7 +36,7 @@ class FileController(
             throw InvalidFileException
         }
         try {
-            return File("${multipartFile.originalFilename}_${UUID.randomUUID()}")
+            return File("${UUID.randomUUID()}_${multipartFile.originalFilename}")
                 .also { FileOutputStream(it).use { outputStream -> outputStream.write(multipartFile.bytes) } }
         } catch (e: IOException) {
             throw InvalidFileException
