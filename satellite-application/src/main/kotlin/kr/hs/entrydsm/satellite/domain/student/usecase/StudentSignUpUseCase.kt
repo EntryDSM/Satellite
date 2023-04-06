@@ -19,9 +19,9 @@ class StudentSignUpUseCase(
         name: String,
         profileImagePath: String?,
         email: String,
-        grade: String,
-        classNum: String,
-        number: String
+        grade: Int,
+        classNum: Int,
+        number: Int,
     ): TokenResponse {
 
         checkEmailSuffix(email)

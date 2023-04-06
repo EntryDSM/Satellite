@@ -1,9 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.student.presentation.dto.request
 
-import kr.hs.entrydsm.satellite.common.util.RegexUtil
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import org.hibernate.validator.constraints.Length
 import org.intellij.lang.annotations.Pattern
+import javax.validation.constraints.Max
 import javax.validation.constraints.NotBlank
 
 data class StudentSignUpWebRequest(
@@ -17,18 +16,15 @@ data class StudentSignUpWebRequest(
     @field:Pattern(Student.EMAIL_SUFFIX_EXP)
     val email: String,
 
-    @field:Length(min = 1, max = 1)
-    @field:Pattern(RegexUtil.NUMBER_EXP)
+    @field:Max(3)
     @field:NotBlank
-    val grade: String,
+    val grade: Int,
 
-    @field:Length(min = 1, max = 1)
-    @field:Pattern(RegexUtil.NUMBER_EXP)
+    @field:Max(4)
     @field:NotBlank
-    val classNum: String,
+    val classNum: Int,
 
-    @field:Length(min = 2, max = 2)
-    @field:Pattern(RegexUtil.NUMBER_EXP)
+    @field:Max(20)
     @field:NotBlank
-    val number: String
+    val number: Int,
 )

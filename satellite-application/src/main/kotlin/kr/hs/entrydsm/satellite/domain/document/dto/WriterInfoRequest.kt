@@ -9,9 +9,9 @@ open class WriterInfoRequest(
     open val profileImagePath: String,
     open val majorId: UUID,
     open val email: String,
-    open val grade: String,
-    open val classNum: String,
-    open val number: String
+    open val grade: Int,
+    open val classNum: Int,
+    open val number: Int
 ) {
     fun toElement(student: Student, major: Major): WriterInfoElement {
         return WriterInfoElement(

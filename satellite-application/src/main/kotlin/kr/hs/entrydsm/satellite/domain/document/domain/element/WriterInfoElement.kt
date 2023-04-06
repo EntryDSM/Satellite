@@ -13,9 +13,9 @@ data class WriterInfoElement(
     val email: String,
     val profileImagePath: String,
 
-    val grade: String,
-    val classNum: String,
-    val number: String,
+    val grade: Int,
+    val classNum: Int,
+    val number: Int,
 
     val majorId: UUID,
     val majorName: String
@@ -45,11 +45,11 @@ data class WriterInfoElement(
 
     companion object {
         fun toStudentNumber(
-            grade: String,
-            classNum: String,
-            number: String
+            grade: Int,
+            classNum: Int,
+            number: Int,
         ): Int = Integer.valueOf(
-            grade + classNum + String.format("%02d", Integer.parseInt(number))
+            grade.toString() + classNum.toString() + String.format("%02d", number)
         )
     }
 }

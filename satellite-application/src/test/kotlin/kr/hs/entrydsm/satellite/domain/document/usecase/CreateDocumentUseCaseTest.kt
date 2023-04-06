@@ -28,11 +28,7 @@ internal class CreateDocumentUseCaseTest : DescribeSpec({
 
     describe("createDocument") {
 
-        val student = anyValueObject<Student>(
-            "grade" to "1",
-            "classNum" to "1",
-            "number" to "1"
-        )
+        val student = anyValueObject<Student>()
         val schoolYear = anyValueObject<SchoolYear>(
             "year" to 2023
         )

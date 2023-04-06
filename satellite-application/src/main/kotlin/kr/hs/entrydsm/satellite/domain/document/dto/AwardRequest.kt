@@ -7,14 +7,12 @@ open class AwardRequest(
     open val name: String,
     open val awardingInstitution: String,
     open val date: Date,
-    open val description: String?,
-    open val url: String?,
+    open val description: String?
 ) {
     fun toAwardElement() = AwardElement(
         name = name,
         awardingInstitution = awardingInstitution,
         date = date,
-        description = description,
-        url = url
+        description = description
     )
 }

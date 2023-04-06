@@ -16,15 +16,15 @@ interface DocumentPort {
     fun queryByStatusAndWriterInfo(
         status: DocumentStatus,
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): List<Document>
 
     fun queryByWriterInfo(
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): List<Document>
 

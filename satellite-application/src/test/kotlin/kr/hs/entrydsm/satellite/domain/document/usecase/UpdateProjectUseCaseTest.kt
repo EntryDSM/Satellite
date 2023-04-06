@@ -24,7 +24,7 @@ internal class UpdateProjectUseCaseTest : DescribeSpec({
 
     describe("updateProject") {
 
-        val student = anyValueObject<Student>("number" to "1")
+        val student = anyValueObject<Student>()
         val document = getTestDocument(student)
 
         val request = listOf(anyValueObject<ProjectRequest>())

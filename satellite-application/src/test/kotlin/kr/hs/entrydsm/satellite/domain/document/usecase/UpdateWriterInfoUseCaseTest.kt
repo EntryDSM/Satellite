@@ -30,7 +30,7 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
 
     describe("updateWriterInfo") {
 
-        val student = anyValueObject<Student>("number" to "1")
+        val student = anyValueObject<Student>()
         val document = getTestDocument(student)
         val major = anyValueObject<Major>()
 

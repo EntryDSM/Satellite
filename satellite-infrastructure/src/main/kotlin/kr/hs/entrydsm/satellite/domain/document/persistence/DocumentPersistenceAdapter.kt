@@ -37,8 +37,8 @@ class DocumentPersistenceAdapter(
     override fun queryByStatusAndWriterInfo(
         status: DocumentStatus,
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): List<Document> {
         return documentRepository.findBy(
@@ -52,8 +52,8 @@ class DocumentPersistenceAdapter(
 
     override fun queryByWriterInfo(
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): List<Document> {
         return documentRepository.findBy(
@@ -64,11 +64,11 @@ class DocumentPersistenceAdapter(
         )
     }
 
-    private fun eqGrade(grade: String?): BooleanExpression? {
+    private fun eqGrade(grade: Int?): BooleanExpression? {
         return if (grade != null) document.writer.grade.eq(grade) else null
     }
 
-    private fun eqClassNum(classNum: String?): BooleanExpression? {
+    private fun eqClassNum(classNum: Int?): BooleanExpression? {
         return if (classNum != null) document.writer.classNum.eq(classNum) else null
     }
 

@@ -7,6 +7,7 @@ import java.util.*
 interface LibraryDocumentPort {
     fun queryById(libraryDocumentId: UUID): LibraryDocument?
     fun queryAll(): List<LibraryDocument>
-    fun queryByAccessRightNot(accessRight: AccessRight): List<LibraryDocument>
+    fun queryByYear(year: Int): List<LibraryDocument>
+    fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument>
     fun save(libraryDocument: LibraryDocument): LibraryDocument
 }

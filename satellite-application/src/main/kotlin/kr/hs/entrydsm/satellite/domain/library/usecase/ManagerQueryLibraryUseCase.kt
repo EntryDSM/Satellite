@@ -8,8 +8,11 @@ import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
 class ManagerQueryLibraryUseCase(
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(): ManagerQueryLibraryResponse {
-        val libraryDocuments = libraryDocumentPort.queryAll()
+    fun execute(year: Int?): ManagerQueryLibraryResponse {
+        val libraryDocuments = year?.let {
+            libraryDocumentPort.queryByYear(year)
+        } ?: libraryDocumentPort.queryAll()
+
         return ManagerQueryLibraryResponse(
             libraryDocuments.map {
                 ManagerQueryLibraryResponse.LibraryDocumentElement(

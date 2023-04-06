@@ -119,7 +119,6 @@ data class DocumentInfoResponse(
         val awardingInstitution: String,
         val date: Date,
         val description: String?,
-        val url: String?,
         val feedback: String?
     ) {
         constructor(element: AwardElement, feedback: String?) : this(
@@ -128,7 +127,6 @@ data class DocumentInfoResponse(
             awardingInstitution = element.awardingInstitution,
             date = element.date,
             description = element.description,
-            url = element.url,
             feedback = feedback
         )
     }

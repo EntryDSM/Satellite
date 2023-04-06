@@ -2,7 +2,6 @@ package kr.hs.entrydsm.satellite.domain.library.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.common.util.FileUtil.toFileDateFormat
-import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.file.spi.PdfPort
@@ -17,7 +16,6 @@ import java.util.*
 
 @UseCase
 class CreateLibraryFileUseCase(
-    private val securityPort: SecurityPort,
     private val schoolYearPort: SchoolYearPort,
     private val pdfPort: PdfPort,
     private val filePort: FilePort,

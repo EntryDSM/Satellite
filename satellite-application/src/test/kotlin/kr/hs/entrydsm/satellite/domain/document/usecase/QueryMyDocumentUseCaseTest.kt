@@ -32,9 +32,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
     describe("updateAward") {
 
-        val student = anyValueObject<Student>(
-            "number" to "1"
-        )
+        val student = anyValueObject<Student>()
         val document = getTestDocument(student)
 
         context("내 문서를 조회하면") {

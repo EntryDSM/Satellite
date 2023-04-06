@@ -10,15 +10,14 @@ class AwardJpaElement(
     name: String,
     awardingInstitution: String,
     date: Date,
-    description: String?,
-    url: String?
+    description: String?
 ) : AwardElement(
-    elementId, name, awardingInstitution, date, description, url
+    elementId, name, awardingInstitution, date, description
 ) {
     companion object {
         fun of(awardElement: AwardElement) = awardElement.run {
             AwardJpaElement(
-                elementId, name, awardingInstitution, date, description, url
+                elementId, name, awardingInstitution, date, description
             )
         }
     }

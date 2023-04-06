@@ -4,8 +4,10 @@ import kr.hs.entrydsm.satellite.domain.document.dto.CertificateRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 
 data class UpdateCertificateWebRequest(
+    @field:Size(max = 3)
     val certificateList: List<CertificateWebRequest>
 ) {
     data class CertificateWebRequest(

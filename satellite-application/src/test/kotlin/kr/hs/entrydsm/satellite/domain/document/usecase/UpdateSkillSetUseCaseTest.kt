@@ -23,7 +23,7 @@ internal class UpdateSkillSetUseCaseTest : DescribeSpec({
 
     describe("updateSkillSet") {
 
-        val student = anyValueObject<Student>("number" to "1")
+        val student = anyValueObject<Student>()
         val document = getTestDocument(student)
 
         val request = listOf("Backend")

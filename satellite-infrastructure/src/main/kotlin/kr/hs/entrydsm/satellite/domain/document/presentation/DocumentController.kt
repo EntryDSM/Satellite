@@ -65,7 +65,7 @@ class DocumentController(
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createDocument(@RequestBody @Valid request: CreateDocumentWebRequest): CreateDocumentResponse {
-        val documentId = createDocumentUseCase.execute(request.majorId!!)
+        val documentId = createDocumentUseCase.execute(request.majorId)
         return CreateDocumentResponse(documentId)
     }
 

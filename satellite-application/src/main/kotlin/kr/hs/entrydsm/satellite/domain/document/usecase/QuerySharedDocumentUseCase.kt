@@ -4,7 +4,7 @@ import kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import java.util.*
+import java.util.UUID
 
 @ReadOnlyUseCase
 class QuerySharedDocumentUseCase(
@@ -12,8 +12,8 @@ class QuerySharedDocumentUseCase(
 ) {
     fun execute(
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): DocumentListResponse {
 

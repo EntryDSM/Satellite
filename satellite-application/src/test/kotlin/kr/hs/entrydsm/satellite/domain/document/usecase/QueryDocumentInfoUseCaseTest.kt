@@ -25,11 +25,7 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
     describe("queryDocumentInfo") {
 
-        val student = anyValueObject<Student>(
-            "grade" to "1",
-            "classNum" to "1",
-            "number" to "1"
-        )
+        val student = anyValueObject<Student>()
         val otherStudent = anyValueObject<Student>()
 
         val createdDocument = getTestDocument(

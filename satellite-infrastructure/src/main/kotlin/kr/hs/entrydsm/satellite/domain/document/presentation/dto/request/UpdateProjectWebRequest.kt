@@ -3,8 +3,10 @@ package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
+import javax.validation.constraints.Size
 
 data class UpdateProjectWebRequest(
+    @field:Size(max = 5)
     val projectList: List<ProjectWebRequest>
 ) {
     data class ProjectWebRequest(
@@ -19,6 +21,7 @@ data class UpdateProjectWebRequest(
 
         override val endDate: Date,
 
+        @field:Size(max = 14)
         override val skillList: List<String>,
 
         override val description: String,

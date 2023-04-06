@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.domain.auth.domain
 import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 
-class RefreshToken(
+data class RefreshToken(
     val id: UUID,
     val token: String,
     val authority: Authority,

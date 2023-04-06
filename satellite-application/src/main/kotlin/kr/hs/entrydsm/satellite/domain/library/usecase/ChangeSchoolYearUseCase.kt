@@ -16,7 +16,7 @@ class ChangeSchoolYearUseCase(
 
         val schoolYear = schoolYearPort.getSchoolYear()
         schoolYearPort.save(
-            schoolYear.copy(year = year)
+            schoolYear.changeYear(year)
         )
     }
 }

@@ -7,8 +7,7 @@ class AwardElement(
     val name: String,
     val awardingInstitution: String,
     val date: Date,
-    val description: String?,
-    val url: String?
+    val description: String?
 ) : AbstractElement() {
 
     override val elementName: String

@@ -4,8 +4,10 @@ import kr.hs.entrydsm.satellite.domain.document.dto.AwardRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
 
 data class UpdateAwardWebRequest(
+    @field:Size(max = 3)
     val awardList: List<AwardWebRequest>
 ) {
     data class AwardWebRequest(
@@ -20,11 +22,8 @@ data class UpdateAwardWebRequest(
 
         override val date: Date,
 
-        @field:Length(max = 255)
+        @field:Length(max = 80)
         override val description: String?,
 
-        @Length(max = 255)
-        override val url: String?,
-
-    ) : AwardRequest(name, awardingInstitution, date, description, url)
+    ) : AwardRequest(name, awardingInstitution, date, description)
 }

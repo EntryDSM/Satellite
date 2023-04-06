@@ -10,8 +10,8 @@ import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
 class StudentQueryLibraryUseCase(
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(): StudentQueryLibraryResponse {
-        val libraryDocuments = libraryDocumentPort.queryByAccessRightNot(AccessRight.PRIVATE)
+    fun execute(year: Int?): StudentQueryLibraryResponse {
+        val libraryDocuments = libraryDocumentPort.queryByAccessRightNotAndYear(AccessRight.PRIVATE, year)
         return StudentQueryLibraryResponse(
             libraryDocuments.map {
                 LibraryDocumentResponse(

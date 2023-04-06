@@ -11,8 +11,8 @@ class QueryStudentDocumentListUseCase(
 ) {
     fun execute(
         name: String?,
-        grade: String?,
-        classNum: String?,
+        grade: Int?,
+        classNum: Int?,
         majorId: UUID?
     ): StudentDocumentListResponse {
 

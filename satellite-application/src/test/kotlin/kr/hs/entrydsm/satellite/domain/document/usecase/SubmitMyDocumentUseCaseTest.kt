@@ -25,7 +25,7 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
 
     describe("submitMyDocumentUseCase") {
 
-        val student = anyValueObject<Student>("number" to "1")
+        val student = anyValueObject<Student>()
         val document = getTestDocument(
             student = student,
             status = DocumentStatus.CREATED

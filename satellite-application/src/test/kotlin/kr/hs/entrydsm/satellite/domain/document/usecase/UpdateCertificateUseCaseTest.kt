@@ -24,7 +24,7 @@ internal class UpdateCertificateUseCaseTest : DescribeSpec({
 
     describe("updateCertificate") {
 
-        val student = anyValueObject<Student>("number" to "1")
+        val student = anyValueObject<Student>()
         val document = getTestDocument(student)
 
         val request = listOf(anyValueObject<CertificateRequest>())

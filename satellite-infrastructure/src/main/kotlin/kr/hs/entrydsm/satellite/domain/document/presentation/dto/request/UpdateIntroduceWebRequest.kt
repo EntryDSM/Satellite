@@ -6,10 +6,11 @@ import javax.validation.constraints.NotEmpty
 
 data class UpdateIntroduceWebRequest(
 
-    @field:Length(max = 100)
+    @field:Length(max = 70)
     @field:NotEmpty
     override val heading: String,
 
+    @field:Length(max = 250)
     @field:NotEmpty
     override val introduce: String
 
