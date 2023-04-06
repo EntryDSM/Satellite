@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>resume</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset='UTF-8'/>
+    <meta content='Content-type: text/html; charset=UTF-8' name='http-equiv'/>
+    <meta content='IE=Edge,chrome=1' http-equiv='X-UA-Compatible'/>
+    <meta content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+    <style>
+        div {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container main">
+        <p th:text="${data.grade}"/>학년 <p th:text="${data.classNum}"/>반
+    </div>
+</body>

@@ -1,105 +1,71 @@
 plugins {
-    id("org.springframework.boot") version "2.7.5"
-    id("io.spring.dependency-management") version "1.0.15.RELEASE"
-    id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
-
     kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
-    kotlin("kapt") version "1.7.10"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
 }
 
-group = "kr.hs.entrydsm.repo"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
-repositories {
-    mavenCentral()
+buildscript {
+    repositories {
+        maven(url = "https://plugins.gradle.org/m2/")
+    }
+    dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.0.0")
+    }
 }
 
-dependencies {
+subprojects {
+    apply {
+        plugin("org.jetbrains.kotlin.jvm")
+        version = KotlinVersion
+    }
 
-    // kotlin
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    apply {
+        plugin("org.jetbrains.kotlin.kapt")
+        version = KotlinVersion
+    }
 
-    // security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
+    dependencies {
 
-    // oauth
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+        // kotlin
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // web
-    implementation("org.springframework.boot:spring-boot-starter-web")
+        // test
+        testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.5")
 
-    // time base uuid
-    implementation("com.fasterxml.uuid:java-uuid-generator:3.1.4")
+        testImplementation("io.kotest:kotest-runner-junit5-jvm:4.4.3")
+        testImplementation("io.kotest:kotest-assertions-core-jvm:4.4.3")
+        testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
 
-    // validation
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-
-    // database
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("com.mysql:mysql-connector-j")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.mongodb:mongodb-driver-sync:4.6.0")
-
-    // querydsl
-    implementation("com.querydsl:querydsl-mongodb:5.0.0")
-    api("com.querydsl:querydsl-jpa:5.0.0")
-    kapt("com.querydsl:querydsl-apt:5.0.0")
-
-    // feign Client
-    implementation("io.github.openfeign:feign-httpclient:11.9.1")
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
-
-    // AWS
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-    implementation("com.amazonaws:aws-java-sdk-ses:1.12.144")
-
-    // cool sms
-    implementation("net.nurigo:javaSDK:2.2")
-
-    // pdf
-    implementation("org.thymeleaf:thymeleaf")
-    implementation("com.itextpdf:html2pdf:3.0.1")
-
-    // test
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.4.3")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:4.4.3")
-    testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
-
-    testImplementation("io.mockk:mockk:1.13.2")
+        testImplementation("io.mockk:mockk:1.13.2")
+    }
 }
 
-allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
-    annotation("org.springframework.data.mongodb.core.mapping.Document")
-}
+allprojects {
+    group = "kr.hs.entrydsm.satellite"
+    version = "0.0.1-SNAPSHOT"
 
-kapt {
-    annotationProcessor("org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor")
-    annotationProcessor("com.querydsl.apt.jpa.JPAAnnotationProcessor")
-}
+    tasks {
+        compileKotlin {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xjsr305=strict")
+                jvmTarget = "17"
+            }
+        }
 
-querydsl {
-    springDataMongo = true
-    jpa = true
-    library = "com.querydsl:querydsl-apt:5.0.0"
-    querydslSourcesDir = "$projectDir/build/generated"
-}
+        compileJava {
+            sourceCompatibility = JavaVersion.VERSION_17.majorVersion
+        }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+        test {
+            useJUnitPlatform()
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
 }
 
 tasks.getByName<Jar>("jar") {
