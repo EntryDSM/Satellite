@@ -46,16 +46,17 @@ class PdfAdapter(
         }.reduce(PdfUtil::concatPdf)
     }
 
-    private fun getDocumentClassNumMap(documents: List<Document>): MutableMap<String, MutableList<Document>> {
-        val documentsClassNumMap = mutableMapOf<String, MutableList<Document>>()
+    private fun getDocumentClassNumMap(documents: List<Document>): MutableMap<Int, MutableList<Document>> {
+        val documentsClassNumMap = mutableMapOf<Int, MutableList<Document>>()
 
         documents.forEach { document ->
             val classNum = document.writer.classNum
-            if (documentsClassNumMap.containsKey(document.writer.grade)) {
-                documentsClassNumMap[classNum] = mutableListOf()
-            } else {
+            if (documentsClassNumMap.containsKey(document.writer.classNum)) {
                 documentsClassNumMap[classNum]!!.add(document)
+            } else {
+                documentsClassNumMap[classNum] = mutableListOf()
             }
+            documentsClassNumMap[classNum]!!.add(document)
         }
         return documentsClassNumMap
     }
