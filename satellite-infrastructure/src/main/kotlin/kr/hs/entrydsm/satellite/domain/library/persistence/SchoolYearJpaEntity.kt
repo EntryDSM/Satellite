@@ -19,6 +19,5 @@ class SchoolYearJpaEntity(
     override val year: Int
 
 ) : SchoolYear(
-    id = id,
-    year = year
+    id, year
 )

@@ -36,22 +36,12 @@ class LibraryDocumentJpaEntity(
     override val createdAt: LocalDateTime = LocalDateTime.now()
 
 ) : LibraryDocument(
-    id = id,
-    year = year,
-    grade = grade,
-    filePath = filePath,
-    accessRight = accessRight,
-    createdAt = createdAt
+    id, year, grade, filePath, accessRight, createdAt
 ) {
     companion object {
         fun of(libraryDocument: LibraryDocument) = libraryDocument.run {
             LibraryDocumentJpaEntity(
-                id = id,
-                year = year,
-                grade = grade,
-                filePath = filePath,
-                accessRight = accessRight,
-                createdAt = createdAt
+                id, year, grade, filePath, accessRight, createdAt
             )
         }
     }

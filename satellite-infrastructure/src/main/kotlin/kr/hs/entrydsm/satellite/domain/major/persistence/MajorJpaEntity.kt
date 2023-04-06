@@ -18,16 +18,10 @@ class MajorJpaEntity(
     @Column(columnDefinition = "VARCHAR(30)", nullable = false)
     override val name: String
 
-) : Major(
-    id = id,
-    name = name
-) {
+) : Major(id, name) {
     companion object {
         fun of(major: Major) = major.run {
-            MajorJpaEntity(
-                id = id,
-                name = name
-            )
+            MajorJpaEntity(id, name)
         }
     }
 }

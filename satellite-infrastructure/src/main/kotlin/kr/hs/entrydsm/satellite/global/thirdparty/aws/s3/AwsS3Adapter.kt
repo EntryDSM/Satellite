@@ -84,4 +84,6 @@ class AwsS3Adapter(
         return awsS3Properties.url + filePath
     }
 
+    override fun getFileBaseUrl(): String = awsS3Properties.url
+
 }

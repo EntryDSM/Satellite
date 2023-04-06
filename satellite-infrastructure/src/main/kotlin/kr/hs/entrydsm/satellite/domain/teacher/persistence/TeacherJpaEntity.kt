@@ -22,7 +22,5 @@ class TeacherJpaEntity(
     override val password: String
 
 ) : Teacher(
-    id = id,
-    accountId = accountId,
-    password = password
+    id, accountId, password
 )

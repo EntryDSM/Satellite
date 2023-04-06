@@ -34,24 +34,12 @@ class StudentJpaEntity(
     override val profileImagePath: String
 
 ) : Student(
-    id = id,
-    email = email,
-    name = name,
-    grade = grade,
-    classNum = classNum,
-    number = number,
-    profileImagePath = profileImagePath
+    id, email, name, grade, classNum, number, profileImagePath
 ) {
     companion object {
         fun of(student: Student) = student.run {
             StudentJpaEntity(
-                id = id,
-                email = email,
-                name = name,
-                grade = grade,
-                classNum = classNum,
-                number = number,
-                profileImagePath = profileImagePath
+                id, email, name, grade, classNum, number, profileImagePath
             )
         }
     }
