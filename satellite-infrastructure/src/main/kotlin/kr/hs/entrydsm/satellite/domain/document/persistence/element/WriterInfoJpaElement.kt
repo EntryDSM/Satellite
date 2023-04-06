@@ -14,9 +14,9 @@ class WriterInfoJpaElement(
     email: String,
     profileImagePath: String,
 
-    grade: String,
-    classNum: String,
-    number: String,
+    grade: Int,
+    classNum: Int,
+    number: Int,
 
     majorId: UUID,
     majorName: String

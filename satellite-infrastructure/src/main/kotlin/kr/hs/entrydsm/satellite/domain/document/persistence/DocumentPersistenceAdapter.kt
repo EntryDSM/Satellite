@@ -29,7 +29,7 @@ class DocumentPersistenceAdapter(
         documentRepository.queryByWriterStudentId(studentId)
 
     override fun queryByYearAndWriterGrade(year: Int, writerGrade: Int) =
-        documentRepository.findByYearAndWriterGrade(year, writerGrade.toString())
+        documentRepository.findByYearAndWriterGrade(year, writerGrade)
 
     override fun existByWriterStudentId(studentId: UUID) =
         documentRepository.existsByWriterStudentId(studentId)

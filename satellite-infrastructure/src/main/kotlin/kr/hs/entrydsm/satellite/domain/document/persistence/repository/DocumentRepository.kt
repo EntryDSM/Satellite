@@ -9,7 +9,7 @@ interface DocumentRepository : MongoRepository<DocumentJpaEntity, UUID>, Queryds
 
     fun queryByWriterStudentId(studentId: UUID): DocumentJpaEntity?
 
-    fun findByYearAndWriterGrade(year: Int, studentGrade: String): List<DocumentJpaEntity>
+    fun findByYearAndWriterGrade(year: Int, studentGrade: Int): List<DocumentJpaEntity>
 
     fun existsByWriterStudentId(studentId: UUID): Boolean
 

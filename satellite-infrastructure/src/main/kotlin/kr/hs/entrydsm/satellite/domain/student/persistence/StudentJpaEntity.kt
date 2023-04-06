@@ -21,14 +21,14 @@ class StudentJpaEntity(
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     override val name: String,
 
-    @Column(columnDefinition = "VARCHAR(1)", nullable = false)
-    override val grade: String,
+    @Column(columnDefinition = "INT", nullable = false)
+    override val grade: Int,
 
-    @Column(columnDefinition = "VARCHAR(1)", nullable = false)
-    override val classNum: String,
+    @Column(columnDefinition = "INT", nullable = false)
+    override val classNum: Int,
 
-    @Column(columnDefinition = "VARCHAR(2)", nullable = false)
-    override val number: String,
+    @Column(columnDefinition = "INT", nullable = false)
+    override val number: Int,
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     override val profileImagePath: String
