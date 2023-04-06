@@ -17,14 +17,11 @@ data class StudentSignUpWebRequest(
     val email: String,
 
     @field:Max(3)
-    @field:NotBlank
     val grade: Int,
 
     @field:Max(4)
-    @field:NotBlank
     val classNum: Int,
 
     @field:Max(20)
-    @field:NotBlank
     val number: Int,
 )

@@ -7,10 +7,9 @@ import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAlreadyExistException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 import kr.hs.entrydsm.satellite.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
-import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 @UseCase
@@ -39,9 +38,5 @@ class CreateDocumentUseCase(
         )
 
         return document.id
-    }
-
-    private fun studentDocumentIsExist(student: Student): Boolean {
-        return documentPort.queryByWriterStudentId(student.id) != null
     }
 }

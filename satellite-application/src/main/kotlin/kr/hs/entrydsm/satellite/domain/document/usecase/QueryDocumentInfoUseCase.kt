@@ -10,14 +10,12 @@ import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAccessRightExc
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
-import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import java.util.*
 
 @ReadOnlyUseCase
 class QueryDocumentInfoUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort,
-    private val studentPort: StudentPort,
     private val filePort: FilePort
 ) {
     fun execute(documentId: UUID): DocumentInfoResponse {
