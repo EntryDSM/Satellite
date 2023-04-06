@@ -7,9 +7,9 @@ import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.QDocument.document
 import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.global.config.querydsl.findBy
+import kr.hs.entrydsm.satellite.global.config.findBy
 import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import java.util.UUID
 
 @Adapter
 class DocumentPersistenceAdapter(
