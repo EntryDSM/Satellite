@@ -58,35 +58,36 @@ auth:
 cloud:
   aws:
     region:
-      static: ${AWS_S3_REGION:ap-northeast-2}
+      static: ${AWS_REGION:ap-northeast-2}
     stack:
       auto: false
     credentials:
-      access-key: ${AWS_S3_ACCESS:tmp}
-      secret-key: ${AWS_S3_SECRET:tmp}
-  ses:
-    access-key: ${AWS_SES_ACCESS:tmp}
-    secret-key: ${AWS_SES_SECRET:tmp}
+      access-key: ${AWS_ACCESS:tmp}
+      secret-key: ${AWS_SECRET:tmp}
 
 aws:
   s3:
     url: ${AWS_S3_URL:tmp}
     bucket: ${AWS_S3_BUCKET:tmp}
-    profile-folder: ${AWS_S3_PROFILE_FOLDER:repo-pof}
-    document-folder: ${AWS_S3_DOC_FOLDER:repo-doc}
-    pdf-folder: ${AWS_S3_PDF_FOLDER:repo-pdf}
+    profile-folder: ${PROFILE_FOLDER:tmp}
+    document-folder: ${DOC_FOLDER:tmp}
+    pdf-folder: ${PDF_FOLDER:tmp}
   ses:
     access-key: ${AWS_SES_ACCESS:tmp}
     secret-key: ${AWS_SES_SECRET:tmp}
     region: ${AWS_SES_REGION:tmp}
 
-cool-sms:
-  key: ${SMS_KEY:tmp}
-  secret: ${SMS_SECRET:tmp}
-  phoneNumber: ${SMS_PHONE_NUMBER:01012345678}
-
 domain:
   school:
     year:
       id: ${SCHOOL_YEAR_ID}
-      secret: ${SCHOOL_YEAR_ADMIN_KEY}
+      secret: ${SCHOOL_YEAR_ADMIN_KEY:tmp}
+
+logging:
+  level:
+    com.example : DEBUG
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
