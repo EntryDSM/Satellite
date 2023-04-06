@@ -92,7 +92,7 @@ data class DocumentInfoResponse(
     data class ProjectResponse(
         val elementId: UUID,
         val name: String,
-        val representImagePath: String,
+        val representImageUrl: String,
         val startDate: Date,
         val endDate: Date,
         val skillSet: List<String>,
@@ -103,7 +103,7 @@ data class DocumentInfoResponse(
         constructor(element: ProjectElement, feedback: String?) : this(
             elementId = element.elementId,
             name = element.name,
-            representImagePath = element.representImagePath,
+            representImageUrl = element.representImagePath,
             startDate = element.startDate,
             endDate = element.endDate,
             skillSet = element.skillSet,

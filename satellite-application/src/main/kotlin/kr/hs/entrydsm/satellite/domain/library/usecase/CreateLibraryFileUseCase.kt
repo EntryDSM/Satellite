@@ -45,7 +45,7 @@ class CreateLibraryFileUseCase(
             LibraryDocument(
                 year = year,
                 grade = grade,
-                fileUrl = filePath,
+                filePath = filePath,
                 accessRight = AccessRight.PRIVATE
             )
         )
