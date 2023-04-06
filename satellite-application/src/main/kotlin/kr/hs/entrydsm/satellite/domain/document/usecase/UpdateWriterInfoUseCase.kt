@@ -37,9 +37,7 @@ class UpdateWriterInfoUseCase(
         student: Student,
         writerInfo: WriterInfoRequest
     ): Document {
-
         val major = majorPort.queryById(writerInfo.majorId) ?: throw MajorNotFoundException
-
         return document.copy(
             writer = writerInfo.toElement(student, major)
         )
