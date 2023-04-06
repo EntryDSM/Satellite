@@ -12,6 +12,7 @@ import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 
@@ -19,9 +20,9 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
     val securityPort: SecurityPort = mockk()
     val documentPort: DocumentPort = mockk()
-    val studentPort: StudentPort = mockk()
+    val filePort: FilePort = mockk(relaxed = true)
 
-    val queryDocumentInfoUseCase = QueryDocumentInfoUseCase(securityPort, documentPort, studentPort)
+    val queryDocumentInfoUseCase = QueryDocumentInfoUseCase(securityPort, documentPort, filePort)
 
     describe("queryDocumentInfo") {
 

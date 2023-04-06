@@ -20,6 +20,7 @@ import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundExcept
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 
 internal class QueryMyDocumentUseCaseTest : DescribeSpec({
@@ -27,8 +28,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
     val securityPort: SecurityPort = mockk()
     val documentPort: DocumentPort = mockk()
     val feedbackPort: FeedbackPort = mockk()
+    val filePort: FilePort = mockk(relaxed = true)
 
-    val queryMyDocumentInfoUseCase = QueryMyDocumentInfoUseCase(securityPort, documentPort, feedbackPort)
+    val queryMyDocumentInfoUseCase = QueryMyDocumentInfoUseCase(securityPort, documentPort, feedbackPort, filePort)
 
     describe("updateAward") {
 
