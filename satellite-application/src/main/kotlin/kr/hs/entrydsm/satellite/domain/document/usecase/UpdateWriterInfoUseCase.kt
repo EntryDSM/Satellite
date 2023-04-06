@@ -23,12 +23,12 @@ class UpdateWriterInfoUseCase(
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        documentPort.save(
-            documentWithUpdatedWriterInfo(document, student, writerInfo)
+        studentPort.save(
+            writerInfo.toStudent(student)
         )
 
-        studentPort.save(
-            studentWithUpdatedInfo(student, writerInfo)
+        documentPort.save(
+            documentWithUpdatedWriterInfo(document, student, writerInfo)
         )
     }
 
@@ -42,14 +42,4 @@ class UpdateWriterInfoUseCase(
             writer = writerInfo.toElement(student, major)
         )
     }
-
-    private fun studentWithUpdatedInfo(student: Student, writerInfo: WriterInfoRequest) =
-        writerInfo.run {
-            student.copy(
-                grade = grade,
-                classNum = classNum,
-                number = number,
-                profileImagePath = profileImagePath
-            )
-        }
 }

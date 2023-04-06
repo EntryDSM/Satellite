@@ -13,8 +13,8 @@ open class WriterInfoRequest(
     open val classNum: Int,
     open val number: Int
 ) {
-    fun toElement(student: Student, major: Major): WriterInfoElement {
-        return WriterInfoElement(
+    fun toElement(student: Student, major: Major) =
+        WriterInfoElement(
             studentId = student.id,
             name = student.name,
             profileImagePath = profileImagePath,
@@ -25,5 +25,12 @@ open class WriterInfoRequest(
             majorId = major.id,
             majorName = major.name
         )
-    }
+
+    fun toStudent(student: Student) =
+        student.copy(
+            grade = grade,
+            classNum = classNum,
+            number = number,
+            profileImagePath = profileImagePath
+        )
 }
