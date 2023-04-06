@@ -1,11 +1,10 @@
 package kr.hs.entrydsm.satellite.domain.feedback.presentation
 
-import javax.validation.Valid
+import kr.hs.entrydsm.satellite.domain.feedback.dto.FeedbackListResponse
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.ApplyFeedbackRequest
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.CreateFeedbackRequest
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.DeleteFeedbackRequest
 import kr.hs.entrydsm.satellite.domain.feedback.presentation.dto.request.UpdateFeedbackWebRequest
-import kr.hs.entrydsm.satellite.domain.feedback.dto.FeedbackListResponse
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.ApplyFeedbackUseCase
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.CreateFeedbackUseCase
 import kr.hs.entrydsm.satellite.domain.feedback.usecase.DeleteFeedbackUseCase
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RequestMapping("/feedback")
 @RestController
@@ -41,7 +41,7 @@ class FeedbackController(
         )
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping
     fun updateFeedback(@RequestBody @Valid request: UpdateFeedbackWebRequest) {
         updateFeedbackUseCase.execute(
@@ -51,7 +51,7 @@ class FeedbackController(
         )
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
     fun deleteFeedback(@RequestBody @Valid request: DeleteFeedbackRequest) {
         deleteFeedbackUseCase.execute(
@@ -60,7 +60,7 @@ class FeedbackController(
         )
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/apply")
     fun applyFeedback(@RequestBody @Valid request: ApplyFeedbackRequest) {
         applyFeedbackUseCase.execute(
