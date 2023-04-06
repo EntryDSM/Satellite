@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.file.presentation
 
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
-import kr.hs.entrydsm.satellite.domain.file.presentation.dto.response.ImageUrlResponse
+import kr.hs.entrydsm.satellite.domain.file.presentation.dto.response.ImagePathResponse
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.global.exception.InvalidFileException
 import org.springframework.http.HttpStatus
@@ -26,9 +26,9 @@ class FileController(
     fun uploadImage(
         @RequestParam file: MultipartFile,
         @RequestParam("type") imageType: ImageType
-    ): ImageUrlResponse {
-        val url = filePort.saveImage(multipartToFile(file), imageType)
-        return ImageUrlResponse(url)
+    ): ImagePathResponse {
+        val filePath = filePort.saveImage(multipartToFile(file), imageType)
+        return ImagePathResponse(filePath)
     }
 
     private fun multipartToFile(multipartFile: MultipartFile?): File {
