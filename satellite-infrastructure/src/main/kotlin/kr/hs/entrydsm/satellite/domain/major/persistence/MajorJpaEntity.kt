@@ -12,6 +12,7 @@ import javax.persistence.Table
 class MajorJpaEntity(
 
     @Id
+    @Column(columnDefinition = "BINARY(16)", nullable = false)
     override val id: UUID,
 
     @Column(columnDefinition = "VARCHAR(30)", nullable = false)

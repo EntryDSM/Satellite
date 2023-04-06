@@ -16,6 +16,7 @@ import javax.persistence.Table
 class LibraryDocumentJpaEntity(
 
     @Id
+    @Column(columnDefinition = "BINARY(16)", nullable = false)
     override val id: UUID,
 
     @Column(columnDefinition = "INT", nullable = false)

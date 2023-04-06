@@ -12,6 +12,7 @@ import javax.persistence.Table
 class StudentJpaEntity(
 
     @Id
+    @Column(columnDefinition = "BINARY(16)", nullable = false)
     override val id: UUID,
 
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
