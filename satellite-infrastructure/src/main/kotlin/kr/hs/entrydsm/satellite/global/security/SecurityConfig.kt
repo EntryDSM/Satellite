@@ -69,6 +69,7 @@ internal class SecurityConfig(
             // LIBRARY
             .antMatchers(HttpMethod.GET, "/library/student").hasAnyAuthority(STUDENT)
             .antMatchers(HttpMethod.GET, "/library/teacher").hasAnyAuthority(TEACHER)
+            .antMatchers(HttpMethod.GET, "/library/public").permitAll()
             .antMatchers(HttpMethod.PATCH, "/library/{library-document-id}/access-right").hasAnyAuthority(STUDENT, TEACHER)
 
             // MAJOR
