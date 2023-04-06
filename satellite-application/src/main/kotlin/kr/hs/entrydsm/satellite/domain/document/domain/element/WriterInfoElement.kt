@@ -6,6 +6,8 @@ import java.util.*
 
 data class WriterInfoElement(
 
+    override val elementId: UUID = UUID.randomUUID(),
+
     val studentId: UUID,
     val name: String,
     val email: String,

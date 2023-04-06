@@ -49,5 +49,5 @@ data class Document(
 
     fun changeStatus(status: DocumentStatus) = copy(status = status)
 
-    protected constructor() : this(year = 2023, writer = WriterInfoElement(UUID(0,0), "", "", "", "", "", "", UUID(0,0), ""))
+    protected constructor() : this(year = 2023, writer = WriterInfoElement(UUID(0,0), UUID(0,0), "", "", "", "", "", "", UUID(0,0), ""))
 }
