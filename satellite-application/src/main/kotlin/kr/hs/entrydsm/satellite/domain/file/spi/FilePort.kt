@@ -8,4 +8,5 @@ interface FilePort {
     fun saveImage(file: File, imageType: ImageType): String
     fun getPdfFileUrl(filePath: String): String
     fun getImageFileUrl(filePath: String): String
+    fun getFileBaseUrl(): String
 }

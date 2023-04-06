@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.document.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
-import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImage
+import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 import java.util.*
 
 open class ProjectRequest(
@@ -15,7 +15,7 @@ open class ProjectRequest(
 ) {
     fun toProjectElement() = ProjectElement(
         name = name,
-        representImagePath = representImagePath ?: DefaultImage.PROJECT,
+        representImagePath = representImagePath ?: DefaultImages.PROJECT,
         startDate = startDate,
         endDate = endDate,
         skillSet = skillList,

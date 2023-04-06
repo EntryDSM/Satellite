@@ -4,7 +4,7 @@ import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
-import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImage
+import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import kr.hs.entrydsm.satellite.domain.student.domain.Student.Companion.checkEmailSuffix
 import kr.hs.entrydsm.satellite.domain.student.exception.StudentAlreadyExistException
@@ -37,7 +37,7 @@ class StudentSignUpUseCase(
                 grade = grade,
                 classNum = classNum,
                 number = number,
-                profileImagePath = profileImagePath ?: DefaultImage.USER_PROFILE
+                profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE
             )
         )
 

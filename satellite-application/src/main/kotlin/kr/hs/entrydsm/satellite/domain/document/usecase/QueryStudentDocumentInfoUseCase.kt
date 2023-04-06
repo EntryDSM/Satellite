@@ -5,6 +5,7 @@ import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.student.exception.StudentNotFoundException
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import java.util.*
@@ -13,7 +14,8 @@ import java.util.*
 class QueryStudentDocumentInfoUseCase(
     private val studentPort: StudentPort,
     private val documentPort: DocumentPort,
-    private val feedbackPort: FeedbackPort
+    private val feedbackPort: FeedbackPort,
+    private val filePort: FilePort
 ) {
     fun execute(studentId: UUID): DocumentInfoResponse {
 
@@ -23,6 +25,7 @@ class QueryStudentDocumentInfoUseCase(
         val feedbackList = feedbackPort.queryByDocumentId(document.id)
         val feedbackMap = feedbackList.associate { it.elementId to it.comment }
 
-        return DocumentInfoResponse(document, feedbackMap)
+        val fileBaseUrl = filePort.getFileBaseUrl()
+        return DocumentInfoResponse(fileBaseUrl, document, feedbackMap)
     }
 }

@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.satellite.common
+package kr.hs.entrydsm.satellite.common.exception
 
 import kr.hs.entrydsm.satellite.common.error.CustomErrorProperty
 

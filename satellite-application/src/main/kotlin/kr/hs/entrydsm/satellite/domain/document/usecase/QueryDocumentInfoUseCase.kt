@@ -9,6 +9,7 @@ import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import java.util.*
 
@@ -16,7 +17,8 @@ import java.util.*
 class QueryDocumentInfoUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort,
-    private val studentPort: StudentPort
+    private val studentPort: StudentPort,
+    private val filePort: FilePort
 ) {
     fun execute(documentId: UUID): DocumentInfoResponse {
 
@@ -27,7 +29,8 @@ class QueryDocumentInfoUseCase(
             throw DocumentAccessRightException
         }
 
-        return DocumentInfoResponse(document)
+        val fileBaseUrl = filePort.getFileBaseUrl()
+        return DocumentInfoResponse(fileBaseUrl, document)
     }
 
     private fun hasAccess(documentStatus: DocumentStatus, authority: Authority): Boolean {

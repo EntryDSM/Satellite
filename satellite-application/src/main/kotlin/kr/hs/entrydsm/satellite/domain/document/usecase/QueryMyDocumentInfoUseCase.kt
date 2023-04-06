@@ -6,12 +6,14 @@ import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
+import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 
 @ReadOnlyUseCase
 class QueryMyDocumentInfoUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort,
-    private val feedbackPort: FeedbackPort
+    private val feedbackPort: FeedbackPort,
+    private val filePort: FilePort
 ) {
     fun execute(): DocumentInfoResponse {
 
@@ -21,6 +23,7 @@ class QueryMyDocumentInfoUseCase(
         val feedbackList = feedbackPort.queryByDocumentId(document.id)
         val feedbackMap = feedbackList.associate { it.elementId to it.comment }
 
-        return DocumentInfoResponse(document, feedbackMap)
+        val fileBaseUrl = filePort.getFileBaseUrl()
+        return DocumentInfoResponse(fileBaseUrl, document, feedbackMap)
     }
 }
