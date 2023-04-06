@@ -1,5 +1,16 @@
 plugins {
     kotlin("jvm") version "1.6.21"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.0.0"
+}
+
+buildscript {
+    repositories {
+        maven(url = "https://plugins.gradle.org/m2/")
+    }
+    dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:11.0.0")
+    }
 }
 
 subprojects {
