@@ -30,6 +30,7 @@ class MongoDBConfig(
     @Bean
     fun mongoClient(): MongoClient {
         val seeds = listOf(ServerAddress(mongoProperties.host))
+
         val credential =
             MongoCredential.createCredential(
                 mongoProperties.username,
