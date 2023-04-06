@@ -31,7 +31,7 @@ class LibraryDocumentPersistenceAdapter(
     override fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument> =
         queryFactory.selectFrom(libraryDocumentJpaEntity)
             .where(
-                libraryDocumentJpaEntity.accessRight.eq(accessRight),
+                libraryDocumentJpaEntity.accessRight.ne(accessRight),
                 year?.let { libraryDocumentJpaEntity.year.eq(year) }
             ).fetch()
 }

@@ -7,7 +7,6 @@ import java.util.*
 
 
 data class StudentDocumentListResponse(
-
     val studentList: List<StudentDocumentResponse>
 ) {
     data class StudentDocumentResponse(

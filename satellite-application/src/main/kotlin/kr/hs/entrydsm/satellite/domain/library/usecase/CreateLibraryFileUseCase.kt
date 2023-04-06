@@ -31,13 +31,15 @@ class CreateLibraryFileUseCase(
         val year = schoolYearPort.getSchoolYear().year
         val documents = documentPort.queryByYearAndWriterGrade(year, grade)
 
+        /*
         documentPort.saveAll(
             documents.map { it.delete() }
         )
+        */
 
         val bytes = pdfPort.generateGradeLibraryDocument(documents)
         val filePath = filePort.savePdf(
-            File("${year}_${grade}_${LocalDateTime.now().toFileDateFormat()}")
+            File("${year}_${grade}_${LocalDateTime.now().toFileDateFormat()}.pdf")
                 .apply { writeBytes(bytes) }
         )
 

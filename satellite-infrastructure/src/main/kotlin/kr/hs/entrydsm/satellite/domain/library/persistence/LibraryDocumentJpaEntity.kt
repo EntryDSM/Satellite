@@ -26,7 +26,7 @@ class LibraryDocumentJpaEntity(
     override val grade: Int,
 
     @Column(columnDefinition = "VARCHAR(1000)", nullable = false)
-    override val fileUrl: String,
+    override val filePath: String,
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(20)", nullable = false)
@@ -39,7 +39,7 @@ class LibraryDocumentJpaEntity(
     id = id,
     year = year,
     grade = grade,
-    fileUrl = fileUrl,
+    filePath = filePath,
     accessRight = accessRight,
     createdAt = createdAt
 ) {
@@ -49,7 +49,7 @@ class LibraryDocumentJpaEntity(
                 id = id,
                 year = year,
                 grade = grade,
-                fileUrl = fileUrl,
+                filePath = filePath,
                 accessRight = accessRight,
                 createdAt = createdAt
             )
