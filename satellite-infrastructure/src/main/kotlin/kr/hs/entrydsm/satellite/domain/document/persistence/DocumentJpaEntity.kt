@@ -15,7 +15,7 @@ import kr.hs.entrydsm.satellite.domain.document.persistence.element.WriterInfoJp
 import org.hibernate.annotations.Where
 import java.util.*
 
-@org.springframework.data.mongodb.core.mapping.Document(collection = "documents")
+@org.springframework.data.mongodb.core.mapping.Document("documents")
 @Where(clause = "is_deleted is false")
 class DocumentJpaEntity(
     id: UUID,
