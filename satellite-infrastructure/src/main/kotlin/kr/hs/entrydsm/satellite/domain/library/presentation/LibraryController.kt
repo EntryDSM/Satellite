@@ -1,12 +1,14 @@
 package kr.hs.entrydsm.satellite.domain.library.presentation
 
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
-import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentResponse
+import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentDetailResponse
+import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentIndexResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.ManagerQueryLibraryResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.StudentQueryLibraryResponse
 import kr.hs.entrydsm.satellite.domain.library.usecase.CreateLibraryFileUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.ManagerQueryLibraryUseCase
-import kr.hs.entrydsm.satellite.domain.library.usecase.QueryLibraryDocumentUseCase
+import kr.hs.entrydsm.satellite.domain.library.usecase.QueryLibraryDocumentDetailUseCase
+import kr.hs.entrydsm.satellite.domain.library.usecase.QueryLibraryDocumentIndexUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.StudentQueryLibraryUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.UpdateLibraryDocumentAccessRightUseCase
 import org.springframework.http.HttpStatus
@@ -26,7 +28,8 @@ class LibraryController(
     private val createLibraryFileUseCase: CreateLibraryFileUseCase,
     private val managerQueryLibraryUseCase: ManagerQueryLibraryUseCase,
     private val studentQueryLibraryUseCase: StudentQueryLibraryUseCase,
-    private val queryLibraryDocumentUseCase: QueryLibraryDocumentUseCase,
+    private val queryLibraryDocumentIndexUseCase: QueryLibraryDocumentIndexUseCase,
+    private val queryLibraryDocumentDetailUseCase: QueryLibraryDocumentDetailUseCase,
     private val updateLibraryDocumentAccessRightUseCase: UpdateLibraryDocumentAccessRightUseCase
 ) {
 
@@ -41,23 +44,30 @@ class LibraryController(
 
     @GetMapping("/teacher")
     fun managerQueryLibrary(
-        @RequestParam(name = "year") year: Int?,
+        @RequestParam(name = "year") year: Int?
     ): ManagerQueryLibraryResponse {
         return managerQueryLibraryUseCase.execute(year)
     }
 
     @GetMapping("/student")
     fun studentQueryLibrary(
-        @RequestParam(name = "year") year: Int?,
+        @RequestParam(name = "year") year: Int?
     ): StudentQueryLibraryResponse {
         return studentQueryLibraryUseCase.execute(year)
     }
 
+    @GetMapping("/{library-document-id}/index")
+    fun queryLibraryDocumentIndex(
+        @PathVariable("library-document-id") libraryDocumentId: UUID,
+    ): LibraryDocumentIndexResponse {
+        return queryLibraryDocumentIndexUseCase.execute(libraryDocumentId)
+    }
+
     @GetMapping("/public/{library-document-id}")
     fun queryLibraryDocument(
-        @PathVariable("library-document-id") libraryDocumentId: UUID,
-    ): LibraryDocumentResponse {
-        return queryLibraryDocumentUseCase.execute(libraryDocumentId)
+        @PathVariable("library-document-id") libraryDocumentId: UUID
+    ): LibraryDocumentDetailResponse {
+        return queryLibraryDocumentDetailUseCase.execute(libraryDocumentId)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
