@@ -10,10 +10,11 @@ data class LibraryDocument(
     val grade: Int,
     val filePath: String,
     val accessRight: AccessRight,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val index: Map<String, Int>
 ) : Domain {
     val generation: Int
         get() = year - grade - 2013
 
-    protected constructor(): this(UUID(0,0), 2023, 1, "", AccessRight.PRIVATE)
+    protected constructor(): this(UUID(0,0), 2023, 1, "", AccessRight.PRIVATE, LocalDateTime.MIN, mapOf())
 }

@@ -51,7 +51,7 @@ dependencies {
 
     // pdf
     implementation("org.thymeleaf:thymeleaf")
-    implementation("com.itextpdf:html2pdf:3.0.1")
+    implementation("com.itextpdf:html2pdf:4.0.3")
 
 }
 

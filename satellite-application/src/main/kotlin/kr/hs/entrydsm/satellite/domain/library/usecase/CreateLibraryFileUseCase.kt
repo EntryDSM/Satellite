@@ -37,10 +37,10 @@ class CreateLibraryFileUseCase(
         )
         */
 
-        val bytes = pdfPort.generateGradeLibraryDocument(documents)
+        val libraryPdfDocumentDto = pdfPort.generateGradeLibraryDocument(documents)
         val filePath = filePort.savePdf(
             File("${year}_${grade}_${LocalDateTime.now().toFileDateFormat()}.pdf")
-                .apply { writeBytes(bytes) }
+                .apply { writeBytes(libraryPdfDocumentDto.byteArray) }
         )
 
         val libraryDocumentJpaEntity = libraryDocumentPort.save(
@@ -48,7 +48,8 @@ class CreateLibraryFileUseCase(
                 year = year,
                 grade = grade,
                 filePath = filePath,
-                accessRight = AccessRight.PRIVATE
+                accessRight = AccessRight.PRIVATE,
+                index = libraryPdfDocumentDto.index
             )
         )
         return libraryDocumentJpaEntity.id
