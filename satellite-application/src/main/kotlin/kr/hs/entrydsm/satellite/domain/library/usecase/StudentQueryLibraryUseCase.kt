@@ -17,6 +17,7 @@ class StudentQueryLibraryUseCase(
         return StudentQueryLibraryResponse(
             libraryDocuments.map {
                 LibraryDocumentResponse(
+                    id = it.id,
                     year = it.year,
                     grade = it.grade,
                     generation = it.generation,
