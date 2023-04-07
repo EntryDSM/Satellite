@@ -5,6 +5,7 @@ import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentDetailResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentIndexResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.ManagerQueryLibraryResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.StudentQueryLibraryResponse
+import kr.hs.entrydsm.satellite.domain.library.presentation.dto.CreateLibraryFileResponse
 import kr.hs.entrydsm.satellite.domain.library.usecase.CreateLibraryFileUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.ManagerQueryLibraryUseCase
 import kr.hs.entrydsm.satellite.domain.library.usecase.QueryLibraryDocumentDetailUseCase
@@ -33,13 +34,15 @@ class LibraryController(
     private val updateLibraryDocumentAccessRightUseCase: UpdateLibraryDocumentAccessRightUseCase
 ) {
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createLibraryFile(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "secret") secret: String
-    ) {
-        createLibraryFileUseCase.execute(grade, secret)
+    ): CreateLibraryFileResponse {
+        return CreateLibraryFileResponse(
+            createLibraryFileUseCase.execute(grade, secret)
+        )
     }
 
     @GetMapping("/teacher")
