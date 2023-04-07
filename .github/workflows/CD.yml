@@ -25,7 +25,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build --scan
+        run: ./gradlew build --stacktrace
 
       - name: build docker image
         run: docker build -t satellite .
