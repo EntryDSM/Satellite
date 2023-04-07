@@ -5,10 +5,8 @@ import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.*
-import javax.persistence.Table
 
-@Table(name = "tbl_library_document")
-@Document
+@Document("libraryDocuments")
 class LibraryDocumentJpaEntity(
     id: UUID,
     year: Int,
