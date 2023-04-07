@@ -20,13 +20,16 @@ object PdfUtil {
     fun concatPdf(documents: List<ByteArrayOutputStream>): ByteArrayOutputStream {
 
         val outputStream = ByteArrayOutputStream()
-        PdfWriter(outputStream).use {
-            val merger = PdfMerger(PdfDocument(it))
-            documents.forEach { document ->
-                val pdf = PdfDocument(PdfReader(ByteArrayInputStream(document.toByteArray())))
-                mergePdf(merger, pdf)
-            }
+
+        val mergedDocument = PdfDocument(PdfWriter(outputStream))
+        val merger = PdfMerger(mergedDocument)
+
+        documents.forEach { document ->
+            val pdf = PdfDocument(PdfReader(ByteArrayInputStream(document.toByteArray())))
+            mergePdf(merger, pdf)
         }
+
+        mergedDocument.close()
 
         return outputStream
     }

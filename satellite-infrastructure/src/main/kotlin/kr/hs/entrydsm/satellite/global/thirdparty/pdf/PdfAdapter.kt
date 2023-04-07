@@ -14,14 +14,9 @@ class PdfAdapter(
 
     override fun generateGradeLibraryDocument(documents: List<Document>): LibraryPdfDocumentDto {
 
-        val bookCover = templateProcessor.process(
-            TemplateFileName.COVER, null
-        ).run(PdfUtil::convertHtmlToPdf)
-        val documentsByClassRoom = getPdfDocumentChapterByClassNum(documents)
-
         var page = 0
         return LibraryPdfDocumentDto(
-            byteArray = PdfUtil.concatPdf(bookCover, documentsByClassRoom).toByteArray(),
+            byteArray = getPdfDocumentPdfs(documents).toByteArray(),
             index = documents
                 .sortedBy { it.writer.studentNumber }
                 .associate {
@@ -32,10 +27,7 @@ class PdfAdapter(
         )
     }
 
-    private fun getPdfDocumentChapterByClassNum(documents: List<Document>): ByteArrayOutputStream {
-
-        val index = mapOf<String, Int>()
-
+    private fun getPdfDocumentPdfs(documents: List<Document>): ByteArrayOutputStream {
         return PdfUtil.concatPdf(
             documents
                 .map { templateProcessor.process(TemplateFileName.DOCUMENT, it) }
