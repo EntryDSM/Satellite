@@ -30,10 +30,10 @@ jobs:
       - name: Build with Gradle
         run: gradle build --stacktrace
 
-      - name: build docker image
+      - name: Build docker image
         run: docker build -t satellite .
 
-      - name: publish to Registry
+      - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
           name: satellite
