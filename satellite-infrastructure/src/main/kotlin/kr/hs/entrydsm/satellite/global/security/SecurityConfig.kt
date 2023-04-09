@@ -61,6 +61,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.POST, "/document/share/{document-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
+            .antMatchers(HttpMethod.GET, "/document/my/detail").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.GET, "/document/student/{student-id}").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER)
             .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER)
