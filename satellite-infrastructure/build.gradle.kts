@@ -72,6 +72,7 @@ noArg {
 kapt {
     annotationProcessor("org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor")
     annotationProcessor("com.querydsl.apt.jpa.JPAAnnotationProcessor")
+    correctErrorTypes = true
 }
 
 querydsl {
