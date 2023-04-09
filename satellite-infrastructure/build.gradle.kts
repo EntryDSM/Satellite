@@ -7,12 +7,6 @@ plugins {
     kotlin("plugin.jpa") version "1.6.21"
 }
 
-buildscript {
-    dependencies {
-        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
-    }
-}
-
 dependencies {
 
     implementation(project(":satellite-application"))
@@ -86,6 +80,10 @@ querydsl {
     jpa = true
     library = "com.querydsl:querydsl-apt:5.0.0"
     querydslSourcesDir = "$projectDir/build/generated"
+}
+
+tasks.compileKotlin {
+    dependsOn(tasks.compileQuerydsl)
 }
 
 tasks.getByName<Jar>("jar") {
