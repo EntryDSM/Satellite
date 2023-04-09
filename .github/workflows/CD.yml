@@ -28,7 +28,7 @@ jobs:
         run: gradle clean
 
       - name: Build with Gradle
-        run: gradle build --stacktrace
+        run: gradle build --scan
 
       - name: Build docker image
         run: docker build -t satellite .
