@@ -82,10 +82,6 @@ querydsl {
     querydslSourcesDir = "$projectDir/build/generated"
 }
 
-tasks.compileKotlin {
-    dependsOn(tasks.compileQuerydsl)
-}
-
 tasks.getByName<Jar>("jar") {
     enabled = false
 }
