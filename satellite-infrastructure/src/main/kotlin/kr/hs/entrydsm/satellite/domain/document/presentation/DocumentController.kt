@@ -3,6 +3,7 @@ package kr.hs.entrydsm.satellite.domain.document.presentation
 import kr.hs.entrydsm.satellite.domain.document.dto.CreateDocumentResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
+import kr.hs.entrydsm.satellite.domain.document.dto.DocumentResponse
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardWebRequest
@@ -13,9 +14,9 @@ import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateS
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoWebRequest
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelShareDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.CancelSubmitMyDocumentUseCase
-import kr.hs.entrydsm.satellite.domain.document.usecase.CreateDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryDocumentInfoUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryMyDocumentInfoUseCase
+import kr.hs.entrydsm.satellite.domain.document.usecase.QueryMyDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QuerySharedDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryStudentDocumentInfoUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.ShareDocumentUseCase
@@ -53,6 +54,7 @@ class DocumentController(
 
     private val queryDocumentInfoUseCase: QueryDocumentInfoUseCase,
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
+    private val queryMyDocumentUseCase: QueryMyDocumentUseCase,
     private val queryStudentDocumentInfoUseCase: QueryStudentDocumentInfoUseCase,
     private val querySharedDocumentUseCase: QuerySharedDocumentUseCase,
 
@@ -105,9 +107,14 @@ class DocumentController(
         updateCertificateUseCase.execute(request.certificateList)
     }
 
-    @GetMapping("/my")
+    @GetMapping("/my/detail")
     fun queryMyDocumentInfo(): DocumentInfoResponse {
         return queryMyDocumentInfoUseCase.execute()
+    }
+
+    @GetMapping("/my")
+    fun queryMyDocument(): DocumentResponse {
+        return queryMyDocumentUseCase.execute()
     }
 
     @GetMapping("/student/{student-id}")
