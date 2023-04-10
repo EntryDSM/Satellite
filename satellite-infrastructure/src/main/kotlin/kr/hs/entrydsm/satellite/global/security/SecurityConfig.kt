@@ -49,7 +49,6 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
             // DOCUMENT
-            .antMatchers(HttpMethod.POST, "/document").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.PATCH, "/document/introduce").hasAuthority(STUDENT)
             .antMatchers(HttpMethod.PATCH, "/document/skill-set").hasAuthority(STUDENT)

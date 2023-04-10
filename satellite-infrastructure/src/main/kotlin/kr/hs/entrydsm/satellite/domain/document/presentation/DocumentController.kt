@@ -1,10 +1,8 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation
 
-import kr.hs.entrydsm.satellite.domain.document.dto.CreateDocumentResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentResponse
-import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.CreateDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateWebRequest
@@ -43,8 +41,6 @@ import javax.validation.Valid
 @RequestMapping("/document")
 @RestController
 class DocumentController(
-    private val createDocumentUseCase: CreateDocumentUseCase,
-
     private val updateWriterInfoUseCase: UpdateWriterInfoUseCase,
     private val updateIntroduceUseCase: UpdateIntroduceUseCase,
     private val updateSkillSetUseCase: UpdateSkillSetUseCase,
@@ -63,13 +59,6 @@ class DocumentController(
     private val shareDocumentUseCase: ShareDocumentUseCase,
     private val cancelShareDocumentUseCase: CancelShareDocumentUseCase
 ) {
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    fun createDocument(@RequestBody @Valid request: CreateDocumentWebRequest): CreateDocumentResponse {
-        val documentId = createDocumentUseCase.execute(request.majorId)
-        return CreateDocumentResponse(documentId)
-    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/writer-info")
