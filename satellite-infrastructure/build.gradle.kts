@@ -46,13 +46,17 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
 
     // AWS
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-    implementation("com.amazonaws:aws-java-sdk-ses:1.12.144")
+    implementation("software.amazon.awssdk:bom:2.20.26")
+    implementation("software.amazom.awssdk:s3-transfer-manager:2.20.42")
+    implementation("software.amazon.awssdk.crt:aws-crt:0.20.3")
 
     // pdf
     implementation("org.thymeleaf:thymeleaf")
     implementation("com.itextpdf:html2pdf:4.0.3")
 
+}
+repositories {
+    mavenCentral()
 }
 
 allOpen {
