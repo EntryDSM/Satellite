@@ -12,30 +12,32 @@ class OauthAdapter(
 ) : OauthPort {
 
     companion object {
-        private const val googleUrl = "%s?client_id=%s&redirect_uri=%s&response_type=code" +
-                "&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+        private const val googleUrl = "%s" +
+                "?client_id=%s" +
+                "&redirect_uri=%s" +
+                "&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
     }
 
-    override fun getGoogleLoginLink() =
+    override suspend fun getGoogleLoginLink() =
         googleUrl.format(
             googleProperties.baseUrl,
             googleProperties.clientId,
             googleProperties.redirectUrl
         )
 
-    override fun getGoogleEmailByCode(code: String): String {
+    override suspend fun getGoogleEmailByCode(code: String): String {
         val accessToken = getAccessToken(code)
         return googleEmail.getEmail(
-            accessToken
+            accessToken = accessToken
         ).email
     }
 
     private fun getAccessToken(code: String): String {
         return googleAuth.queryAccessToken(
-            code,
-            googleProperties.clientId,
-            googleProperties.secretKey,
-            googleProperties.redirectUrl
+            code = code,
+            clientId = googleProperties.clientId,
+            clientSecret = googleProperties.secretKey,
+            redirectUri = googleProperties.redirectUrl
         ).accessToken
     }
 }
