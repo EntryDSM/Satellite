@@ -16,7 +16,7 @@ class QueryStudentDocumentListUseCase(
         majorId: UUID?
     ): StudentDocumentListResponse {
 
-        val documentList = documentPort.queryByWriterInfo(
+        val documentList = documentPort.queryByWriterInfoAndStatus(
             name = name,
             grade = grade,
             classNum = classNum,

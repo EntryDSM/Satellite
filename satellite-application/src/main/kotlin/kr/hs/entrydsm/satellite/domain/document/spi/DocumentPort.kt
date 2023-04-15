@@ -13,11 +13,11 @@ interface DocumentPort {
     suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document>
     suspend fun existByWriterStudentId(studentId: UUID): Boolean
 
-    suspend fun queryByStatusAndWriterInfo(
+    suspend fun queryByWriterInfoAndStatus(
         name: String?,
-        status: DocumentStatus?,
         grade: Int?,
         classNum: Int?,
-        majorId: UUID?
+        majorId: UUID?,
+        status: DocumentStatus? = null,
     ): List<Document>
 }
