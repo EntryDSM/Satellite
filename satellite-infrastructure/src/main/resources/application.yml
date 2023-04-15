@@ -7,20 +7,16 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: "60s"
 
-  datasource:
+  main:
+    web-application-type: reactive
+
+  r2dbc:
+    protocol: r2dbc:mysql
+    host: ${MYSQL_HOST:localhost}
+    port: ${MYSQL_PORT:3306}
+    database: ${MYSQL_DATABASE:test}
     username: ${MYSQL_USERNAME:root}
     password: ${MYSQL_PASSWORD:pass}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${JDBC_URL:jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true}
-
-  jpa:
-    hibernate:
-      ddl-auto: ${DDL:validate}
-    properties:
-      hibernate:
-        format_sql: ${FORMAT_SQL:true}
-        show_sql: ${SHOW_SQL:true}
-    database-platform: org.hibernate.dialect.MySQL8Dialect
 
   jackson:
     property-naming-strategy: SNAKE_CASE
@@ -38,12 +34,6 @@ spring:
       username: ${MONGO_DB_USERNAME:admin}
       password: ${MONGO_DB_PASSWORD:pass}
 
-  thymeleaf:
-    prefix: classpath:/templates
-
-  main:
-    allow-bean-definition-overriding: true
-
 jwt:
   secret-key: ${JWT_SECRET_KEY:tmp}
   access-exp: ${JWT_ACCESS_EXP:1000000}
@@ -55,33 +45,27 @@ auth:
   client-id: ${GOOGLE_CLIENT_ID:tmp}
   secret-key: ${GOOGLE_SECRET_KEY:tmp}
 
-cloud:
-  aws:
-    region:
-      static: ${AWS_REGION:ap-northeast-2}
-    stack:
-      auto: false
-    credentials:
-      access-key: ${AWS_ACCESS:tmp}
-      secret-key: ${AWS_SECRET:tmp}
-
 aws:
+  region: ${AWS_REGION:ap-northeast-2}
+  credentials:
+    access-key: ${AWS_ACCESS_KEY_ID:tmp}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:tmp}
   s3:
     url: ${AWS_S3_URL:tmp}
     bucket: ${AWS_S3_BUCKET:tmp}
     profile-folder: ${PROFILE_FOLDER:tmp}
     document-folder: ${DOC_FOLDER:tmp}
     pdf-folder: ${PDF_FOLDER:tmp}
-  ses:
-    access-key: ${AWS_SES_ACCESS:tmp}
-    secret-key: ${AWS_SES_SECRET:tmp}
-    region: ${AWS_SES_REGION:tmp}
 
 domain:
   school:
     year:
       id: ${SCHOOL_YEAR_ID}
       secret: ${SCHOOL_YEAR_ADMIN_KEY:tmp}
+
+sentry:
+  dsn: ${SENTRY_DSN:tmp}
+  traces-sample-rate: 1.0
 
 logging:
   level:
