@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
@@ -36,9 +36,9 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("작성자가 CREATED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryById(createdDocument.id) } returns createdDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryById(createdDocument.id) } returns createdDocument
 
             it("문서의 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
@@ -49,9 +49,9 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("작성자가 아닌 학생이 CREATED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
-            every { securityPort.getCurrentStudent() } returns otherStudent
-            every { documentPort.queryById(createdDocument.id) } returns createdDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
+            coEvery { securityPort.getCurrentStudent() } returns otherStudent
+            coEvery { documentPort.queryById(createdDocument.id) } returns createdDocument
 
             it("DocumentAccessRight 예외를 던진다.") {
                 shouldThrow<DocumentAccessRightException> {
@@ -62,8 +62,8 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("선생님이 CREATED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
-            every { documentPort.queryById(createdDocument.id) } returns createdDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
+            coEvery { documentPort.queryById(createdDocument.id) } returns createdDocument
 
             it("DocumentAccessRight 예외를 던진다.") {
                 shouldThrow<DocumentAccessRightException> {
@@ -79,9 +79,9 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("작성자가 아닌 학생이 SUBMITTED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
-            every { securityPort.getCurrentStudent() } returns otherStudent
-            every { documentPort.queryById(submittedDocument.id) } returns submittedDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
+            coEvery { securityPort.getCurrentStudent() } returns otherStudent
+            coEvery { documentPort.queryById(submittedDocument.id) } returns submittedDocument
 
             it("DocumentAccessRight 예외를 던진다.") {
                 shouldThrow<DocumentAccessRightException> {
@@ -92,8 +92,8 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("선생님이 SUBMITTED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
-            every { documentPort.queryById(submittedDocument.id) } returns submittedDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
+            coEvery { documentPort.queryById(submittedDocument.id) } returns submittedDocument
 
             it("문서의 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
@@ -109,9 +109,9 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("작성자가 아닌 학생이 SHARED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
-            every { securityPort.getCurrentStudent() } returns otherStudent
-            every { documentPort.queryById(sharedDocument.id) } returns sharedDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.STUDENT
+            coEvery { securityPort.getCurrentStudent() } returns otherStudent
+            coEvery { documentPort.queryById(sharedDocument.id) } returns sharedDocument
 
             it("문서의 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
@@ -122,8 +122,8 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
         context("선생님이 SHARED 상태의 문서를 조회하면") {
 
-            every { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
-            every { documentPort.queryById(sharedDocument.id) } returns sharedDocument
+            coEvery { securityPort.getCurrentUserAuthority() } returns Authority.TEACHER
+            coEvery { documentPort.queryById(sharedDocument.id) } returns sharedDocument
             
             it("문서의 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {

@@ -1,10 +1,6 @@
 package kr.hs.entrydsm.satellite.common
 
-import java.util.Date
-import java.util.UUID
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
+import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -14,6 +10,21 @@ object AnyValueObjectGenerator {
 
         val parameterMap = mutableMapOf(*pairs)
         val constructor = T::class.primaryConstructor!!
+
+        val params = constructor.parameters.map {
+            val cls = it.type.classifier as KClass<*>
+            if (parameterMap[it.name] != null) parameterMap.remove(it.name)
+            else anyValue(cls)
+        }
+        require(parameterMap.isEmpty())
+
+        return constructor.call(*params.toTypedArray())
+    }
+
+    fun KClass<*>.anyValueObject(vararg pairs: Pair<String, Any>): Any {
+
+        val parameterMap = mutableMapOf(*pairs)
+        val constructor = primaryConstructor!!
 
         val params = constructor.parameters.map {
             val cls = it.type.classifier as KClass<*>
@@ -54,9 +65,13 @@ object AnyValueObjectGenerator {
             HashSet::class -> HashSet<Any>()
 
             else -> {
-                throw IllegalArgumentException(
-                    "Fields of type ${cls.qualifiedName} cannot automatically generate values"
-                )
+                try {
+                    cls.anyValueObject()
+                } catch (e: Exception) {
+                    throw IllegalArgumentException(
+                        "Fields of type ${cls.qualifiedName} cannot automatically generate values"
+                    )
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
@@ -39,9 +39,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("내 문서를 조회하면") {
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns document
-            every { feedbackPort.queryByDocumentId(document.id) } returns listOf()
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { feedbackPort.queryByDocumentId(document.id) } returns listOf()
 
             it("문서 상세 정보를 반환한다.") {
                 shouldNotThrow<Exception> {
@@ -81,9 +81,9 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("피드백이 있는 내 문서를 조회하면") {
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns documentWithFeedbacks
-            every { feedbackPort.queryByDocumentId(documentWithFeedbacks.id) } returns feedbacks
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns documentWithFeedbacks
+            coEvery { feedbackPort.queryByDocumentId(documentWithFeedbacks.id) } returns feedbacks
 
             it("문서 상세, 피드백 정보를 반환한다.") {
 
@@ -102,8 +102,8 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         context("내 문서가 존재하지 않으면") {
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns null
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns null
 
             it("DocumentNotFound 예외를 던진다.") {
                 shouldThrow<DocumentNotFoundException> {
