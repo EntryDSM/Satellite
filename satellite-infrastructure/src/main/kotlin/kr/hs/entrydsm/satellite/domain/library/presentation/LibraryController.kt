@@ -36,7 +36,7 @@ class LibraryController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createLibraryFile(
+    suspend fun createLibraryFile(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "secret") secret: String
     ): CreateLibraryFileResponse {
@@ -46,28 +46,28 @@ class LibraryController(
     }
 
     @GetMapping("/teacher")
-    fun managerQueryLibrary(
+    suspend fun managerQueryLibrary(
         @RequestParam(name = "year") year: Int?
     ): ManagerQueryLibraryResponse {
         return managerQueryLibraryUseCase.execute(year)
     }
 
     @GetMapping("/student")
-    fun studentQueryLibrary(
+    suspend fun studentQueryLibrary(
         @RequestParam(name = "year") year: Int?
     ): StudentQueryLibraryResponse {
         return studentQueryLibraryUseCase.execute(year)
     }
 
     @GetMapping("/{library-document-id}/index")
-    fun queryLibraryDocumentIndex(
+    suspend fun queryLibraryDocumentIndex(
         @PathVariable("library-document-id") libraryDocumentId: UUID,
     ): LibraryDocumentIndexResponse {
         return queryLibraryDocumentIndexUseCase.execute(libraryDocumentId)
     }
 
     @GetMapping("/public/{library-document-id}")
-    fun queryLibraryDocument(
+    suspend fun queryLibraryDocument(
         @PathVariable("library-document-id") libraryDocumentId: UUID
     ): LibraryDocumentDetailResponse {
         return queryLibraryDocumentDetailUseCase.execute(libraryDocumentId)
@@ -75,7 +75,7 @@ class LibraryController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{library-document-id}/access-right")
-    fun updateLibraryDocumentAccessRight(
+    suspend fun updateLibraryDocumentAccessRight(
         @PathVariable("library-document-id") libraryDocumentId: UUID,
         @RequestParam(name = "access_right") accessRight: AccessRight
     ) {

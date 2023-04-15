@@ -1,33 +1,29 @@
 package kr.hs.entrydsm.satellite.domain.library.persistence
 
+import kotlinx.coroutines.reactor.awaitSingle
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.library.domain.SchoolYear
-import kr.hs.entrydsm.satellite.domain.library.persistence.repository.SchoolYearRepository
 import kr.hs.entrydsm.satellite.domain.library.properties.SchoolYearProperties
 import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
-import org.springframework.data.repository.findByIdOrNull
+
+private typealias E = SchoolYearEntity
 
 @Adapter
 class SchoolYearPersistenceAdapter(
     private val securityPort: SecurityPort,
-    private val schoolYearRepository: SchoolYearRepository,
-    private val schoolYearProperties: SchoolYearProperties
+    private val schoolYearProperties: SchoolYearProperties,
+    private val schoolYearRepository: SchoolYearRepository
 ) : SchoolYearPort {
 
-    override fun save(schoolYear: SchoolYear): SchoolYearJpaEntity = schoolYear.run {
-        schoolYearRepository.save(
-            SchoolYearJpaEntity(
-                id = id,
-                year = year
-            )
-        )
+    override suspend fun save(schoolYear: SchoolYear) = schoolYear.also {
+        schoolYearRepository.save(SchoolYearEntity.of(schoolYear)).awaitSingle()
     }
 
-    override fun getSchoolYear(): SchoolYear =
-        schoolYearRepository.findByIdOrNull(schoolYearProperties.id)!!
+    override suspend fun getSchoolYear(): SchoolYearEntity =
+        schoolYearRepository.findById(schoolYearProperties.id).awaitSingle()
 
-    override fun secretMatches(secret: String) =
+    override suspend fun secretMatches(secret: String) =
         securityPort.encyptMatches(secret, schoolYearProperties.secret)
 
 }

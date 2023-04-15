@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Document("libraryDocuments")
-class LibraryDocumentJpaEntity(
+class LibraryDocumentEntity(
     id: UUID,
     year: Int,
     grade: Int,
@@ -20,7 +20,7 @@ class LibraryDocumentJpaEntity(
 ) {
     companion object {
         fun of(libraryDocument: LibraryDocument) = libraryDocument.run {
-            LibraryDocumentJpaEntity(
+            LibraryDocumentEntity(
                 id, year, grade, filePath, accessRight, createdAt, index
             )
         }

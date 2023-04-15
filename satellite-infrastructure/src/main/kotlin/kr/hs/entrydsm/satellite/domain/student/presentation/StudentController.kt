@@ -22,7 +22,7 @@ class StudentController(
 ) {
 
     @PostMapping
-    fun studentSignUp(@RequestBody @Valid request: StudentSignUpWebRequest): TokenResponse {
+    suspend fun studentSignUp(@RequestBody @Valid request: StudentSignUpWebRequest): TokenResponse {
         return request.run {
             studentSignUpUseCase.execute(
                 name = name,
@@ -37,7 +37,7 @@ class StudentController(
     }
 
     @GetMapping
-    fun queryStudentDocumentList(
+    suspend fun queryStudentDocumentList(
         @ModelAttribute @Valid request: QueryDocumentWebRequest
     ): StudentDocumentListResponse {
         return queryStudentDocumentListUseCase.execute(

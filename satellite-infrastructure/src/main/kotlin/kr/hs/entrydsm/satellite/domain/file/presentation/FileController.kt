@@ -23,7 +23,7 @@ class FileController(
 ) {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/image")
-    fun uploadImage(
+    suspend fun uploadImage(
         @RequestParam file: MultipartFile,
         @RequestParam("type") imageType: ImageType
     ): ImagePathResponse {

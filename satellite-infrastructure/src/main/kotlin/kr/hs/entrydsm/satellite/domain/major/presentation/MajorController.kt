@@ -27,7 +27,7 @@ class MajorController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createMajor(@RequestBody request: CreateMajorRequest) {
+    suspend fun createMajor(@RequestBody request: CreateMajorRequest) {
         createMajorUseCase.execute(request.majorName)
     }
 
@@ -38,7 +38,7 @@ class MajorController(
     }
 
     @GetMapping
-    fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
+    suspend fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
         return queryMajorUseCase.execute(name)
     }
 }
