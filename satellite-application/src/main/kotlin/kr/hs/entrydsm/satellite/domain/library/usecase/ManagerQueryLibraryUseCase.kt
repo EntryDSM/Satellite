@@ -11,7 +11,7 @@ class ManagerQueryLibraryUseCase(
     private val libraryDocumentPort: LibraryDocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(year: Int?): ManagerQueryLibraryResponse {
+    suspend fun execute(year: Int?): ManagerQueryLibraryResponse {
         val libraryDocuments = year?.let {
             libraryDocumentPort.queryByYear(year)
         } ?: libraryDocumentPort.queryAll()

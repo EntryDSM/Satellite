@@ -12,7 +12,7 @@ class UpdateCertificateUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(certificateList: List<CertificateRequest>) {
+    suspend fun execute(certificateList: List<CertificateRequest>) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

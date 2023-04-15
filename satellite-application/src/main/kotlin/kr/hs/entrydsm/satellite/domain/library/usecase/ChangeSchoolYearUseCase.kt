@@ -8,7 +8,7 @@ import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 class ChangeSchoolYearUseCase(
     private val schoolYearPort: SchoolYearPort
 ) {
-    fun execute(year: Int, secret: String) {
+    suspend fun execute(year: Int, secret: String) {
 
         if (schoolYearPort.secretMatches(secret)) {
             throw SecretMismatchException

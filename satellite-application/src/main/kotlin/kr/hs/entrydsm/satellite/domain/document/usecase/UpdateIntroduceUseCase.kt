@@ -12,7 +12,7 @@ class UpdateIntroduceUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(introduce: IntroduceRequest) {
+    suspend fun execute(introduce: IntroduceRequest) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

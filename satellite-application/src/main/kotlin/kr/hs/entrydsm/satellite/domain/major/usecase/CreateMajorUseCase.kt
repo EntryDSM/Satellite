@@ -8,7 +8,7 @@ import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
 class CreateMajorUseCase(
     private val majorPort: MajorPort
 ) {
-    fun execute(majorName: String) {
+    suspend fun execute(majorName: String) {
         majorPort.save(
             Major(
                 name = majorName

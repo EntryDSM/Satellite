@@ -13,7 +13,7 @@ class ShareDocumentUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(documentId: UUID) {
+    suspend fun execute(documentId: UUID) {
 
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
@@ -21,8 +21,7 @@ class ShareDocumentUseCase(
             throw DocumentIllegalStatusException
         }
 
-        val feedbackList = feedbackPort.queryByDocumentId(document.id)
-        feedbackPort.deleteAll(feedbackList)
+        feedbackPort.deleteByDocumentId(document.id)
 
         documentPort.save(
             document.changeStatus(DocumentStatus.SHARED)

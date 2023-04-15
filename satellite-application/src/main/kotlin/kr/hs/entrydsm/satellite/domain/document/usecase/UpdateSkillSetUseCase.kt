@@ -11,7 +11,7 @@ class UpdateSkillSetUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(skillSet: List<String>) {
+    suspend fun execute(skillSet: List<String>) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

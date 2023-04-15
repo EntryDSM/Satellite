@@ -10,7 +10,7 @@ import java.util.UUID
 class QuerySharedDocumentUseCase(
     private val documentPort: DocumentPort
 ) {
-    fun execute(
+    suspend fun execute(
         name: String?,
         grade: Int?,
         classNum: Int?,

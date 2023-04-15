@@ -12,7 +12,7 @@ class UpdateProjectUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(projectList: List<ProjectRequest>) {
+    suspend fun execute(projectList: List<ProjectRequest>) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

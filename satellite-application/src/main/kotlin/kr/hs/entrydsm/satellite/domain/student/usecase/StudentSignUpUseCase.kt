@@ -26,7 +26,7 @@ class StudentSignUpUseCase(
     private val schoolYearPort: SchoolYearPort,
     private val tokenPort: TokenPort
 ) {
-    fun execute(
+    suspend fun execute(
         name: String,
         profileImagePath: String?,
         email: String,

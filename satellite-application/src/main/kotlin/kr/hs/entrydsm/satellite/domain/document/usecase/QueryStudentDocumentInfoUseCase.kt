@@ -17,7 +17,7 @@ class QueryStudentDocumentInfoUseCase(
     private val feedbackPort: FeedbackPort,
     private val filePort: FilePort
 ) {
-    fun execute(studentId: UUID): DocumentInfoResponse {
+    suspend fun execute(studentId: UUID): DocumentInfoResponse {
 
         val student = studentPort.queryById(studentId) ?: throw StudentNotFoundException
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

@@ -17,13 +17,13 @@ class GoogleOauthUseCase(
     private val tokenPort: TokenPort
 ) {
 
-    fun getGoogleLoginLink(): OauthLinkResponse {
+    suspend fun getGoogleLoginLink(): OauthLinkResponse {
         return OauthLinkResponse(
             loginLink = oauthPort.getGoogleLoginLink()
         )
     }
 
-    fun oauthSignIn(code: String): TokenResponse {
+    suspend fun oauthSignIn(code: String): TokenResponse {
         val email = oauthPort.getGoogleEmailByCode(code)
         checkEmailSuffix(email)
 

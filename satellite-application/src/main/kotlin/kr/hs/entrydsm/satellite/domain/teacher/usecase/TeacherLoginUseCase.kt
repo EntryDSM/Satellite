@@ -15,7 +15,7 @@ class TeacherLoginUseCase(
     private val securityPort: SecurityPort,
     private val teacherPort: TeacherPort
 ) {
-    fun execute(accountId: String, password: String): TokenResponse? {
+    suspend fun execute(accountId: String, password: String): TokenResponse? {
 
         val teacher = teacherPort.queryByAccountId(accountId)
             ?: throw TeacherNotFoundException

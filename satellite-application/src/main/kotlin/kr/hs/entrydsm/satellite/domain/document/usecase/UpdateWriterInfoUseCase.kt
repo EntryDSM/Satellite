@@ -19,7 +19,7 @@ class UpdateWriterInfoUseCase(
     private val documentPort: DocumentPort,
     private val majorPort: MajorPort
 ) {
-    fun execute(writerInfo: WriterInfoRequest) {
+    suspend fun execute(writerInfo: WriterInfoRequest) {
 
         val student = securityPort.getCurrentStudent()
 

@@ -4,9 +4,9 @@ import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import java.io.File
 
 interface FilePort {
-    fun savePdf(file: File): String
-    fun saveImage(file: File, imageType: ImageType): String
-    fun getPdfFileUrl(filePath: String): String
-    fun getImageFileUrl(filePath: String): String
-    fun getFileBaseUrl(): String
+    suspend fun savePdf(file: File): String
+    suspend fun saveImage(file: File, imageType: ImageType): String
+    suspend fun getPdfFileUrl(filePath: String): String
+    suspend fun getImageFileUrl(filePath: String): String
+    suspend fun getFileBaseUrl(): String
 }

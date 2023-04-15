@@ -4,8 +4,8 @@ import kr.hs.entrydsm.satellite.domain.major.domain.Major
 import java.util.*
 
 interface MajorPort {
-    fun queryById(majorId: UUID): Major?
-    fun save(major: Major): Major
-    fun deleteById(majorId: UUID)
-    fun queryByNameContaining(majorName: String): List<Major>
+    suspend fun queryById(majorId: UUID): Major?
+    suspend fun save(major: Major): Major
+    suspend fun deleteById(majorId: UUID)
+    suspend fun queryByNameContaining(majorName: String): List<Major>
 }

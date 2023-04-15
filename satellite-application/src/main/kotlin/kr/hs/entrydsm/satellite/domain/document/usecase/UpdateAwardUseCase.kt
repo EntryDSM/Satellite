@@ -12,7 +12,7 @@ class UpdateAwardUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(awardList: List<AwardRequest>) {
+    suspend fun execute(awardList: List<AwardRequest>) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

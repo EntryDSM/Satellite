@@ -15,7 +15,7 @@ class CreateFeedbackUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(
+    suspend fun execute(
         documentId: UUID,
         elementId: UUID,
         comment: String

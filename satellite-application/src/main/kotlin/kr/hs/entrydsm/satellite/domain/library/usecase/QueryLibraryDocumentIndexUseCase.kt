@@ -10,7 +10,7 @@ import java.util.*
 class QueryLibraryDocumentIndexUseCase(
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(libraryDocumentId: UUID): LibraryDocumentIndexResponse {
+    suspend fun execute(libraryDocumentId: UUID): LibraryDocumentIndexResponse {
         val libraryDocument = libraryDocumentPort.queryById(libraryDocumentId) ?: throw LibraryDocumentNotFoundException
         return LibraryDocumentIndexResponse(libraryDocument.index)
     }

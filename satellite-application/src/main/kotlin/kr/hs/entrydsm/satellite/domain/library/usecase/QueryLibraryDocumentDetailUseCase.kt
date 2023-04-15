@@ -13,7 +13,7 @@ class QueryLibraryDocumentDetailUseCase(
     private val libraryDocumentPort: LibraryDocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(libraryDocumentId: UUID): LibraryDocumentDetailResponse {
+    suspend fun execute(libraryDocumentId: UUID): LibraryDocumentDetailResponse {
         val libraryDocument = libraryDocumentPort.queryById(libraryDocumentId)?.let {
             if (it.accessRight != AccessRight.PUBLIC) null else it
         } ?: throw LibraryDocumentNotFoundException

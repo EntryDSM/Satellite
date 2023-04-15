@@ -22,7 +22,7 @@ class CreateLibraryFileUseCase(
     private val documentPort: DocumentPort,
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(grade: Int, secret: String): UUID {
+    suspend fun execute(grade: Int, secret: String): UUID {
 
         if (schoolYearPort.secretMatches(secret)) {
             throw SecretMismatchException

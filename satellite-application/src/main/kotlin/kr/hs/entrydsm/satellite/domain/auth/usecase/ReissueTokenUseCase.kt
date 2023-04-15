@@ -11,7 +11,7 @@ class ReissueTokenUseCase(
     private val tokenPort: TokenPort,
     private val refreshTokenPort: RefreshTokenPort
 ) {
-    fun execute(token: String): TokenResponse {
+    suspend fun execute(token: String): TokenResponse {
         val refreshToken = refreshTokenPort.queryByToken(token) ?: throw RefreshTokenNotFoundException
         return tokenPort.generateBothToken(refreshToken.id, refreshToken.authority)
     }

@@ -11,7 +11,7 @@ import java.util.*
 class CancelShareDocumentUseCase(
     private val documentPort: DocumentPort
 ) {
-    fun execute(documentId: UUID) {
+    suspend fun execute(documentId: UUID) {
 
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 

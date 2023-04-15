@@ -9,7 +9,7 @@ import java.util.*
 class QueryStudentDocumentListUseCase(
     private val documentPort: DocumentPort
 ) {
-    fun execute(
+    suspend fun execute(
         name: String?,
         grade: Int?,
         classNum: Int?,

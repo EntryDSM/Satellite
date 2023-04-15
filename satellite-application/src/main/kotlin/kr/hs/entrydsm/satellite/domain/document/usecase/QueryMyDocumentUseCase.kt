@@ -12,7 +12,7 @@ class QueryMyDocumentUseCase(
     private val documentPort: DocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(): DocumentResponse {
+    suspend fun execute(): DocumentResponse {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id)

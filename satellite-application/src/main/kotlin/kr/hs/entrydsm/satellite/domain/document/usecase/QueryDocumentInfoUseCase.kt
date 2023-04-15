@@ -18,7 +18,7 @@ class QueryDocumentInfoUseCase(
     private val documentPort: DocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(documentId: UUID): DocumentInfoResponse {
+    suspend fun execute(documentId: UUID): DocumentInfoResponse {
 
         val authority = securityPort.getCurrentUserAuthority()
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException

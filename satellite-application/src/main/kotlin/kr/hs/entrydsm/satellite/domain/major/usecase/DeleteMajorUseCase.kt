@@ -9,7 +9,7 @@ import java.util.*
 class DeleteMajorUseCase(
     private val majorPort: MajorPort
 ) {
-    fun execute(majorId: UUID) {
+    suspend fun execute(majorId: UUID) {
         val major = majorPort.queryById(majorId) ?: throw MajorNotFoundException
         majorPort.deleteById(major.id)
     }
