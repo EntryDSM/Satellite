@@ -28,7 +28,6 @@ object PdfUtil {
             val pdf = PdfDocument(PdfReader(ByteArrayInputStream(document.toByteArray())))
             mergePdf(merger, pdf)
         }
-
         mergedDocument.close()
 
         return outputStream
