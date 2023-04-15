@@ -6,9 +6,10 @@ import io.jsonwebtoken.InvalidClaimException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
+import kotlinx.coroutines.reactor.awaitSingle
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.global.exception.ExpiredTokenException
-import kr.hs.entrydsm.satellite.global.exception.InternalServerException
+import kr.hs.entrydsm.satellite.global.exception.InternalServerError
 import kr.hs.entrydsm.satellite.global.exception.InvalidTokenException
 import kr.hs.entrydsm.satellite.global.exception.UnexpectedTokenException
 import kr.hs.entrydsm.satellite.global.security.auth.details.service.StudentDetailService
@@ -29,7 +30,7 @@ class JwtParser(
     private val studentDetailService: StudentDetailService
 ) {
 
-    fun getAuthentication(token: String): Authentication? {
+    suspend fun getAuthentication(token: String): Authentication? {
         val claims = getClaims(token)
 
         if (claims.header[TYPE_CLAIM] != ACCESS) {
@@ -51,12 +52,12 @@ class JwtParser(
                 is InvalidClaimException -> throw InvalidTokenException
                 is ExpiredJwtException -> throw ExpiredTokenException
                 is JwtException -> throw UnexpectedTokenException
-                else -> throw InternalServerException
+                else -> throw InternalServerError
             }
         }
     }
 
-    private fun getDetails(body: Claims): UserDetails {
+    private suspend fun getDetails(body: Claims): UserDetails {
 
         val authority = Authority.valueOf(
             body.get(ROLE_CLAIM, String::class.java)
@@ -65,6 +66,6 @@ class JwtParser(
         return when (authority) {
             Authority.STUDENT -> studentDetailService
             Authority.TEACHER -> teacherDetailService
-        }.loadUserByUsername(body.subject)
+        }.findByUsername(body.subject).awaitSingle()
     }
 }

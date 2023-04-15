@@ -1,52 +1,59 @@
 package kr.hs.entrydsm.satellite.global.error
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import io.sentry.Sentry
 import kr.hs.entrydsm.satellite.common.error.CustomErrorProperty
 import kr.hs.entrydsm.satellite.common.error.CustomException
 import kr.hs.entrydsm.satellite.global.error.response.DefaultErrorResponse
-import org.springframework.web.filter.OncePerRequestFilter
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import org.springframework.boot.autoconfigure.web.WebProperties
+import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
+import org.springframework.boot.web.reactive.error.ErrorAttributes
+import org.springframework.context.ApplicationContext
+import org.springframework.core.annotation.Order
+import org.springframework.http.codec.ServerCodecConfigurer
+import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.server.RequestPredicates
+import org.springframework.web.reactive.function.server.RouterFunction
+import org.springframework.web.reactive.function.server.RouterFunctions
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
+import reactor.core.publisher.Mono
 
+@Order(-2)
+@Component
 class GlobalErrorFilter(
-    private val objectMapper: ObjectMapper
-) : OncePerRequestFilter() {
+    errorAttributes: ErrorAttributes,
+    webProperties: WebProperties,
+    applicationContext: ApplicationContext,
+    configurer: ServerCodecConfigurer
+) : AbstractErrorWebExceptionHandler(errorAttributes, webProperties.resources, applicationContext) {
 
-    override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
-        try {
-            filterChain.doFilter(request, response)
-        } catch (e: CustomException) {
-            sendErrorMessage(response, e.errorProperty)
-        } catch (e: Exception) {
-            when (e.cause) {
-                is CustomException -> sendErrorMessage(response, (e.cause as CustomException).errorProperty)
-                else -> {
-                    e.printStackTrace()
-                    sendErrorMessage(response, GlobalErrorCode.INTERNAL_SERVER_ERROR)
+    init {
+        this.setMessageWriters(configurer.writers)
+    }
+
+    override fun getRoutingFunction(errorAttributes: ErrorAttributes?): RouterFunction<ServerResponse> =
+        RouterFunctions.route(RequestPredicates.all(), this::handleError)
+
+    private fun handleError(request: ServerRequest) =
+        when (val e = super.getError(request)) {
+            is CustomException -> getErrorMessage(e.errorProperty)
+            else -> {
+                if (e.cause is CustomException) getErrorMessage((e.cause as CustomException).errorProperty)
+                else {
+                    Sentry.captureException(e)
+                    getErrorMessage(GlobalErrorCode.INTERNAL_SERVER_ERROR)
                 }
             }
         }
-    }
 
-    private fun sendErrorMessage(response: HttpServletResponse, errorProperty: CustomErrorProperty) {
-
-        response.status = errorProperty.status()
-        response.contentType = "application/json"
-        response.characterEncoding = "UTF-8"
-
-        response.writer.write(
-            objectMapper.writeValueAsString(
+    private fun getErrorMessage(errorProperty: CustomErrorProperty): Mono<ServerResponse> =
+        ServerResponse
+            .status(errorProperty.status())
+            .bodyValue(
                 DefaultErrorResponse(
                     status = errorProperty.status(),
                     message = errorProperty.message(),
                     code = errorProperty.code()
                 )
             )
-        )
-    }
 }

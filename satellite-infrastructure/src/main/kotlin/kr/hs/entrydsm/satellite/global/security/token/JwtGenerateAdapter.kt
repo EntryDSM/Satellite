@@ -23,7 +23,7 @@ class JwtGenerateAdapter(
     private val refreshTokenPort: RefreshTokenPort
 ) : TokenPort {
 
-    override fun generateBothToken(
+    override suspend fun generateBothToken(
         userId: UUID,
         auth: Authority,
     ): TokenResponse {
@@ -37,7 +37,7 @@ class JwtGenerateAdapter(
 
     private fun nowPlusSeconds(exp: Long): LocalDateTime = LocalDateTime.now().withNano(0).plusSeconds(exp)
 
-    private fun generateRefreshToken(userId: UUID, authority: Authority): String {
+    private suspend fun generateRefreshToken(userId: UUID, authority: Authority): String {
 
         val token = Jwts
             .builder()
@@ -60,7 +60,7 @@ class JwtGenerateAdapter(
         return token
     }
 
-    private fun generateAccessToken(userId: UUID, authority: Authority): String {
+    private suspend fun generateAccessToken(userId: UUID, authority: Authority): String {
         return Jwts
             .builder()
             .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)

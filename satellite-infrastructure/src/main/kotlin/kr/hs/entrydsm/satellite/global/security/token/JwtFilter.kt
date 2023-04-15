@@ -1,36 +1,35 @@
 package kr.hs.entrydsm.satellite.global.security.token
 
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.mono
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants
+import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.filter.OncePerRequestFilter
+import org.springframework.stereotype.Component
+import org.springframework.web.server.ServerWebExchange
+import org.springframework.web.server.WebFilter
+import org.springframework.web.server.WebFilterChain
+import reactor.core.publisher.Mono
 
+@Component
 class JwtFilter(
     private val jwtParser: JwtParser
-) : OncePerRequestFilter() {
+) : WebFilter {
 
-    override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
-
-        val token = resolvedToken(request)
+    override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> = mono {
+        val token = resolvedToken(exchange.request)
         SecurityContextHolder.clearContext()
-
         token?.let {
             SecurityContextHolder.getContext().authentication = jwtParser.getAuthentication(token)
         }
-
-        filterChain.doFilter(request, response)
+        return@mono chain.filter(exchange).awaitSingle()
     }
 
-    private fun resolvedToken(request: HttpServletRequest): String? =
-        request.getHeader(JwtConstants.HEADER)?.also {
-            if (it.startsWith(JwtConstants.PREFIX)) {
-                return it.substring(JwtConstants.PREFIX.length)
-            }
+    private fun resolvedToken(request: ServerHttpRequest): String? =
+        request.headers[JwtConstants.HEADER]?.run {
+            val headerData = get(0)
+            if (headerData.startsWith(JwtConstants.PREFIX)) {
+                headerData.substring(JwtConstants.PREFIX.length)
+            } else null
         }
 }
