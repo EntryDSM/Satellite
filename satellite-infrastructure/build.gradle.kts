@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "2.7.5"
+    id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
 
@@ -49,28 +49,20 @@ dependencies {
 
     // Logging
     implementation("io.sentry:sentry-spring-boot-starter:6.16.0")
-
 }
+
 repositories {
     mavenCentral()
 }
 
 allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.data.relational.core.mapping.Table")
     annotation("org.springframework.data.mongodb.core.mapping.Document")
 }
 
 noArg {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.data.relational.core.mapping.Table")
     annotation("org.springframework.data.mongodb.core.mapping.Document")
-}
-
-tasks.compileKotlin {
-    dependsOn(tasks.compileQuerydsl)
 }
 
 tasks.getByName<Jar>("jar") {
