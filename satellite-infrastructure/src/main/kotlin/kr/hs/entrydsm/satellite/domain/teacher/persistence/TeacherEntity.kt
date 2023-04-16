@@ -8,9 +8,9 @@ import java.util.*
 @Table(name = "tbl_teacher")
 class TeacherEntity(
     @Id
-    override val id: UUID,
-    override val accountId: String,
-    override val password: String
+    override var id: UUID,
+    override var accountId: String,
+    override var password: String
 ) : Teacher(
     id, accountId, password
 )

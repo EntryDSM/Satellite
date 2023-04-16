@@ -34,7 +34,7 @@ class UpdateWriterInfoUseCase(
         )
     }
 
-    private fun updateDocument(
+    private suspend fun updateDocument(
         document: Document,
         student: Student,
         major: Major,
