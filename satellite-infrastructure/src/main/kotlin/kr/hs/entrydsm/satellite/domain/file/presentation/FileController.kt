@@ -27,8 +27,10 @@ class FileController(
         @RequestParam file: MultipartFile,
         @RequestParam("type") imageType: ImageType
     ): ImagePathResponse {
-        val filePath = filePort.saveImage(multipartToFile(file), imageType)
-        return ImagePathResponse(filePath)
+        return ImagePathResponse(
+            imagePath = filePort.saveImage(multipartToFile(file), imageType),
+            baseUrl = filePort.getFileBaseUrl()
+        )
     }
 
     private fun multipartToFile(multipartFile: MultipartFile?): File {
