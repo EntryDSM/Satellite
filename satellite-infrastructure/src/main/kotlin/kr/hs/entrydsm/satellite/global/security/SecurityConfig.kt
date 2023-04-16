@@ -75,7 +75,7 @@ internal class SecurityConfig(
             .antMatchers(HttpMethod.PATCH, "/library/{library-document-id}/access-right").hasAnyAuthority(TEACHER)
 
             // MAJOR
-            .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER)
+            .antMatchers(HttpMethod.GET, "/major").permitAll()
             .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
             .antMatchers(HttpMethod.DELETE, "/major/{major-id}").hasAuthority(TEACHER)
 
