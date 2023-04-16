@@ -20,6 +20,7 @@ class QueryMyDocumentUseCase(
         val fileBaseUrl = filePort.getFileBaseUrl()
         return DocumentResponse(
             profileImageUrl = fileBaseUrl + student.profileImagePath,
+            email = document?.writer?.email ?: student.email,
             name = student.name,
             grade = student.grade,
             classNum = student.classNum,
