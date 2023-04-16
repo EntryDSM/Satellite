@@ -6,10 +6,10 @@ import java.util.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.Max
 
-data class UpdateWriterInfoWebRequest(
+class UpdateWriterInfoWebRequest(
 
-    @field:Length(max = 255)
-    override val profileImagePath: String?,
+    @Length(max = 255)
+    profileImagePath: String?,
 
     override val majorId: UUID,
 

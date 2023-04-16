@@ -33,7 +33,7 @@ class MajorController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{major-id}")
-    fun deleteMajor(@PathVariable("major-id") majorId: UUID) {
+    suspend fun deleteMajor(@PathVariable("major-id") majorId: UUID) {
         deleteMajorUseCase.execute(majorId)
     }
 

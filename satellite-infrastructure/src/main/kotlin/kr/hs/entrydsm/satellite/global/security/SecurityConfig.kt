@@ -1,22 +1,20 @@
 package kr.hs.entrydsm.satellite.global.security
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
-import kr.hs.entrydsm.satellite.global.security.token.JwtParser
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.authentication.ReactiveAuthenticationManager
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.server.SecurityWebFilterChain
 
 
 @EnableWebFluxSecurity
-internal class SecurityConfig(
-    private val jwtParser: JwtParser,
-    private val objectMapper: ObjectMapper
-) {
+internal class SecurityConfig {
 
     companion object {
         private val TEACHER = Authority.TEACHER.name
@@ -43,7 +41,7 @@ internal class SecurityConfig(
             .pathMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
             // TEACHER
-            .antMatchers(HttpMethod.POST, "/teacher/auth").permitAll()
+            .pathMatchers(HttpMethod.POST, "/teacher/auth").permitAll()
 
             // DOCUMENT
             .pathMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
@@ -100,6 +98,6 @@ internal class SecurityConfig(
         }
 
     @Bean
-    protected fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
 }
