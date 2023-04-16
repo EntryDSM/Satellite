@@ -9,7 +9,7 @@ import javax.validation.constraints.Max
 data class UpdateWriterInfoWebRequest(
 
     @field:Length(max = 255)
-    override val profileImagePath: String,
+    override val profileImagePath: String?,
 
     override val majorId: UUID,
 

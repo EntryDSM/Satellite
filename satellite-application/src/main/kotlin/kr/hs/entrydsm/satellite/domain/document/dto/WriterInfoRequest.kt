@@ -1,12 +1,13 @@
 package kr.hs.entrydsm.satellite.domain.document.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
+import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 import kr.hs.entrydsm.satellite.domain.major.domain.Major
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 open class WriterInfoRequest(
-    open val profileImagePath: String,
+    open val profileImagePath: String?,
     open val majorId: UUID,
     open val email: String,
     open val grade: Int,
@@ -17,7 +18,7 @@ open class WriterInfoRequest(
         WriterInfoElement(
             studentId = student.id,
             name = student.name,
-            profileImagePath = profileImagePath,
+            profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE,
             grade = grade,
             classNum = classNum,
             number = number,
@@ -31,6 +32,6 @@ open class WriterInfoRequest(
             grade = grade,
             classNum = classNum,
             number = number,
-            profileImagePath = profileImagePath
+            profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE,
         )
 }
