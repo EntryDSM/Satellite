@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.student.presentation.dto.request
 
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import org.intellij.lang.annotations.Pattern
+import java.util.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.NotBlank
 
@@ -24,4 +25,6 @@ data class StudentSignUpWebRequest(
 
     @field:Max(20)
     val number: Int,
+
+    val majorId: UUID
 )

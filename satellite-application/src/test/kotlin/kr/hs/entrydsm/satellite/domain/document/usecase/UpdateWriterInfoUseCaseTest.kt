@@ -14,7 +14,6 @@ import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 import kr.hs.entrydsm.satellite.domain.major.domain.Major
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
@@ -26,9 +25,8 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
     val documentPort: DocumentPort = mockk()
     val studentPort: StudentPort = mockk()
     val majorPort: MajorPort = mockk()
-    val schoolYearPort: SchoolYearPort = mockk(relaxed = true)
 
-    val updateWriterInfoUseCase = UpdateWriterInfoUseCase(securityPort, studentPort, documentPort, majorPort, schoolYearPort)
+    val updateWriterInfoUseCase = UpdateWriterInfoUseCase(securityPort, studentPort, documentPort, majorPort)
 
     describe("updateWriterInfo") {
 

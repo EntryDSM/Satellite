@@ -30,7 +30,8 @@ class StudentController(
                 email = email,
                 grade = grade,
                 classNum = classNum,
-                number = number
+                number = number,
+                majorId = majorId
             )
         }
     }
