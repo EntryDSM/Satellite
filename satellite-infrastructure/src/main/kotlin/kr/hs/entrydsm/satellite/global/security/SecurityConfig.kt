@@ -77,7 +77,7 @@ internal class SecurityConfig(
             // MAJOR
             .antMatchers(HttpMethod.GET, "/major").hasAnyAuthority(STUDENT, TEACHER)
             .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.DELETE, "/major").hasAuthority(TEACHER)
+            .antMatchers(HttpMethod.DELETE, "/major/{major-id}").hasAuthority(TEACHER)
 
             // FEEDBACK
             .antMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
