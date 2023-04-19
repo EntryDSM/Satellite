@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.satellite.domain.library.persistence
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.convertValue
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
@@ -10,11 +12,12 @@ import java.util.*
 
 @Adapter
 class LibraryDocumentPersistenceAdapter(
-    private val libraryDocumentRepository: LibraryDocumentRepository
+    private val libraryDocumentRepository: LibraryDocumentRepository,
+    private val objectMapper: ObjectMapper
 ) : LibraryDocumentPort {
 
     override suspend fun save(libraryDocument: LibraryDocument): LibraryDocumentEntity =
-        libraryDocumentRepository.save(LibraryDocumentEntity.of(libraryDocument)).awaitSingle()
+        libraryDocumentRepository.save(objectMapper.convertValue(libraryDocument)).awaitSingle()
 
     override suspend fun queryById(libraryDocumentId: UUID) =
         libraryDocumentRepository.findById(libraryDocumentId).awaitSingleOrNull()

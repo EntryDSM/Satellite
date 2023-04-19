@@ -23,7 +23,7 @@ class RefreshTokenPersistenceAdapter(
             .opsForValue()
             .set(
                 refreshToken.token,
-                RefreshTokenEntity.of(refreshToken),
+                objectMapper.convertValue<RefreshTokenEntity>(refreshToken),
                 Duration.ofSeconds(refreshToken.timeToLive)
             ).awaitSingle()
 

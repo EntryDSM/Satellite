@@ -5,8 +5,6 @@ import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.teacher.spi.TeacherPort
 import java.util.*
 
-private typealias E = TeacherEntity
-
 @Adapter
 class TeacherPersistenceAdapter(
     private val teacherRepository: TeacherRepository
