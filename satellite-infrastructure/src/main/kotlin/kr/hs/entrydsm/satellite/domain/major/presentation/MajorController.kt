@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.major.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.major.dto.MajorListResponse
 import kr.hs.entrydsm.satellite.domain.major.presentation.dto.request.CreateMajorRequest
 import kr.hs.entrydsm.satellite.domain.major.usecase.CreateMajorUseCase
@@ -27,7 +28,7 @@ class MajorController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    suspend fun createMajor(@RequestBody request: CreateMajorRequest) {
+    suspend fun createMajor(@RequestBody @Valid request: CreateMajorRequest) {
         createMajorUseCase.execute(request.majorName)
     }
 
