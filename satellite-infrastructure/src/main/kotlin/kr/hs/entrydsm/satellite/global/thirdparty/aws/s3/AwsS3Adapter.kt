@@ -10,7 +10,6 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.transfer.s3.S3TransferManager
 import software.amazon.awssdk.transfer.s3.model.UploadFileRequest
 import java.io.File
-import java.nio.file.Paths
 import java.time.Duration
 import java.util.*
 
@@ -64,7 +63,7 @@ class AwsS3Adapter(
                     .key(filePath)
                     .acl(fileType.cannedAcl)
             }
-            .source(Paths.get(filePath))
+            .source(file)
             .build()
 
         val fileUpload = transferManager.uploadFile(uploadFileRequest)
