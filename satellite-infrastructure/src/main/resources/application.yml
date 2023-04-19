@@ -12,11 +12,11 @@ spring:
 
   r2dbc:
     protocol: mariadb
-    host: ${MYSQL_HOST:localhost}
-    port: ${MYSQL_PORT:3306}
-    database: ${MYSQL_DATABASE:test}
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:pass}
+    host: ${MARIA_DB_HOST:localhost}
+    port: ${MARIA_DB_PORT:3306}
+    database: ${MARIA_DB_DATABASE:test}
+    username: ${MARIA_DB_USERNAME:root}
+    password: ${MARIA_DB_PASSWORD:pass}
 
   jackson:
     property-naming-strategy: SNAKE_CASE
