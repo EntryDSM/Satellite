@@ -8,29 +8,17 @@ import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.util.*
 
-data class Document(
-
-    val id: UUID = UUID.randomUUID(),
-
-    val year: Int,
-
-    val writer: WriterInfoElement,
-
-    val status: DocumentStatus = DocumentStatus.CREATED,
-
-    val introduce: IntroduceElement = IntroduceElement(),
-
-    val skillSet: MutableList<String> = mutableListOf(),
-
-    val projectList: MutableList<ProjectElement> = mutableListOf(),
-
-    val awardList: MutableList<AwardElement> = mutableListOf(),
-
-    val certificateList: MutableList<CertificateElement> = mutableListOf(),
-
-    val isDeleted: Boolean = false
-
-) : Domain {
+interface Document {
+    val id: UUID
+    val year: Int
+    var isDeleted: Boolean
+    var status: DocumentStatus
+    var writer: WriterInfoElement
+    var introduce: IntroduceElement
+    var skillSet: List<String>
+    var projectList: List<ProjectElement>
+    var awardList: List<AwardElement>
+    var certificateList: List<CertificateElement>
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
@@ -45,9 +33,41 @@ data class Document(
         return elementList.associate { it.elementId to it.elementName }
     }
 
-    fun delete() = copy(isDeleted = true)
+    fun delete() { this.isDeleted = true }
 
-    fun changeStatus(status: DocumentStatus) = copy(status = status)
+    fun changeStatus(status: DocumentStatus) { this.status = status }
 
-    protected constructor() : this(year = 2023, writer = WriterInfoElement(UUID(0,0), UUID(0,0), "", "", "", 1, 1, 1, UUID(0,0), ""))
+    fun updateElement(
+        writer: WriterInfoElement = this.writer,
+        status: DocumentStatus = this.status,
+        introduce: IntroduceElement = this.introduce
+    ) {
+        this.writer = writer
+        this.status = status
+        this.introduce = introduce
+    }
 }
+
+data class DocumentDomain(
+
+    override val id: UUID = UUID.randomUUID(),
+
+    override val year: Int,
+
+    override var isDeleted: Boolean = false,
+
+    override var status: DocumentStatus = DocumentStatus.CREATED,
+
+    override var writer: WriterInfoElement,
+
+    override var introduce: IntroduceElement = IntroduceElement(),
+
+    override var skillSet: List<String> = mutableListOf(),
+
+    override var projectList: List<ProjectElement> = mutableListOf(),
+
+    override var awardList: List<AwardElement> = mutableListOf(),
+
+    override var certificateList: List<CertificateElement> = mutableListOf()
+
+) : Document, Domain
