@@ -15,7 +15,7 @@ class UpdateLibraryDocumentAccessRightUseCase(
             libraryDocumentPort.queryById(libraryDocumentId) ?: throw LibraryDocumentNotFoundException
 
         libraryDocumentPort.save(
-            libraryDocument.copy(accessRight = accessRight)
+            libraryDocument.apply { changeAccessRight(accessRight) }
         )
     }
 }

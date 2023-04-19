@@ -22,7 +22,7 @@ class CancelSubmitMyDocumentUseCase(
         }
 
         documentPort.save(
-            document.changeStatus(DocumentStatus.CREATED)
+            document.apply { changeStatus(DocumentStatus.CREATED) }
         )
     }
 }

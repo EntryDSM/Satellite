@@ -24,7 +24,7 @@ class ShareDocumentUseCase(
         feedbackPort.deleteByDocumentId(document.id)
 
         documentPort.save(
-            document.changeStatus(DocumentStatus.SHARED)
+            document.apply { changeStatus(DocumentStatus.SHARED) }
         )
     }
 }

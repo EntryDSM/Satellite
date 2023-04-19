@@ -26,7 +26,7 @@ class UpdateFeedbackUseCase(
         ) ?: throw FeedbackNotFoundException
 
         feedbackPort.save(
-            feedback.updateComment(comment)
+            feedback.apply { updateComment(comment) }
         )
     }
 }

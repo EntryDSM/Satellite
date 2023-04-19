@@ -39,7 +39,7 @@ class QueryDocumentInfoUseCase(
         }
     }
 
-    private fun isWriter(document: Document, authority: Authority): Boolean {
+    private suspend fun isWriter(document: Document,authority: Authority): Boolean {
         return if (authority == Authority.STUDENT) {
             val student = securityPort.getCurrentStudent()
             document.isWriter(student.id)

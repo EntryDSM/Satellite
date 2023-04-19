@@ -4,7 +4,7 @@ import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
-import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentDomain
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
@@ -12,8 +12,8 @@ import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 import kr.hs.entrydsm.satellite.domain.major.exception.MajorNotFoundException
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import kr.hs.entrydsm.satellite.domain.student.domain.Student.Companion.checkEmailSuffix
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 import kr.hs.entrydsm.satellite.domain.student.exception.StudentAlreadyExistException
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import java.util.*
@@ -43,7 +43,7 @@ class StudentSignUpUseCase(
         }
 
         val student = studentPort.save(
-            Student(
+            StudentDomain(
                 email = email,
                 name = name,
                 grade = grade,
@@ -55,7 +55,7 @@ class StudentSignUpUseCase(
 
         val major = majorPort.queryById(majorId) ?: throw MajorNotFoundException
         documentPort.save(
-            Document(
+            DocumentDomain(
                 writer = WriterInfoElement(student, major),
                 year = schoolYearPort.getSchoolYear().year,
                 status = DocumentStatus.CREATED
