@@ -6,23 +6,12 @@ import java.io.Serializable
 import java.util.*
 
 @Table(name = "tbl_feedback")
-class FeedbackEntity(
+data class FeedbackEntity(
     override val documentId: UUID,
     override val elementId: UUID,
-    override val comment: String,
+    override var comment: String,
     override val isApply: Boolean
-) : Feedback(documentId, elementId, comment, isApply) {
-    companion object {
-        fun of(feedback: Feedback) = feedback.run {
-            FeedbackEntity(
-                documentId = documentId,
-                elementId = elementId,
-                comment = comment,
-                isApply = isApply
-            )
-        }
-    }
-}
+) : Feedback
 
 data class FeedbackId(
     val elementId: UUID,
