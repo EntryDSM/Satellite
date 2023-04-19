@@ -19,8 +19,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     // Web
-    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
-    compileOnly("org.glassfish.jaxb:jaxb-runtime")
+    runtimeOnly("javax.servlet:javax.servlet-api:4.0.1")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
