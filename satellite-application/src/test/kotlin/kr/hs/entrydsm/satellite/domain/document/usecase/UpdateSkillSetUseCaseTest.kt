@@ -12,7 +12,7 @@ import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 
 internal class UpdateSkillSetUseCaseTest : DescribeSpec({
 
@@ -23,7 +23,7 @@ internal class UpdateSkillSetUseCaseTest : DescribeSpec({
 
     describe("updateSkillSet") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(student)
 
         val request = listOf("Backend")
@@ -33,7 +33,7 @@ internal class UpdateSkillSetUseCaseTest : DescribeSpec({
             val slot = slot<Document>()
 
             coEvery { securityPort.getCurrentStudent() } returns student
-            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document.copy()
             coEvery { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("본인(학생) 문서의 스킬셋 정보를 수정한다.") {

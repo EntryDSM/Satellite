@@ -21,7 +21,8 @@ import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.domain.FeedbackDomain
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.major.domain.MajorDomain
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 
 internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
@@ -34,7 +35,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
     describe("updateAward") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(student)
 
         context("내 문서를 조회하면") {
@@ -61,7 +62,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         val documentWithFeedbacks = DocumentDomain(
             writer = WriterInfoElement(
                 student = student,
-                major = anyValueObject()
+                major = anyValueObject<MajorDomain>()
             ),
             introduce = introduce,
             status = DocumentStatus.SUBMITTED,

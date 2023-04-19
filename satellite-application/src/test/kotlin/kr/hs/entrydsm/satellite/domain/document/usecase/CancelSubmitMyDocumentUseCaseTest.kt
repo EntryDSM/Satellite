@@ -4,9 +4,9 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.coVerify
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
@@ -14,7 +14,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 
 internal class CancelSubmitMyDocumentUseCaseTest : DescribeSpec({
 
@@ -25,7 +25,7 @@ internal class CancelSubmitMyDocumentUseCaseTest : DescribeSpec({
 
     describe("cancelSubmitMyDocumentUseCase") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(
             student = student,
             status = DocumentStatus.SUBMITTED

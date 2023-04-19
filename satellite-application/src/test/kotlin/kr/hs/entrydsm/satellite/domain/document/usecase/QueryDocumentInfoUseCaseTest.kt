@@ -13,8 +13,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentAccessRightException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 
 internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
@@ -26,8 +25,8 @@ internal class QueryDocumentInfoUseCaseTest : DescribeSpec({
 
     describe("queryDocumentInfo") {
 
-        val student = anyValueObject<Student>()
-        val otherStudent = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
+        val otherStudent = anyValueObject<StudentDomain>()
 
         val createdDocument = getTestDocument(
             student = student,

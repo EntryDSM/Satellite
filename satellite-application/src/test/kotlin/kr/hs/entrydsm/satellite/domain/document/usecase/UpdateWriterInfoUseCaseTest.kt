@@ -5,18 +5,18 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.CapturingSlot
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.coVerify
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.major.domain.Major
+import kr.hs.entrydsm.satellite.domain.major.domain.MajorDomain
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 
 internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
@@ -30,9 +30,9 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
 
     describe("updateWriterInfo") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(student)
-        val major = anyValueObject<Major>()
+        val major = anyValueObject<MajorDomain>()
 
         val request = anyValueObject<WriterInfoRequest>()
 
@@ -41,7 +41,7 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
             val slot = slot<Document>()
 
             coEvery { securityPort.getCurrentStudent() } returns student
-            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document.copy()
             coEvery { majorPort.queryById(request.majorId) } returns major
             coEvery { documentPort.save(capture(slot)) } returnsArgument 0
             coEvery { studentPort.save(any()) } returnsArgument 0

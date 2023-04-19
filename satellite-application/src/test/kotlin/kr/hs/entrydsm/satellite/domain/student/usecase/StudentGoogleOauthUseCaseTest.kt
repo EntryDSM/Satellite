@@ -13,6 +13,7 @@ import kr.hs.entrydsm.satellite.domain.auth.spi.OauthPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
 import kr.hs.entrydsm.satellite.domain.auth.usecase.GoogleOauthUseCase
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 import kr.hs.entrydsm.satellite.domain.student.exception.SignUpRequiredRedirection
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import java.time.LocalDateTime
@@ -29,7 +30,7 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
         val code = "code"
         val email = "email@dsm.hs.kr"
-        val student = anyValueObject<Student>(
+        val student = anyValueObject<StudentDomain>(
             "email" to email
         )
 

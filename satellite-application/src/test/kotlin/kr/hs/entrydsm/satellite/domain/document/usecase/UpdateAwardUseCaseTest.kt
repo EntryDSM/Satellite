@@ -13,7 +13,7 @@ import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.dto.AwardRequest
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
 
 internal class UpdateAwardUseCaseTest : DescribeSpec({
 
@@ -24,7 +24,7 @@ internal class UpdateAwardUseCaseTest : DescribeSpec({
 
     describe("updateAward") {
 
-        val student = anyValueObject<Student>()
+        val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(student)
 
         val request = listOf(anyValueObject<AwardRequest>())
@@ -34,7 +34,7 @@ internal class UpdateAwardUseCaseTest : DescribeSpec({
             val slot = slot<Document>()
 
             coEvery { securityPort.getCurrentStudent() } returns student
-            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document.copy()
             coEvery { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("본인(학생) 문서의 정보를 수정한다.") {
@@ -55,6 +55,6 @@ private fun onlyAwardIsDifferent(
     slot.captured.introduce shouldBe document.introduce
     slot.captured.skillSet shouldBe document.skillSet
     slot.captured.projectList shouldBe document.projectList
-    slot.captured.awardList shouldNotBe document.awardList
+    slot.captured.awardList.size shouldNotBe document.awardList.size
     slot.captured.certificateList shouldBe document.certificateList
 }
