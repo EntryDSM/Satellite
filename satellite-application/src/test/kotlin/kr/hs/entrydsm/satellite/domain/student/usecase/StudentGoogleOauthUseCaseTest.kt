@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.domain.student.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.exception.EmailSuffixNotValidException
@@ -42,9 +42,9 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
         context("가입된 유저의 Oauth 코드가 주어지면") {
 
-            every { oauthPort.getGoogleEmailByCode(code) } returns email
-            every { studentPort.queryByEmail(email) } returns student
-            every { tokenPort.generateBothToken(student.id, Authority.STUDENT) } returns tokenResponse
+            coEvery { oauthPort.getGoogleEmailByCode(code) } returns email
+            coEvery { studentPort.queryByEmail(email) } returns student
+            coEvery { tokenPort.generateBothToken(student.id, Authority.STUDENT) } returns tokenResponse
 
             it("토큰을 반환한다.") {
                 val response = googleOauthUseCase.oauthSignIn(code)
@@ -54,8 +54,8 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
         context("가입되지 않은 유저의 Oauth 코드가 주어지면") {
 
-            every { oauthPort.getGoogleEmailByCode(code) } returns email
-            every { studentPort.queryByEmail(email) } returns null
+            coEvery { oauthPort.getGoogleEmailByCode(code) } returns email
+            coEvery { studentPort.queryByEmail(email) } returns null
 
             it("SignUpRequiredRedirection를 던진다.") {
                 shouldThrow<SignUpRequiredRedirection> {
@@ -68,7 +68,7 @@ internal class StudentGoogleOauthUseCaseTest : DescribeSpec({
 
             val gmail = "email@gmail.com"
 
-            every { oauthPort.getGoogleEmailByCode(code) } returns gmail
+            coEvery { oauthPort.getGoogleEmailByCode(code) } returns gmail
 
             it("EmailSuffixNotValid 예외를 던진다.") {
                 shouldThrow<EmailSuffixNotValidException> {

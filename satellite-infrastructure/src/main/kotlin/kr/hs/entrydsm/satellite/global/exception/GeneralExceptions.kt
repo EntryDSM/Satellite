@@ -7,6 +7,6 @@ object ForbiddenException : GlobalCustomException(
     GlobalErrorCode.FORBIDDEN
 )
 
-object InternalServerException : GlobalCustomException(
+object InternalServerError : GlobalCustomException(
     GlobalErrorCode.INTERNAL_SERVER_ERROR
 )

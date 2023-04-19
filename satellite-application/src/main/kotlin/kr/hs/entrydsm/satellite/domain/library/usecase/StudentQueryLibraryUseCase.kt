@@ -12,7 +12,7 @@ class StudentQueryLibraryUseCase(
     private val libraryDocumentPort: LibraryDocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(year: Int?): StudentQueryLibraryResponse {
+    suspend fun execute(year: Int?): StudentQueryLibraryResponse {
         val libraryDocuments = libraryDocumentPort.queryByAccessRightNotAndYear(AccessRight.PRIVATE, year)
         return StudentQueryLibraryResponse(
             libraryDocuments.map {

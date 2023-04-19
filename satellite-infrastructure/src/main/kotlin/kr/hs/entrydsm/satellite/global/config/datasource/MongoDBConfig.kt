@@ -1,30 +1,29 @@
-package kr.hs.entrydsm.satellite.global.config
+package kr.hs.entrydsm.satellite.global.config.datasource
 
 import com.mongodb.MongoClientSettings
 import com.mongodb.MongoCredential
 import com.mongodb.ServerAddress
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoClients
 import com.mongodb.connection.ClusterSettings
+import com.mongodb.reactivestreams.client.MongoClient
+import com.mongodb.reactivestreams.client.MongoClients
 import org.bson.UuidRepresentation
 import org.springframework.boot.autoconfigure.mongo.MongoProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.mongodb.MongoDatabaseFactory
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories
 
 @Configuration
-@EnableMongoRepositories(basePackages = ["kr.hs.entrydsm.satellite"], mongoTemplateRef = "blogMongoTemplate")
+@EnableReactiveMongoRepositories(basePackages = ["kr.hs.entrydsm.satellite"], reactiveMongoTemplateRef = "blogMongoTemplate")
 class MongoDBConfig(
-    private val mongoProperties: MongoProperties,
+    private val mongoProperties: MongoProperties
 ) {
 
     @Bean
-    fun blogMongoTemplate(mongoClient: MongoClient): MongoTemplate {
-        val factory: MongoDatabaseFactory = SimpleMongoClientDatabaseFactory(mongoClient, mongoProperties.database)
-        return MongoTemplate(factory)
+    fun blogMongoTemplate(mongoClient: MongoClient): ReactiveMongoTemplate {
+        val factory = SimpleReactiveMongoDatabaseFactory(mongoClient, mongoProperties.database)
+        return ReactiveMongoTemplate(factory)
     }
 
     @Bean
@@ -39,7 +38,8 @@ class MongoDBConfig(
             )
 
         return MongoClients.create(
-            MongoClientSettings.builder()
+            MongoClientSettings
+                .builder()
                 .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
                 .applyToClusterSettings { builder: ClusterSettings.Builder -> builder.hosts(seeds) }
                 .credential(credential)

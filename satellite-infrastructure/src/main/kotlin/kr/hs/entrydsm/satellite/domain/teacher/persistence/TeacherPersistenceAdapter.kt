@@ -1,14 +1,18 @@
 package kr.hs.entrydsm.satellite.domain.teacher.persistence
 
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
-import kr.hs.entrydsm.satellite.domain.teacher.domain.Teacher
-import kr.hs.entrydsm.satellite.domain.teacher.persistence.repository.TeacherRepository
 import kr.hs.entrydsm.satellite.domain.teacher.spi.TeacherPort
+import java.util.*
 
 @Adapter
 class TeacherPersistenceAdapter(
     private val teacherRepository: TeacherRepository
 ) : TeacherPort {
-    override fun queryByAccountId(accountId: String) =
-        teacherRepository.findByAccountId(accountId)
+
+    override suspend fun queryById(teacherId: UUID) =
+        teacherRepository.findById(teacherId).awaitSingleOrNull()
+
+    override suspend fun queryByAccountId(accountId: String) =
+        teacherRepository.findByAccountId(accountId).awaitSingleOrNull()
 }

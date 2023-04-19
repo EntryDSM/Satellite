@@ -1,23 +1,20 @@
 package kr.hs.entrydsm.satellite.global.security
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
-import kr.hs.entrydsm.satellite.global.config.FilterConfig
-import kr.hs.entrydsm.satellite.global.security.token.JwtParser
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.authentication.ReactiveAuthenticationManager
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.server.SecurityWebFilterChain
 
-@Configuration
-internal class SecurityConfig(
-    private val jwtParser: JwtParser,
-    private val objectMapper: ObjectMapper
-) {
+
+@EnableWebFluxSecurity
+internal class SecurityConfig {
 
     companion object {
         private val TEACHER = Authority.TEACHER.name
@@ -25,74 +22,82 @@ internal class SecurityConfig(
     }
 
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    fun springSecurityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain? {
 
-        http
-            .csrf().disable()
+        http.csrf().disable()
             .formLogin().disable()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and().cors()
+            .cors()
 
-        http
-            .authorizeRequests()
+        http.authorizeExchange()
+
             // AUTH
-            .antMatchers("/auth/**").permitAll()
+            .pathMatchers("/auth/**").permitAll()
 
             // FILE
-            .antMatchers(HttpMethod.POST, "/file/image").permitAll()
+            .pathMatchers(HttpMethod.POST, "/file/image").permitAll()
 
             // STUDENT
-            .antMatchers(HttpMethod.POST, "/student").permitAll()
-            .antMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.POST, "/student").permitAll()
+            .pathMatchers(HttpMethod.GET, "/student").hasAuthority(TEACHER)
 
             // TEACHER
-            .antMatchers(HttpMethod.POST, "/teacher/auth").permitAll()
+            .pathMatchers(HttpMethod.POST, "/teacher/auth").permitAll()
 
             // DOCUMENT
-            .antMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PATCH, "/document/introduce").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PATCH, "/document/skill-set").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PATCH, "/document/project").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PATCH, "/document/award").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.PATCH, "/document/certificate").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.POST, "/document/submit").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.POST, "/document/submit/cancel").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.POST, "/document/share/{document-id}").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.GET, "/document/my/detail").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.GET, "/document/student/{student-id}").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER)
-            .antMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER)
-            .antMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER)
+            .pathMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/introduce").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/skill-set").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/project").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/award").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/certificate").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.POST, "/document/submit").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.POST, "/document/submit/cancel").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.POST, "/document/share/{document-id}").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.POST, "/document/share/cancel/{document-id}").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.GET, "/document/my").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.GET, "/document/my/detail").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.GET, "/document/student/{student-id}").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER)
+            .pathMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER)
+            .pathMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER)
 
             // LIBRARY
-            .antMatchers(HttpMethod.GET, "/library/student").hasAnyAuthority(STUDENT)
-            .antMatchers(HttpMethod.GET, "/library/teacher").hasAnyAuthority(TEACHER)
-            .antMatchers(HttpMethod.GET, "/library/{library-document-id}/index").hasAnyAuthority(STUDENT, TEACHER)
-            .antMatchers(HttpMethod.GET, "/library/public").permitAll()
-            .antMatchers(HttpMethod.PATCH, "/library/{library-document-id}/access-right").hasAnyAuthority(TEACHER)
+            .pathMatchers(HttpMethod.GET, "/library/student").hasAnyAuthority(STUDENT)
+            .pathMatchers(HttpMethod.GET, "/library/teacher").hasAnyAuthority(TEACHER)
+            .pathMatchers(HttpMethod.GET, "/library/{library-document-id}/index").hasAnyAuthority(STUDENT, TEACHER)
+            .pathMatchers(HttpMethod.GET, "/library/public").permitAll()
+            .pathMatchers(HttpMethod.PATCH, "/library/{library-document-id}/access-right").hasAnyAuthority(TEACHER)
 
             // MAJOR
-            .antMatchers(HttpMethod.GET, "/major").permitAll()
-            .antMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.DELETE, "/major/{major-id}").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.GET, "/major").permitAll()
+            .pathMatchers(HttpMethod.POST, "/major").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.DELETE, "/major/{major-id}").hasAuthority(TEACHER)
 
             // FEEDBACK
-            .antMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
-            .antMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
-            .antMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
-            .antMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
-            .antMatchers(HttpMethod.GET, "/feedback/my").hasAuthority(STUDENT)
-            .anyRequest().authenticated()
+            .pathMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
+            .pathMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
+            .pathMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
+            .pathMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.GET, "/feedback/my").hasAuthority(STUDENT)
 
-        http
-            .apply(FilterConfig(jwtParser, objectMapper))
+            .anyExchange().authenticated()
+            .and()
+            .httpBasic().and()
+            .formLogin()
 
         return http.build()
     }
 
     @Bean
-    protected fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    fun reactiveAuthenticationManager(
+        userDetailsService: ReactiveUserDetailsService,
+        passwordEncoder: PasswordEncoder
+    ): ReactiveAuthenticationManager =
+        UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService).apply {
+            setPasswordEncoder(passwordEncoder)
+        }
+
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+
 }

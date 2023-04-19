@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.teacher.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.teacher.presentation.dto.request.TeacherSignInRequest
 import kr.hs.entrydsm.satellite.domain.teacher.usecase.TeacherLoginUseCase
@@ -17,7 +18,7 @@ class TeacherController(
 ) {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth")
-    fun teacherLogin(@RequestBody request: TeacherSignInRequest): TokenResponse? {
+    suspend fun teacherLogin(@RequestBody @Valid request: TeacherSignInRequest): TokenResponse? {
         return teacherLoginUseCase.execute(
             accountId = request.accountId!!,
             password = request.password!!

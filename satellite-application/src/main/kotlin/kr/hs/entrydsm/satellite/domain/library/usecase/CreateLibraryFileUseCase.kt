@@ -6,7 +6,7 @@ import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.file.spi.PdfPort
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
-import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
+import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocumentDomain
 import kr.hs.entrydsm.satellite.domain.library.exception.SecretMismatchException
 import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
 import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
@@ -22,7 +22,7 @@ class CreateLibraryFileUseCase(
     private val documentPort: DocumentPort,
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(grade: Int, secret: String): UUID {
+    suspend fun execute(grade: Int, secret: String): UUID {
 
         if (schoolYearPort.secretMatches(secret)) {
             throw SecretMismatchException
@@ -44,7 +44,7 @@ class CreateLibraryFileUseCase(
         )
 
         val libraryDocumentJpaEntity = libraryDocumentPort.save(
-            LibraryDocument(
+            LibraryDocumentDomain(
                 year = year,
                 grade = grade,
                 filePath = filePath,

@@ -1,21 +1,24 @@
 package kr.hs.entrydsm.satellite.global.security.auth.details.service
 
-import java.util.UUID
-import kr.hs.entrydsm.satellite.domain.student.persistence.repository.StudentRepository
+import kotlinx.coroutines.reactor.mono
+import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
 import kr.hs.entrydsm.satellite.global.exception.InvalidTokenException
 import kr.hs.entrydsm.satellite.global.security.auth.details.StudentDetails
-import org.springframework.data.repository.findByIdOrNull
+import org.springframework.context.annotation.Primary
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
+import java.util.*
 
-@Service
+@Primary
+@Component
 class StudentDetailService(
-    private val studentRepository: StudentRepository
-) : UserDetailsService {
+    private val studentPort: StudentPort
+): ReactiveUserDetailsService {
 
-    override fun loadUserByUsername(username: String): UserDetails {
-        val student = studentRepository.findByIdOrNull(UUID.fromString(username)) ?: throw InvalidTokenException
-        return StudentDetails(student)
+    override fun findByUsername(username: String?): Mono<UserDetails>? = mono {
+        val student = studentPort.queryById(UUID.fromString(username)) ?: throw InvalidTokenException
+        return@mono StudentDetails(student)
     }
 }

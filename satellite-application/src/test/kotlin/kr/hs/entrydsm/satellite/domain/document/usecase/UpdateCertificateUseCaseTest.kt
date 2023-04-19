@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.CapturingSlot
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
@@ -33,9 +33,9 @@ internal class UpdateCertificateUseCaseTest : DescribeSpec({
 
             val slot = slot<Document>()
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns document
-            every { documentPort.save(capture(slot)) } returnsArgument 0
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("본인(학생) 문서의 자격증 정보를 수정한다.") {
 

@@ -26,18 +26,19 @@ subprojects {
 
     dependencies {
 
-        // kotlin
+        // Kotlin
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-        // test
-        testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.5")
+        // Coroutine
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1")
 
-        testImplementation("io.kotest:kotest-runner-junit5-jvm:4.4.3")
-        testImplementation("io.kotest:kotest-assertions-core-jvm:4.4.3")
-        testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
-
+        // Test
+        testImplementation("io.kotest:kotest-runner-junit5-jvm:5.4.0")
+        testImplementation("io.kotest:kotest-assertions-core-jvm:5.4.0")
         testImplementation("io.mockk:mockk:1.13.2")
     }
 }

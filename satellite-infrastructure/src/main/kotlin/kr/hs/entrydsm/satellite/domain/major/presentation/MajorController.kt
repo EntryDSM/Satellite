@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.major.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.major.dto.MajorListResponse
 import kr.hs.entrydsm.satellite.domain.major.presentation.dto.request.CreateMajorRequest
 import kr.hs.entrydsm.satellite.domain.major.usecase.CreateMajorUseCase
@@ -27,18 +28,18 @@ class MajorController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createMajor(@RequestBody request: CreateMajorRequest) {
+    suspend fun createMajor(@RequestBody @Valid request: CreateMajorRequest) {
         createMajorUseCase.execute(request.majorName)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{major-id}")
-    fun deleteMajor(@PathVariable("major-id") majorId: UUID) {
+    suspend fun deleteMajor(@PathVariable("major-id") majorId: UUID) {
         deleteMajorUseCase.execute(majorId)
     }
 
     @GetMapping
-    fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
+    suspend fun queryMajor(@RequestParam(value = "name", defaultValue = "") name: String): MajorListResponse {
         return queryMajorUseCase.execute(name)
     }
 }

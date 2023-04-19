@@ -7,18 +7,20 @@ import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 open class WriterInfoRequest(
-    open val profileImagePath: String?,
+    profileImagePath: String?,
     open val majorId: UUID,
     open val email: String,
     open val grade: Int,
     open val classNum: Int,
     open val number: Int
 ) {
+    val profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE
+
     fun toElement(student: Student, major: Major) =
         WriterInfoElement(
             studentId = student.id,
             name = student.name,
-            profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE,
+            profileImagePath = profileImagePath,
             grade = grade,
             classNum = classNum,
             number = number,
@@ -28,10 +30,10 @@ open class WriterInfoRequest(
         )
 
     fun toStudent(student: Student) =
-        student.copy(
-            grade = grade,
-            classNum = classNum,
-            number = number,
-            profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE,
-        )
+        student.apply {
+            this.grade = grade
+            this.classNum = classNum
+            this.number = number
+            this.profileImagePath = profileImagePath
+        }
 }

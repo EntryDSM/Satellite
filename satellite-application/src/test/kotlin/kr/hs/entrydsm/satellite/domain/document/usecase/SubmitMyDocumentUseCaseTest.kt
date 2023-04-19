@@ -3,10 +3,10 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
+import io.mockk.coVerify
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
@@ -35,15 +35,15 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
 
             val slot = slot<Document>()
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns document
-            every { documentPort.save(capture(slot)) } returnsArgument 0
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("SUBMITTED 상태로 변경하여 저장한다.") {
 
                 submitMyDocumentUseCase.execute()
 
-                verify(exactly = 1) { documentPort.save(slot.captured) }
+                coVerify(exactly = 1) { documentPort.save(slot.captured) }
                 slot.captured.status shouldBe DocumentStatus.SUBMITTED
             }
         }
@@ -55,15 +55,15 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
 
         context("SUBMITTED 상태의 문서를 가진 학생(유저)가 주어지면") {
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns submittedDocument
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns submittedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     submitMyDocumentUseCase.execute()
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
 
@@ -74,15 +74,15 @@ internal class SubmitMyDocumentUseCaseTest : DescribeSpec({
 
         context("SHARED 상태의 문서를 가진 학생(유저)가 주어지면") {
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns sharedDocument
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns sharedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     submitMyDocumentUseCase.execute()
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
     }

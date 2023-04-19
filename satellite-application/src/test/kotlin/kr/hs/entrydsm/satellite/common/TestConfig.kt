@@ -7,7 +7,6 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.test.AssertionMode
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestResult
-import io.kotest.extensions.spring.SpringExtension
 import io.mockk.clearAllMocks
 
 @AutoScan
@@ -20,7 +19,8 @@ object TestConfig : AbstractProjectConfig(), TestListener {
     override val failOnIgnoredTests = false
     override val isolationMode = IsolationMode.SingleInstance
 
-    override fun extensions() = listOf(SpringExtension)
+//    @ExperimentalKotest
+//    override var testCoroutineDispatcher = true
 
     // TestListener
     override suspend fun afterEach(testCase: TestCase, result: TestResult) = clearAllMocks()

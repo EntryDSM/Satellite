@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.satellite.domain.student.spi
 
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import java.util.UUID
+import java.util.*
 
 interface StudentPort {
-    fun save(student: Student): Student
-    fun queryById(studentId: UUID): Student?
-    fun queryByEmail(email: String): Student?
-    fun existsByEmail(email: String): Boolean
+    suspend fun save(student: Student): Student
+    suspend fun queryById(studentId: UUID): Student?
+    suspend fun queryByEmail(email: String): Student?
+    suspend fun existsByEmail(email: String): Boolean
 }

@@ -1,36 +1,37 @@
 package kr.hs.entrydsm.satellite.global.security.token
 
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.reactor.mono
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.filter.OncePerRequestFilter
+import org.springframework.core.annotation.Order
+import org.springframework.http.server.reactive.ServerHttpRequest
+import org.springframework.security.core.context.ReactiveSecurityContextHolder
+import org.springframework.stereotype.Component
+import org.springframework.web.server.ServerWebExchange
+import org.springframework.web.server.WebFilter
+import org.springframework.web.server.WebFilterChain
+import reactor.core.publisher.Mono
 
+@Order(-100)
+@Component
 class JwtFilter(
     private val jwtParser: JwtParser
-) : OncePerRequestFilter() {
+) : WebFilter {
 
-    override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
+    override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> = mono {
 
-        val token = resolvedToken(request)
-        SecurityContextHolder.clearContext()
-
-        token?.let {
-            SecurityContextHolder.getContext().authentication = jwtParser.getAuthentication(token)
+        resolvedToken(exchange.request)?.let { token ->
+            val auth = jwtParser.getAuthentication(token)
+            return@mono chain.filter(exchange)
+                .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth)).awaitSingleOrNull()
         }
-
-        filterChain.doFilter(request, response)
+        return@mono chain.filter(exchange).awaitSingleOrNull()
     }
 
-    private fun resolvedToken(request: HttpServletRequest): String? =
-        request.getHeader(JwtConstants.HEADER)?.also {
+    private fun resolvedToken(request: ServerHttpRequest): String? =
+        request.headers[JwtConstants.HEADER]?.get(0)?.let {
             if (it.startsWith(JwtConstants.PREFIX)) {
-                return it.substring(JwtConstants.PREFIX.length)
-            }
+                it.substring(JwtConstants.PREFIX.length + 1)
+            } else null
         }
 }

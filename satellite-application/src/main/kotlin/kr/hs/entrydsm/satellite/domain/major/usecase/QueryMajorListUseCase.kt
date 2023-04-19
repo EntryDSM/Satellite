@@ -9,7 +9,7 @@ import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
 class QueryMajorListUseCase(
     private val majorPort: MajorPort
 ) {
-    fun execute(name: String): MajorListResponse {
+    suspend fun execute(name: String): MajorListResponse {
 
         val tags = majorPort.queryByNameContaining(name)
             .map { MajorElement(it) }

@@ -5,9 +5,9 @@ import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import java.util.*
 
 interface LibraryDocumentPort {
-    fun queryById(libraryDocumentId: UUID): LibraryDocument?
-    fun queryAll(): List<LibraryDocument>
-    fun queryByYear(year: Int): List<LibraryDocument>
-    fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument>
-    fun save(libraryDocument: LibraryDocument): LibraryDocument
+    suspend fun queryById(libraryDocumentId: UUID): LibraryDocument?
+    suspend fun queryAll(): List<LibraryDocument>
+    suspend fun queryByYear(year: Int): List<LibraryDocument>
+    suspend fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument>
+    suspend fun save(libraryDocument: LibraryDocument): LibraryDocument
 }

@@ -5,5 +5,5 @@ import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import java.util.*
 
 interface TokenPort {
-    fun generateBothToken(userId: UUID, auth: Authority): TokenResponse
+    suspend fun generateBothToken(userId: UUID, auth: Authority): TokenResponse
 }

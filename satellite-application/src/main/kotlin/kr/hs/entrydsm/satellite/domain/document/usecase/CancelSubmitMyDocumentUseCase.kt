@@ -12,7 +12,7 @@ class CancelSubmitMyDocumentUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute() {
+    suspend fun execute() {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
@@ -22,7 +22,7 @@ class CancelSubmitMyDocumentUseCase(
         }
 
         documentPort.save(
-            document.changeStatus(DocumentStatus.CREATED)
+            document.apply { changeStatus(DocumentStatus.CREATED) }
         )
     }
 }

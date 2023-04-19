@@ -1,28 +1,30 @@
 package kr.hs.entrydsm.satellite.domain.major.persistence
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.convertValue
+import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.major.domain.Major
-import kr.hs.entrydsm.satellite.domain.major.persistence.repository.MajorRepository
 import kr.hs.entrydsm.satellite.domain.major.spi.MajorPort
-import org.springframework.data.repository.findByIdOrNull
 import java.util.*
 
 @Adapter
 class MajorPersistenceAdapter(
-    private val majorRepository: MajorRepository
+    private val majorRepository: MajorRepository,
+    private val objectMapper: ObjectMapper
 ) : MajorPort {
 
-    override fun save(major: Major): MajorJpaEntity =
-        majorRepository.save(MajorJpaEntity.of(major))
+    override suspend fun save(major: Major) =
+        majorRepository.save(objectMapper.convertValue<MajorEntity>(major)).awaitSingle()
 
-    override fun queryById(majorId: UUID) =
-        majorRepository.findByIdOrNull(majorId)
+    override suspend fun queryById(majorId: UUID) =
+        majorRepository.findById(majorId).awaitSingleOrNull()
 
-    override fun deleteById(majorId: UUID) {
-        majorRepository.deleteById(majorId)
+    override suspend fun deleteById(majorId: UUID) {
+        majorRepository.deleteById(majorId).awaitSingle()
     }
 
-    override fun queryByNameContaining(majorName: String) =
-        majorRepository.findByNameContaining(majorName)
-
+    override suspend fun queryByNameContaining(majorName: String): List<Major> =
+        majorRepository.findByNameContaining(majorName).collectList().awaitSingle()
 }

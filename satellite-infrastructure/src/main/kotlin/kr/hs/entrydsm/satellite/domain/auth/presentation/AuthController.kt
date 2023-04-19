@@ -19,17 +19,17 @@ class AuthController(
 ) {
 
     @GetMapping("/google/link")
-    fun getGoogleClientId(): OauthLinkResponse {
+    suspend fun getGoogleClientId(): OauthLinkResponse {
         return studentAuthService.getGoogleLoginLink()
     }
 
     @GetMapping("/oauth/token")
-    fun oauthSignIn(@RequestParam("code") code: String): TokenResponse {
+    suspend fun oauthSignIn(@RequestParam("code") code: String): TokenResponse {
         return studentAuthService.oauthSignIn(code)
     }
 
     @PutMapping("/token")
-    fun reissue(@RequestHeader("X-Refresh-Token") token: String): TokenResponse {
+    suspend fun reissue(@RequestHeader("X-Refresh-Token") token: String): TokenResponse {
         return reissueTokenUseCase.execute(token)
     }
 }

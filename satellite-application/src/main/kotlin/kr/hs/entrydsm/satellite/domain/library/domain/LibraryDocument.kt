@@ -4,17 +4,29 @@ import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.time.LocalDateTime
 import java.util.*
 
-data class LibraryDocument(
-    val id: UUID = UUID.randomUUID(),
-    val year: Int,
-    val grade: Int,
-    val filePath: String,
-    val accessRight: AccessRight,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+interface LibraryDocument {
+    val id: UUID
+    val year: Int
+    val grade: Int
+    val filePath: String
+    var accessRight: AccessRight
+    val createdAt: LocalDateTime
     val index: Map<String, Int>
-) : Domain {
+
     val generation: Int
         get() = year - grade - 2013
 
-    protected constructor(): this(UUID(0,0), 2023, 1, "", AccessRight.PRIVATE, LocalDateTime.MIN, mapOf())
+    fun changeAccessRight(accessRight: AccessRight) {
+        this.accessRight = accessRight
+    }
 }
+
+data class LibraryDocumentDomain(
+    override val id: UUID = UUID.randomUUID(),
+    override val year: Int,
+    override val grade: Int,
+    override val filePath: String,
+    override var accessRight: AccessRight,
+    override val createdAt: LocalDateTime = LocalDateTime.now(),
+    override val index: Map<String, Int>
+) : LibraryDocument, Domain

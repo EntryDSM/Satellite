@@ -13,7 +13,7 @@ class QueryMyDocumentFeedbackUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(): FeedbackListResponse {
+    suspend fun execute(): FeedbackListResponse {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException

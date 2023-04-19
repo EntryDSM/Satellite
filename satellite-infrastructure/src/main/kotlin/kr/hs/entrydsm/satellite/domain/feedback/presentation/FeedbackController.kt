@@ -33,7 +33,7 @@ class FeedbackController(
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    fun createFeedback(@RequestBody @Valid request: CreateFeedbackRequest) {
+    suspend fun createFeedback(@RequestBody @Valid request: CreateFeedbackRequest) {
         createFeedbackUseCase.execute(
             documentId = request.documentId!!,
             elementId = request.elementId!!,
@@ -43,7 +43,7 @@ class FeedbackController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping
-    fun updateFeedback(@RequestBody @Valid request: UpdateFeedbackWebRequest) {
+    suspend fun updateFeedback(@RequestBody @Valid request: UpdateFeedbackWebRequest) {
         updateFeedbackUseCase.execute(
             documentId = request.documentId!!,
             elementId = request.elementId!!,
@@ -53,7 +53,7 @@ class FeedbackController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
-    fun deleteFeedback(@RequestBody @Valid request: DeleteFeedbackRequest) {
+    suspend fun deleteFeedback(@RequestBody @Valid request: DeleteFeedbackRequest) {
         deleteFeedbackUseCase.execute(
             documentId = request.documentId!!,
             elementId = request.elementId!!
@@ -62,7 +62,7 @@ class FeedbackController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/apply")
-    fun applyFeedback(@RequestBody @Valid request: ApplyFeedbackRequest) {
+    suspend fun applyFeedback(@RequestBody @Valid request: ApplyFeedbackRequest) {
         applyFeedbackUseCase.execute(
             documentId = request.documentId!!,
             elementId = request.elementId!!,
@@ -70,7 +70,7 @@ class FeedbackController(
     }
 
     @GetMapping("/my")
-    fun queryMyDocumentFeedback(): FeedbackListResponse {
+    suspend fun queryMyDocumentFeedback(): FeedbackListResponse {
         return queryMyDocumentFeedbackUseCase.execute()
     }
 }

@@ -14,17 +14,17 @@ data class StudentDocumentListResponse(
         val name: String,
         val documentStatus: DocumentStatus,
         val documentId: UUID,
-        val profileImagePath: String,
+        val profileImageUrl: String,
         val studentNumber: Int,
         val email: String,
         val major: MajorElement
     ) {
-        constructor(document: Document) : this(
+        constructor(fileBaseUrl: String, document: Document) : this(
             studentId = document.writer.studentId,
             name = document.writer.name,
             documentStatus = document.status,
             documentId = document.id,
-            profileImagePath = document.writer.profileImagePath,
+            profileImageUrl = fileBaseUrl + document.writer.profileImagePath,
             studentNumber = document.writer.studentNumber,
             email = document.writer.email,
             major = MajorElement(

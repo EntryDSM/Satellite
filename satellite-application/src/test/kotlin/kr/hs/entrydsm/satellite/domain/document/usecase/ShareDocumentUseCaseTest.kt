@@ -3,11 +3,11 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.justRun
+import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
@@ -32,19 +32,19 @@ internal class ShareDocumentUseCaseTest : DescribeSpec({
 
             val slot = slot<Document>()
 
-            every { documentPort.queryById(document.id) } returns document
-            every { documentPort.save(capture(slot)) } returnsArgument 0
-            every { feedbackPort.queryByDocumentId(document.id) } returns feedbackList
-            justRun { feedbackPort.deleteAll(feedbackList) }
+            coEvery { documentPort.queryById(document.id) } returns document
+            coEvery { documentPort.save(capture(slot)) } returnsArgument 0
+            coEvery { feedbackPort.queryByDocumentId(document.id) } returns feedbackList
+            coJustRun { feedbackPort.deleteByDocumentId(document.id) }
 
             it("해당 문서를 SHARED 상태로 변경하여 저장한다.") {
 
                 shareDocumentUseCase.execute(document.id)
 
-                verify(exactly = 1) { documentPort.save(slot.captured) }
+                coVerify(exactly = 1) { documentPort.save(slot.captured) }
                 slot.captured.status shouldBe DocumentStatus.SHARED
 
-                verify(exactly = 1) { feedbackPort.deleteAll(feedbackList) }
+                coVerify(exactly = 1) { feedbackPort.deleteByDocumentId(document.id) }
             }
         }
 
@@ -52,14 +52,14 @@ internal class ShareDocumentUseCaseTest : DescribeSpec({
 
         context("CREATED 상태인 문서의 id가 주어지면") {
 
-            every { documentPort.queryById(createdDocument.id) } returns createdDocument
+            coEvery { documentPort.queryById(createdDocument.id) } returns createdDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     shareDocumentUseCase.execute(createdDocument.id)
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
 
@@ -67,14 +67,14 @@ internal class ShareDocumentUseCaseTest : DescribeSpec({
 
         context("SHARED 상태인 문서의 id가 주어지면") {
 
-            every { documentPort.queryById(sharedDocument.id) } returns sharedDocument
+            coEvery { documentPort.queryById(sharedDocument.id) } returns sharedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     shareDocumentUseCase.execute(sharedDocument.id)
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
     }

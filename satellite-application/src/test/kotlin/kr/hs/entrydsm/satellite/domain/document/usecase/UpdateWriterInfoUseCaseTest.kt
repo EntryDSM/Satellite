@@ -4,10 +4,10 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.CapturingSlot
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
+import io.mockk.coVerify
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
@@ -40,18 +40,18 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
 
             val slot = slot<Document>()
 
-            every { securityPort.getCurrentStudent() } returns student
-            every { documentPort.queryByWriterStudentId(student.id) } returns document
-            every { majorPort.queryById(request.majorId) } returns major
-            every { documentPort.save(capture(slot)) } returnsArgument 0
-            every { studentPort.save(any()) } returnsArgument 0
+            coEvery { securityPort.getCurrentStudent() } returns student
+            coEvery { documentPort.queryByWriterStudentId(student.id) } returns document
+            coEvery { majorPort.queryById(request.majorId) } returns major
+            coEvery { documentPort.save(capture(slot)) } returnsArgument 0
+            coEvery { studentPort.save(any()) } returnsArgument 0
 
             it("본인(학생) 문서의 작성자 정보를 수정한다.") {
 
                 updateWriterInfoUseCase.execute(request)
 
-                verify(exactly = 1) { documentPort.save(slot.captured) }
-                verify(exactly = 1) { studentPort.save(any()) }
+                coVerify(exactly = 1) { documentPort.save(slot.captured) }
+                coVerify(exactly = 1) { studentPort.save(any()) }
                 onlyWriterIsDifferent(slot, document)
             }
         }

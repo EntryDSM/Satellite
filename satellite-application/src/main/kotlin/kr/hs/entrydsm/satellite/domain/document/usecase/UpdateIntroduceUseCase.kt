@@ -2,7 +2,6 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 
 import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
-import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.dto.IntroduceRequest
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
@@ -12,20 +11,13 @@ class UpdateIntroduceUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort
 ) {
-    fun execute(introduce: IntroduceRequest) {
+    suspend fun execute(requests: IntroduceRequest) {
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
         documentPort.save(
-            documentWithUpdatedIntroduce(document, introduce)
+            document.apply { this.introduce = requests.toIntroduceElement() }
         )
-    }
-
-    private fun documentWithUpdatedIntroduce(
-        document: Document,
-        introduce: IntroduceRequest
-    ): Document {
-        return document.copy(introduce = introduce.toIntroduceElement())
     }
 }

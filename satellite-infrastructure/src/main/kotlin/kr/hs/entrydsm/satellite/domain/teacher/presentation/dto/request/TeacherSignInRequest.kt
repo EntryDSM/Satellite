@@ -4,9 +4,9 @@ import javax.validation.constraints.NotBlank
 
 data class TeacherSignInRequest(
 
-    @NotBlank
+    @field:NotBlank
     val accountId: String?,
 
-    @NotBlank
+    @field:NotBlank
     val password: String?
 )

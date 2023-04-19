@@ -1,35 +1,35 @@
 package kr.hs.entrydsm.satellite.domain.library.persistence
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.convertValue
+import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
-import kr.hs.entrydsm.satellite.domain.library.persistence.QLibraryDocumentJpaEntity.libraryDocumentJpaEntity
-import kr.hs.entrydsm.satellite.domain.library.persistence.repository.LibraryDocumentRepository
 import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
-import kr.hs.entrydsm.satellite.global.config.findBy
-import org.springframework.data.repository.findByIdOrNull
 import java.util.*
 
 @Adapter
 class LibraryDocumentPersistenceAdapter(
-    private val libraryDocumentRepository: LibraryDocumentRepository
+    private val libraryDocumentRepository: LibraryDocumentRepository,
+    private val objectMapper: ObjectMapper
 ) : LibraryDocumentPort {
 
-    override fun save(libraryDocument: LibraryDocument): LibraryDocumentJpaEntity =
-        libraryDocumentRepository.save(LibraryDocumentJpaEntity.of(libraryDocument))
+    override suspend fun save(libraryDocument: LibraryDocument): LibraryDocumentEntity =
+        libraryDocumentRepository.save(objectMapper.convertValue(libraryDocument)).awaitSingle()
 
-    override fun queryById(libraryDocumentId: UUID) =
-        libraryDocumentRepository.findByIdOrNull(libraryDocumentId)
+    override suspend fun queryById(libraryDocumentId: UUID) =
+        libraryDocumentRepository.findById(libraryDocumentId).awaitSingleOrNull()
 
-    override fun queryAll(): List<LibraryDocument> =
-        libraryDocumentRepository.findAll().toList()
+    override suspend fun queryAll(): List<LibraryDocument> =
+        libraryDocumentRepository.findAll().collectList().awaitSingle()
 
-    override fun queryByYear(year: Int): List<LibraryDocument> =
-        libraryDocumentRepository.findByYear(year)
+    override suspend fun queryByYear(year: Int): List<LibraryDocument> =
+        libraryDocumentRepository.findByYear(year).collectList().awaitSingle()
 
-    override fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument> =
-        libraryDocumentRepository.findBy(
-            libraryDocumentJpaEntity.accessRight.ne(accessRight),
-            year?.let { libraryDocumentJpaEntity.year.eq(year) }
-        )
+    override suspend fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument> =
+        (year?.let {
+            libraryDocumentRepository.findByAccessRightNotAndYear(accessRight, year)
+        } ?: libraryDocumentRepository.findByAccessRightNot(accessRight)).collectList().awaitSingle()
 }

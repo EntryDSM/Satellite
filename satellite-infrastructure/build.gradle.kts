@@ -11,75 +11,57 @@ dependencies {
 
     implementation(project(":satellite-application"))
 
-    // security
+    // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
-    // oauth
+    // Oauth
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
-    // web
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
-    // time base uuid
-    implementation("com.fasterxml.uuid:java-uuid-generator:3.1.4")
-
-    // validation
+    // Web
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    compileOnly("org.glassfish.jaxb:jaxb-runtime")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    // database
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("com.mysql:mysql-connector-j")
+    // Database
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    runtimeOnly("org.mariadb:r2dbc-mariadb:1.0.3")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
+    implementation("org.mongodb:mongodb-driver-async:3.12.12")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.mongodb:mongodb-driver-sync:4.6.0")
-
-    // querydsl
-    implementation("com.querydsl:querydsl-mongodb:5.0.0")
-    api("com.querydsl:querydsl-jpa:5.0.0")
-    kapt("com.querydsl:querydsl-apt:5.0.0")
-
-    // feign Client
-    implementation("io.github.openfeign:feign-httpclient:11.9.1")
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
+    // UUID
+    implementation("com.fasterxml.uuid:java-uuid-generator:4.1.0")
 
     // AWS
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
-    implementation("com.amazonaws:aws-java-sdk-ses:1.12.144")
+    val awsSdkVersion = "2.20.26"
+    implementation("software.amazon.awssdk:bom:$awsSdkVersion")
+    implementation("software.amazon.awssdk:s3-transfer-manager:$awsSdkVersion")
+    implementation("software.amazon.awssdk:s3:$awsSdkVersion")
+    implementation("software.amazon.awssdk.crt:aws-crt:0.21.8")
 
-    // pdf
+    // PDF
     implementation("org.thymeleaf:thymeleaf")
     implementation("com.itextpdf:html2pdf:4.0.3")
 
+    // Logging
+    implementation("io.sentry:sentry-spring-boot-starter:6.16.0")
+}
+
+repositories {
+    mavenCentral()
 }
 
 allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.data.relational.core.mapping.Table")
     annotation("org.springframework.data.mongodb.core.mapping.Document")
 }
 
 noArg {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
+    annotation("org.springframework.data.relational.core.mapping.Table")
     annotation("org.springframework.data.mongodb.core.mapping.Document")
-}
-
-kapt {
-    annotationProcessor("org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor")
-    annotationProcessor("com.querydsl.apt.jpa.JPAAnnotationProcessor")
-    correctErrorTypes = true
-}
-
-querydsl {
-    springDataMongo = true
-    jpa = true
-    library = "com.querydsl:querydsl-apt:5.0.0"
-    querydslSourcesDir = "$projectDir/build/generated"
 }
 
 tasks.getByName<Jar>("jar") {

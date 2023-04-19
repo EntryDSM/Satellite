@@ -1,20 +1,18 @@
 package kr.hs.entrydsm.satellite.domain.auth.persistence
 
+import kr.hs.entrydsm.satellite.common.entity.BaseUUIDEntity
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
-import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive
 import java.util.*
-import javax.validation.constraints.NotBlank
 
 @RedisHash
-class RefreshTokenEntity(
+data class RefreshTokenEntity(
 
-    @field:Id
-    override val id: UUID,
+    @get:JvmName("getIdentifier")
+    override var id: UUID,
 
-    @field:NotBlank
     override val token: String,
 
     override val authority: Authority,
@@ -22,15 +20,4 @@ class RefreshTokenEntity(
     @field:TimeToLive
     override val timeToLive: Long
 
-) : RefreshToken(id, token, authority, timeToLive) {
-    companion object {
-        fun of(refreshToken: RefreshToken) = refreshToken.run {
-            RefreshTokenEntity(
-                id = id,
-                token = token,
-                authority = authority,
-                timeToLive = timeToLive
-            )
-        }
-    }
-}
+) : RefreshToken, BaseUUIDEntity(id)

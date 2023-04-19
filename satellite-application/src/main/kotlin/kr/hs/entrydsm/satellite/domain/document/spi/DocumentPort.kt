@@ -6,26 +6,18 @@ import java.util.*
 
 interface DocumentPort {
 
-    fun save(document: Document): Document
-    fun saveAll(documents: List<Document>): List<Document>
-    fun queryById(documentId: UUID): Document?
-    fun queryByWriterStudentId(studentId: UUID): Document?
-    fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document>
-    fun existByWriterStudentId(studentId: UUID): Boolean
+    suspend fun save(document: Document): Document
+    suspend fun saveAll(documents: List<Document>)
+    suspend fun queryById(documentId: UUID): Document?
+    suspend fun queryByWriterStudentId(studentId: UUID): Document?
+    suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document>
+    suspend fun existByWriterStudentId(studentId: UUID): Boolean
 
-    fun queryByStatusAndWriterInfo(
-        status: DocumentStatus,
+    suspend fun queryByWriterInfoAndStatus(
         name: String?,
         grade: Int?,
         classNum: Int?,
-        majorId: UUID?
+        majorId: UUID?,
+        status: DocumentStatus? = null,
     ): List<Document>
-
-    fun queryByWriterInfo(
-        name: String?,
-        grade: Int?,
-        classNum: Int?,
-        majorId: UUID?
-    ): List<Document>
-
 }

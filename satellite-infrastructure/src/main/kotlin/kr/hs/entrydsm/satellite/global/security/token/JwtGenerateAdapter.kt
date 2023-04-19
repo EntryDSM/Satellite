@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.global.security.token
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
-import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
+import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshTokenDomain
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
@@ -14,8 +14,7 @@ import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.TY
 import kr.hs.entrydsm.satellite.global.security.token.properties.SecurityProperties
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.Date
-import java.util.UUID
+import java.util.*
 
 @Component
 class JwtGenerateAdapter(
@@ -23,7 +22,7 @@ class JwtGenerateAdapter(
     private val refreshTokenPort: RefreshTokenPort
 ) : TokenPort {
 
-    override fun generateBothToken(
+    override suspend fun generateBothToken(
         userId: UUID,
         auth: Authority,
     ): TokenResponse {
@@ -37,7 +36,7 @@ class JwtGenerateAdapter(
 
     private fun nowPlusSeconds(exp: Long): LocalDateTime = LocalDateTime.now().withNano(0).plusSeconds(exp)
 
-    private fun generateRefreshToken(userId: UUID, authority: Authority): String {
+    private suspend fun generateRefreshToken(userId: UUID, authority: Authority): String {
 
         val token = Jwts
             .builder()
@@ -49,7 +48,7 @@ class JwtGenerateAdapter(
             .setExpiration(Date(System.currentTimeMillis() + securityProperties.refreshExp * 1000))
             .compact()
 
-        val refreshToken = RefreshToken(
+        val refreshToken = RefreshTokenDomain(
             id = userId,
             token = token,
             authority = authority,
@@ -60,7 +59,7 @@ class JwtGenerateAdapter(
         return token
     }
 
-    private fun generateAccessToken(userId: UUID, authority: Authority): String {
+    private suspend fun generateAccessToken(userId: UUID, authority: Authority): String {
         return Jwts
             .builder()
             .signWith(SignatureAlgorithm.HS512, securityProperties.secretKey)

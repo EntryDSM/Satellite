@@ -62,62 +62,62 @@ class DocumentController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/writer-info")
-    fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoWebRequest) {
+    suspend fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoWebRequest) {
         updateWriterInfoUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/introduce")
-    fun updateIntroduce(@RequestBody @Valid request: UpdateIntroduceWebRequest) {
+    suspend fun updateIntroduce(@RequestBody @Valid request: UpdateIntroduceWebRequest) {
         updateIntroduceUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/skill-set")
-    fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetWebRequest) {
+    suspend fun updateSkillSet(@RequestBody @Valid request: UpdateSkillSetWebRequest) {
         updateSkillSetUseCase.execute(request.skillList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/project")
-    fun updateProject(@RequestBody @Valid request: UpdateProjectWebRequest) {
+    suspend fun updateProject(@RequestBody @Valid request: UpdateProjectWebRequest) {
         updateProjectUseCase.execute(request.projectList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/award")
-    fun updateAward(@RequestBody @Valid request: UpdateAwardWebRequest) {
+    suspend fun updateAward(@RequestBody @Valid request: UpdateAwardWebRequest) {
         updateAwardUseCase.execute(request.awardList)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/certificate")
-    fun updateCertificate(@RequestBody @Valid request: UpdateCertificateWebRequest) {
+    suspend fun updateCertificate(@RequestBody @Valid request: UpdateCertificateWebRequest) {
         updateCertificateUseCase.execute(request.certificateList)
     }
 
     @GetMapping("/my/detail")
-    fun queryMyDocumentInfo(): DocumentInfoResponse {
+    suspend fun queryMyDocumentInfo(): DocumentInfoResponse {
         return queryMyDocumentInfoUseCase.execute()
     }
 
     @GetMapping("/my")
-    fun queryMyDocument(): DocumentResponse {
+    suspend fun queryMyDocument(): DocumentResponse {
         return queryMyDocumentUseCase.execute()
     }
 
     @GetMapping("/student/{student-id}")
-    fun queryStudentDocumentInfo(@PathVariable("student-id") studentId: UUID): DocumentInfoResponse {
+    suspend fun queryStudentDocumentInfo(@PathVariable("student-id") studentId: UUID): DocumentInfoResponse {
         return queryStudentDocumentInfoUseCase.execute(studentId)
     }
 
     @GetMapping("/{document-id}")
-    fun queryDocumentInfo(@PathVariable("document-id") documentId: UUID): DocumentInfoResponse {
+    suspend fun queryDocumentInfo(@PathVariable("document-id") documentId: UUID): DocumentInfoResponse {
         return queryDocumentInfoUseCase.execute(documentId)
     }
 
     @GetMapping("/shared")
-    fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentWebRequest): DocumentListResponse {
+    suspend fun querySharedDocument(@ModelAttribute @Valid request: QueryDocumentWebRequest): DocumentListResponse {
         return request.run {
             querySharedDocumentUseCase.execute(
                 name = name,
@@ -130,25 +130,25 @@ class DocumentController(
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/submit")
-    fun submitDocument() {
+    suspend fun submitDocument() {
         submitMyDocumentUseCase.execute()
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/submit/cancel")
-    fun cancelSubmitDocument() {
+    suspend fun cancelSubmitDocument() {
         cancelSubmitMyDocumentUseCase.execute()
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/share/{document-id}")
-    fun shareDocument(@PathVariable("document-id") documentId: UUID) {
+    suspend fun shareDocument(@PathVariable("document-id") documentId: UUID) {
         shareDocumentUseCase.execute(documentId)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/share/cancel/{document-id}")
-    fun cancelShareDocument(@PathVariable("document-id") documentId: UUID) {
+    suspend fun cancelShareDocument(@PathVariable("document-id") documentId: UUID) {
         cancelShareDocumentUseCase.execute(documentId)
     }
 }

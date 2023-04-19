@@ -12,7 +12,7 @@ class UpdateFeedbackUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(
+    suspend fun execute(
         documentId: UUID,
         elementId: UUID,
         comment: String
@@ -26,7 +26,7 @@ class UpdateFeedbackUseCase(
         ) ?: throw FeedbackNotFoundException
 
         feedbackPort.save(
-            feedback.updateComment(comment)
+            feedback.apply { updateComment(comment) }
         )
     }
 }

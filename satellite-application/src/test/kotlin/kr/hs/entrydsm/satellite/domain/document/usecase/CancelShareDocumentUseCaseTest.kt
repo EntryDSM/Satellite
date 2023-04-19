@@ -3,10 +3,10 @@ package kr.hs.entrydsm.satellite.domain.document.usecase
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
@@ -27,14 +27,14 @@ internal class CancelShareDocumentUseCaseTest : DescribeSpec({
 
             val slot = slot<Document>()
 
-            every { documentPort.queryById(document.id) } returns document
-            every { documentPort.save(capture(slot)) } returnsArgument 0
+            coEvery { documentPort.queryById(document.id) } returns document
+            coEvery { documentPort.save(capture(slot)) } returnsArgument 0
 
             it("SUBMITTED 상태로 변경하여 저장한다.") {
 
                 cancelShareDocumentUseCase.execute(document.id)
 
-                verify(exactly = 1) { documentPort.save(slot.captured) }
+                coVerify(exactly = 1) { documentPort.save(slot.captured) }
                 slot.captured.status shouldBe DocumentStatus.SUBMITTED
             }
         }
@@ -43,14 +43,14 @@ internal class CancelShareDocumentUseCaseTest : DescribeSpec({
 
         context("CREATED 상태인 문서의 id가 주어지면") {
 
-            every { documentPort.queryById(createdDocument.id) } returns createdDocument
+            coEvery { documentPort.queryById(createdDocument.id) } returns createdDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     cancelShareDocumentUseCase.execute(createdDocument.id)
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
 
@@ -58,14 +58,14 @@ internal class CancelShareDocumentUseCaseTest : DescribeSpec({
 
         context("SUBMITTED 상태인 문서의 id가 주어지면") {
 
-            every { documentPort.queryById(submittedDocument.id) } returns submittedDocument
+            coEvery { documentPort.queryById(submittedDocument.id) } returns submittedDocument
 
             it("IllegalStatus 예외를 던진다.") {
 
                 shouldThrow<DocumentIllegalStatusException> {
                     cancelShareDocumentUseCase.execute(submittedDocument.id)
                 }
-                verify(exactly = 0) { documentPort.save(any()) }
+                coVerify(exactly = 0) { documentPort.save(any()) }
             }
         }
     }

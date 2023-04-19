@@ -10,12 +10,12 @@ import java.util.*
 class UpdateLibraryDocumentAccessRightUseCase(
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
-    fun execute(libraryDocumentId: UUID, accessRight: AccessRight) {
+    suspend fun execute(libraryDocumentId: UUID, accessRight: AccessRight) {
         val libraryDocument =
             libraryDocumentPort.queryById(libraryDocumentId) ?: throw LibraryDocumentNotFoundException
 
         libraryDocumentPort.save(
-            libraryDocument.copy(accessRight = accessRight)
+            libraryDocument.apply { changeAccessRight(accessRight) }
         )
     }
 }

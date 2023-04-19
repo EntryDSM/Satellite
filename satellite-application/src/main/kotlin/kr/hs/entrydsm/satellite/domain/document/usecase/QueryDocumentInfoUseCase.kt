@@ -18,7 +18,7 @@ class QueryDocumentInfoUseCase(
     private val documentPort: DocumentPort,
     private val filePort: FilePort
 ) {
-    fun execute(documentId: UUID): DocumentInfoResponse {
+    suspend fun execute(documentId: UUID): DocumentInfoResponse {
 
         val authority = securityPort.getCurrentUserAuthority()
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
@@ -39,7 +39,7 @@ class QueryDocumentInfoUseCase(
         }
     }
 
-    private fun isWriter(document: Document, authority: Authority): Boolean {
+    private suspend fun isWriter(document: Document,authority: Authority): Boolean {
         return if (authority == Authority.STUDENT) {
             val student = securityPort.getCurrentStudent()
             document.isWriter(student.id)

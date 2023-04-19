@@ -11,7 +11,7 @@ class ApplyFeedbackUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(documentId: UUID, elementId: UUID) {
+    suspend fun execute(documentId: UUID, elementId: UUID) {
 
         documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 

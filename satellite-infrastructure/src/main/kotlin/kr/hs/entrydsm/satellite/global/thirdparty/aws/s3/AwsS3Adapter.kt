@@ -1,28 +1,28 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.aws.s3
 
-import com.amazonaws.HttpMethod
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.internal.Mimetypes
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.amazonaws.services.s3.model.ObjectMetadata
-import com.amazonaws.services.s3.model.PutObjectRequest
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.global.exception.InvalidExtensionException
 import org.springframework.stereotype.Component
-import java.io.ByteArrayInputStream
+import software.amazon.awssdk.services.s3.model.GetObjectRequest
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
+import software.amazon.awssdk.transfer.s3.S3TransferManager
+import software.amazon.awssdk.transfer.s3.model.UploadFileRequest
 import java.io.File
-import java.sql.Timestamp
-import java.time.LocalDateTime
+import java.nio.file.Paths
+import java.time.Duration
 import java.util.*
+
 
 @Component
 class AwsS3Adapter(
-    private val amazonS3: AmazonS3,
-    private val awsS3Properties: AwsS3Properties,
+    private val transferManager: S3TransferManager,
+    private val s3Presigner: S3Presigner,
+    private val awsS3Properties: AwsS3Properties
 ) : FilePort {
 
-    override fun savePdf(file: File): String {
+    override suspend fun savePdf(file: File): String {
 
         val extension = getExtension(file)
         if (extension != ".pdf") {
@@ -35,7 +35,7 @@ class AwsS3Adapter(
             .also { uploadFile(file, it, AwsS3FileType.PDF) }
     }
 
-    override fun saveImage(file: File, imageType: ImageType): String {
+    override suspend fun saveImage(file: File, imageType: ImageType): String {
 
         val extension = getExtension(file)
         if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic")) {
@@ -51,39 +51,47 @@ class AwsS3Adapter(
             .also { uploadFile(file, it, AwsS3FileType.IMAGE) }
     }
 
-    private fun getExtension(file: File): String {
+    private suspend fun getExtension(file: File): String {
         val originalFilename = file.name
         return originalFilename.substring(originalFilename.lastIndexOf("."))
     }
 
-    private fun uploadFile(file: File, filePath: String, fileType: AwsS3FileType) {
-        val bytes = file.readBytes()
-        amazonS3.putObject(
-            PutObjectRequest(
-                awsS3Properties.bucket,
-                filePath,
-                ByteArrayInputStream(bytes),
-                ObjectMetadata().apply {
-                    contentType = Mimetypes.getInstance().getMimetype(file)
-                    contentLength = bytes.size.toLong()
-                }
-            ).withCannedAcl(fileType.cannedAcl)
-        )
-        file.delete()
+    private suspend fun uploadFile(file: File, filePath: String, fileType: AwsS3FileType) {
+        val uploadFileRequest = UploadFileRequest
+            .builder()
+            .putObjectRequest {
+                it.bucket(awsS3Properties.bucket)
+                    .key(filePath)
+                    .acl(fileType.cannedAcl)
+            }
+            .source(Paths.get(filePath))
+            .build()
+
+        val fileUpload = transferManager.uploadFile(uploadFileRequest)
+        fileUpload.completionFuture().join()
     }
 
-    override fun getPdfFileUrl(filePath: String): String {
-        val request = GeneratePresignedUrlRequest(awsS3Properties.bucket, filePath)
-            .withMethod(HttpMethod.GET)
-            .withExpiration(Timestamp.valueOf(LocalDateTime.now().plusHours(4)))
+    override suspend fun getPdfFileUrl(filePath: String): String {
 
-        return amazonS3.generatePresignedUrl(request).toString()
+        val getObjectPresignRequest = GetObjectPresignRequest
+            .builder()
+            .signatureDuration(Duration.ofHours(4))
+            .getObjectRequest(
+                GetObjectRequest
+                    .builder()
+                    .bucket(awsS3Properties.bucket)
+                    .key(filePath)
+                    .build()
+            )
+            .build()
+
+        return s3Presigner.presignGetObject(getObjectPresignRequest).url().toString()
     }
 
-    override fun getImageFileUrl(filePath: String): String {
+    override suspend fun getImageFileUrl(filePath: String): String {
         return awsS3Properties.url + filePath
     }
 
-    override fun getFileBaseUrl(): String = awsS3Properties.url
+    override suspend fun getFileBaseUrl(): String = awsS3Properties.url
 
 }

@@ -5,7 +5,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusException
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
+import kr.hs.entrydsm.satellite.domain.feedback.domain.FeedbackDomain
 import kr.hs.entrydsm.satellite.domain.feedback.exception.FeedbackAlreadyExistException
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import java.util.*
@@ -15,7 +15,7 @@ class CreateFeedbackUseCase(
     private val documentPort: DocumentPort,
     private val feedbackPort: FeedbackPort
 ) {
-    fun execute(
+    suspend fun execute(
         documentId: UUID,
         elementId: UUID,
         comment: String
@@ -31,7 +31,7 @@ class CreateFeedbackUseCase(
         }
 
         feedbackPort.save(
-            Feedback(
+            FeedbackDomain(
                 documentId = documentId,
                 elementId = elementId,
                 comment = comment,

@@ -1,16 +1,31 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kr.hs.entrydsm.satellite.global.exception.ForbiddenException
+import kr.hs.entrydsm.satellite.global.exception.InternalServerError
 import kr.hs.entrydsm.satellite.global.thirdparty.oauth.dto.response.GoogleEmailResponse
-import org.springframework.cloud.openfeign.FeignClient
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.core.ParameterizedTypeReference
+import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 
-@FeignClient(name = "googleUserInfoFeign", url = "https://www.googleapis.com/oauth2/v1/userinfo")
-interface GoogleEmail {
-
-    @GetMapping
-    fun getEmail(
-        @RequestParam("access_token") accessToken: String,
-        @RequestParam("alt") alt: String = "json"
-    ): GoogleEmailResponse
+@Component
+class GoogleEmail {
+    suspend fun getEmail(
+        accessToken: String,
+        alt: String = "json"
+    ) = WebClient.builder()
+        .baseUrl("https://www.googleapis.com/oauth2/v1/userinfo").build()
+        .get()
+        .uri {
+            it.queryParam("access_token", accessToken)
+                .queryParam("alt", alt)
+                .build()
+        }
+        .retrieve()
+        .onStatus(HttpStatus::is4xxClientError) { Mono.error(ForbiddenException) }
+        .bodyToMono(object : ParameterizedTypeReference<GoogleEmailResponse>() {})
+        .onErrorMap { throw it }
+        .awaitSingleOrNull() ?: throw InternalServerError
 }
