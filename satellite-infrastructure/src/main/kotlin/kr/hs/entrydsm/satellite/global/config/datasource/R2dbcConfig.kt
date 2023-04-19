@@ -60,19 +60,19 @@ class R2dbcConfig(
 
     @WritingConverter
     class UUIDEncoder : Converter<UUID, ByteArray> {
-        override fun convert(source: UUID): ByteArray {
-            return ByteBuffer.wrap(ByteArray(16))
+        override fun convert(source: UUID): ByteArray =
+            ByteBuffer.wrap(ByteArray(16))
                 .apply {
                     putLong(source.mostSignificantBits)
                     putLong(source.leastSignificantBits)
                 }.array()
-        }
     }
 
     @ReadingConverter
     class UUIDDecoder : Converter<ByteArray, UUID> {
-        override fun convert(source: ByteArray): UUID {
-            return UUID.nameUUIDFromBytes(source)
-        }
+        override fun convert(source: ByteArray): UUID =
+            ByteBuffer.wrap(source).run {
+                UUID(long, long)
+            }
     }
 }
