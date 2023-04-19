@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.global.exception.ForbiddenException
 import kr.hs.entrydsm.satellite.global.exception.InternalServerError
 import kr.hs.entrydsm.satellite.global.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
@@ -11,19 +12,18 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 
 @Component
-class GoogleAuth(
-    private val webClient: WebClient
-) {
-    fun queryAccessToken(
+class GoogleAuth {
+    suspend fun queryAccessToken(
         code: String,
         clientId: String,
         clientSecret: String,
         redirectUri: String,
         grantType: String = "authorization_code",
-    ) = webClient.post()
+    ) = WebClient.builder()
+        .baseUrl("https://oauth2.googleapis.com/token").build()
+        .post()
         .uri {
-            it.path("https://oauth2.googleapis.com/token")
-                .queryParam("code", code)
+            it.queryParam("code", code)
                 .queryParam("clientId", clientId)
                 .queryParam("clientSecret", clientSecret)
                 .queryParam("redirectUri", redirectUri)
@@ -34,5 +34,5 @@ class GoogleAuth(
         .onStatus(HttpStatus::is4xxClientError) { Mono.error(ForbiddenException) }
         .bodyToMono(object : ParameterizedTypeReference<GoogleAccessTokenResponse>() {})
         .onErrorMap { throw it }
-        .block() ?: throw InternalServerError
+        .awaitSingleOrNull() ?: throw InternalServerError
 }

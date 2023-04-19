@@ -32,7 +32,7 @@ class OauthAdapter(
         ).email
     }
 
-    private fun getAccessToken(code: String): String {
+    private suspend fun getAccessToken(code: String): String {
         return googleAuth.queryAccessToken(
             code = code,
             clientId = googleProperties.clientId,
