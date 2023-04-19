@@ -18,11 +18,11 @@ create table if not exists tbl_school_year(
 
 create table if not exists tbl_student(
     id                 binary(16)   not null primary key,
-    class_num          varchar(1)   not null,
-    email              varchar(50)  not null,
-    grade              varchar(1)   not null,
     name               varchar(10)  not null,
-    number             varchar(2)   not null,
+    email              varchar(50)  not null,
+    grade              int          not null,
+    class_num          int          not null,
+    number             int          not null,
     profile_image_path varchar(255) not null
 );
 
