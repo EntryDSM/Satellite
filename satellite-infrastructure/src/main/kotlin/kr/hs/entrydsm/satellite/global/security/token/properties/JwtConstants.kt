@@ -6,5 +6,5 @@ object JwtConstants {
     const val TYPE_CLAIM = "type"
     const val ROLE_CLAIM = "role"
     const val HEADER = "Authorization"
-    const val PREFIX = "Bearer "
+    const val PREFIX = "Bearer"
 }

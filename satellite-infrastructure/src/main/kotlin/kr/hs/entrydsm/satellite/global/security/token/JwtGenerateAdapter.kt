@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.global.security.token
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
-import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
+import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshTokenDomain
 import kr.hs.entrydsm.satellite.domain.auth.dto.TokenResponse
 import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
 import kr.hs.entrydsm.satellite.domain.auth.spi.TokenPort
@@ -14,8 +14,7 @@ import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants.TY
 import kr.hs.entrydsm.satellite.global.security.token.properties.SecurityProperties
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.util.Date
-import java.util.UUID
+import java.util.*
 
 @Component
 class JwtGenerateAdapter(
@@ -49,7 +48,7 @@ class JwtGenerateAdapter(
             .setExpiration(Date(System.currentTimeMillis() + securityProperties.refreshExp * 1000))
             .compact()
 
-        val refreshToken = RefreshToken(
+        val refreshToken = RefreshTokenDomain(
             id = userId,
             token = token,
             authority = authority,
