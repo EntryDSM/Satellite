@@ -5,8 +5,8 @@ import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 interface SecurityPort {
-    fun getCurrentStudent(): Student
-    fun getCurrentUserAuthority(): Authority
-    fun getCurrentUserId(): UUID
+    suspend fun getCurrentStudent(): Student
+    suspend fun getCurrentUserAuthority(): Authority
+    suspend fun getCurrentUserId(): UUID
     fun encyptMatches(rawString: String, encryptedString: String): Boolean
 }
