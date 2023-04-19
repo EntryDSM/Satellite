@@ -30,10 +30,10 @@ open class WriterInfoRequest(
         )
 
     fun toStudent(student: Student) =
-        student.copy(
-            grade = grade,
-            classNum = classNum,
-            number = number,
-            profileImagePath = profileImagePath
-        )
+        student.apply {
+            this.grade = grade
+            this.classNum = classNum
+            this.number = number
+            this.profileImagePath = profileImagePath
+        }
 }

@@ -9,7 +9,7 @@ import io.mockk.mockk
 import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
-import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.DocumentDomain
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
@@ -18,7 +18,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.WriterInfoElement
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
-import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
+import kr.hs.entrydsm.satellite.domain.feedback.domain.FeedbackDomain
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
@@ -58,7 +58,7 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
 
         val elementIds = listOf(introduce, project1, project2, award, certificate).map { it.elementId }
 
-        val documentWithFeedbacks = Document(
+        val documentWithFeedbacks = DocumentDomain(
             writer = WriterInfoElement(
                 student = student,
                 major = anyValueObject()
@@ -72,11 +72,11 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         )
 
         val feedbacks = listOf(
-            Feedback(document.id, elementIds[0], "0", false),
-            Feedback(document.id, elementIds[1], "1", false),
-            Feedback(document.id, elementIds[2], "2", false),
-            Feedback(document.id, elementIds[3], "3", false),
-            Feedback(document.id, elementIds[4], "4", false)
+            FeedbackDomain(document.id, elementIds[0], "0", false),
+            FeedbackDomain(document.id, elementIds[1], "1", false),
+            FeedbackDomain(document.id, elementIds[2], "2", false),
+            FeedbackDomain(document.id, elementIds[3], "3", false),
+            FeedbackDomain(document.id, elementIds[4], "4", false)
         )
 
         context("피드백이 있는 내 문서를 조회하면") {
