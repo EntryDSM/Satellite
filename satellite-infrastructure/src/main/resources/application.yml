@@ -66,12 +66,3 @@ domain:
 sentry:
   dsn: ${SENTRY_DSN:tmp}
   traces-sample-rate: 1.0
-
-logging:
-  level:
-    com.example : DEBUG
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
