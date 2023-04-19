@@ -18,7 +18,7 @@ enum class GlobalErrorCode(
 
     BAD_REQUEST(400, "COMMON-400-1", "Bad request"),
     FORBIDDEN(403, "COMMON-403-1", "Forbidden"),
-    METHOD_NOT_ALLOWED(405, "COMMON-405-1", "Internal server error"),
+    METHOD_NOT_ALLOWED(405, "COMMON-405-1", "Method not allowed"),
     INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal server error")
     ;
 
