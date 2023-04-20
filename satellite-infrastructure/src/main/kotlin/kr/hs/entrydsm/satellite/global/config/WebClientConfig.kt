@@ -11,15 +11,15 @@ import org.springframework.web.reactive.function.client.WebClient
 @Configuration
 class WebClientConfig {
     @Bean
-    fun webClient(objectMapper: ObjectMapper): WebClient =
-        WebClient.builder()
-            .exchangeStrategies(
-                ExchangeStrategies
-                    .builder()
-                    .codecs { configurer ->
-                        configurer.defaultCodecs().jackson2JsonDecoder(Jackson2JsonDecoder(objectMapper))
-                        configurer.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(objectMapper))
-                    }
-                    .build()
-            ).build()
+    fun webClient(objectMapper: ObjectMapper): WebClient = WebClient
+        .builder()
+        .exchangeStrategies(
+            ExchangeStrategies
+                .builder()
+                .codecs { configurer ->
+                    configurer.defaultCodecs().jackson2JsonDecoder(Jackson2JsonDecoder(objectMapper))
+                    configurer.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(objectMapper))
+                }
+                .build()
+        ).build()
 }
