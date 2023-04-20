@@ -1,19 +1,23 @@
 package kr.hs.entrydsm.satellite.domain.file.presentation
 
+import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingle
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import kr.hs.entrydsm.satellite.domain.file.presentation.dto.response.ImagePathResponse
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
-import kr.hs.entrydsm.satellite.global.exception.InvalidFileException
+import org.springframework.core.io.buffer.DataBufferUtils
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.codec.multipart.FilePart
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.multipart.MultipartFile
+import reactor.core.publisher.Mono
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.util.*
 
 @RequestMapping("/file")
@@ -22,26 +26,26 @@ class FileController(
     private val filePort: FilePort
 ) {
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/image")
+    @PostMapping("/image", consumes = [
+        MediaType.MULTIPART_FORM_DATA_VALUE,
+        MediaType.IMAGE_PNG_VALUE,
+        MediaType.IMAGE_JPEG_VALUE
+    ])
     suspend fun uploadImage(
-        @RequestParam file: MultipartFile,
+        @RequestPart("file") monoFilePart: Mono<FilePart>,
         @RequestParam("type") imageType: ImageType
     ): ImagePathResponse {
+
+        val filePart = monoFilePart.awaitSingle()
+
         return ImagePathResponse(
-            imagePath = filePort.saveImage(multipartToFile(file), imageType),
+            imagePath = filePort.saveImage(filePart.toFile(), imageType),
             baseUrl = filePort.getFileBaseUrl()
         )
     }
 
-    private fun multipartToFile(multipartFile: MultipartFile?): File {
-        if (multipartFile == null || multipartFile.isEmpty || multipartFile.originalFilename == null) {
-            throw InvalidFileException
-        }
-        try {
-            return File("${UUID.randomUUID()}_${multipartFile.originalFilename}")
-                .also { FileOutputStream(it).use { outputStream -> outputStream.write(multipartFile.bytes) } }
-        } catch (e: IOException) {
-            throw InvalidFileException
-        }
-    }
+    private suspend fun FilePart.toFile() = File(filename())
+            .also { FileOutputStream(it).use { outputStream ->
+                DataBufferUtils.write(content(), outputStream).awaitSingle()
+            } }
 }

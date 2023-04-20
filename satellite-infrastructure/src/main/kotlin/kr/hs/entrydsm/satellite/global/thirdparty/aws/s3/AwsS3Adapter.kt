@@ -52,7 +52,7 @@ class AwsS3Adapter(
 
     private suspend fun getExtension(file: File): String {
         val originalFilename = file.name
-        return originalFilename.substring(originalFilename.lastIndexOf("."))
+        return originalFilename.substring(originalFilename.lastIndexOf(".")).lowercase()
     }
 
     private suspend fun uploadFile(file: File, filePath: String, fileType: AwsS3FileType) {
@@ -68,6 +68,7 @@ class AwsS3Adapter(
 
         val fileUpload = transferManager.uploadFile(uploadFileRequest)
         fileUpload.completionFuture().join()
+        file.delete()
     }
 
     override suspend fun getPdfFileUrl(filePath: String): String {
