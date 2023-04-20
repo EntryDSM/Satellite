@@ -29,6 +29,7 @@ internal class SecurityConfig {
             .cors()
 
         http.authorizeExchange()
+            .pathMatchers(HttpMethod.OPTIONS).permitAll()
 
             // AUTH
             .pathMatchers("/auth/**").permitAll()
