@@ -12,7 +12,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer
 
 @Configuration
 @EnableWebFlux
-class WebFluxConfiguration(
+class WebFluxConfig(
     private val objectMapper: ObjectMapper
 ) : WebFluxConfigurer {
 
