@@ -20,7 +20,7 @@ data class DocumentInfoResponse(
 
     val introduce: IntroduceResponse,
 
-    val skillSet: List<String>,
+    val skillList: List<String>,
 
     val projectList: List<ProjectResponse>,
 
@@ -33,7 +33,7 @@ data class DocumentInfoResponse(
         writer = WriterInfoResponse(fileBaseUrl, document.writer, null),
         documentStatus = document.status,
         introduce = IntroduceResponse(document.introduce, null),
-        skillSet = document.skillSet,
+        skillList = document.skillSet,
         projectList = document.projectList.map { ProjectResponse(fileBaseUrl, it, null) },
         awardList = document.awardList.map { AwardResponse(it, null) },
         certificateList = document.certificateList.map { CertificateResponse(it, null) }
@@ -44,7 +44,7 @@ data class DocumentInfoResponse(
         writer = WriterInfoResponse(fileBaseUrl, document.writer, feedbackMap[document.writer.elementId]),
         documentStatus = document.status,
         introduce = IntroduceResponse(document.introduce, feedbackMap[document.introduce.elementId]),
-        skillSet = document.skillSet,
+        skillList = document.skillSet,
         projectList = document.projectList.map { ProjectResponse(fileBaseUrl, it, feedbackMap[it.elementId]) },
         awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
         certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) }
@@ -95,7 +95,7 @@ data class DocumentInfoResponse(
         val representImageUrl: String,
         val startDate: Date,
         val endDate: Date,
-        val skillSet: List<String>,
+        val skillList: List<String>,
         val description: String,
         val url: String?,
         val feedback: String?
@@ -106,7 +106,7 @@ data class DocumentInfoResponse(
             representImageUrl = fileBasePath + element.representImagePath,
             startDate = element.startDate,
             endDate = element.endDate,
-            skillSet = element.skillSet,
+            skillList = element.skillSet,
             description = element.description,
             url = element.url,
             feedback = feedback
