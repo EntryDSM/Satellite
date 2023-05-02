@@ -23,7 +23,7 @@ interface Document {
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
-    private fun getElementList(): List<AbstractElement> =
+    fun getElementList(): List<AbstractElement> =
         listOf(
             writer,
             introduce,
