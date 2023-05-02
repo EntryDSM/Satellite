@@ -11,14 +11,17 @@ class CorsConfig {
 
     @Bean
     fun corsFilter(): CorsWebFilter {
-        val config = CorsConfiguration()
-        config.allowCredentials = true
-        config.addAllowedOriginPattern("*")
-        config.addAllowedHeader("*")
-        config.addAllowedMethod("*")
+        val config = CorsConfiguration().apply {
+            allowCredentials = true
+            addAllowedOriginPattern("*")
+            addAllowedHeader("*")
+            addAllowedMethod("*")
+        }
 
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**",config)
+        val source = UrlBasedCorsConfigurationSource().apply {
+            registerCorsConfiguration("/**",config)
+        }
+
         return CorsWebFilter(source)
     }
 }
