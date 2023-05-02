@@ -28,7 +28,7 @@ class FeedbackPersistenceAdapter(
     override suspend fun queryByDocumentIdIn(documentIds: List<UUID>): List<FeedbackEntity> =
         feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitSingle()
 
-    override suspend fun existsByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID) =
+    override suspend fun existsByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID): Boolean =
         feedbackRepository.existsById(FeedbackId(elementId, documentId)).awaitSingle()
 
     override suspend fun deleteByDocumentId(documentId: UUID) {
