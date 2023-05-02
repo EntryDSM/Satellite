@@ -26,6 +26,6 @@ class SecurityAdapter(
         return UUID.fromString(ReactiveSecurityContextHolder.getContext().awaitSingle().authentication.name)
     }
 
-    override fun encyptMatches(rawString: String, encryptedString: String) =
+    override fun encryptMatches(rawString: String,encryptedString: String) =
         passwordEncoder.matches(rawString, encryptedString)
 }

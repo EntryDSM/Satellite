@@ -16,7 +16,7 @@ class UpdateSkillSetUseCase(
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
         documentPort.save(
-            document.apply { this.skillSet = requests }
+            document.updateElement(skillSet = requests)
         )
     }
 }

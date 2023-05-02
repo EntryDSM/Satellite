@@ -17,9 +17,10 @@ data class StudentDocumentListResponse(
         val profileImageUrl: String,
         val studentNumber: Int,
         val email: String,
-        val major: MajorElement
+        val major: MajorElement,
+        val feedbackCount: Int
     ) {
-        constructor(fileBaseUrl: String, document: Document) : this(
+        constructor(fileBaseUrl: String, document: Document, feedbackCount: Int) : this(
             studentId = document.writer.studentId,
             name = document.writer.name,
             documentStatus = document.status,
@@ -30,7 +31,8 @@ data class StudentDocumentListResponse(
             major = MajorElement(
                 id = document.writer.majorId,
                 name = document.writer.majorName
-            )
+            ),
+            feedbackCount = feedbackCount
         )
     }
 }

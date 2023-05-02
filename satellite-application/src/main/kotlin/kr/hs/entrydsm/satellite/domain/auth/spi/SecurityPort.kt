@@ -8,5 +8,5 @@ interface SecurityPort {
     suspend fun getCurrentStudent(): Student
     suspend fun getCurrentUserAuthority(): Authority
     suspend fun getCurrentUserId(): UUID
-    fun encyptMatches(rawString: String, encryptedString: String): Boolean
+    fun encryptMatches(rawString: String, encryptedString: String): Boolean
 }

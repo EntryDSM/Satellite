@@ -17,7 +17,7 @@ class UpdateIntroduceUseCase(
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
         documentPort.save(
-            document.apply { this.introduce = requests.toIntroduceElement() }
+            document.updateElement(introduce =  requests.toIntroduceElement())
         )
     }
 }

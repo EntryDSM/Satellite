@@ -17,7 +17,7 @@ class StudentDetailService(
     private val studentPort: StudentPort
 ): ReactiveUserDetailsService {
 
-    override fun findByUsername(username: String?): Mono<UserDetails>? = mono {
+    override fun findByUsername(username: String?): Mono<UserDetails> = mono {
         val student = studentPort.queryById(UUID.fromString(username)) ?: throw InvalidTokenException
         return@mono StudentDetails(student)
     }

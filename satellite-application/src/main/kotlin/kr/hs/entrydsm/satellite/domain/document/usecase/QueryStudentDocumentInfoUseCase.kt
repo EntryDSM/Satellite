@@ -22,8 +22,8 @@ class QueryStudentDocumentInfoUseCase(
         val student = studentPort.queryById(studentId) ?: throw StudentNotFoundException
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
-        val feedbackList = feedbackPort.queryByDocumentId(document.id)
-        val feedbackMap = feedbackList.associate { it.elementId to it.comment }
+        val feedbackMap = feedbackPort.queryByDocumentId(document.id)
+            .associate { it.elementId to it.comment }
 
         val fileBaseUrl = filePort.getFileBaseUrl()
         return DocumentInfoResponse(fileBaseUrl, document, feedbackMap)

@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.domain
 
+import kr.hs.entrydsm.satellite.domain.document.domain.element.AbstractElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -22,15 +23,17 @@ interface Document {
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
-    fun getElementNameMap(): Map<UUID, String> {
-        val elementList = listOf(
+    private fun getElementList(): List<AbstractElement> =
+        listOf(
             writer,
             introduce,
             *projectList.toTypedArray(),
             *awardList.toTypedArray(),
             *certificateList.toTypedArray()
         )
-        return elementList.associate { it.elementId to it.elementName }
+
+    fun getElementNameMap(): Map<UUID, String> {
+        return getElementList().associate { it.elementId to it.elementName }
     }
 
     fun delete() { this.isDeleted = true }
@@ -39,35 +42,31 @@ interface Document {
 
     fun updateElement(
         writer: WriterInfoElement = this.writer,
-        status: DocumentStatus = this.status,
-        introduce: IntroduceElement = this.introduce
-    ) {
+        introduce: IntroduceElement = this.introduce,
+        skillSet: List<String> = this.skillSet,
+        projectList: List<ProjectElement> = this.projectList,
+        awardList: List<AwardElement> = this.awardList,
+        certificateList: List<CertificateElement> = this.certificateList
+    ): Document {
         this.writer = writer
-        this.status = status
         this.introduce = introduce
+        this.skillSet = skillSet
+        this.projectList = projectList
+        this.awardList = awardList
+        this.certificateList = certificateList
+        return this
     }
 }
 
 data class DocumentDomain(
-
     override val id: UUID = UUID.randomUUID(),
-
     override val year: Int,
-
     override var isDeleted: Boolean = false,
-
     override var status: DocumentStatus = DocumentStatus.CREATED,
-
     override var writer: WriterInfoElement,
-
     override var introduce: IntroduceElement = IntroduceElement(),
-
-    override var skillSet: List<String> = mutableListOf(),
-
-    override var projectList: List<ProjectElement> = mutableListOf(),
-
-    override var awardList: List<AwardElement> = mutableListOf(),
-
-    override var certificateList: List<CertificateElement> = mutableListOf()
-
+    override var skillSet: List<String> = listOf(),
+    override var projectList: List<ProjectElement> = listOf(),
+    override var awardList: List<AwardElement> = listOf(),
+    override var certificateList: List<CertificateElement> = listOf()
 ) : Document, Domain

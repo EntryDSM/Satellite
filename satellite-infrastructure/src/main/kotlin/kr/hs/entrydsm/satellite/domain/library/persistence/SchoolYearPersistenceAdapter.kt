@@ -25,6 +25,6 @@ class SchoolYearPersistenceAdapter(
         schoolYearRepository.findById(schoolYearProperties.id).awaitSingle()
 
     override suspend fun secretMatches(secret: String) =
-        securityPort.encyptMatches(secret, schoolYearProperties.secret)
+        securityPort.encryptMatches(secret, schoolYearProperties.secret)
 
 }

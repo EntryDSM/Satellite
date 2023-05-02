@@ -20,7 +20,7 @@ class TeacherLoginUseCase(
         val teacher = teacherPort.queryByAccountId(accountId)
             ?: throw TeacherNotFoundException
 
-        if (!securityPort.encyptMatches(password, teacher.password)) {
+        if (!securityPort.encryptMatches(password, teacher.password)) {
             throw PasswordMismatchException
         }
 

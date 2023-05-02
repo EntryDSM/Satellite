@@ -19,11 +19,14 @@ class FeedbackPersistenceAdapter(
         feedbackRepository.save(objectMapper.convertValue(feedback)).awaitSingle()
     }
 
-    override suspend fun queryByDocumentId(documentId: UUID) =
+    override suspend fun queryByDocumentId(documentId: UUID): List<FeedbackEntity> =
         feedbackRepository.findByDocumentId(documentId).collectList().awaitSingle()
 
     override suspend fun queryByDocumentIdAndElementId(documentId: UUID, elementId: UUID) =
         feedbackRepository.findById(FeedbackId(elementId, documentId)).awaitSingleOrNull()
+
+    override suspend fun queryByDocumentIdIn(documentIds: List<UUID>): List<FeedbackEntity> =
+        feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitSingle()
 
     override suspend fun existsByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID) =
         feedbackRepository.existsById(FeedbackId(elementId, documentId)).awaitSingle()
