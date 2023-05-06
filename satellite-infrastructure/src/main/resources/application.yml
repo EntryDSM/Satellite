@@ -34,6 +34,13 @@ spring:
       username: ${MONGO_DB_USERNAME:admin}
       password: ${MONGO_DB_PASSWORD:pass}
 
+  thymeleaf:
+    check-template: true # Check that the template exists before rendering it.
+    check-template-location: true # Check that the templates location exists.
+    enabled: true # Enable MVC Thymeleaf view resolution.
+    prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
+    thymeleaf.suffix: .html
+
 jwt:
   secret-key: ${JWT_SECRET_KEY:tmp}
   access-exp: ${JWT_ACCESS_EXP:1000000}

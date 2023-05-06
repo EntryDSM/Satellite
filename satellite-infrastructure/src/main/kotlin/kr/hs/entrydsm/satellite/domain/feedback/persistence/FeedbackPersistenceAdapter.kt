@@ -29,13 +29,13 @@ class FeedbackPersistenceAdapter(
         feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitSingle()
 
     override suspend fun existsByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID): Boolean =
-        feedbackRepository.existsById(FeedbackId(elementId, documentId)).awaitSingle()
+        feedbackRepository.existsByDocumentIdAndElementId(documentId, elementId).awaitSingle()
 
     override suspend fun deleteByDocumentId(documentId: UUID) {
         feedbackRepository.deleteByDocumentId(documentId)
     }
 
     override suspend fun deleteByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID) {
-        feedbackRepository.deleteById(FeedbackId(elementId, documentId)).awaitSingle()
+        feedbackRepository.deleteByDocumentIdAndElementId(documentId, elementId)
     }
 }

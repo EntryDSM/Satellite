@@ -27,7 +27,7 @@ class QueryStudentDocumentListUseCase(
             majorId = majorId
         )
 
-        val feedbacks = feedbackPort.queryByDocumentIdIn(documentList.map { it.writer.studentId })
+        val feedbacks = feedbackPort.queryByDocumentIdIn(documentList.map { it.id })
 
         val fileBaseUrl = filePort.getFileBaseUrl()
         return StudentDocumentListResponse(

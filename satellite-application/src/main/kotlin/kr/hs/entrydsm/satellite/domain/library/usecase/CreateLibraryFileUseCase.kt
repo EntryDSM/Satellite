@@ -24,7 +24,7 @@ class CreateLibraryFileUseCase(
 ) {
     suspend fun execute(grade: Int, secret: String): UUID {
 
-        if (schoolYearPort.secretMatches(secret)) {
+        if (!schoolYearPort.secretMatches(secret)) {
             throw SecretMismatchException
         }
 

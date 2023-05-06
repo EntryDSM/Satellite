@@ -13,6 +13,7 @@ class TemplateProcessor(
         data: Any?,
     ): String {
         val context = Context().apply { setVariable("data", data) }
+        println(template)
         return templateEngine.process(template, context)
     }
 }
