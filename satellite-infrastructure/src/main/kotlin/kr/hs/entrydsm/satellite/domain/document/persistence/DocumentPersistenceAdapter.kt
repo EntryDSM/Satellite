@@ -12,6 +12,7 @@ import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentR
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
 import java.util.*
 
 @Adapter
@@ -48,16 +49,16 @@ class DocumentPersistenceAdapter(
         status: DocumentStatus?
     ): List<Document> {
 
-        var criteria = Criteria.where("writer.name").regex("${name ?: ""}%")
-/*
+        var criteria = Criteria.where("writer.name").regex("^" + (name ?: ""))
+
         status?.let { criteria = criteria.and("status").`is`(it) }
         grade?.let { criteria = criteria.and("writer.grade").`is`(it) }
         classNum?.let { criteria = criteria.and("writer.classNum").`is`(it) }
         majorId?.let { criteria = criteria.and("writer.majorId").`is`(it) }
-*/
-        return documentRepository.findAll().collectList().awaitSingle()/*mongoTemplate.findAll(
-            //Query(criteria),
+
+        return mongoTemplate.find(
+            Query(criteria),
             DocumentEntity::class.java
-        ).collectList().awaitSingle().map { it as Document }*/
+        ).collectList().awaitSingle().map { it as Document }
     }
 }
