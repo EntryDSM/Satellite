@@ -8,7 +8,7 @@ import java.util.*
 interface FeedbackRepository : ReactiveCrudRepository<FeedbackEntity, FeedbackId> {
     fun findByDocumentId(documentId: UUID): Flux<FeedbackEntity>
     fun findByDocumentIdIn(documentIds: List<UUID>): Flux<FeedbackEntity>
-    fun deleteByDocumentId(documentId: UUID)
-    fun deleteByDocumentIdAndElementId(documentId: UUID, elementId: UUID)
+    fun deleteByDocumentId(documentId: UUID): Mono<Void>
+    fun deleteByDocumentIdAndElementId(documentId: UUID, elementId: UUID): Mono<Void>
     fun existsByDocumentIdAndElementId(documentId: UUID, elementId: UUID): Mono<Boolean>
 }

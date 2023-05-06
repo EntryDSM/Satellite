@@ -10,5 +10,5 @@ interface FeedbackPort {
     suspend fun existsByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID): Boolean
     suspend fun save(feedback: Feedback): Feedback
     suspend fun deleteByDocumentId(documentId: UUID)
-    suspend fun deleteByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID)
+    suspend fun deleteByDocumentIdAndElementId(documentId: UUID, elementId: UUID)
 }

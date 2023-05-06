@@ -15,6 +15,6 @@ class DeleteFeedbackUseCase(
 
         documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        feedbackPort.deleteByDocumentIdAndFeedbackId(documentId, elementId)
+        feedbackPort.deleteByDocumentIdAndElementId(documentId, elementId)
     }
 }

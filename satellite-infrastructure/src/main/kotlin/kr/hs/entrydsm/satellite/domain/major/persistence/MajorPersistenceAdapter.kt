@@ -22,7 +22,7 @@ class MajorPersistenceAdapter(
         majorRepository.findById(majorId).awaitSingleOrNull()
 
     override suspend fun deleteById(majorId: UUID) {
-        majorRepository.deleteById(majorId).awaitSingle()
+        majorRepository.deleteById(majorId).awaitSingleOrNull()
     }
 
     override suspend fun queryByNameContaining(majorName: String): List<Major> =

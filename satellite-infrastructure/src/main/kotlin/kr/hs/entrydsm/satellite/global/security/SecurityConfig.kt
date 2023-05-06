@@ -78,7 +78,7 @@ internal class SecurityConfig {
             .pathMatchers(HttpMethod.POST, "/feedback").hasAnyAuthority(TEACHER)
             .pathMatchers(HttpMethod.PATCH, "/feedback").hasAnyAuthority(TEACHER)
             .pathMatchers(HttpMethod.DELETE, "/feedback").hasAuthority(TEACHER)
-            .pathMatchers(HttpMethod.POST, "/feedback/apply").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/feedback/apply").hasAuthority(STUDENT)
             .pathMatchers(HttpMethod.GET, "/feedback/my").hasAuthority(STUDENT)
 
             .anyExchange().authenticated()

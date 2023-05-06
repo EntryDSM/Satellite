@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AbstractElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
@@ -23,6 +24,7 @@ interface Document {
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
+    @JsonIgnore
     fun getElementList(): List<AbstractElement> =
         listOf(
             writer,

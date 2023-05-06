@@ -32,10 +32,10 @@ class FeedbackPersistenceAdapter(
         feedbackRepository.existsByDocumentIdAndElementId(documentId, elementId).awaitSingle()
 
     override suspend fun deleteByDocumentId(documentId: UUID) {
-        feedbackRepository.deleteByDocumentId(documentId)
+        feedbackRepository.deleteByDocumentId(documentId).awaitSingleOrNull()
     }
 
-    override suspend fun deleteByDocumentIdAndFeedbackId(documentId: UUID, elementId: UUID) {
-        feedbackRepository.deleteByDocumentIdAndElementId(documentId, elementId)
+    override suspend fun deleteByDocumentIdAndElementId(documentId: UUID,elementId: UUID) {
+        feedbackRepository.deleteByDocumentIdAndElementId(documentId, elementId).awaitSingleOrNull()
     }
 }

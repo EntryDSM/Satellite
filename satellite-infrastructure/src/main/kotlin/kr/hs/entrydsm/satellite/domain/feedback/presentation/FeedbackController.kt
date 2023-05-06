@@ -61,7 +61,7 @@ class FeedbackController(
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PostMapping("/apply")
+    @PatchMapping("/apply")
     suspend fun applyFeedback(@RequestBody @Valid request: ApplyFeedbackRequest) {
         applyFeedbackUseCase.execute(
             documentId = request.documentId!!,
