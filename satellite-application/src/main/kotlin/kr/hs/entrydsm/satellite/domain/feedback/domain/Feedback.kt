@@ -9,10 +9,6 @@ interface Feedback {
     val elementId: UUID
     var comment: String
     val isApply: Boolean
-
-    fun updateComment(comment: String) {
-        this.comment = comment
-    }
 }
 
 data class FeedbackDomain(
