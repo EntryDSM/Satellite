@@ -46,6 +46,7 @@ internal class SecurityConfig {
 
             // DOCUMENT
             .pathMatchers(HttpMethod.PATCH, "/document/writer-info").hasAuthority(STUDENT)
+            .pathMatchers(HttpMethod.PATCH, "/document/profile-image").hasAuthority(STUDENT)
             .pathMatchers(HttpMethod.PATCH, "/document/introduce").hasAuthority(STUDENT)
             .pathMatchers(HttpMethod.PATCH, "/document/skill-set").hasAuthority(STUDENT)
             .pathMatchers(HttpMethod.PATCH, "/document/project").hasAuthority(STUDENT)

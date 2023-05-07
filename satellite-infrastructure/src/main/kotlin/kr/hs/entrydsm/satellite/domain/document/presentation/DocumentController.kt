@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation
 
+import javax.validation.Valid
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentResponse
@@ -7,6 +8,7 @@ import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDo
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateIntroduceWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProfileImageWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateProjectWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateSkillSetWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateWriterInfoWebRequest
@@ -22,6 +24,7 @@ import kr.hs.entrydsm.satellite.domain.document.usecase.SubmitMyDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateAwardUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateCertificateUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateIntroduceUseCase
+import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateProfileImageUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateProjectUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateSkillSetUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateWriterInfoUseCase
@@ -36,12 +39,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
-import javax.validation.Valid
 
 @RequestMapping("/document")
 @RestController
 class DocumentController(
     private val updateWriterInfoUseCase: UpdateWriterInfoUseCase,
+    private val updateProfileImageUseCase: UpdateProfileImageUseCase,
     private val updateIntroduceUseCase: UpdateIntroduceUseCase,
     private val updateSkillSetUseCase: UpdateSkillSetUseCase,
     private val updateProjectUseCase: UpdateProjectUseCase,
@@ -64,6 +67,12 @@ class DocumentController(
     @PatchMapping("/writer-info")
     suspend fun updateWriterInfo(@RequestBody @Valid request: UpdateWriterInfoWebRequest) {
         updateWriterInfoUseCase.execute(request)
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping("/profile-image")
+    suspend fun updateProfileImage(@RequestBody @Valid request: UpdateProfileImageWebRequest) {
+        updateProfileImageUseCase.execute(request)
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
