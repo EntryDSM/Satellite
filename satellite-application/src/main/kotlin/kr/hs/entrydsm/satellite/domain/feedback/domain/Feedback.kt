@@ -7,13 +7,13 @@ import java.util.*
 interface Feedback {
     val documentId: UUID
     val elementId: UUID
-    var comment: String
+    val comment: String
     val isApply: Boolean
 }
 
 data class FeedbackDomain(
     override val documentId: UUID,
     override val elementId: UUID,
-    override var comment: String,
+    override val comment: String,
     override val isApply: Boolean
 ) : Feedback, Domain

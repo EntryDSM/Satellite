@@ -14,12 +14,28 @@ interface Student {
     var number: Int
     var profileImagePath: String
 
+    fun changeGcn(
+        grade: Int,
+        classNum: Int,
+        number: Int
+    ) = this.apply {
+        this.grade = grade
+        this.classNum = classNum
+        this.number = number
+    }
+
+    fun changeProfileImagePath(
+        profileImagePath: String
+    ) = this.apply {
+        this.profileImagePath = profileImagePath
+    }
+
     companion object {
         private const val schoolEmail = "@dsm.hs.kr"
         const val EMAIL_SUFFIX_EXP = "^[a-zA-Z0-9.]+$schoolEmail$"
 
         fun checkEmailSuffix(email: String) {
-            if (!Pattern.matches(EMAIL_SUFFIX_EXP, email)) {
+            if (!Pattern.matches(EMAIL_SUFFIX_EXP,email)) {
                 throw EmailSuffixNotValidException
             }
         }
