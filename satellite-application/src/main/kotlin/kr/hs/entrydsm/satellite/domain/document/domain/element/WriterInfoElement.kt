@@ -4,14 +4,14 @@ import kr.hs.entrydsm.satellite.domain.major.domain.Major
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
-data class WriterInfoElement(
+class WriterInfoElement(
 
-    override val elementId: UUID = UUID.randomUUID(),
+    elementId: UUID? = null,
 
     val studentId: UUID,
     val name: String,
     val email: String,
-    val profileImagePath: String,
+    var profileImagePath: String,
 
     val grade: Int,
     val classNum: Int,
@@ -20,7 +20,7 @@ data class WriterInfoElement(
     val majorId: UUID,
     val majorName: String
 
-) : AbstractElement() {
+) : AbstractElement(elementId) {
 
     override val elementName: String
         get() = "내 정보"

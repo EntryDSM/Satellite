@@ -6,6 +6,7 @@ import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 open class WriterInfoRequest(
+    open val elementId: UUID?,
     open val majorId: UUID,
     open val email: String,
     open val grade: Int,
@@ -15,6 +16,7 @@ open class WriterInfoRequest(
 
     fun toElement(student: Student, major: Major) =
         WriterInfoElement(
+            elementId = elementId,
             studentId = student.id,
             name = student.name,
             profileImagePath = student.profileImagePath,

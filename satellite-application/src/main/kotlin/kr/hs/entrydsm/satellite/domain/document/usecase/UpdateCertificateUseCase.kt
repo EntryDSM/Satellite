@@ -17,7 +17,9 @@ class UpdateCertificateUseCase(
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
         documentPort.save(
-            document.updateElement(certificateList = requests.map { it.toCertificateElement() })
+            document.updateElement(
+                certificateList = requests.map { it.toCertificateElement() }
+            )
         )
     }
 }

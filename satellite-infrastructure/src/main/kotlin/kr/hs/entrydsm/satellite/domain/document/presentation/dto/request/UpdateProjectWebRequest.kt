@@ -1,15 +1,17 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
+import javax.validation.constraints.Size
 import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
-import javax.validation.constraints.Size
 
 data class UpdateProjectWebRequest(
     @field:Size(max = 5)
     val projectList: List<ProjectWebRequest>
 ) {
     data class ProjectWebRequest(
+
+        override val elementId: UUID?,
 
         @field:Length(max = 30)
         override val name: String,
@@ -30,6 +32,6 @@ data class UpdateProjectWebRequest(
         override val url: String?
 
     ) : ProjectRequest(
-        name, representImagePath, startDate, endDate, skillList, description, url
+        elementId, name, representImagePath, startDate, endDate, skillList, description, url
     )
 }

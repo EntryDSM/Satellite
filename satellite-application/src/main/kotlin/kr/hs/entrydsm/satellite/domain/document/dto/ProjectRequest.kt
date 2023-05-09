@@ -5,6 +5,7 @@ import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 import java.util.*
 
 open class ProjectRequest(
+    open val elementId: UUID?,
     open val name: String,
     open val representImagePath: String?,
     open val startDate: Date,
@@ -14,6 +15,7 @@ open class ProjectRequest(
     open val url: String?
 ) {
     fun toProjectElement() = ProjectElement(
+        elementId = elementId,
         name = name,
         representImagePath = representImagePath ?: DefaultImages.PROJECT,
         startDate = startDate,

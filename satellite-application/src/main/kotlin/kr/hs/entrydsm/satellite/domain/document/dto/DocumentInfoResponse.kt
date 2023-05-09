@@ -11,21 +11,13 @@ import kr.hs.entrydsm.satellite.domain.major.dto.MajorElement
 import java.util.*
 
 data class DocumentInfoResponse(
-
     val documentId: UUID,
-
     val writer: WriterInfoResponse,
-
     val documentStatus: DocumentStatus,
-
     val introduce: IntroduceResponse,
-
     val skillList: List<String>,
-
     val projectList: List<ProjectResponse>,
-
     val awardList: List<AwardResponse>,
-
     val certificateList: List<CertificateResponse>
 ) {
     constructor(fileBaseUrl: String, document: Document) : this(

@@ -1,16 +1,18 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.Size
 import kr.hs.entrydsm.satellite.domain.document.dto.CertificateRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.Size
 
 data class UpdateCertificateWebRequest(
     @field:Size(max = 3)
     val certificateList: List<CertificateWebRequest>
 ) {
     data class CertificateWebRequest(
+
+        override val elementId: UUID?,
 
         @field:Length(max = 30)
         @field:NotEmpty
@@ -21,5 +23,5 @@ data class UpdateCertificateWebRequest(
         override val issuingInstitution: String,
 
         override val date: Date
-    ) : CertificateRequest(name, issuingInstitution, date)
+    ) : CertificateRequest(elementId, name, issuingInstitution, date)
 }

@@ -22,7 +22,7 @@ class UpdateProfileImageUseCase(
         documentPort.save(
             document.updateElement(
                 writer = document.writer
-                    .copy(profileImagePath = request.profileImagePath)
+                    .apply { profileImagePath = request.profileImagePath }
             )
         )
 

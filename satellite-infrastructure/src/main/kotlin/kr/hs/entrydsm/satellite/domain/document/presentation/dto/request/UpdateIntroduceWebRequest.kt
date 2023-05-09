@@ -1,10 +1,13 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
+import javax.validation.constraints.NotEmpty
 import kr.hs.entrydsm.satellite.domain.document.dto.IntroduceRequest
 import org.hibernate.validator.constraints.Length
-import javax.validation.constraints.NotEmpty
+import java.util.*
 
 data class UpdateIntroduceWebRequest(
+
+    override val elementId: UUID?,
 
     @field:Length(max = 70)
     @field:NotEmpty
@@ -14,4 +17,4 @@ data class UpdateIntroduceWebRequest(
     @field:NotEmpty
     override val introduce: String
 
-) : IntroduceRequest(heading, introduce)
+) : IntroduceRequest(elementId, heading, introduce)

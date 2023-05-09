@@ -2,8 +2,8 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.*
 
-data class ProjectElement(
-    override val elementId: UUID = UUID.randomUUID(),
+class ProjectElement(
+    elementId: UUID?,
     val name: String,
     val representImagePath: String,
     val startDate: Date,
@@ -11,7 +11,7 @@ data class ProjectElement(
     val skillSet: List<String>,
     val description: String,
     val url: String?
-) : AbstractElement() {
+) : AbstractElement(elementId) {
 
     override val elementName: String
         get() = "프로젝트 $name"

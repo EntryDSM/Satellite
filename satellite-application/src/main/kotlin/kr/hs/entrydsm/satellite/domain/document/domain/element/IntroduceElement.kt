@@ -2,11 +2,11 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.*
 
-data class IntroduceElement(
-    override val elementId: UUID = UUID.randomUUID(),
+class IntroduceElement(
+    elementId: UUID? = null,
     val heading: String = "",
     val introduce: String = ""
-) : AbstractElement() {
+) : AbstractElement(elementId) {
 
     override val elementName: String
         get() = "자기소개"

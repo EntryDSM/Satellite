@@ -17,7 +17,9 @@ class UpdateProjectUseCase(
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
         documentPort.save(
-            document.updateElement(projectList = requests.map { it.toProjectElement() })
+            document.updateElement(
+                projectList = requests.map { it.toProjectElement() }
+            )
         )
     }
 }

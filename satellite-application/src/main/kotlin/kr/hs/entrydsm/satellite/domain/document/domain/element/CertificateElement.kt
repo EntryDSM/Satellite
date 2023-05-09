@@ -2,12 +2,12 @@ package kr.hs.entrydsm.satellite.domain.document.domain.element
 
 import java.util.*
 
-data class CertificateElement(
-    override val elementId: UUID = UUID.randomUUID(),
+class CertificateElement(
+    elementId: UUID? = null,
     val name: String,
     val issuingInstitution: String,
     val date: Date
-) : AbstractElement() {
+) : AbstractElement(elementId) {
 
     override val elementName: String
         get() = "자격증 $name"
