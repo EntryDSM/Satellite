@@ -7,8 +7,6 @@ import java.util.*
 
 class UpdateWriterInfoWebRequest(
 
-    override val elementId: UUID?,
-
     override val majorId: UUID,
 
     @field:Email
@@ -23,4 +21,4 @@ class UpdateWriterInfoWebRequest(
     @field:Max(20)
     override val number: Int,
 
-) : WriterInfoRequest(elementId, majorId, email, grade, classNum, number)
+) : WriterInfoRequest(majorId, email, grade, classNum, number)

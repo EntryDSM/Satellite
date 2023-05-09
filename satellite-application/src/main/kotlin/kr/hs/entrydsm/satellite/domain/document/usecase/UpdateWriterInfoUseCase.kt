@@ -24,12 +24,15 @@ class UpdateWriterInfoUseCase(
 
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
         documentPort.save(
-            document.updateElement(
-                writer = request.toElement(
-                    student = student,
-                    major = major
+            document.run {
+                updateElement(
+                    writer = request.toElement(
+                        elementId = writer.elementId,
+                        student = student,
+                        major = major
+                    )
                 )
-            )
+            }
         )
 
         studentPort.save(
