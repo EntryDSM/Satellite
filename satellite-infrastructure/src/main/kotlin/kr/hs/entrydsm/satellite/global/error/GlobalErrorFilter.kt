@@ -21,6 +21,7 @@ import org.springframework.web.reactive.function.server.RouterFunctions
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.server.MethodNotAllowedException
+import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.server.ServerWebInputException
 import reactor.core.publisher.Mono
 
@@ -48,7 +49,7 @@ class GlobalErrorFilter(
             }
             is WebExchangeBindException -> getBindErrorMessage(e) // request validation
             is ServerWebInputException -> getErrorMessage(GlobalErrorCode.BAD_REQUEST) // request null
-            is MethodNotAllowedException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
+            is MethodNotAllowedException, is ResponseStatusException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
             else -> {
                 e.printStackTrace()
                 if (e.cause is CustomException) getErrorMessage((e.cause as CustomException).errorProperty)
