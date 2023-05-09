@@ -4,6 +4,7 @@ import kr.hs.entrydsm.satellite.common.annotation.UseCase
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.domain.FeedbackDomain
+import kr.hs.entrydsm.satellite.domain.feedback.exception.FeedbackNotFoundException
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import java.util.*
 
@@ -19,6 +20,10 @@ class UpdateFeedbackUseCase(
     ) {
 
         documentPort.queryById(documentId) ?: throw DocumentNotFoundException
+
+        if (!feedbackPort.existsByDocumentIdAndElementId(documentId, elementId)) {
+            throw FeedbackNotFoundException
+        }
 
         feedbackPort.deleteByDocumentIdAndElementId(documentId, elementId)
         feedbackPort.save(

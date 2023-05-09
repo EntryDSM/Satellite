@@ -44,14 +44,12 @@ class GlobalErrorFilter(
     private fun handleError(request: ServerRequest) =
         when (val e = super.getError(request)) {
             is CustomException -> {
-                e.printStackTrace()
                 getErrorMessage(e.errorProperty)
             }
             is WebExchangeBindException -> getBindErrorMessage(e) // request validation
             is ServerWebInputException -> getErrorMessage(GlobalErrorCode.BAD_REQUEST) // request null
             is MethodNotAllowedException, is ResponseStatusException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
             else -> {
-                e.printStackTrace()
                 if (e.cause is CustomException) getErrorMessage((e.cause as CustomException).errorProperty)
                 else {
                     Sentry.captureException(e)

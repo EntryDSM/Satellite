@@ -6,7 +6,6 @@ import kr.hs.entrydsm.satellite.domain.document.exception.DocumentIllegalStatusE
 import kr.hs.entrydsm.satellite.domain.document.exception.DocumentNotFoundException
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.feedback.domain.FeedbackDomain
-import kr.hs.entrydsm.satellite.domain.feedback.exception.FeedbackAlreadyExistException
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
 import java.util.*
 
@@ -22,14 +21,11 @@ class CreateFeedbackUseCase(
     ) {
         val document = documentPort.queryById(documentId) ?: throw DocumentNotFoundException
 
-        if (feedbackPort.existsByDocumentIdAndFeedbackId(documentId, elementId)) {
-            throw FeedbackAlreadyExistException
-        }
-
         if (document.status != DocumentStatus.SUBMITTED) {
             throw DocumentIllegalStatusException
         }
 
+        feedbackPort.deleteByDocumentIdAndElementId(documentId, elementId)
         feedbackPort.save(
             FeedbackDomain(
                 documentId = documentId,
