@@ -27,8 +27,7 @@ class QueryDocumentInfoUseCase(
             throw DocumentAccessRightException
         }
 
-        val fileBaseUrl = filePort.getFileBaseUrl()
-        return DocumentInfoResponse(fileBaseUrl, document)
+        return DocumentInfoResponse(document)
     }
 
     private fun hasAccess(documentStatus: DocumentStatus, authority: Authority): Boolean {

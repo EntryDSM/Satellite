@@ -20,24 +20,24 @@ data class DocumentInfoResponse(
     val awardList: List<AwardResponse>,
     val certificateList: List<CertificateResponse>
 ) {
-    constructor(fileBaseUrl: String, document: Document) : this(
+    constructor(document: Document) : this(
         documentId = document.id,
-        writer = WriterInfoResponse(fileBaseUrl, document.writer, null),
+        writer = WriterInfoResponse(document.writer, null),
         documentStatus = document.status,
         introduce = IntroduceResponse(document.introduce, null),
         skillList = document.skillSet,
-        projectList = document.projectList.map { ProjectResponse(fileBaseUrl, it, null) },
+        projectList = document.projectList.map { ProjectResponse(it, null) },
         awardList = document.awardList.map { AwardResponse(it, null) },
         certificateList = document.certificateList.map { CertificateResponse(it, null) }
     )
 
-    constructor(fileBaseUrl: String, document: Document, feedbackMap: Map<UUID, String>) : this(
+    constructor(document: Document, feedbackMap: Map<UUID, String>) : this(
         documentId = document.id,
-        writer = WriterInfoResponse(fileBaseUrl, document.writer, feedbackMap[document.writer.elementId]),
+        writer = WriterInfoResponse(document.writer, feedbackMap[document.writer.elementId]),
         documentStatus = document.status,
         introduce = IntroduceResponse(document.introduce, feedbackMap[document.introduce.elementId]),
         skillList = document.skillSet,
-        projectList = document.projectList.map { ProjectResponse(fileBaseUrl, it, feedbackMap[it.elementId]) },
+        projectList = document.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
         awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
         certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) }
     )
@@ -46,17 +46,17 @@ data class DocumentInfoResponse(
         val elementId: UUID,
         val studentId: UUID,
         val name: String,
-        val profileImageUrl: String,
+        val profileImagePath: String,
         val studentNumber: Int,
         val email: String,
         val major: MajorElement,
         val feedback: String?
     ) {
-        constructor(fileBaseUrl: String, element: WriterInfoElement, feedback: String?) : this(
+        constructor(element: WriterInfoElement, feedback: String?) : this(
             elementId = element.elementId,
             studentId = element.studentId,
             name = element.name,
-            profileImageUrl = fileBaseUrl + element.profileImagePath,
+            profileImagePath = element.profileImagePath,
             studentNumber = element.studentNumber,
             email = element.email,
             major = MajorElement(
@@ -84,7 +84,7 @@ data class DocumentInfoResponse(
     data class ProjectResponse(
         val elementId: UUID,
         val name: String,
-        val representImageUrl: String,
+        val representImagePath: String,
         val startDate: Date,
         val endDate: Date,
         val skillList: List<String>,
@@ -92,10 +92,10 @@ data class DocumentInfoResponse(
         val url: String?,
         val feedback: String?
     ) {
-        constructor(fileBasePath: String, element: ProjectElement, feedback: String?) : this(
+        constructor(element: ProjectElement, feedback: String?) : this(
             elementId = element.elementId,
             name = element.name,
-            representImageUrl = fileBasePath + element.representImagePath,
+            representImagePath = element.representImagePath,
             startDate = element.startDate,
             endDate = element.endDate,
             skillList = element.skillSet,

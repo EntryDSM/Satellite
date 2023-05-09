@@ -12,8 +12,7 @@ import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 class QueryMyDocumentInfoUseCase(
     private val securityPort: SecurityPort,
     private val documentPort: DocumentPort,
-    private val feedbackPort: FeedbackPort,
-    private val filePort: FilePort
+    private val feedbackPort: FeedbackPort
 ) {
     suspend fun execute(): DocumentInfoResponse {
 
@@ -23,7 +22,6 @@ class QueryMyDocumentInfoUseCase(
         val feedbackMap = feedbackPort.queryByDocumentId(document.id)
             .associate { it.elementId to it.comment }
 
-        val fileBaseUrl = filePort.getFileBaseUrl()
-        return DocumentInfoResponse(fileBaseUrl, document, feedbackMap)
+        return DocumentInfoResponse(document, feedbackMap)
     }
 }
