@@ -11,7 +11,7 @@ interface LibraryDocument {
     val filePath: String
     var accessRight: AccessRight
     val createdAt: LocalDateTime
-    val index: Map<String, Int>
+    val index: List<DocumentIndex>
 
     val generation: Int
         get() = year - grade - 2013
@@ -28,5 +28,5 @@ data class LibraryDocumentDomain(
     override val filePath: String,
     override var accessRight: AccessRight,
     override val createdAt: LocalDateTime = LocalDateTime.now(),
-    override val index: Map<String, Int>
+    override val index: List<DocumentIndex>
 ) : LibraryDocument, Domain

@@ -23,12 +23,14 @@ class QueryMyDocumentFeedbackUseCase(
 
         return FeedbackListResponse(
             documentId = document.id,
-            feedbackList = feedbackList.map {
-                FeedbackListResponse.FeedbackResponse(
-                    elementId = it.elementId,
-                    elementName = feedbackNameMap[it.elementId]!!,
-                    comment = it.comment,
-                )
+            feedbackList = feedbackList.mapNotNull { feedback ->
+                feedbackNameMap[feedback.elementId]?.let {
+                    FeedbackListResponse.FeedbackResponse(
+                        elementId = feedback.elementId,
+                        elementName = it,
+                        comment = feedback.comment,
+                    )
+                }
             }
         )
     }

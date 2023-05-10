@@ -48,7 +48,8 @@ class GlobalErrorFilter(
             }
             is WebExchangeBindException -> getBindErrorMessage(e) // request validation
             is ServerWebInputException -> getErrorMessage(GlobalErrorCode.BAD_REQUEST) // request null
-            is MethodNotAllowedException, is ResponseStatusException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
+            is MethodNotAllowedException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
+            is ResponseStatusException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
             else -> {
                 if (e.cause is CustomException) getErrorMessage((e.cause as CustomException).errorProperty)
                 else {

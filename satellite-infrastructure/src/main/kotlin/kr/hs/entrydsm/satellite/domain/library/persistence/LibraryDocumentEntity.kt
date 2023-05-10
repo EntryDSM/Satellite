@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.library.persistence
 
 import kr.hs.entrydsm.satellite.common.entity.BaseUUIDEntity
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
+import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndex
 import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
@@ -16,5 +17,5 @@ data class LibraryDocumentEntity(
     override val filePath: String,
     override var accessRight: AccessRight,
     override val createdAt: LocalDateTime,
-    override val index: Map<String, Int>
+    override val index: List<DocumentIndex>
 ) : LibraryDocument, BaseUUIDEntity(id)

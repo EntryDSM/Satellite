@@ -7,7 +7,6 @@ import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.domain.file.spi.PdfPort
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocumentDomain
-import kr.hs.entrydsm.satellite.domain.library.exception.SecretMismatchException
 import kr.hs.entrydsm.satellite.domain.library.spi.LibraryDocumentPort
 import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 import java.io.File
@@ -23,10 +22,10 @@ class CreateLibraryFileUseCase(
     private val libraryDocumentPort: LibraryDocumentPort
 ) {
     suspend fun execute(grade: Int, secret: String): UUID {
-
+        /*
         if (!schoolYearPort.secretMatches(secret)) {
             throw SecretMismatchException
-        }
+        }*/
 
         val year = schoolYearPort.getSchoolYear().year
         val documents = documentPort.queryByYearAndWriterGrade(year, grade)
@@ -37,7 +36,7 @@ class CreateLibraryFileUseCase(
         )
         */
 
-        val libraryPdfDocumentDto = pdfPort.generateGradeLibraryDocument(documents)
+        val libraryPdfDocumentDto = pdfPort.generateLibraryDocument(documents)
         val filePath = filePort.savePdf(
             File("${year}_${grade}_${LocalDateTime.now().toFileDateFormat()}.pdf")
                 .apply { writeBytes(libraryPdfDocumentDto.byteArray) }

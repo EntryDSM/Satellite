@@ -43,7 +43,7 @@ dependencies {
     implementation("software.amazon.awssdk.crt:aws-crt:0.21.8")
 
     // PDF
-    implementation("org.thymeleaf:thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("com.itextpdf:html2pdf:4.0.3")
 
     // Logging

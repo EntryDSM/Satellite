@@ -45,7 +45,7 @@
 
     기술 스택
     <div th:each="skill : ${data.skillSet}">
-        <p th:text="${data.skill}"/>
+        <p th:text="${skill}"/>
     </div>
 
     프로젝트
@@ -64,7 +64,6 @@
         <p th:text="${award.awardingInstitution}"/>
         <p th:text="${award.date}"/>
         <p th:text="${award.description}"/>
-        <p th:text="${award.url}"/>
     </div>
 
     자격증
