@@ -66,8 +66,8 @@ internal class SecurityConfig {
             // LIBRARY
             .pathMatchers(HttpMethod.GET, "/library/student").hasAnyAuthority(STUDENT)
             .pathMatchers(HttpMethod.GET, "/library/teacher").hasAnyAuthority(TEACHER)
-            .pathMatchers(HttpMethod.GET, "/library/{library-document-id}/index").hasAnyAuthority(STUDENT, TEACHER)
-            .pathMatchers(HttpMethod.GET, "/library/public").permitAll()
+            .pathMatchers(HttpMethod.GET, "/library/{library-document-id}/index").permitAll()
+            .pathMatchers(HttpMethod.GET, "/library/public/{library-document-id}").permitAll()
             .pathMatchers(HttpMethod.PATCH, "/library/{library-document-id}/access-right").hasAnyAuthority(TEACHER)
 
             // MAJOR
