@@ -51,10 +51,12 @@ class DocumentPersistenceAdapter(
 
         var criteria = Criteria.where("writer.name").regex("^" + (name ?: ""))
 
-        status?.let { criteria = criteria.and("status").`is`(it) }
-        grade?.let { criteria = criteria.and("writer.grade").`is`(it) }
-        classNum?.let { criteria = criteria.and("writer.classNum").`is`(it) }
-        majorId?.let { criteria = criteria.and("writer.majorId").`is`(it) }
+        with(criteria) {
+            status?.let { criteria = and("status").`is`(it) }
+            grade?.let { criteria = and("writer.grade").`is`(it) }
+            classNum?.let { criteria = and("writer.classNum").`is`(it) }
+            majorId?.let { criteria = and("writer.majorId").`is`(it) }
+        }
 
         return mongoTemplate.find(
             Query(criteria),
