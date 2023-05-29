@@ -40,7 +40,7 @@ class R2dbcConfig(
                 .option(Option.valueOf("allowPublicKeyRetrieval"), true)
         ).build()
 
-        var connectionPoolConfiguration = ConnectionPoolConfiguration.builder(connectionFactory)
+        val connectionPoolConfiguration = ConnectionPoolConfiguration.builder(connectionFactory)
             .initialSize(2)
             .minIdle(2)
             .maxSize(20)
