@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.satellite.global.config.datasource
 
+import io.r2dbc.pool.ConnectionPool
+import io.r2dbc.pool.ConnectionPoolConfiguration
 import io.r2dbc.spi.ConnectionFactory
 import io.r2dbc.spi.ConnectionFactoryOptions.*
 import io.r2dbc.spi.Option
@@ -14,6 +16,7 @@ import org.springframework.data.convert.WritingConverter
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.r2dbc.core.DatabaseClient
 import java.nio.ByteBuffer
+import java.time.Duration
 import java.util.*
 
 @Configuration(proxyBeanMethods = false)
@@ -23,7 +26,8 @@ class R2dbcConfig(
 
     @Bean
     override fun connectionFactory(): ConnectionFactory {
-        return ConnectionFactoryBuilder.withOptions(
+
+        val connectionFactory = ConnectionFactoryBuilder.withOptions(
             builder()
                 .option(DRIVER, "pool")
                 .option(PROTOCOL, r2dbcProperties.protocol)
@@ -35,6 +39,16 @@ class R2dbcConfig(
                 .option(SSL, false)
                 .option(Option.valueOf("allowPublicKeyRetrieval"), true)
         ).build()
+
+        var connectionPoolConfiguration = ConnectionPoolConfiguration.builder(connectionFactory)
+            .initialSize(2)
+            .minIdle(2)
+            .maxSize(20)
+            .maxLifeTime(Duration.ofSeconds(1800))
+            .maxIdleTime(Duration.ofSeconds(1800))
+            .build()
+
+        return ConnectionPool(connectionPoolConfiguration)
     }
 
     @ConstructorBinding
