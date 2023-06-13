@@ -39,6 +39,7 @@ class StudentSignUpUseCase(
         checkEmailSuffix(email)
 
         if (studentPort.existsByEmail(email)) {
+            println(studentPort.queryByEmail(email))
             throw StudentAlreadyExistException
         }
 

@@ -10,7 +10,8 @@ open class WriterInfoRequest(
     open val email: String,
     open val grade: Int,
     open val classNum: Int,
-    open val number: Int
+    open val number: Int,
+    open val url: String?
 ) {
 
     fun toElement(elementId: UUID, student: Student, major: Major) =
@@ -24,7 +25,8 @@ open class WriterInfoRequest(
             number = number,
             email = email,
             majorId = major.id,
-            majorName = major.name
+            majorName = major.name,
+            url = url
         )
 
     fun toStudent(student: Student) =

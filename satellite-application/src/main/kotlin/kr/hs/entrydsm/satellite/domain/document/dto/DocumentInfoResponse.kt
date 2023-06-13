@@ -50,6 +50,7 @@ data class DocumentInfoResponse(
         val studentNumber: Int,
         val email: String,
         val major: MajorElement,
+        val url: String?,
         val feedback: String?
     ) {
         constructor(element: WriterInfoElement, feedback: String?) : this(
@@ -63,6 +64,7 @@ data class DocumentInfoResponse(
                 id = element.majorId,
                 name = element.majorName
             ),
+            url = element.url,
             feedback = feedback
         )
     }

@@ -18,7 +18,9 @@ class WriterInfoElement(
     val number: Int,
 
     val majorId: UUID,
-    val majorName: String
+    val majorName: String,
+
+    val url: String? = null
 
 ) : AbstractElement(elementId) {
 
