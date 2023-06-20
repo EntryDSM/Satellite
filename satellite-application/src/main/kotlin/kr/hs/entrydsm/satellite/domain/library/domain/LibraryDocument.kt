@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.satellite.domain.library.domain
 
-import kr.hs.entrydsm.satellite.global.domain.Domain
 import java.time.LocalDateTime
 import java.util.*
 
@@ -20,13 +19,3 @@ interface LibraryDocument {
         this.accessRight = accessRight
     }
 }
-
-data class LibraryDocumentDomain(
-    override val id: UUID = UUID.randomUUID(),
-    override val year: Int,
-    override val grade: Int,
-    override val filePath: String,
-    override var accessRight: AccessRight,
-    override val createdAt: LocalDateTime = LocalDateTime.now(),
-    override val index: List<DocumentIndex>
-) : LibraryDocument, Domain
