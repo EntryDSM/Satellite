@@ -74,8 +74,9 @@ sentry:
   dsn: ${SENTRY_DSN:tmp}
   traces-sample-rate: 1.0
 
-log:
-  stash:
-    name: satellite.log
-    path: ${LOG_PATH:/}
-    size: 10
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb: debug
