@@ -39,7 +39,13 @@ class GlobalErrorFilter(
     }
 
     override fun getRoutingFunction(errorAttributes: ErrorAttributes?): RouterFunction<ServerResponse> =
-        RouterFunctions.route(RequestPredicates.all(), this::handleError)
+        RouterFunctions.route(RequestPredicates.all(), this::handleErrortest)
+
+    private fun handleErrortest(request: ServerRequest): Mono<ServerResponse> {
+        val e = super.getError(request)
+        e.printStackTrace()
+        return handleError(request)
+    }
 
     private fun handleError(request: ServerRequest) =
         when (val e = super.getError(request)) {
