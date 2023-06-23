@@ -27,8 +27,8 @@ dependencies {
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     runtimeOnly("org.mariadb:r2dbc-mariadb:1.0.3")
-    runtimeOnly("io.r2dbc:r2dbc-pool:0.9.0.RELEASE")
-    runtimeOnly("io.r2dbc:r2dbc-spi:0.9.1.RELEASE")
+    runtimeOnly("io.r2dbc:r2dbc-pool:1.0.0.RELEASE")
+    runtimeOnly("io.r2dbc:r2dbc-spi:1.0.0.RELEASE")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")

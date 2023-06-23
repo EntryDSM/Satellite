@@ -28,12 +28,8 @@ class RequestLogger(
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> =
         when (exchange.request.getHeader("Content-Type")) {
-            null, "multipart/form-data" -> {
-                chain.filter(exchange)
-            }
-            else -> {
-                logRequest(exchange,chain)
-            }
+            null, "multipart/form-data" -> chain.filter(exchange)
+            else -> logRequest(exchange,chain)
         }
 
     @Throws(IOException::class)
