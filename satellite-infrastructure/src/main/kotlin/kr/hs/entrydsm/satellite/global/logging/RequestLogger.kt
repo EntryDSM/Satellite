@@ -27,10 +27,13 @@ class RequestLogger(
 ) : WebFilter {
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> =
-        if (exchange.request.headers["Content-Type"]?.contains("multipart/form-data") == true) {
-            chain.filter(exchange)
-        } else {
-            logRequest(exchange, chain)
+        when (exchange.request.getHeader("Content-Type")) {
+            null, "multipart/form-data" -> {
+                chain.filter(exchange)
+            }
+            else -> {
+                logRequest(exchange,chain)
+            }
         }
 
     @Throws(IOException::class)
@@ -84,7 +87,7 @@ class RequestLogger(
 
         // 2023-06-22 15:51:24.102 :: 127.0.0.1 [POST] 200 path : /example/auth query : asd=asd body : {key: value}
         return "$requestTime :: $requestIP [${request.method}] " +
-                "$statusCode path : ${request.path} query : ${request.uri.rawQuery ?: ""} body : ${securedBody(bodyBytes)}"
+                "status : $statusCode path : ${request.path} query : ${request.uri.rawQuery ?: ""} body : ${securedBody(bodyBytes)}"
     }
 
     private fun securedBody(body: ByteArray): String? {
