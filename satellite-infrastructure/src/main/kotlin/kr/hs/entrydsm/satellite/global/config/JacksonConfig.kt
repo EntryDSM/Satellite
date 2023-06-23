@@ -6,8 +6,12 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.format.Formatter
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 @Configuration
 class JacksonConfig {
@@ -18,5 +22,13 @@ class JacksonConfig {
             .serializers(LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm")))
             .serializers(LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
             .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+    }
+
+    @Bean
+    fun localDateFormatter(): Formatter<LocalDateTime> {
+        return object : Formatter<LocalDateTime> {
+            override fun parse(text: String, locale: Locale) = LocalDateTime.parse(text)
+            override fun print(localDateTime: LocalDateTime,locale: Locale) = DateTimeFormatter.ISO_DATE.format(localDateTime)
+        }
     }
 }
