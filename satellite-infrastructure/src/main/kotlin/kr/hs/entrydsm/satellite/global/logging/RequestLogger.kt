@@ -82,9 +82,9 @@ class RequestLogger(
         val requestIP = request.getHeader("X-Forwarded-For") ?: "127.0.0.1"
         val statusCode = response.statusCode?.value()
 
-        // 2023-06-22 15:51:24.102 :: 127.0.0.1 [POST] 200 /example/auth?asd=asd {key: value}
+        // 2023-06-22 15:51:24.102 :: 127.0.0.1 [POST] 200 path : /example/auth query : asd=asd body : {key: value}
         return "$requestTime :: $requestIP [${request.method}] " +
-                "$statusCode ${request.path}${request.uri.rawQuery?.let { "?$it" } ?: ""} ${securedBody(bodyBytes)}"
+                "$statusCode path : ${request.path} query : ${request.uri.rawQuery ?: ""} body : ${securedBody(bodyBytes)}"
     }
 
     private fun securedBody(body: ByteArray): String? {
