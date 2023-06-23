@@ -37,6 +37,7 @@ class R2dbcConfig(
                 .option(USER, r2dbcProperties.username)
                 .option(PASSWORD, r2dbcProperties.password)
                 .option(SSL, false)
+                .option(Option.valueOf("pool"), 20)
                 .option(Option.valueOf("allowPublicKeyRetrieval"), true)
         ).build()
 
