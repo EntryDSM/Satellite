@@ -83,16 +83,14 @@ class RequestLogger(
         val statusCode = response.statusCode?.value()
 
         // 2023-06-22 15:51:24.102 :: 127.0.0.1 [POST] 200 /example/auth?asd=asd {key: value}
-        return "$requestTime :: $requestIP [${request.method}]" +
+        return "$requestTime :: $requestIP [${request.method}] " +
                 "$statusCode ${request.path}${request.uri.rawQuery?.let { "?$it" } ?: ""} ${securedBody(bodyBytes)}"
     }
 
     private fun securedBody(body: ByteArray): String? {
         val bodyMap = (objectMapper.readValue(String(body),MutableMap::class.java) as MutableMap<String,Any>)
         "password".let {
-            if (bodyMap[it] != null) {
-                bodyMap[it] = "***"
-            }
+            if (bodyMap[it] != null) bodyMap[it] = "***"
         }
         return objectMapper.writeValueAsString(bodyMap)
     }

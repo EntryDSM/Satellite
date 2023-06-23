@@ -53,7 +53,7 @@ class LogWriter(
 
     @Throws(IOException::class)
     private fun createZipFile() {
-        val zipFile = File(logProperties.path,"${logProperties.name}.${now}.zip")
+        val zipFile = File(logProperties.path, "${logProperties.name}.${now}.zip")
         ZipOutputStream(FileOutputStream(zipFile)).use {
             writeFileInputStream(it)
         }
