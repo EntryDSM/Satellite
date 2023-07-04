@@ -37,7 +37,7 @@ class AwsS3Adapter(
     override suspend fun saveImage(file: File, imageType: ImageType): String {
 
         val extension = getExtension(file)
-        if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic")) {
+        if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic" || extension == ".svg")) {
             throw InvalidExtensionException
         }
 
