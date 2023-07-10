@@ -44,6 +44,9 @@ dependencies {
     implementation("software.amazon.awssdk:s3:$awsSdkVersion")
     implementation("software.amazon.awssdk.crt:aws-crt:0.21.8")
 
+    // AOP
+    implementation("org.aspectj:aspectjweaver:1.9.7")
+
     // Logging
     implementation("io.sentry:sentry-spring-boot-starter:6.16.0")
 }

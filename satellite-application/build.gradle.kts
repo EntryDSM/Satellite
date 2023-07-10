@@ -9,8 +9,12 @@ dependencies {
 
 allOpen {
     annotation("kr.hs.entrydsm.satellite.common.annotation.Aggregate")
+    annotation("kr.hs.entrydsm.satellite.common.annotation.UseCase")
+    annotation("kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase")
 }
 
 noArg {
     annotation("kr.hs.entrydsm.satellite.common.annotation.Aggregate")
+    annotation("kr.hs.entrydsm.satellite.common.annotation.UseCase")
+    annotation("kr.hs.entrydsm.satellite.common.annotation.ReadOnlyUseCase")
 }

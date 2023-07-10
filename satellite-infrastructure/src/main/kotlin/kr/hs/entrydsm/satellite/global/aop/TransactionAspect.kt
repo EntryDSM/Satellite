@@ -40,31 +40,30 @@ class TransactionAspect(
     fun transactionAdvice(): TransactionInterceptor {
 
         val source = MatchAlwaysTransactionAttributeSource()
-        val transactionAttribute = RuleBasedTransactionAttribute().apply {
-            name = "Transaction"
-            rollbackRules = listOf(
-                RollbackRuleAttribute(Exception::class.java)
-            )
-        }
+        val transactionAttribute = RuleBasedTransactionAttribute()
+        transactionAttribute.setName("Transaction")
+        transactionAttribute.rollbackRules = listOf(
+            RollbackRuleAttribute(Exception::class.java)
+        )
         source.setTransactionAttribute(transactionAttribute)
 
-        return TransactionInterceptor(transactionManager, source)
+        return TransactionInterceptor(transactionManager,source)
     }
 
     @Bean
     fun readOnlyTransactionAdvice(): TransactionInterceptor {
 
         val source = MatchAlwaysTransactionAttributeSource()
-        val transactionAttribute = RuleBasedTransactionAttribute().apply {
-            name = "Read-Only Transaction"
-            isReadOnly = true
-            rollbackRules = listOf(
-                RollbackRuleAttribute(Exception::class.java)
-            )
-        }
+        val transactionAttribute = RuleBasedTransactionAttribute()
+
+        transactionAttribute.setName("Read-Only Transaction")
+        transactionAttribute.isReadOnly = true
+        transactionAttribute.rollbackRules = listOf(
+            RollbackRuleAttribute(Exception::class.java)
+        )
         source.setTransactionAttribute(transactionAttribute)
 
-        return TransactionInterceptor(transactionManager, source)
+        return TransactionInterceptor(transactionManager,source)
     }
 
 }

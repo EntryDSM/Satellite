@@ -43,6 +43,8 @@ class StudentSignUpUseCase(
             throw StudentAlreadyExistException
         }
 
+        val major = majorPort.queryById(majorId) ?: throw MajorNotFoundException
+
         val student = studentPort.save(
             StudentDomain(
                 email = email,
@@ -53,8 +55,7 @@ class StudentSignUpUseCase(
                 profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE
             )
         )
-
-        val major = majorPort.queryById(majorId) ?: throw MajorNotFoundException
+        
         documentPort.save(
             DocumentDomain(
                 writer = WriterInfoElement(student, major),
