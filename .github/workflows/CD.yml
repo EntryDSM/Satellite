@@ -24,14 +24,14 @@ jobs:
             build
             --build-cache
             --no-daemon
-
-      - name: Build docker image
-        run: docker build -t satellite .
-
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@v4
+            
+      - name: Deploy to xquare
+        uses: team-xquare/xquare-deployment-action@master 
         with:
-          name: satellite
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: ${{ secrets.DOCKER_REGISTRY }}
+          environment: prod
+          access_key: ${{ secrets.ACCESS_KEY }}
+          github_token: ${{ secrets.GHP_TOKEN }} 
+          buildargs: |
+            CLOUD_CONFIG_PASSWORD=${{secrets.CLOUD_CONFIG_PASSWORD}}
+            CLOUD_CONFIG_USERNAME=${{secrets.CLOUD_CONFIG_USERNAME}}
+            PROFILE=prod
