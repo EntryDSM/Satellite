@@ -1,6 +1,6 @@
 config: 
   name: repo
   service_type: be
-  port: 8080
+  port: 8000
   domain:
     prod: api.dsm-repo.com
