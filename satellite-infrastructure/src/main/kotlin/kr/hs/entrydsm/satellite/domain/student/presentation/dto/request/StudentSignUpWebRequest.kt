@@ -1,16 +1,19 @@
 package kr.hs.entrydsm.satellite.domain.student.presentation.dto.request
 
-import kr.hs.entrydsm.satellite.domain.student.domain.Student
-import org.intellij.lang.annotations.Pattern
-import java.util.*
 import javax.validation.constraints.Max
 import javax.validation.constraints.NotBlank
+import kr.hs.entrydsm.satellite.domain.student.domain.Student
+import org.hibernate.validator.constraints.Length
+import org.intellij.lang.annotations.Pattern
+import java.util.*
 
 data class StudentSignUpWebRequest(
 
     @field:NotBlank
+    @field:Length(max = 300)
     val name: String,
 
+    @field:Length(max = 300)
     val profileImagePath: String?,
 
     @field:NotBlank

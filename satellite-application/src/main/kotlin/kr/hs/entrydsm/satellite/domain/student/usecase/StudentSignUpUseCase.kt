@@ -55,7 +55,7 @@ class StudentSignUpUseCase(
                 profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE
             )
         )
-        
+
         documentPort.save(
             DocumentDomain(
                 writer = WriterInfoElement(student, major),

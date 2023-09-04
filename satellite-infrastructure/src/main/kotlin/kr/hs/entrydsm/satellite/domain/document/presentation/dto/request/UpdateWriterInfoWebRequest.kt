@@ -3,6 +3,7 @@ package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 import javax.validation.constraints.Email
 import javax.validation.constraints.Max
 import kr.hs.entrydsm.satellite.domain.document.dto.WriterInfoRequest
+import org.hibernate.validator.constraints.Length
 import java.util.*
 
 class UpdateWriterInfoWebRequest(
@@ -21,6 +22,7 @@ class UpdateWriterInfoWebRequest(
     @field:Max(20)
     override val number: Int,
 
-    url: String?
+    @field:Length(max = 300)
+    override val url: String?
 
 ) : WriterInfoRequest(majorId, email, grade, classNum, number, url)

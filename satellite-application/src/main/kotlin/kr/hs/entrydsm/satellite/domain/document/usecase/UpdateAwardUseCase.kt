@@ -15,7 +15,7 @@ class UpdateAwardUseCase(
 
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
-
+        
         documentPort.save(
             document.updateElement(
                 awardList = requests.map { it.toAwardElement() }
