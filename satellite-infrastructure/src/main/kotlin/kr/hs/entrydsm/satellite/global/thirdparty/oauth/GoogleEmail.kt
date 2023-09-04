@@ -1,14 +1,13 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
 import kotlinx.coroutines.reactor.awaitSingleOrNull
-import kr.hs.entrydsm.satellite.global.exception.ForbiddenException
+import kr.hs.entrydsm.satellite.global.exception.DynamicForbiddenException
 import kr.hs.entrydsm.satellite.global.exception.InternalServerError
 import kr.hs.entrydsm.satellite.global.thirdparty.oauth.dto.response.GoogleEmailResponse
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.core.publisher.Mono
 
 @Component
 class GoogleEmail {
@@ -24,7 +23,10 @@ class GoogleEmail {
                 .build()
         }
         .retrieve()
-        .onStatus(HttpStatus::is4xxClientError) { Mono.error(ForbiddenException) }
+        .onStatus(HttpStatus::is4xxClientError) {
+            it.bodyToMono(String::class.java)
+                .map { body -> DynamicForbiddenException(body) }
+        }
         .bodyToMono(object : ParameterizedTypeReference<GoogleEmailResponse>() {})
         .onErrorMap { throw it }
         .awaitSingleOrNull() ?: throw InternalServerError
