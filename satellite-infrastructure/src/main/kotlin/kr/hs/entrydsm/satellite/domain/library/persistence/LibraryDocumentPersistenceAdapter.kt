@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.library.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
@@ -17,19 +17,19 @@ class LibraryDocumentPersistenceAdapter(
 ) : LibraryDocumentPort {
 
     override suspend fun save(libraryDocument: LibraryDocument): LibraryDocumentEntity =
-        libraryDocumentRepository.save(objectMapper.convertValue(libraryDocument)).awaitSingle()
+        libraryDocumentRepository.save(objectMapper.convertValue(libraryDocument)).awaitFirst()
 
     override suspend fun queryById(libraryDocumentId: UUID) =
         libraryDocumentRepository.findById(libraryDocumentId).awaitSingleOrNull()
 
     override suspend fun queryAll(): List<LibraryDocument> =
-        libraryDocumentRepository.findAll().collectList().awaitSingle()
+        libraryDocumentRepository.findAll().collectList().awaitFirst()
 
     override suspend fun queryByYear(year: Int): List<LibraryDocument> =
-        libraryDocumentRepository.findByYear(year).collectList().awaitSingle()
+        libraryDocumentRepository.findByYear(year).collectList().awaitFirst()
 
     override suspend fun queryByAccessRightNotAndYear(accessRight: AccessRight, year: Int?): List<LibraryDocument> =
         (year?.let {
             libraryDocumentRepository.findByAccessRightNotAndYear(accessRight, year)
-        } ?: libraryDocumentRepository.findByAccessRightNot(accessRight)).collectList().awaitSingle()
+        } ?: libraryDocumentRepository.findByAccessRightNot(accessRight)).collectList().awaitFirst()
 }

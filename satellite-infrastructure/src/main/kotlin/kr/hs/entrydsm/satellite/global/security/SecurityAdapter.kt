@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.satellite.global.security
 
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
@@ -15,15 +15,15 @@ class SecurityAdapter(
 ) : SecurityPort {
 
     override suspend fun getCurrentStudent() =
-        (ReactiveSecurityContextHolder.getContext().awaitSingle().authentication.principal as StudentDetails).student
+        (ReactiveSecurityContextHolder.getContext().awaitFirst().authentication.principal as StudentDetails).student
 
     override suspend fun getCurrentUserAuthority(): Authority {
-        val authorities = ReactiveSecurityContextHolder.getContext().awaitSingle().authentication.authorities
+        val authorities = ReactiveSecurityContextHolder.getContext().awaitFirst().authentication.authorities
         return Authority.valueOf(authorities.toList()[0].authority)
     }
 
     override suspend fun getCurrentUserId(): UUID {
-        return UUID.fromString(ReactiveSecurityContextHolder.getContext().awaitSingle().authentication.name)
+        return UUID.fromString(ReactiveSecurityContextHolder.getContext().awaitFirst().authentication.name)
     }
 
     override fun encryptMatches(rawString: String,encryptedString: String) =

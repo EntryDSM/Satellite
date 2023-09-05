@@ -2,8 +2,8 @@ package kr.hs.entrydsm.satellite.domain.document.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
+import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
-import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
@@ -23,7 +23,7 @@ class DocumentPersistenceAdapter(
 ) : DocumentPort {
 
     override suspend fun save(document: Document): DocumentEntity =
-        documentRepository.save(objectMapper.convertValue(document)).awaitSingle()
+        documentRepository.save(objectMapper.convertValue(document)).awaitFirst()
 
     override suspend fun saveAll(documents: List<Document>) {
         documentRepository.saveAll(documents.map(objectMapper::convertValue)).awaitFirstOrNull()
@@ -36,10 +36,10 @@ class DocumentPersistenceAdapter(
         documentRepository.findByWriterStudentId(studentId).awaitSingleOrNull()
 
     override suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document> =
-        documentRepository.findByYearAndWriterGrade(year, writerGrade).collectList().awaitSingle()
+        documentRepository.findByYearAndWriterGrade(year, writerGrade).collectList().awaitFirst()
 
     override suspend fun existByWriterStudentId(studentId: UUID) =
-        documentRepository.existsByWriterStudentId(studentId).awaitSingle()
+        documentRepository.existsByWriterStudentId(studentId).awaitFirst()
 
     override suspend fun queryByWriterInfoAndStatus(
         name: String?,
@@ -61,6 +61,6 @@ class DocumentPersistenceAdapter(
         return mongoTemplate.find(
             Query(criteria),
             DocumentEntity::class.java
-        ).collectList().awaitSingle().map { it as Document }
+        ).collectList().awaitFirst().map { it as Document }
     }
 }

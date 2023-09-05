@@ -18,8 +18,8 @@ class GoogleEmail {
         .baseUrl("https://www.googleapis.com/oauth2/v1/userinfo").build()
         .get()
         .uri {
-            it.queryParam("access_token", accessToken)
-                .queryParam("alt", alt)
+            it.queryParam("access_token",accessToken)
+                .queryParam("alt",alt)
                 .build()
         }
         .retrieve()

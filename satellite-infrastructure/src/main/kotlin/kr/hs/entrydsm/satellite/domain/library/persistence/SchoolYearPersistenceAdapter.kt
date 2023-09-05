@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.library.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.library.domain.SchoolYear
@@ -18,11 +18,11 @@ class SchoolYearPersistenceAdapter(
 ) : SchoolYearPort {
 
     override suspend fun save(schoolYear: SchoolYear) = schoolYear.also {
-        schoolYearRepository.save(objectMapper.convertValue(schoolYear)).awaitSingle()
+        schoolYearRepository.save(objectMapper.convertValue(schoolYear)).awaitFirst()
     }
 
     override suspend fun getSchoolYear(): SchoolYearEntity =
-        schoolYearRepository.findById(schoolYearProperties.id).awaitSingle()
+        schoolYearRepository.findById(schoolYearProperties.id).awaitFirst()
 
     override suspend fun secretMatches(secret: String) =
         securityPort.encryptMatches(secret, schoolYearProperties.secret)

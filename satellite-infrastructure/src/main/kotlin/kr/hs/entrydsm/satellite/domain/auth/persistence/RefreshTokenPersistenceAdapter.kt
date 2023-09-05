@@ -2,8 +2,8 @@ package kr.hs.entrydsm.satellite.domain.auth.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kotlinx.coroutines.reactor.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.domain.RefreshToken
 import kr.hs.entrydsm.satellite.domain.auth.spi.RefreshTokenPort
@@ -25,7 +25,7 @@ class RefreshTokenPersistenceAdapter(
                 refreshToken.token,
                 objectMapper.convertValue<RefreshTokenEntity>(refreshToken),
                 Duration.ofSeconds(refreshToken.timeToLive)
-            ).awaitSingle()
+            ).awaitFirst()
 
         if (!isSaveSuccess) {
             throw InternalServerError
@@ -39,7 +39,7 @@ class RefreshTokenPersistenceAdapter(
         val refreshToken = reactiveRedisOperations
             .opsForValue()
             .get(token)
-            .awaitSingleOrNull()
+            .awaitFirstOrNull()
 
         return refreshToken?.let {
             objectMapper.convertValue<RefreshTokenEntity>(it)

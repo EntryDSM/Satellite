@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.major.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.major.domain.Major
@@ -16,7 +16,7 @@ class MajorPersistenceAdapter(
 ) : MajorPort {
 
     override suspend fun save(major: Major) =
-        majorRepository.save(objectMapper.convertValue<MajorEntity>(major)).awaitSingle()
+        majorRepository.save(objectMapper.convertValue<MajorEntity>(major)).awaitFirst()
 
     override suspend fun queryById(majorId: UUID) =
         majorRepository.findById(majorId).awaitSingleOrNull()
@@ -26,5 +26,5 @@ class MajorPersistenceAdapter(
     }
 
     override suspend fun queryByNameContaining(majorName: String): List<Major> =
-        majorRepository.findByNameContaining(majorName).collectList().awaitSingle()
+        majorRepository.findByNameContaining(majorName).collectList().awaitFirst()
 }

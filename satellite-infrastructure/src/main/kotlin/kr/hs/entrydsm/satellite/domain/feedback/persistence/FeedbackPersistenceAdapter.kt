@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.feedback.persistence
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
+import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
@@ -16,26 +17,26 @@ class FeedbackPersistenceAdapter(
 ) : FeedbackPort {
 
     override suspend fun save(feedback: Feedback) = feedback.also {
-        feedbackRepository.save(objectMapper.convertValue(feedback)).awaitSingle()
+        feedbackRepository.save(objectMapper.convertValue(feedback)).awaitFirst()
     }
 
     override suspend fun queryByDocumentId(documentId: UUID): List<FeedbackEntity> =
-        feedbackRepository.findByDocumentId(documentId).collectList().awaitSingle()
+        feedbackRepository.findByDocumentId(documentId).collectList().awaitFirst()
 
-    override suspend fun queryByDocumentIdAndElementId(documentId: UUID, elementId: UUID) =
-        feedbackRepository.findByDocumentIdAndElementId(documentId, elementId).awaitSingleOrNull()
+    override suspend fun queryByDocumentIdAndElementId(documentId: UUID,elementId: UUID) =
+        feedbackRepository.findByDocumentIdAndElementId(documentId,elementId).awaitSingleOrNull()
 
     override suspend fun queryByDocumentIdIn(documentIds: List<UUID>): List<FeedbackEntity> =
-        feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitSingle()
+        feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitFirst()
 
-    override suspend fun existsByDocumentIdAndElementId(documentId: UUID, elementId: UUID): Boolean =
-        feedbackRepository.existsByDocumentIdAndElementId(documentId, elementId).awaitSingle()
+    override suspend fun existsByDocumentIdAndElementId(documentId: UUID,elementId: UUID): Boolean =
+        feedbackRepository.existsByDocumentIdAndElementId(documentId,elementId).awaitFirst()
 
     override suspend fun deleteByDocumentId(documentId: UUID) {
         feedbackRepository.deleteByDocumentId(documentId).awaitSingleOrNull()
     }
 
     override suspend fun deleteByDocumentIdAndElementId(documentId: UUID,elementId: UUID) {
-        feedbackRepository.deleteByDocumentIdAndElementId(documentId, elementId).awaitSingleOrNull()
+        feedbackRepository.deleteByDocumentIdAndElementId(documentId,elementId).awaitSingleOrNull()
     }
 }

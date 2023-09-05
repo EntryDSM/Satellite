@@ -6,7 +6,7 @@ import io.jsonwebtoken.InvalidClaimException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kr.hs.entrydsm.satellite.domain.auth.domain.Authority
 import kr.hs.entrydsm.satellite.global.exception.ExpiredTokenException
 import kr.hs.entrydsm.satellite.global.exception.InternalServerError
@@ -66,6 +66,6 @@ class JwtParser(
         return when (authority) {
             Authority.STUDENT -> studentDetailService
             Authority.TEACHER -> teacherDetailService
-        }.findByUsername(body.subject).awaitSingle()
+        }.findByUsername(body.subject).awaitFirst()
     }
 }

@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.file.presentation
 
-import kotlinx.coroutines.reactive.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactive.awaitFirst
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import kr.hs.entrydsm.satellite.domain.file.presentation.dto.response.ImagePathResponse
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
@@ -36,7 +35,7 @@ class FileController(
         @RequestParam("type") imageType: ImageType
     ): ImagePathResponse {
 
-        val filePart = monoFilePart.awaitSingle()
+        val filePart = monoFilePart.awaitFirst()
 
         return ImagePathResponse(
             imagePath = filePort.saveImage(filePart.toFile(), imageType),
@@ -46,6 +45,6 @@ class FileController(
 
     private suspend fun FilePart.toFile() = File(filename())
             .also { FileOutputStream(it).use { outputStream ->
-                DataBufferUtils.write(content(), outputStream).awaitSingle()
+                DataBufferUtils.write(content(), outputStream).awaitFirst()
             } }
 }
