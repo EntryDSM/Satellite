@@ -52,7 +52,7 @@ class StudentSignUpUseCase(
                 grade = grade,
                 classNum = classNum,
                 number = number,
-                profileImagePath = profileImagePath ?: DefaultImages.USER_PROFILE
+                profileImagePath = if (profileImagePath.isNullOrBlank()) DefaultImages.USER_PROFILE else profileImagePath
             )
         )
 
