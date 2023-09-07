@@ -5,5 +5,5 @@ import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
 open class UpdateProfileImageRequest(
     profileImagePath: String?
 ) {
-    val profileImagePath: String = profileImagePath ?: DefaultImages.USER_PROFILE
+    val profileImagePath: String = if (profileImagePath.isNullOrBlank()) DefaultImages.USER_PROFILE else profileImagePath
 }
