@@ -10,6 +10,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
@@ -49,18 +50,35 @@ class DocumentPersistenceAdapter(
         status: DocumentStatus?
     ): List<Document> {
 
-        var criteria = Criteria.where("writer.name").regex("^" + (name ?: ""))
+        var criteria = Criteria.where(PropertyName.name).regex("^" + (name ?: ""))
 
         with(criteria) {
-            status?.let { criteria = and("status").`is`(it) }
-            grade?.let { criteria = and("writer.grade").`is`(it) }
-            classNum?.let { criteria = and("writer.classNum").`is`(it) }
-            majorId?.let { criteria = and("writer.majorId").`is`(it) }
+            status?.let { criteria = and(PropertyName.status).`is`(it) }
+            grade?.let { criteria = and(PropertyName.grade).`is`(it) }
+            classNum?.let { criteria = and(PropertyName.classNum).`is`(it) }
+            majorId?.let { criteria = and(PropertyName.majorId).`is`(it) }
         }
 
+        val sort = Sort.by(
+            Sort.Direction.ASC,
+            PropertyName.grade,
+            PropertyName.classNum,
+            PropertyName.number
+        )
+
         return mongoTemplate.find(
-            Query(criteria),
+            Query(criteria).with(sort),
             DocumentEntity::class.java
         ).collectList().awaitFirst().map { it as Document }
     }
+
+    object PropertyName {
+        const val name = "writer.name"
+        const val status = "status"
+        const val grade = "writer.grade"
+        const val classNum = "writer.classNum"
+        const val number = "writer.number"
+        const val majorId = "writer.majorId"
+    }
+
 }
