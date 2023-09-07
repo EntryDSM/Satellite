@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length
 import java.util.*
 
 data class UpdateAwardWebRequest(
-    @field:Size(max = 3)
+    @field:Size(max = 10)
     val awardList: List<AwardWebRequest>
 ) {
     data class AwardWebRequest(

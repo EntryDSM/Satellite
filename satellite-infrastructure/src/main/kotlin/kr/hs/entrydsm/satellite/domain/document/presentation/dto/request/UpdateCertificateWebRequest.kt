@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length
 import java.util.*
 
 data class UpdateCertificateWebRequest(
-    @field:Size(max = 3)
+    @field:Size(max = 10)
     val certificateList: List<CertificateWebRequest>
 ) {
     data class CertificateWebRequest(
