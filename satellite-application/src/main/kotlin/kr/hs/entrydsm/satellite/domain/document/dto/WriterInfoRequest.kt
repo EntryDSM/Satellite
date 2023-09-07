@@ -29,6 +29,22 @@ open class WriterInfoRequest(
             url = url
         )
 
+
+    fun toElement(elementId: UUID, student: Student, majorName: String, majorId: UUID) =
+        WriterInfoElement(
+            elementId = elementId,
+            studentId = student.id,
+            name = student.name,
+            profileImagePath = student.profileImagePath,
+            grade = grade,
+            classNum = classNum,
+            number = number,
+            email = email,
+            majorId = majorId,
+            majorName = majorName,
+            url = url
+        )
+
     fun toStudent(student: Student) =
         student.changeGcn(grade, classNum, number)
 }
