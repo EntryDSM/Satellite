@@ -3,7 +3,7 @@ package kr.hs.entrydsm.satellite.domain.library.persistence
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kotlinx.coroutines.reactive.awaitFirst
-import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.domain.LibraryDocument
@@ -20,7 +20,7 @@ class LibraryDocumentPersistenceAdapter(
         libraryDocumentRepository.save(objectMapper.convertValue(libraryDocument)).awaitFirst()
 
     override suspend fun queryById(libraryDocumentId: UUID) =
-        libraryDocumentRepository.findById(libraryDocumentId).awaitSingleOrNull()
+        libraryDocumentRepository.findById(libraryDocumentId).awaitFirstOrNull()
 
     override suspend fun queryAll(): List<LibraryDocument> =
         libraryDocumentRepository.findAll().collectList().awaitFirst()

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
-import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
@@ -31,10 +30,10 @@ class DocumentPersistenceAdapter(
     }
 
     override suspend fun queryById(documentId: UUID) =
-        documentRepository.findById(documentId).awaitSingleOrNull()
+        documentRepository.findById(documentId).awaitFirstOrNull()
 
     override suspend fun queryByWriterStudentId(studentId: UUID) =
-        documentRepository.findByWriterStudentId(studentId).awaitSingleOrNull()
+        documentRepository.findByWriterStudentId(studentId).awaitFirstOrNull()
 
     override suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document> =
         documentRepository.findByYearAndWriterGrade(year, writerGrade).collectList().awaitFirst()

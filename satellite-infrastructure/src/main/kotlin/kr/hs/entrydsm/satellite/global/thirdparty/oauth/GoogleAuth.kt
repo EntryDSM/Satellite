@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.oauth
 
-import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kr.hs.entrydsm.satellite.global.exception.DynamicForbiddenException
 import kr.hs.entrydsm.satellite.global.exception.InternalServerError
 import kr.hs.entrydsm.satellite.global.thirdparty.oauth.dto.response.GoogleAccessTokenResponse
@@ -36,5 +36,5 @@ class GoogleAuth {
         }
         .bodyToMono(object : ParameterizedTypeReference<GoogleAccessTokenResponse>() {})
         .onErrorMap { throw it }
-        .awaitSingleOrNull() ?: throw InternalServerError
+        .awaitFirstOrNull() ?: throw InternalServerError
 }

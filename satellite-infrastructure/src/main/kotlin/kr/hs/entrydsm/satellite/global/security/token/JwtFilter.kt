@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.satellite.global.security.token
 
 import kotlinx.coroutines.reactive.awaitFirstOrNull
-import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import kr.hs.entrydsm.satellite.global.security.token.properties.JwtConstants
 import org.springframework.core.annotation.Order
@@ -24,9 +23,9 @@ class JwtFilter(
         resolvedToken(exchange.request)?.let { token ->
             val auth = jwtParser.getAuthentication(token)
             return@mono chain.filter(exchange)
-                .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth)).awaitSingleOrNull()
+                .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth)).awaitFirstOrNull()
         }
-        return@mono chain.filter(exchange).awaitSingleOrNull()
+        return@mono chain.filter(exchange).awaitFirstOrNull()
     }
 
     private fun resolvedToken(request: ServerHttpRequest): String? =

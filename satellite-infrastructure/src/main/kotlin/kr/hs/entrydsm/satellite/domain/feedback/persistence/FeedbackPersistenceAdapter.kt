@@ -3,8 +3,7 @@ package kr.hs.entrydsm.satellite.domain.feedback.persistence
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kotlinx.coroutines.reactive.awaitFirst
-import kotlinx.coroutines.reactor.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.feedback.domain.Feedback
 import kr.hs.entrydsm.satellite.domain.feedback.spi.FeedbackPort
@@ -24,7 +23,7 @@ class FeedbackPersistenceAdapter(
         feedbackRepository.findByDocumentId(documentId).collectList().awaitFirst()
 
     override suspend fun queryByDocumentIdAndElementId(documentId: UUID,elementId: UUID) =
-        feedbackRepository.findByDocumentIdAndElementId(documentId,elementId).awaitSingleOrNull()
+        feedbackRepository.findByDocumentIdAndElementId(documentId,elementId).awaitFirstOrNull()
 
     override suspend fun queryByDocumentIdIn(documentIds: List<UUID>): List<FeedbackEntity> =
         feedbackRepository.findByDocumentIdIn(documentIds).collectList().awaitFirst()
@@ -33,10 +32,10 @@ class FeedbackPersistenceAdapter(
         feedbackRepository.existsByDocumentIdAndElementId(documentId,elementId).awaitFirst()
 
     override suspend fun deleteByDocumentId(documentId: UUID) {
-        feedbackRepository.deleteByDocumentId(documentId).awaitSingleOrNull()
+        feedbackRepository.deleteByDocumentId(documentId).awaitFirstOrNull()
     }
 
     override suspend fun deleteByDocumentIdAndElementId(documentId: UUID,elementId: UUID) {
-        feedbackRepository.deleteByDocumentIdAndElementId(documentId,elementId).awaitSingleOrNull()
+        feedbackRepository.deleteByDocumentIdAndElementId(documentId,elementId).awaitFirstOrNull()
     }
 }
