@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AbstractElement
+import kr.hs.entrydsm.satellite.domain.document.domain.element.ActivityElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -21,6 +22,7 @@ interface Document {
     var projectList: List<ProjectElement>
     var awardList: List<AwardElement>
     var certificateList: List<CertificateElement>
+    var activityList: List<ActivityElement>
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
@@ -48,7 +50,8 @@ interface Document {
         skillSet: List<String> = this.skillSet,
         projectList: List<ProjectElement> = this.projectList,
         awardList: List<AwardElement> = this.awardList,
-        certificateList: List<CertificateElement> = this.certificateList
+        certificateList: List<CertificateElement> = this.certificateList,
+        activityList: List<ActivityElement> = this.activityList
     ): Document {
         this.writer = writer
         this.introduce = introduce
@@ -56,6 +59,7 @@ interface Document {
         this.projectList = projectList
         this.awardList = awardList
         this.certificateList = certificateList
+        this.activityList = activityList
         return this
     }
 }
@@ -70,5 +74,6 @@ data class DocumentDomain(
     override var skillSet: List<String> = listOf(),
     override var projectList: List<ProjectElement> = listOf(),
     override var awardList: List<AwardElement> = listOf(),
-    override var certificateList: List<CertificateElement> = listOf()
+    override var certificateList: List<CertificateElement> = listOf(),
+    override var activityList: List<ActivityElement> = listOf()
 ) : Document, Domain

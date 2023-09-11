@@ -24,7 +24,7 @@ data class UpdateAwardWebRequest(
 
         override val date: Date,
 
-        @field:Length(max = 80)
+        @field:Length(max = 200)
         override val description: String?,
 
     ) : AwardRequest(elementId, name, awardingInstitution, date, description)

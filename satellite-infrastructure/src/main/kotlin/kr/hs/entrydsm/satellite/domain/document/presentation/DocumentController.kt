@@ -5,6 +5,7 @@ import kr.hs.entrydsm.satellite.domain.document.dto.DocumentInfoResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentListResponse
 import kr.hs.entrydsm.satellite.domain.document.dto.DocumentResponse
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.QueryDocumentWebRequest
+import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateActivityWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateAwardWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateCertificateWebRequest
 import kr.hs.entrydsm.satellite.domain.document.presentation.dto.request.UpdateIntroduceWebRequest
@@ -21,6 +22,7 @@ import kr.hs.entrydsm.satellite.domain.document.usecase.QuerySharedDocumentUseCa
 import kr.hs.entrydsm.satellite.domain.document.usecase.QueryStudentDocumentInfoUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.ShareDocumentUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.SubmitMyDocumentUseCase
+import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateActivityUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateAwardUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateCertificateUseCase
 import kr.hs.entrydsm.satellite.domain.document.usecase.UpdateIntroduceUseCase
@@ -50,6 +52,7 @@ class DocumentController(
     private val updateProjectUseCase: UpdateProjectUseCase,
     private val updateAwardUseCase: UpdateAwardUseCase,
     private val updateCertificateUseCase: UpdateCertificateUseCase,
+    private val updateActivityUseCase: UpdateActivityUseCase,
 
     private val queryDocumentInfoUseCase: QueryDocumentInfoUseCase,
     private val queryMyDocumentInfoUseCase: QueryMyDocumentInfoUseCase,
@@ -103,6 +106,12 @@ class DocumentController(
     @PatchMapping("/certificate")
     suspend fun updateCertificate(@RequestBody @Valid request: UpdateCertificateWebRequest) {
         updateCertificateUseCase.execute(request.certificateList)
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping("/activity")
+    suspend fun updateActivity(@RequestBody @Valid request: UpdateActivityWebRequest) {
+        updateActivityUseCase.execute(request.activityList)
     }
 
     @GetMapping("/my/detail")

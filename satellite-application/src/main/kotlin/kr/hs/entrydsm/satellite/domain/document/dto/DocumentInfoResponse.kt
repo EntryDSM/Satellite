@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.element.ActivityElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -18,7 +19,8 @@ data class DocumentInfoResponse(
     val skillList: List<String>,
     val projectList: List<ProjectResponse>,
     val awardList: List<AwardResponse>,
-    val certificateList: List<CertificateResponse>
+    val certificateList: List<CertificateResponse>,
+    val activityList: List<ActivityResponse>
 ) {
     constructor(document: Document) : this(
         documentId = document.id,
@@ -28,7 +30,8 @@ data class DocumentInfoResponse(
         skillList = document.skillSet,
         projectList = document.projectList.map { ProjectResponse(it, null) },
         awardList = document.awardList.map { AwardResponse(it, null) },
-        certificateList = document.certificateList.map { CertificateResponse(it, null) }
+        certificateList = document.certificateList.map { CertificateResponse(it, null) },
+        activityList = document.activityList.map { ActivityResponse(it, null) }
     )
 
     constructor(document: Document, feedbackMap: Map<UUID, String>) : this(
@@ -39,7 +42,8 @@ data class DocumentInfoResponse(
         skillList = document.skillSet,
         projectList = document.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
         awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
-        certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) }
+        certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) },
+        activityList = document.activityList.map { ActivityResponse(it, feedbackMap[it.elementId]) }
     )
 
     data class WriterInfoResponse(
@@ -137,6 +141,22 @@ data class DocumentInfoResponse(
             name = element.name,
             issuingInstitution = element.issuingInstitution,
             date = element.date,
+            feedback = feedback
+        )
+    }
+
+    data class ActivityResponse(
+        val elementId: UUID,
+        val name: String,
+        val date: Date,
+        val description: String?,
+        val feedback: String?
+    ) {
+        constructor(element: ActivityElement, feedback: String?) : this(
+            elementId = element.elementId,
+            name = element.name,
+            date = element.date,
+            description = element.description,
             feedback = feedback
         )
     }
