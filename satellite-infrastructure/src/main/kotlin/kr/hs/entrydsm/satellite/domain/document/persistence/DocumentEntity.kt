@@ -24,5 +24,5 @@ data class DocumentEntity(
     override var projectList: List<ProjectElement>,
     override var awardList: List<AwardElement>,
     override var certificateList: List<CertificateElement>,
-    override var activityList: List<ActivityElement>
+    override var activityList: List<ActivityElement>?
 ) : Document, BaseUUIDEntity(id)

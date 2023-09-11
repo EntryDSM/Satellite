@@ -22,7 +22,7 @@ interface Document {
     var projectList: List<ProjectElement>
     var awardList: List<AwardElement>
     var certificateList: List<CertificateElement>
-    var activityList: List<ActivityElement>
+    var activityList: List<ActivityElement>?
 
     fun isWriter(studentId: UUID?) = writer.studentId == studentId
 
@@ -51,7 +51,7 @@ interface Document {
         projectList: List<ProjectElement> = this.projectList,
         awardList: List<AwardElement> = this.awardList,
         certificateList: List<CertificateElement> = this.certificateList,
-        activityList: List<ActivityElement> = this.activityList
+        activityList: List<ActivityElement> = this.activityList ?: listOf()
     ): Document {
         this.writer = writer
         this.introduce = introduce
@@ -75,5 +75,5 @@ data class DocumentDomain(
     override var projectList: List<ProjectElement> = listOf(),
     override var awardList: List<AwardElement> = listOf(),
     override var certificateList: List<CertificateElement> = listOf(),
-    override var activityList: List<ActivityElement> = listOf()
+    override var activityList: List<ActivityElement>? = listOf()
 ) : Document, Domain

@@ -31,7 +31,7 @@ data class DocumentInfoResponse(
         projectList = document.projectList.map { ProjectResponse(it, null) },
         awardList = document.awardList.map { AwardResponse(it, null) },
         certificateList = document.certificateList.map { CertificateResponse(it, null) },
-        activityList = document.activityList.map { ActivityResponse(it, null) }
+        activityList = document.activityList?.map { ActivityResponse(it, null) } ?: listOf()
     )
 
     constructor(document: Document, feedbackMap: Map<UUID, String>) : this(
@@ -43,7 +43,7 @@ data class DocumentInfoResponse(
         projectList = document.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
         awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
         certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) },
-        activityList = document.activityList.map { ActivityResponse(it, feedbackMap[it.elementId]) }
+        activityList = document.activityList?.map { ActivityResponse(it, feedbackMap[it.elementId]) } ?: listOf()
     )
 
     data class WriterInfoResponse(
