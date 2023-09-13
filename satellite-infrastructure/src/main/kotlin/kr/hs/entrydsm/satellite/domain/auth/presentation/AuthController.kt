@@ -25,7 +25,6 @@ class AuthController(
 
     @GetMapping("/oauth/token")
     suspend fun oauthSignIn(@RequestParam("code") code: String): TokenResponse {
-        println("AuthController.oauthSignIn")
         return studentAuthService.oauthSignIn(code)
     }
 
