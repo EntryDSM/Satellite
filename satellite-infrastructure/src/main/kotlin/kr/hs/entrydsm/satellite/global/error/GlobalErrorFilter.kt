@@ -47,7 +47,10 @@ class GlobalErrorFilter(
                 getErrorMessage(e.errorProperty)
             }
             is WebExchangeBindException -> getBindErrorMessage(e) // request validation
-            is ServerWebInputException -> getErrorMessage(GlobalErrorCode.BAD_REQUEST) // request null
+            is ServerWebInputException -> let {
+                e.printStackTrace()
+                getErrorMessage(GlobalErrorCode.BAD_REQUEST)
+            } // request null
             is MethodNotAllowedException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
             is ResponseStatusException -> getErrorMessage(GlobalErrorCode.METHOD_NOT_ALLOWED)
             else -> {

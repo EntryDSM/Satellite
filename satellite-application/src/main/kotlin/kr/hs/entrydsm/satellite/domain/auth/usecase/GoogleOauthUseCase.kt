@@ -25,11 +25,12 @@ class GoogleOauthUseCase(
 
     suspend fun oauthSignIn(code: String): TokenResponse {
         val email = oauthPort.getGoogleEmailByCode(code)
+        println(email)
         checkEmailSuffix(email)
 
         val student = studentPort.queryByEmail(email)
             ?: throw SignUpRequiredRedirection(email)
-
+        println(student.name)
         return tokenPort.generateBothToken(student.id, Authority.STUDENT)
     }
 }
