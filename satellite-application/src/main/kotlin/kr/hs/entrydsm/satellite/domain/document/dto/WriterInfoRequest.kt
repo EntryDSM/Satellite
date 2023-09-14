@@ -6,7 +6,7 @@ import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import java.util.*
 
 open class WriterInfoRequest(
-    open val majorId: UUID,
+    open val majorId: UUID?,
     open val email: String,
     open val grade: Int,
     open val classNum: Int,

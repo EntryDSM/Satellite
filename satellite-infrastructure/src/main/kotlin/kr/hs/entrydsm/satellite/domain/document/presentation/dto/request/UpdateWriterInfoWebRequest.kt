@@ -8,7 +8,7 @@ import java.util.*
 
 class UpdateWriterInfoWebRequest(
 
-    override val majorId: UUID,
+    override val majorId: UUID?,
 
     @field:Email
     override val email: String,
