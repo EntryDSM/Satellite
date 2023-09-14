@@ -42,7 +42,7 @@ internal class UpdateWriterInfoUseCaseTest : DescribeSpec({
 
             coEvery { securityPort.getCurrentStudent() } returns student
             coEvery { documentPort.queryByWriterStudentId(student.id) } returns document.copy()
-            coEvery { majorPort.queryById(request.majorId) } returns major
+            coEvery { majorPort.queryById(request.majorId!!) } returns major
             coEvery { documentPort.save(capture(slot)) } returnsArgument 0
             coEvery { studentPort.save(any()) } returnsArgument 0
 
