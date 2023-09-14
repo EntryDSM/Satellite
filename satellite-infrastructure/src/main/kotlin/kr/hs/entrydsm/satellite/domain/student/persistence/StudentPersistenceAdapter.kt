@@ -7,10 +7,11 @@ import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.student.domain.Student
 import kr.hs.entrydsm.satellite.domain.student.spi.StudentPort
+import org.springframework.cache.annotation.Cacheable
 import java.util.*
 
 @Adapter
-class StudentPersistenceAdapter(
+open class StudentPersistenceAdapter(
     private val studentRepository: StudentRepository,
     private val objectMapper: ObjectMapper
 ) : StudentPort {
@@ -18,6 +19,7 @@ class StudentPersistenceAdapter(
     override suspend fun save(student: Student): Student =
         studentRepository.save(objectMapper.convertValue(student)).awaitFirst()
 
+    @Cacheable("studentById")
     override suspend fun queryById(studentId: UUID) =
         studentRepository.findById(studentId).awaitFirstOrNull()
 
