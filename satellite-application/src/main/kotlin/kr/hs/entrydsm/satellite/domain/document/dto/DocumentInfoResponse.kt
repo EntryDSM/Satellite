@@ -149,6 +149,8 @@ data class DocumentInfoResponse(
         val elementId: UUID,
         val name: String,
         val date: Date,
+        val endDate: Date?,
+        val isPeriod: Boolean,
         val description: String?,
         val feedback: String?
     ) {
@@ -156,6 +158,8 @@ data class DocumentInfoResponse(
             elementId = element.elementId,
             name = element.name,
             date = element.date,
+            endDate = element.endDate,
+            isPeriod = element.isPeriod ?: false,
             description = element.description,
             feedback = feedback
         )

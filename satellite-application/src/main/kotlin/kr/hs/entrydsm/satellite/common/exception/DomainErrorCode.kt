@@ -20,6 +20,7 @@ enum class DomainErrorCode(
 
     MAJOR_NOT_FOUND(404, "MAJOR-404-1", "Major not found"),
 
+    INVALID_PERIOD(400, "DOCUMENT-400-1", "Invalid Period"),
     DOCUMENT_ACCESS_RIGHT(403, "DOCUMENT-403-1", "Have no access to documents"),
     DOCUMENT_NOT_FOUND(404, "DOCUMENT-404-1", "Document not found"),
     DOCUMENT_ALREADY_EXIST(409, "DOCUMENT-409-1", "Document already exist"),

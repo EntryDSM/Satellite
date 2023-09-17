@@ -11,18 +11,22 @@ data class UpdateActivityWebRequest(
     @field:Size(max = 10)
     val activityList: List<ActivityWebRequest>
 ) {
-    data class ActivityWebRequest(
+    class ActivityWebRequest(
 
-        override val elementId: UUID?,
+        elementId: UUID?,
 
         @field:Length(max = 30)
         @field:NotEmpty
         override val name: String,
 
-        override val date: Date,
+        date: Date,
+
+        endDate: Date?,
+
+        isPeriod: Boolean?,
 
         @field:Length(max = 200)
         override val description: String?
 
-    ) : ActivityRequest(elementId, name, date, description)
+    ) : ActivityRequest(elementId, name, date, endDate, isPeriod ?: false, description)
 }

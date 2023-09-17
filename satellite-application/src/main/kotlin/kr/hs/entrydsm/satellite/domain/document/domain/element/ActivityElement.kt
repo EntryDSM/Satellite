@@ -6,6 +6,8 @@ class ActivityElement(
     elementId: UUID? = null,
     val name: String,
     val date: Date,
+    val endDate: Date?,
+    val isPeriod: Boolean?,
     val description: String?
 ) : AbstractElement(elementId) {
 
