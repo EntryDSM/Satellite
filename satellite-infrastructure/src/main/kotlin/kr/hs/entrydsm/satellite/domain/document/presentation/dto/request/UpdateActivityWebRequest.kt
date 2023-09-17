@@ -25,7 +25,7 @@ data class UpdateActivityWebRequest(
 
         isPeriod: Boolean?,
 
-        @field:Length(max = 200)
+        @field:Length(max = 500)
         override val description: String?
 
     ) : ActivityRequest(elementId, name, date, endDate, isPeriod ?: false, description)

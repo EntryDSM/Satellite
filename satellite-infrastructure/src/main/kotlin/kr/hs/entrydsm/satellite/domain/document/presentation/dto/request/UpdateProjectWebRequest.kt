@@ -28,7 +28,7 @@ data class UpdateProjectWebRequest(
         @field:Size(max = 14)
         override val skillList: List<String>,
 
-        @field:Length(max = 1000)
+        @field:Length(max = 1500)
         override val description: String,
 
         @field:Length(max = 225)

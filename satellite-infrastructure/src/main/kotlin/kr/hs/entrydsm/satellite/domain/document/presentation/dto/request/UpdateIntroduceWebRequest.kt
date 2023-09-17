@@ -10,7 +10,7 @@ data class UpdateIntroduceWebRequest(
     @field:NotNull
     override val heading: String,
 
-    @field:Length(max = 250)
+    @field:Length(max = 500)
     @field:NotNull
     override val introduce: String
 
