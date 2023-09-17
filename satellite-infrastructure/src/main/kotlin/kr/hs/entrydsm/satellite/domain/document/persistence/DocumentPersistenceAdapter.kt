@@ -38,7 +38,7 @@ class DocumentPersistenceAdapter(
     override suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document> =
         documentRepository.findByYearAndWriterGrade(year, writerGrade).collectList().awaitFirst()
 
-    override suspend fun existByWriterStudentId(studentId: UUID) =
+    override suspend fun existByWriterStudentId(studentId: UUID): Boolean =
         documentRepository.existsByWriterStudentId(studentId).awaitFirst()
 
     override suspend fun queryByWriterInfoAndStatus(

@@ -12,6 +12,9 @@ class QueryLibraryDocumentIndexUseCase(
 ) {
     suspend fun execute(libraryDocumentId: UUID): LibraryDocumentIndexResponse {
         val libraryDocument = libraryDocumentPort.queryById(libraryDocumentId) ?: throw LibraryDocumentNotFoundException
-        return LibraryDocumentIndexResponse(libraryDocument.index)
+        return LibraryDocumentIndexResponse(
+            libraryDocument.index
+                .map { it.copy(major = it.major.split(" ")[0]) }
+        )
     }
 }
