@@ -11,6 +11,7 @@ import kr.hs.entrydsm.satellite.common.AnyValueObjectGenerator.anyValueObject
 import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
+import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
 import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
 import kr.hs.entrydsm.satellite.domain.student.domain.StudentDomain
@@ -28,7 +29,8 @@ internal class UpdateProjectUseCaseTest : DescribeSpec({
         val document = getTestDocument(student)
 
         val request = listOf(anyValueObject<ProjectRequest>(
-            "isPeriod" to true
+            "isPeriod" to true,
+            "type" to ProjectType.TEAM
         ))
 
         context("프로젝트 데이터를 받으면") {

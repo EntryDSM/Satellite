@@ -11,6 +11,7 @@ import kr.hs.entrydsm.satellite.common.getTestDocument
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentDomain
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.IntroduceElement
@@ -50,8 +51,8 @@ internal class QueryMyDocumentUseCaseTest : DescribeSpec({
         }
 
         val introduce: IntroduceElement = anyValueObject()
-        val project1: ProjectElement = anyValueObject()
-        val project2: ProjectElement = anyValueObject()
+        val project1: ProjectElement = anyValueObject("type" to ProjectType.TEAM)
+        val project2: ProjectElement = anyValueObject("type" to ProjectType.TEAM)
         val award: AwardElement = anyValueObject()
         val certificate: CertificateElement = anyValueObject()
 
