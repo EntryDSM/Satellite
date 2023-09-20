@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
+import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 import kr.hs.entrydsm.satellite.common.validator.ElementSize
 import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
@@ -16,6 +17,7 @@ data class UpdateProjectWebRequest(
         override val elementId: UUID?,
 
         @field:Length(max = 30)
+        @field:NotEmpty
         override val name: String,
 
         @field:Length(max = 255)
@@ -32,6 +34,7 @@ data class UpdateProjectWebRequest(
         override val skillList: List<String>,
 
         @field:Length(max = 1500)
+        @field:NotEmpty
         override val description: String,
 
         @field:Length(max = 225)

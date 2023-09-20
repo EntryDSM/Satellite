@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
@@ -23,7 +24,8 @@ class DocumentPersistenceAdapter(
 ) : DocumentPort {
 
     override suspend fun save(document: Document): DocumentEntity =
-        documentRepository.save(objectMapper.convertValue(document)).awaitFirst()
+        documentRepository.save(objectMapper.convertValue(document)).awaitSingle()
+            .also { println(objectMapper.convertValue<DocumentEntity>(document)) }
 
     override suspend fun saveAll(documents: List<Document>) {
         documentRepository.saveAll(documents.map(objectMapper::convertValue)).awaitFirstOrNull()
