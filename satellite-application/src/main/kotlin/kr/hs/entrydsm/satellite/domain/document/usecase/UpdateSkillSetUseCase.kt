@@ -20,6 +20,7 @@ class UpdateSkillSetUseCase(
 
         documentPort.save(
             document.updateElement(skillSet = requests)
+                .also { println(document.skillSet) }
         )
     }
 }
