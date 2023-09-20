@@ -7,7 +7,8 @@ class ProjectElement(
     val name: String,
     val representImagePath: String,
     val startDate: Date,
-    val endDate: Date,
+    val endDate: Date?,
+    val isPeriod: Boolean?,
     val skillSet: List<String>,
     val description: String,
     val url: String?

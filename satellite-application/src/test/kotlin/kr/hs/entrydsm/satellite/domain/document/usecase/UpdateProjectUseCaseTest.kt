@@ -27,7 +27,9 @@ internal class UpdateProjectUseCaseTest : DescribeSpec({
         val student = anyValueObject<StudentDomain>()
         val document = getTestDocument(student)
 
-        val request = listOf(anyValueObject<ProjectRequest>())
+        val request = listOf(anyValueObject<ProjectRequest>(
+            "isPeriod" to true
+        ))
 
         context("프로젝트 데이터를 받으면") {
 

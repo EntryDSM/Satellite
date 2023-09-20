@@ -15,6 +15,9 @@ class UpdateSkillSetUseCase(
         val student = securityPort.getCurrentStudent()
         val document = documentPort.queryByWriterStudentId(student.id) ?: throw DocumentNotFoundException
 
+        println("UpdateSkillSetUseCase.execute")
+        println(requests)
+
         documentPort.save(
             document.updateElement(skillSet = requests)
         )

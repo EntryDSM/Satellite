@@ -10,7 +10,7 @@ data class UpdateProjectWebRequest(
     @field:Size(max = 5)
     val projectList: List<ProjectWebRequest>
 ) {
-    data class ProjectWebRequest(
+    class ProjectWebRequest(
 
         override val elementId: UUID?,
 
@@ -22,7 +22,9 @@ data class UpdateProjectWebRequest(
 
         override val startDate: Date,
 
-        override val endDate: Date,
+        override val endDate: Date?,
+
+        isPeriod: Boolean?,
 
         @field:ElementSize(max = 30)
         @field:Size(max = 14)
@@ -35,6 +37,6 @@ data class UpdateProjectWebRequest(
         override val url: String?
 
     ) : ProjectRequest(
-        elementId, name, representImagePath, startDate, endDate, skillList, description, url
+        elementId, name, representImagePath, startDate, endDate, isPeriod ?: true, skillList, description, url
     )
 }
