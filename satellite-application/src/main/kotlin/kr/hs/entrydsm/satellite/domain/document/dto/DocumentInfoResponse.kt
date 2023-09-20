@@ -112,7 +112,7 @@ data class DocumentInfoResponse(
             skillList = element.skillSet,
             description = element.description,
             url = element.url,
-            urls = element.urls ?: listOf(),
+            urls = element.urls ?: element.url?.let { listOf(it) } ?: listOf(),
             type = element.type ?: ProjectType.TEAM,
             feedback = feedback
         )
