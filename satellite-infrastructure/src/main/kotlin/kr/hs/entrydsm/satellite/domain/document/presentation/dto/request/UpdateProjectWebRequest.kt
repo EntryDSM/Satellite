@@ -37,9 +37,11 @@ data class UpdateProjectWebRequest(
         @field:Length(max = 225)
         override val url: String?,
 
+        urls: List<String>?,
+
         type: ProjectType?
 
     ) : ProjectRequest(
-        elementId, name, representImagePath, startDate, endDate, isPeriod ?: true, skillList, description, url, type ?: ProjectType.TEAM
+        elementId, name, representImagePath, startDate, endDate, isPeriod ?: true, skillList, description, url, urls ?: listOf(), type ?: ProjectType.TEAM
     )
 }

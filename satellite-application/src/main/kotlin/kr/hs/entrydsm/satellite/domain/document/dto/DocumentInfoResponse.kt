@@ -98,6 +98,7 @@ data class DocumentInfoResponse(
         val skillList: List<String>,
         val description: String,
         val url: String?,
+        val urls: List<String>,
         val type: ProjectType,
         val feedback: String?
     ) {
@@ -111,6 +112,7 @@ data class DocumentInfoResponse(
             skillList = element.skillSet,
             description = element.description,
             url = element.url,
+            urls = element.urls ?: listOf(),
             type = element.type ?: ProjectType.TEAM,
             feedback = feedback
         )

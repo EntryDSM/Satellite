@@ -13,6 +13,7 @@ class ProjectElement(
     val skillSet: List<String>,
     val description: String,
     val url: String?,
+    val urls: List<String>?,
     val type: ProjectType?
 ) : AbstractElement(elementId) {
 

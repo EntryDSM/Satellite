@@ -15,7 +15,8 @@ open class ProjectRequest(
     open val isPeriod: Boolean,
     open val skillList: List<String>,
     open val description: String,
-    open val url: String?,
+    open val url: String?, // TODO: 리팩 필요함
+    open val urls: List<String>,
     open val type: ProjectType
 ) {
     fun toProjectElement() = let {
@@ -32,6 +33,7 @@ open class ProjectRequest(
             skillSet = skillList,
             description = description,
             url = url,
+            urls = urls.also { it.union(listOf(url)) },
             type = type
         )
     }
