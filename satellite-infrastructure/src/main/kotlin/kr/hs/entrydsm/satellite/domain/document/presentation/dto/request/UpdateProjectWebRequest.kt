@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.presentation.dto.request
 
 import javax.validation.constraints.Size
 import kr.hs.entrydsm.satellite.common.validator.ElementSize
+import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
 import kr.hs.entrydsm.satellite.domain.document.dto.ProjectRequest
 import org.hibernate.validator.constraints.Length
 import java.util.*
@@ -34,9 +35,11 @@ data class UpdateProjectWebRequest(
         override val description: String,
 
         @field:Length(max = 225)
-        override val url: String?
+        override val url: String?,
+
+        type: ProjectType?
 
     ) : ProjectRequest(
-        elementId, name, representImagePath, startDate, endDate, isPeriod ?: true, skillList, description, url
+        elementId, name, representImagePath, startDate, endDate, isPeriod ?: true, skillList, description, url, type ?: ProjectType.TEAM
     )
 }

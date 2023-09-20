@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.document.dto
 
+import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ProjectElement
 import kr.hs.entrydsm.satellite.domain.document.exception.InvalidPeriodException
 import kr.hs.entrydsm.satellite.domain.file.domain.DefaultImages
@@ -14,7 +15,8 @@ open class ProjectRequest(
     open val isPeriod: Boolean,
     open val skillList: List<String>,
     open val description: String,
-    open val url: String?
+    open val url: String?,
+    open val type: ProjectType
 ) {
     fun toProjectElement() = let {
         if ((!isPeriod && endDate != null) || (isPeriod && endDate == null)) {
@@ -29,7 +31,8 @@ open class ProjectRequest(
             isPeriod = isPeriod,
             skillSet = skillList,
             description = description,
-            url = url
+            url = url,
+            type = type
         )
     }
 }

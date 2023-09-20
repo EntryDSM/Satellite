@@ -2,6 +2,7 @@ package kr.hs.entrydsm.satellite.domain.document.dto
 
 import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
+import kr.hs.entrydsm.satellite.domain.document.domain.ProjectType
 import kr.hs.entrydsm.satellite.domain.document.domain.element.ActivityElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.AwardElement
 import kr.hs.entrydsm.satellite.domain.document.domain.element.CertificateElement
@@ -97,6 +98,7 @@ data class DocumentInfoResponse(
         val skillList: List<String>,
         val description: String,
         val url: String?,
+        val type: ProjectType,
         val feedback: String?
     ) {
         constructor(element: ProjectElement, feedback: String?) : this(
@@ -109,6 +111,7 @@ data class DocumentInfoResponse(
             skillList = element.skillSet,
             description = element.description,
             url = element.url,
+            type = element.type ?: ProjectType.TEAM,
             feedback = feedback
         )
     }
