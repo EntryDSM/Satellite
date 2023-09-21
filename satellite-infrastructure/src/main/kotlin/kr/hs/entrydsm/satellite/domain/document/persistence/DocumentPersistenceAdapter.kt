@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
-import java.util.*
+import java.util.UUID
 
 @Adapter
 class DocumentPersistenceAdapter(
@@ -25,7 +25,6 @@ class DocumentPersistenceAdapter(
 
     override suspend fun save(document: Document): DocumentEntity =
         documentRepository.save(objectMapper.convertValue(document)).awaitSingle()
-            .also { println(objectMapper.convertValue<DocumentEntity>(document)) }
 
     override suspend fun saveAll(documents: List<Document>) {
         documentRepository.saveAll(documents.map(objectMapper::convertValue)).awaitFirstOrNull()
