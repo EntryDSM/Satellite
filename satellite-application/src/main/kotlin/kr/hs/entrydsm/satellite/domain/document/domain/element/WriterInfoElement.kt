@@ -20,6 +20,8 @@ class WriterInfoElement(
     val majorId: UUID,
     val majorName: String,
 
+    var skillSet: List<String>?,
+
     val url: String? = null
 
 ) : AbstractElement(elementId) {
@@ -41,6 +43,7 @@ class WriterInfoElement(
         classNum = student.classNum,
         number = student.number,
         email = student.email,
+        skillSet = listOf(),
         majorId = major.id,
         majorName = major.name
     )

@@ -40,7 +40,7 @@ data class DocumentInfoResponse(
         writer = WriterInfoResponse(document.writer, feedbackMap[document.writer.elementId]),
         documentStatus = document.status,
         introduce = IntroduceResponse(document.introduce, feedbackMap[document.introduce.elementId]),
-        skillList = document.skillSet,
+        skillList = document.writer.skillSet ?: document.skillSet,
         projectList = document.projectList.map { ProjectResponse(it, feedbackMap[it.elementId]) },
         awardList = document.awardList.map { AwardResponse(it, feedbackMap[it.elementId]) },
         certificateList = document.certificateList.map { CertificateResponse(it, feedbackMap[it.elementId]) },

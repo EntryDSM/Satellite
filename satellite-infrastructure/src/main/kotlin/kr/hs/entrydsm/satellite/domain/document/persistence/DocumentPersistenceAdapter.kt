@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
-import java.util.UUID
+import java.util.*
 
 @Adapter
 class DocumentPersistenceAdapter(

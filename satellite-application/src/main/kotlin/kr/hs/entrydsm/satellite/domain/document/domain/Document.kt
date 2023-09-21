@@ -18,7 +18,7 @@ interface Document {
     var status: DocumentStatus
     var writer: WriterInfoElement
     var introduce: IntroduceElement
-    var skillSet: List<String>
+    var skillSet: List<String> // TODO: 삭제 필요
     var projectList: List<ProjectElement>
     var awardList: List<AwardElement>
     var certificateList: List<CertificateElement>
@@ -47,7 +47,7 @@ interface Document {
     fun updateElement(
         writer: WriterInfoElement = this.writer,
         introduce: IntroduceElement = this.introduce,
-        skillSet: List<String> = this.skillSet,
+        skillSet: List<String> = this.writer.skillSet ?: this.skillSet,
         projectList: List<ProjectElement> = this.projectList,
         awardList: List<AwardElement> = this.awardList,
         certificateList: List<CertificateElement> = this.certificateList,
@@ -55,7 +55,8 @@ interface Document {
     ): Document {
         this.writer = writer
         this.introduce = introduce
-        this.skillSet = skillSet
+        this.writer.skillSet = skillSet
+        // this.skillSet = skillSet
         this.projectList = projectList
         this.awardList = awardList
         this.certificateList = certificateList

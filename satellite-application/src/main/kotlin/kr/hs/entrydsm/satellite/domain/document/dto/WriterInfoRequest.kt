@@ -14,7 +14,7 @@ open class WriterInfoRequest(
     open val url: String?
 ) {
 
-    fun toElement(elementId: UUID, student: Student, major: Major) =
+    fun toElement(elementId: UUID, skillSet: List<String>, student: Student, major: Major) =
         WriterInfoElement(
             elementId = elementId,
             studentId = student.id,
@@ -24,13 +24,14 @@ open class WriterInfoRequest(
             classNum = classNum,
             number = number,
             email = email,
+            skillSet = skillSet,
             majorId = major.id,
             majorName = major.name,
             url = url
         )
 
 
-    fun toElement(elementId: UUID, student: Student, majorName: String, majorId: UUID) =
+    fun toElement(elementId: UUID, skillSet: List<String>,  student: Student, majorName: String, majorId: UUID) =
         WriterInfoElement(
             elementId = elementId,
             studentId = student.id,
@@ -40,6 +41,7 @@ open class WriterInfoRequest(
             classNum = classNum,
             number = number,
             email = email,
+            skillSet = skillSet,
             majorId = majorId,
             majorName = majorName,
             url = url

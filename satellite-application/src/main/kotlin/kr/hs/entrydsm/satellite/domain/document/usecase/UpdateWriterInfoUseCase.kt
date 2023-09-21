@@ -15,7 +15,7 @@ class UpdateWriterInfoUseCase(
     private val documentPort: DocumentPort,
     private val majorPort: MajorPort
 ) {
-    suspend fun execute(request: WriterInfoRequest) {
+    suspend fun execute(request: WriterInfoRequest) { // TODO: skill set api와 병합
 
         val student = securityPort.getCurrentStudent()
 
@@ -26,11 +26,13 @@ class UpdateWriterInfoUseCase(
                 val writer = major?.let {
                     request.toElement(
                         elementId = writer.elementId,
+                        skillSet = writer.skillSet ?: skillSet,
                         student = student,
                         major = major
                     )
                 } ?: request.toElement(
                     elementId = writer.elementId,
+                    skillSet = writer.skillSet ?: skillSet,
                     student = student,
                     majorName = document.writer.name,
                     majorId = document.writer.majorId
