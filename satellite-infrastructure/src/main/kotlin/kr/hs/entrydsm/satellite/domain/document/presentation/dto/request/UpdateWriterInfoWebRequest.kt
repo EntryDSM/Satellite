@@ -28,7 +28,7 @@ class UpdateWriterInfoWebRequest(
     @field:Min(1)
     override val number: Int,
 
-    skillList: List<String>?,
+    skillList: List<String>,
 
     @field:Length(max = 300)
     override val url: String?

@@ -24,7 +24,23 @@ class DocumentPersistenceAdapter(
 ) : DocumentPort {
 
     override suspend fun save(document: Document): DocumentEntity =
-        documentRepository.save(objectMapper.convertValue(document)).awaitSingle()
+        documentRepository.save(
+            document.run {
+                DocumentEntity(
+                    id = id,
+                    year = year,
+                    isDeleted = isDeleted,
+                    status = status,
+                    writer = writer.also { println("in: ${it.skillSet}") },
+                    introduce = introduce,
+                    skillSet = skillSet,
+                    projectList = projectList,
+                    awardList = awardList,
+                    certificateList = certificateList,
+                    activityList = activityList
+                )
+            }.also { println("out: ${it.writer.skillSet}") }
+        ).awaitSingle()
 
     override suspend fun saveAll(documents: List<Document>) {
         documentRepository.saveAll(documents.map(objectMapper::convertValue)).awaitFirstOrNull()

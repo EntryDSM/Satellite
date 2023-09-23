@@ -11,11 +11,11 @@ open class WriterInfoRequest(
     open val grade: Int,
     open val classNum: Int,
     open val number: Int,
-    open val skillSet: List<String>?,
+    open val skillSet: List<String>,
     open val url: String?
 ) {
 
-    fun toElement(elementId: UUID, skillSet: List<String>, student: Student, major: Major) =
+    fun toElement(elementId: UUID, student: Student, major: Major) =
         WriterInfoElement(
             elementId = elementId,
             studentId = student.id,
@@ -32,7 +32,7 @@ open class WriterInfoRequest(
         )
 
 
-    fun toElement(elementId: UUID, skillSet: List<String>,  student: Student, majorName: String, majorId: UUID) =
+    fun toElement(elementId: UUID, student: Student, majorName: String, majorId: UUID) =
         WriterInfoElement(
             elementId = elementId,
             studentId = student.id,

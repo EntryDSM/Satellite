@@ -24,6 +24,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     runtimeOnly("org.mariadb:r2dbc-mariadb:1.0.3")
@@ -49,6 +50,13 @@ dependencies {
 
     // Logging
     implementation("io.sentry:sentry-spring-boot-starter:6.16.0")
+
+}
+
+configurations {
+    all {
+        exclude(group = "org.springframework.boot", module = "spring-webmvc")
+    }
 }
 
 repositories {

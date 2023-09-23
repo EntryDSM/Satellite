@@ -47,7 +47,6 @@ interface Document {
     fun updateElement(
         writer: WriterInfoElement = this.writer,
         introduce: IntroduceElement = this.introduce,
-        skillSet: List<String> = this.writer.skillSet ?: this.skillSet,
         projectList: List<ProjectElement> = this.projectList,
         awardList: List<AwardElement> = this.awardList,
         certificateList: List<CertificateElement> = this.certificateList,
@@ -55,8 +54,6 @@ interface Document {
     ): Document {
         this.writer = writer
         this.introduce = introduce
-        this.writer.skillSet = skillSet
-        // this.skillSet = skillSet
         this.projectList = projectList
         this.awardList = awardList
         this.certificateList = certificateList
