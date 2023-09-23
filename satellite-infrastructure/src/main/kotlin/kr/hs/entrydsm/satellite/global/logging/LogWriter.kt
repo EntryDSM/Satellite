@@ -29,11 +29,11 @@ class LogWriter(
     @Async
     @Throws(IOException::class)
     fun writeLog(content: String) {
-        writer.write("${content}\n")
-        writer.flush()
-        if (isLogOverSize) {
-            createZipFile()
-        }
+//        writer.write("${content}\n")
+//        writer.flush()
+//        if (isLogOverSize) {
+//            createZipFile()
+//        }
     }
 
     @PreDestroy
