@@ -26,13 +26,13 @@ class UpdateWriterInfoUseCase(
                 val writer = major?.let {
                     request.toElement(
                         elementId = writer.elementId,
-                        skillSet = writer.skillSet ?: skillSet,
+                        skillSet = request.skillSet ?: writer.skillSet ?: skillSet,
                         student = student,
                         major = major
                     )
                 } ?: request.toElement(
                     elementId = writer.elementId,
-                    skillSet = writer.skillSet ?: skillSet,
+                    skillSet = request.skillSet ?: writer.skillSet ?: skillSet,
                     student = student,
                     majorName = document.writer.name,
                     majorId = document.writer.majorId

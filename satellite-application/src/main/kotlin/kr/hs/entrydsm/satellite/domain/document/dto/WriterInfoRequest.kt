@@ -11,6 +11,7 @@ open class WriterInfoRequest(
     open val grade: Int,
     open val classNum: Int,
     open val number: Int,
+    open val skillSet: List<String>?,
     open val url: String?
 ) {
 
