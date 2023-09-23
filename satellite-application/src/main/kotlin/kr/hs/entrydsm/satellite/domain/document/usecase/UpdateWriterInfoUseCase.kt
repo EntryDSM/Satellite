@@ -23,6 +23,7 @@ class UpdateWriterInfoUseCase(
         documentPort.save(
             document.run {
                 val major = request.majorId?.let { majorPort.queryById(it) }
+                println(request.skillSet ?: writer.skillSet ?: skillSet)
                 val writer = major?.let {
                     request.toElement(
                         elementId = writer.elementId,
