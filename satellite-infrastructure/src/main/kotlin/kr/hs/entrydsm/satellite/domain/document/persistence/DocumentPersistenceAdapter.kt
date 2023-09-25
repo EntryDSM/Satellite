@@ -31,7 +31,7 @@ class DocumentPersistenceAdapter(
                     year = year,
                     isDeleted = isDeleted,
                     status = status,
-                    writer = writer.also { println("in: ${it.skillSet}") },
+                    writer = writer,
                     introduce = introduce,
                     skillSet = skillSet,
                     projectList = projectList,
@@ -39,7 +39,7 @@ class DocumentPersistenceAdapter(
                     certificateList = certificateList,
                     activityList = activityList
                 )
-            }.also { println("out: ${it.writer.skillSet}") }
+            }
         ).awaitSingle()
 
     override suspend fun saveAll(documents: List<Document>) {
