@@ -6,6 +6,6 @@ import org.hibernate.validator.constraints.Length
 class UpdateProfileImageWebRequest(
 
     @Length(max = 255)
-    profileImagePath: String?
+    profileImagePath: String
 
 ): UpdateProfileImageRequest(profileImagePath)
