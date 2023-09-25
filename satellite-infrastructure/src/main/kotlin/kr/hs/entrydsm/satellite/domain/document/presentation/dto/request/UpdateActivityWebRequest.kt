@@ -8,7 +8,7 @@ import java.util.*
 
 
 data class UpdateActivityWebRequest(
-    @field:Size(max = 10)
+    @field:Size(max = 20)
     val activityList: List<ActivityWebRequest>
 ) {
     class ActivityWebRequest(
