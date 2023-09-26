@@ -11,6 +11,7 @@ spring:
     web-application-type: reactive
 
   r2dbc:
+    url: r2dbc:mariadb://${spring.r2dbc.host}:${spring.r2dbc.port}/${spring.r2dbc.database}
     protocol: mariadb
     host: ${MARIA_DB_HOST:localhost}
     port: ${MARIA_DB_PORT:3306}

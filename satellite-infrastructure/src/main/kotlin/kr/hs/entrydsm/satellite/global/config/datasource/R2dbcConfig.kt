@@ -2,35 +2,36 @@ package kr.hs.entrydsm.satellite.global.config.datasource
 
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
+import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactory
 import io.r2dbc.spi.ConnectionFactoryOptions.*
 import io.r2dbc.spi.Option
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
-import org.springframework.boot.r2dbc.ConnectionFactoryBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.ReadingConverter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.r2dbc.core.DatabaseClient
 import java.nio.ByteBuffer
 import java.time.Duration
 import java.util.*
 
 @Configuration(proxyBeanMethods = false)
+@EnableR2dbcRepositories
 class R2dbcConfig(
     private val r2dbcProperties: R2dbcProperties
 ) : AbstractR2dbcConfiguration() {
 
-    @Bean
     override fun connectionFactory(): ConnectionFactory {
 
-        val connectionFactory = ConnectionFactoryBuilder.withOptions(
+        val pooledConnectionFactory = ConnectionFactories.get(
             builder()
-                .option(DRIVER, "pool")
-                .option(PROTOCOL, r2dbcProperties.protocol)
+                .option(DRIVER,"pool")
+                .option(PROTOCOL,"mariadb")
                 .option(DATABASE, r2dbcProperties.database)
                 .option(HOST, r2dbcProperties.host)
                 .option(PORT, r2dbcProperties.port)
@@ -40,9 +41,11 @@ class R2dbcConfig(
                 .option(Option.valueOf("initialSize"), 30)
                 .option(Option.valueOf("maxSize"), 30)
                 .option(Option.valueOf("allowPublicKeyRetrieval"), true)
-        ).build()
+                .build()
+        )
 
-        val connectionPoolConfiguration = ConnectionPoolConfiguration.builder(connectionFactory)
+        val connectionPoolConfiguration = ConnectionPoolConfiguration
+            .builder(pooledConnectionFactory)
             .initialSize(30)
             .minIdle(30)
             .maxSize(30)
@@ -56,7 +59,6 @@ class R2dbcConfig(
     @ConstructorBinding
     @ConfigurationProperties("spring.r2dbc")
     class R2dbcProperties(
-        val protocol: String,
         val host: String,
         val port: Int,
         val database: String,
