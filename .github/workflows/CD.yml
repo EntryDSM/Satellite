@@ -34,7 +34,8 @@ jobs:
           access_key: ${{ secrets.ACCESS_KEY }}
           github_token: ${{ secrets.GHP_TOKEN }} 
           buildargs: |
-            DB_HOST=${{ secrets.DB_HOST }}
+            MARIA_DB_HOST=${{ secrets.MARIA_DB_HOST }}
+            MONGO_DB_HOST=${{ secrets.MONGO_DB_HOST }}
             REDIS_HOST=${{ secrets.REDIS_HOST }}
             SENTRY_DSN=${{ secrets.SENTRY_DSN }}
             AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}

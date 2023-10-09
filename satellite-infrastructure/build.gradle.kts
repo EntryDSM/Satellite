@@ -4,7 +4,7 @@ plugins {
     id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
 
     kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
+    kotlin("plugin.jpa") version "1.6.21"  
 }
 
 dependencies {
