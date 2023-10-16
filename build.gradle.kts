@@ -35,6 +35,7 @@ subprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1")
+        implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2")
 
         // Test
         testImplementation("io.kotest:kotest-runner-junit5-jvm:5.4.0")

@@ -38,11 +38,11 @@ dependencies {
     implementation("com.fasterxml.uuid:java-uuid-generator:4.1.0")
 
     // AWS
-    val awsSdkVersion = "2.20.26"
+    val awsSdkVersion = "2.21.0"
     implementation("software.amazon.awssdk:bom:$awsSdkVersion")
     implementation("software.amazon.awssdk:s3-transfer-manager:$awsSdkVersion")
     implementation("software.amazon.awssdk:s3:$awsSdkVersion")
-    implementation("software.amazon.awssdk.crt:aws-crt:0.21.8")
+    implementation("software.amazon.awssdk.crt:aws-crt:0.27.3")
 
     // AOP
     implementation("org.aspectj:aspectjweaver:1.9.7")

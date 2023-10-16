@@ -5,5 +5,5 @@ import kr.hs.entrydsm.satellite.domain.library.domain.SchoolYear
 interface SchoolYearPort {
     suspend fun save(schoolYear: SchoolYear): SchoolYear
     suspend fun getSchoolYear(): SchoolYear
-    suspend fun secretMatches(secret: String): Boolean
+    suspend fun checkSecretMatches(secret: String)
 }

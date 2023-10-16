@@ -3,72 +3,93 @@ package kr.hs.entrydsm.satellite.global.thirdparty.aws.s3
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.global.exception.InvalidExtensionException
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.HEIC
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.JPEG
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.JPG
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.PDF
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.PNG
+import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.SVG
+import org.springframework.core.io.buffer.DataBuffer
+import org.springframework.http.codec.multipart.FilePart
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import software.amazon.awssdk.core.async.AsyncRequestBody
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
+import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import software.amazon.awssdk.transfer.s3.S3TransferManager
-import software.amazon.awssdk.transfer.s3.model.UploadFileRequest
-import java.io.File
+import software.amazon.awssdk.transfer.s3.model.UploadRequest
 import java.time.Duration
 import java.util.*
 
 
 @Component
 class AwsS3Adapter(
-    private val transferManager: S3TransferManager,
+    private val s3TransferManager: S3TransferManager,
     private val s3Presigner: S3Presigner,
     private val awsS3Properties: AwsS3Properties
 ) : FilePort {
 
-    override suspend fun savePdf(file: File): String {
-
-        val extension = getExtension(file)
-        if (extension != ".pdf") {
-            throw InvalidExtensionException
-        }
-
-        val folder = awsS3Properties.documentFolder
-
-        return "$folder/${file.name}"
-            .also { uploadFile(file, it, AwsS3FileType.PDF) }
-    }
-
-    override suspend fun saveImage(file: File, imageType: ImageType): String {
-
-        val extension = getExtension(file)
-        if (!(extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".heic" || extension == ".svg")) {
-            throw InvalidExtensionException
-        }
-
+    suspend fun saveImage(monoFilePart: Mono<FilePart>,imageType: ImageType): Mono<String> {
         val folder = when (imageType) {
             ImageType.PROFILE -> awsS3Properties.profileFolder
             ImageType.DOCUMENT -> awsS3Properties.documentFolder
         }
 
-        return "$folder/${UUID.randomUUID()}$extension"
-            .also { uploadFile(file, it, AwsS3FileType.IMAGE) }
-    }
-
-    private suspend fun getExtension(file: File): String {
-        val originalFilename = file.name
-        return originalFilename.substring(originalFilename.lastIndexOf(".")).lowercase()
-    }
-
-    private suspend fun uploadFile(file: File, filePath: String, fileType: AwsS3FileType) {
-        val uploadFileRequest = UploadFileRequest
-            .builder()
-            .putObjectRequest {
-                it.bucket(awsS3Properties.bucket)
-                    .key(filePath)
-                    .acl(fileType.cannedAcl)
+        return monoFilePart.map { filePart ->
+            val extension = filePart.filename().getExtension()
+                .also {
+                    if (!arrayOf(JPG,JPEG,PNG,HEIC,SVG).contains(it)) {
+                        throw InvalidExtensionException
+                    }
+                }
+            return@map "$folder/${UUID.randomUUID()}$extension".also { key ->
+                uploadFile(
+                    fileContent = filePart.content(),
+                    key = key,
+                    fileType = AwsS3FileType.IMAGE
+                )
             }
-            .source(file)
+        }
+    }
+
+    suspend fun savePdf(monoFilePart: Mono<FilePart>): Mono<String> {
+        val folder = awsS3Properties.pdfFolder
+
+        return monoFilePart.map { filePart ->
+            val extension = filePart.filename().getExtension()
+                .also { if (it != PDF) throw InvalidExtensionException }
+
+            return@map "$folder/${UUID.randomUUID()}$extension".also { key ->
+                uploadFile(
+                    fileContent = filePart.content(),
+                    key = key,
+                    fileType = AwsS3FileType.PDF
+                )
+            }
+        }
+    }
+
+    private fun String.getExtension(): String {
+        return substring(lastIndexOf(".")).lowercase()
+    }
+
+    private fun uploadFile(fileContent: Flux<DataBuffer>, key: String, fileType: AwsS3FileType) {
+        val putObjectRequest = PutObjectRequest.builder()
+            .bucket(awsS3Properties.bucket)
+            .key(key)
+            .acl(fileType.cannedAcl)
             .build()
 
-        val fileUpload = transferManager.uploadFile(uploadFileRequest)
-        fileUpload.completionFuture().join()
-        file.delete()
+        s3TransferManager
+            .upload(
+                UploadRequest.builder()
+                    .putObjectRequest(putObjectRequest)
+                    .requestBody(AsyncRequestBody.fromPublisher(fileContent.map { it.asByteBuffer() }))
+                    .build()
+            ).completionFuture().get()
     }
 
     override suspend fun getPdfFileUrl(filePath: String): String {
@@ -92,6 +113,14 @@ class AwsS3Adapter(
         return awsS3Properties.url + filePath
     }
 
-    override suspend fun getFileBaseUrl(): String = awsS3Properties.url
+    override fun getFileBaseUrl(): String = awsS3Properties.url
 
+    object Extensions {
+        const val JPG = ".jpg"
+        const val JPEG = ".jpeg"
+        const val PNG = ".png"
+        const val HEIC = ".heic"
+        const val SVG = ".svg"
+        const val PDF = ".pdf"
+    }
 }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.reactive.awaitFirst
 import kr.hs.entrydsm.satellite.common.annotation.Adapter
 import kr.hs.entrydsm.satellite.domain.auth.spi.SecurityPort
 import kr.hs.entrydsm.satellite.domain.library.domain.SchoolYear
+import kr.hs.entrydsm.satellite.domain.library.exception.SecretMismatchException
 import kr.hs.entrydsm.satellite.domain.library.properties.SchoolYearProperties
 import kr.hs.entrydsm.satellite.domain.library.spi.SchoolYearPort
 
@@ -24,7 +25,9 @@ class SchoolYearPersistenceAdapter(
     override suspend fun getSchoolYear(): SchoolYearEntity =
         schoolYearRepository.findById(schoolYearProperties.id).awaitFirst()
 
-    override suspend fun secretMatches(secret: String) =
-        securityPort.encryptMatches(secret, schoolYearProperties.secret)
-
+    override suspend fun checkSecretMatches(secret: String) {
+        if (!securityPort.encryptMatches(secret,schoolYearProperties.secret)) {
+            throw SecretMismatchException
+        }
+    }
 }
