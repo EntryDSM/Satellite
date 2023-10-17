@@ -23,7 +23,7 @@ interface LibraryDocument {
 
 
 class LibraryDocumentDomain(
-    override val id: UUID = UUID(0, 0),
+    override val id: UUID = UUID.randomUUID(),
     override val year: Int,
     override val grade: Int,
     override val filePath: String,

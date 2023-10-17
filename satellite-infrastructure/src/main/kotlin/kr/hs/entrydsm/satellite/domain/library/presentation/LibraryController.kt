@@ -2,7 +2,7 @@ package kr.hs.entrydsm.satellite.domain.library.presentation
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import javax.validation.constraints.NotNull
-import kotlinx.coroutines.reactor.mono
+import kotlinx.coroutines.reactor.awaitSingle
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndex
 import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentDetailResponse
@@ -93,32 +93,23 @@ class LibraryController(
         @RequestPart("pdf") monoPdfPart: Mono<FilePart>,
         @RequestPart("index") monoIndexJsonPart: Mono<FilePart>
     ) {
-        val filePath = s3Adapter.savePdf(monoPdfPart)
-        val documentIndex = monoIndexJsonPart.toDocumentIndexList()
-
-        documentIndex.zipWith(filePath).map {
-            mono {
-                createLibraryDocumentUseCase.execute(
-                    documentIndex = it.t1,
-                    filePath = it.t2,
-                    grade = grade
-                )
-            }
-        }.subscribe()
+        createLibraryDocumentUseCase.execute(
+            documentIndex = monoIndexJsonPart.toDocumentIndexList(),
+            filePath = s3Adapter.savePdf(monoPdfPart),
+            grade = grade
+        )
     }
 
-    fun Mono<FilePart>.toDocumentIndexList(): Mono<List<DocumentIndex>> = flatMap { part ->
+    suspend fun Mono<FilePart>.toDocumentIndexList() = flatMap { part ->
         DataBufferUtils.join(part.content())
             .map parse@{ dataBuffer: DataBuffer ->
                 val bytes = ByteArray(dataBuffer.readableByteCount())
                 dataBuffer.read(bytes)
 
                 data class IndexJsonValue(val data: List<DocumentIndex>)
-                val value = objectMapper.readValue(bytes, IndexJsonValue::class.java)
-
-                DataBufferUtils.release(dataBuffer)
-                return@parse value.data
+                return@parse objectMapper.readValue(bytes,IndexJsonValue::class.java).data
+                    .also { DataBufferUtils.release(dataBuffer) }
             }
-    }
+    }.awaitSingle()
 
 }

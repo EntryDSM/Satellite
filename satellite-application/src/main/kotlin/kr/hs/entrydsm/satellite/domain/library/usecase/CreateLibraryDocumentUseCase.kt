@@ -17,8 +17,10 @@ class CreateLibraryDocumentUseCase(
         documentIndex: List<DocumentIndex>,
         filePath: String
     ) {
+        println("CreateLibraryDocumentUseCase.execute")
         val year = schoolYearPort.getSchoolYear().year
 
+        println("CreateLibraryDocumentUseCase.execute22222")
         libraryDocumentPort.save(
             LibraryDocumentDomain(
                 index = documentIndex,

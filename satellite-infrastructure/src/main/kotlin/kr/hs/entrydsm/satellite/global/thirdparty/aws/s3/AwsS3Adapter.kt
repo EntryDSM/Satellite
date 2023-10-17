@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.satellite.global.thirdparty.aws.s3
 
+import kotlinx.coroutines.reactive.awaitSingle
 import kr.hs.entrydsm.satellite.domain.file.domain.ImageType
 import kr.hs.entrydsm.satellite.domain.file.spi.FilePort
 import kr.hs.entrydsm.satellite.global.exception.InvalidExtensionException
@@ -55,9 +56,8 @@ class AwsS3Adapter(
         }
     }
 
-    suspend fun savePdf(monoFilePart: Mono<FilePart>): Mono<String> {
+    suspend fun savePdf(monoFilePart: Mono<FilePart>): String {
         val folder = awsS3Properties.pdfFolder
-
         return monoFilePart.map { filePart ->
             val extension = filePart.filename().getExtension()
                 .also { if (it != PDF) throw InvalidExtensionException }
@@ -69,7 +69,7 @@ class AwsS3Adapter(
                     fileType = AwsS3FileType.PDF
                 )
             }
-        }
+        }.awaitSingle()
     }
 
     private fun String.getExtension(): String {
@@ -77,6 +77,7 @@ class AwsS3Adapter(
     }
 
     private fun uploadFile(fileContent: Flux<DataBuffer>, key: String, fileType: AwsS3FileType) {
+        println("AwsS3Adapter.uploadFile")
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(awsS3Properties.bucket)
             .key(key)
