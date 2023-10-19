@@ -7,11 +7,11 @@ import kr.hs.entrydsm.satellite.global.exception.InvalidExtensionException
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.HEIC
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.JPEG
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.JPG
-import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.PDF
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.PNG
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.SVG
 import org.springframework.core.io.buffer.DataBuffer
 import org.springframework.http.codec.multipart.FilePart
+import org.springframework.http.codec.multipart.FormFieldPart
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -56,13 +56,10 @@ class AwsS3Adapter(
         }
     }
 
-    suspend fun savePdf(monoFilePart: Mono<FilePart>): String {
+    suspend fun savePdf(monoFilePart: Mono<FormFieldPart>): String {
         val folder = awsS3Properties.pdfFolder
         return monoFilePart.map { filePart ->
-            val extension = filePart.filename().getExtension()
-                .also { if (it != PDF) throw InvalidExtensionException }
-
-            return@map "$folder/${UUID.randomUUID()}$extension".also { key ->
+            return@map "$folder/${UUID.randomUUID()}.pdf".also { key ->
                 uploadFile(
                     fileContent = filePart.content(),
                     key = key,

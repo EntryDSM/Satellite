@@ -20,7 +20,7 @@ import org.springframework.core.io.buffer.DataBuffer
 import org.springframework.core.io.buffer.DataBufferUtils
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.http.codec.multipart.FilePart
+import org.springframework.http.codec.multipart.FormFieldPart
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -90,8 +90,8 @@ class LibraryController(
     @PostMapping("/",consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     suspend fun saveLibraryDocument(
         @RequestParam(name = "grade") @NotNull grade: Int,
-        @RequestPart("pdf") monoPdfPart: Mono<FilePart>,
-        @RequestPart("index") monoIndexJsonPart: Mono<FilePart>
+        @RequestPart("pdf") monoPdfPart: Mono<FormFieldPart>,
+        @RequestPart("index") monoIndexJsonPart: Mono<FormFieldPart>
     ) {
         createLibraryDocumentUseCase.execute(
             documentIndex = monoIndexJsonPart.toDocumentIndexList(),
@@ -100,7 +100,7 @@ class LibraryController(
         )
     }
 
-    suspend fun Mono<FilePart>.toDocumentIndexList() = flatMap { part ->
+    suspend fun Mono<FormFieldPart>.toDocumentIndexList(): List<DocumentIndex> = flatMap { part ->
         DataBufferUtils.join(part.content())
             .map parse@{ dataBuffer: DataBuffer ->
                 val bytes = ByteArray(dataBuffer.readableByteCount())
