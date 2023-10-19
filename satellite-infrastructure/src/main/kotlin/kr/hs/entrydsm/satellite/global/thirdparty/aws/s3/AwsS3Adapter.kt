@@ -11,7 +11,7 @@ import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions
 import kr.hs.entrydsm.satellite.global.thirdparty.aws.s3.AwsS3Adapter.Extensions.SVG
 import org.springframework.core.io.buffer.DataBuffer
 import org.springframework.http.codec.multipart.FilePart
-import org.springframework.http.codec.multipart.FormFieldPart
+import org.springframework.http.codec.multipart.Part
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -56,7 +56,7 @@ class AwsS3Adapter(
         }
     }
 
-    suspend fun savePdf(monoFilePart: Mono<FormFieldPart>): String {
+    suspend fun savePdf(monoFilePart: Mono<Part>): String {
         val folder = awsS3Properties.pdfFolder
         return monoFilePart.map { filePart ->
             return@map "$folder/${UUID.randomUUID()}.pdf".also { key ->
