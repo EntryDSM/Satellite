@@ -74,7 +74,7 @@ class AwsS3Adapter(
     }
 
     private fun uploadFile(fileContent: Flux<DataBuffer>, key: String, fileType: AwsS3FileType) {
-        println("AwsS3Adapter.uploadFile")
+
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(awsS3Properties.bucket)
             .key(key)

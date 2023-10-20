@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull
 import kotlinx.coroutines.reactor.awaitSingle
 import kr.hs.entrydsm.satellite.domain.library.domain.AccessRight
 import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndex
+import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndexRequest
 import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentDetailResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.LibraryDocumentIndexResponse
 import kr.hs.entrydsm.satellite.domain.library.dto.ManagerQueryLibraryResponse
@@ -106,8 +107,20 @@ class LibraryController(
                 val bytes = ByteArray(dataBuffer.readableByteCount())
                 dataBuffer.read(bytes)
 
-                data class IndexJsonValue(val data: List<DocumentIndex>)
-                return@parse objectMapper.readValue(bytes,IndexJsonValue::class.java).data
+                data class IndexJsonValue(val data: List<DocumentIndexRequest>)
+                return@parse objectMapper.readValue(bytes, IndexJsonValue::class.java).data
+                    .run {
+                        var sum = 0
+                        map {
+                            sum += it.page
+                            DocumentIndex(
+                                name = it.name,
+                                major = it.major,
+                                studentNumber = it.studentNumber,
+                                page = sum - it.page
+                            )
+                        }
+                    }
                     .also { DataBufferUtils.release(dataBuffer) }
             }
     }.awaitSingle()

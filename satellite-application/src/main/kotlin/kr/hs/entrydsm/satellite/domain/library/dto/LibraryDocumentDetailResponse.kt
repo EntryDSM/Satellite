@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.satellite.domain.library.dto
 
-import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndex
+import kr.hs.entrydsm.satellite.domain.library.domain.DocumentIndexResponse
 import java.util.*
 
 data class LibraryDocumentDetailResponse(
@@ -9,5 +9,5 @@ data class LibraryDocumentDetailResponse(
     val grade: Int,
     val generation: Int,
     val documentUrl: String,
-    val index: List<DocumentIndex>
+    val index: List<DocumentIndexResponse>
 )
