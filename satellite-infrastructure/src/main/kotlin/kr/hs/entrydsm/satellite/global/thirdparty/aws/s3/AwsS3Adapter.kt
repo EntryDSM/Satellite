@@ -23,6 +23,8 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.transfer.s3.S3TransferManager
 import software.amazon.awssdk.transfer.s3.model.UploadRequest
 import java.time.Duration
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -59,7 +61,8 @@ class AwsS3Adapter(
     suspend fun savePdf(monoFilePart: Mono<Part>): String {
         val folder = awsS3Properties.pdfFolder
         return monoFilePart.map { filePart ->
-            return@map "$folder/${UUID.randomUUID()}.pdf".also { key ->
+            val date = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
+            return@map "$folder/${date}-${UUID.randomUUID()}.pdf".also { key ->
                 uploadFile(
                     fileContent = filePart.content(),
                     key = key,
