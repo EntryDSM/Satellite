@@ -1,5 +1,5 @@
 config: 
-  name: repotest
+  name: repo
   service_type: be
   port: 8000
   domain:
