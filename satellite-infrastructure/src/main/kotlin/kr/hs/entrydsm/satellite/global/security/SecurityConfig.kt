@@ -62,6 +62,7 @@ internal class SecurityConfig {
             .pathMatchers(HttpMethod.GET, "/document/shared").hasAnyAuthority(STUDENT, TEACHER)
             .pathMatchers(HttpMethod.GET, "/document/{document-id}/paging").hasAnyAuthority(STUDENT, TEACHER)
             .pathMatchers(HttpMethod.GET, "/document/{document-id}").hasAnyAuthority(STUDENT, TEACHER)
+            .pathMatchers(HttpMethod.GET, "/document/tmp").hasAnyAuthority(STUDENT)
 
             // LIBRARY
             .pathMatchers(HttpMethod.GET, "/library/student").hasAnyAuthority(STUDENT)

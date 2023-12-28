@@ -37,7 +37,11 @@ class JwtParser(
             throw InvalidTokenException
         }
 
-        val userDetails = getDetails(claims.body)
+        val userDetails = try {
+            getDetails(claims.body)
+        } catch (e: Exception) {
+            return null
+        }
 
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }

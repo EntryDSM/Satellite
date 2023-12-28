@@ -10,6 +10,7 @@ import kr.hs.entrydsm.satellite.domain.document.domain.Document
 import kr.hs.entrydsm.satellite.domain.document.domain.DocumentStatus
 import kr.hs.entrydsm.satellite.domain.document.persistence.repository.DocumentRepository
 import kr.hs.entrydsm.satellite.domain.document.spi.DocumentPort
+import kr.hs.entrydsm.satellite.domain.student.persistence.StudentRepository
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
@@ -19,6 +20,7 @@ import java.util.*
 @Adapter
 class DocumentPersistenceAdapter(
     private val documentRepository: DocumentRepository,
+    private val studentRepository: StudentRepository,
     private val mongoTemplate: ReactiveMongoTemplate,
     private val objectMapper: ObjectMapper
 ) : DocumentPort {
@@ -49,8 +51,8 @@ class DocumentPersistenceAdapter(
     override suspend fun queryById(documentId: UUID) =
         documentRepository.findById(documentId).awaitFirstOrNull()
 
-    override suspend fun queryByWriterStudentId(studentId: UUID) =
-        documentRepository.findByWriterStudentId(studentId).awaitFirstOrNull()
+    override suspend fun queryByWriterStudentId(studentId: UUID): DocumentEntity =
+        documentRepository.findByWriterStudentId(studentId).awaitFirst()
 
     override suspend fun queryByYearAndWriterGrade(year: Int, writerGrade: Int): List<Document> =
         documentRepository.findByYearAndWriterGrade(year, writerGrade).collectList().awaitFirst()

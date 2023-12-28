@@ -8,7 +8,7 @@ class WriterInfoElement(
 
     elementId: UUID? = null,
 
-    val studentId: UUID,
+    var studentId: UUID,
     val name: String,
     val email: String,
     var profileImagePath: String,
