@@ -4,3 +4,4 @@ config:
   port: 8000
   domain:
     prod: api.dsm-repo.com
+  
